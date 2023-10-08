@@ -38,51 +38,7 @@ class HomeController extends Controller
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-
-        if(@$objAdmin->is_super){
-            // Fetch notifications from the Problem model
-            $problemNotifications = Problem::where('type','procedure')
-            ->where('status','pending')
-            ->where('send_email',0)
-            ->get();
-        }else{
-            // Fetch notifications from the Problem model
-            $problemNotifications = Problem::where('type','procedure')
-            ->where('status','pending')
-            ->where('admin_id',@$objAdmin->id)
-            ->where('send_email',0)
-            ->get();
-        }
-
-
-        
-        foreach ($problemNotifications as $problem) {
-
-            if(empty($problem->number_days_remind)) continue;
-
-            
-            $notificationDate = Carbon::parse($problem->file_open_date)->addDays($problem->number_days_remind);
-
-            if (Carbon::now()->isSameDay($notificationDate)) {
-
-                $body = "المعامله $problem->subject لم تتم عليا اى اجراء";
-                 
-                # send email 
-                $recipient = $objAdmin->email;
-                $subject = __('messages.remind_notification_title');
-
-                $data= [
-                        'source' => 'Problem',
-                        'id' => $problem->id,
-                        'title' => __('messages.remind_notification_title'),
-                        'body' => "المعامله $problem->subject لم تتم عليا اى اجراء",
-                ];
-
-                $fromEmail = 'info@qalam.lawjo.net'; 
-                 
-
-            }
-        }
+        $problemNotifications = array();
 
         
         $userId = \Auth::id();
@@ -94,89 +50,10 @@ class HomeController extends Controller
 
         $count_admins = Admin::where('position_id',1)->count();
         $count_lawyers = Admin::where('position_id',2)->count();
-        $count_secretariats = Admin::where('position_id',3)->count();
-        $count_clients = Client::count();
-        $count_procedure = 0;
-        $count_case = 0;
-        if (Auth::guard('admin')->check()) {
-            if(Auth::user()->is_super){
-                $count_procedure = Problem::where('type','procedure')->count();
-                $count_case = Problem::where('type','case')->count();
-            }else{
-                $count_procedure = Problem::where('type','procedure')->where('admin_id',$userId)->count();
-                $count_case = Problem::where('type','case')->where('admin_id',$userId)->count();
-            }
-            
-        }else{
-            $count_procedure = Problem::where('type','procedure')->where('client_id',$userId)->count();
-            $count_case = Problem::where('type','case')->where('client_id',$userId)->count();
-        }
-
-        // Get today's date
-        $today = Carbon::today();
-
-        // Get the start and end of the current week
-        $startOfWeek = $today;
-        $endOfWeek = $today->copy()->addDays(7); // 7 days from today
-
-
-
-        // Get the start and end of the current month
-        $startOfMonth = $today;
-        $endOfMonth = $today->copy()->addDays(30); // 30 days from today
-
-       
- 
-        $daily_procedures = ProblemProcedure::whereDate('date', $today)
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'procedure');
-        })
-        ->orderBy('date', 'desc')
-        ->get();
- 
-        $weekly_procedures = ProblemProcedure::whereBetween('date', [$startOfWeek, $endOfWeek])
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'procedure');
-        })
-        ->orderBy('date', 'desc')
-        ->get();   
- 
-
-       $monthly_procedures = ProblemProcedure::whereBetween('date', [$startOfMonth, $endOfMonth])
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'procedure');
-        })
-        ->orderBy('date', 'desc')
-        ->get();       
-
-
-
-        $daily_cases = ProblemProcedure::whereDate('next_session_date', $today)
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'case');
-        })
-        ->orderBy('next_session_date', 'desc')
-        ->get();
-
- 
-        $weekly_cases = ProblemProcedure::whereBetween('next_session_date', [$startOfWeek, $endOfWeek])
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'case');
-        })
-        ->orderBy('next_session_date', 'desc')
-        ->get();   
- 
-
-       $monthly_cases = ProblemProcedure::whereBetween('next_session_date', [$startOfMonth, $endOfMonth])
-        ->whereHas('problem', function ($query) {
-            $query->where('type', 'case');
-        })
-        ->orderBy('next_session_date', 'desc')
-        ->get();        
-
+         
         
         
-        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_secretariats' => $count_secretariats,'count_clients' => $count_clients,'count_procedure' => $count_procedure,'count_case' => $count_case,'daily_procedures' => $daily_procedures,'weekly_procedures' => $weekly_procedures,'monthly_procedures' => $monthly_procedures,'daily_cases' => $daily_cases,'weekly_cases' => $weekly_cases,'monthly_cases' => $monthly_cases]);
+        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers]);
     }
 
     public function update_warehouses()

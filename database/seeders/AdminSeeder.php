@@ -18,7 +18,7 @@ class AdminSeeder extends Seeder
             'name' =>  'Webmaster',
             'position_id' =>  1,
             'username' =>  'admin',
-            'email' =>  'admin@qalam.com',
+            'email' =>  'admin@tasareeh.com',
             'password' => bcrypt('IUK@24D2xtH6'),
             'is_super' => 1,
         ];
