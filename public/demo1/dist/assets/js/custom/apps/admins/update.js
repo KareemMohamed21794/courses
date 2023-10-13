@@ -18,6 +18,131 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
+
+                    'registration_type': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'group_classification': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'group_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'date_establishment': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'registration_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'email': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'website': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'governorate': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'district': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'street_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'building_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'workplace': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'job': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
                     'name': {
                         validators: {
                             notEmpty: {
@@ -45,21 +170,7 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    // 'department_id': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'القسم مطلوب'
-                    //         }
-                    //     }
-                    // },
-
-                    // 'position_id': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'الوظيفة مطلوبة'
-                    //         }
-                    //     }
-                    // },
+                   
 
                     // 'password': {
                     //     validators: {
@@ -118,6 +229,19 @@ var KTModalBranchesUpdate = function () {
                             //select_is_super: jQuery('#select_is_super_update').val(),
                             phone: jQuery('#phone_update').val(),
                             address: jQuery('#address_update').val(),
+                            registration_type: jQuery('#registration_type_update').val(),
+                            group_classification: jQuery('#group_classification_update').val(),
+                            group_name: jQuery('#group_name_update').val(),
+                            date_establishment: jQuery('#date_establishment_update').val(),
+                            registration_number: jQuery('#registration_number_update').val(),
+                            website: jQuery('#website_update').val(),
+                            governorate: jQuery('#governorate_update').val(),
+                            district: jQuery('#district_update').val(),
+                            street_name: jQuery('#street_name_update').val(),
+                            building_number: jQuery('#building_number_update').val(),
+                            workplace: jQuery('#workplace_update').val(),
+                            job: jQuery('#job_update').val(),
+                           
                         };
 
                         var type = "PATCH";
@@ -311,12 +435,23 @@ function getData(id) {
             jQuery('#username_update').val(data.username);
             jQuery('#email_update').val(data.email);
             jQuery('#phone_update').val(data.phone);
+            jQuery('#group_name_update').val(data.group_name);
+            jQuery('#date_establishment_update').val(data.date_establishment);
+            jQuery('#registration_number_update').val(data.registration_number);
+            jQuery('#website_update').val(data.website);
+            jQuery('#district_update').val(data.district);
+            jQuery('#street_name_update').val(data.street_name);
+            jQuery('#building_number_update').val(data.building_number);
+            jQuery('#workplace_update').val(data.workplace);
+            jQuery('#job_update').val(data.job);
             jQuery('#address_update').val(data.address);
-            // jQuery('#department_id_update').val(data.position.department.id);
-            // jQuery('#department_id_update').select2();
+            jQuery('#governorate_update').val(data.governorate);
+            jQuery('#governorate_update').select2();
             jQuery('#position_id_update').val(data.position.id);
-            jQuery('#select_is_super_update').val(data.is_super);
-            jQuery("#select_is_super_update").select2("val", ""+data.is_super+"");
+            jQuery('#registration_type_update').val(data.registration_type);
+            jQuery("#registration_type_update").select2("val", ""+data.registration_type+"");
+            jQuery('#group_classification_update').val(data.group_classification);
+            jQuery("#group_classification_update").select2("val", ""+data.group_classification+"");
             
 
             jQuery(`#position_id_update option[value="${data.position.id}"]`).attr("selected", "selected");

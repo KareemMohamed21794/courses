@@ -8,6 +8,7 @@ var KTDatatablesServerSide = function () {
     var filterPayment;
 
     var segment = $("#segment").val();
+    var is_super = $("#is_super").val();
     let main_url = "/admin/"+segment+"/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
@@ -93,11 +94,11 @@ var KTDatatablesServerSide = function () {
                     className: 'text-end',
                     render: function (data, type, row) {
 
-                        var deleteContent = '';
+                        var AdminContent = '';
 
                         // Check if segment is 'lawyer'
-                        if (segment === 'lawyers') {
-                            deleteContent = `
+                        if (is_super === '1') {
+                            AdminContent = `
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_deletelawyer" data-id=`+row.id+`>
@@ -105,13 +106,11 @@ var KTDatatablesServerSide = function () {
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
-                            `;
-                        } else {
-                            deleteContent = `
+
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_promotion" data-id=`+row.id+`>
+                                    ترقيه
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -140,16 +139,10 @@ var KTDatatablesServerSide = function () {
                                 </div>
                                 <!--end::Menu item-->
 
-                                `+deleteContent+`
+                                `+AdminContent+`
 
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_promotion" data-id=`+row.id+`>
-                                    ترقيه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                             
                             </div>
                             <!--end::Menu-->
                         `;

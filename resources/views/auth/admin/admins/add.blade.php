@@ -115,7 +115,7 @@
                         <!--end::Input group-->
 
 
-                        <!--begin::Input group-->
+                      {{--  <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
@@ -140,7 +140,7 @@
                         <!--end::Input group-->
 
 
-                        {{-- <!--begin::Input group-->
+                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.password_confirmation') }}</label>

@@ -26,10 +26,10 @@ class AdminsController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize(self::MODEL.'-viewAny');
+       // $this->authorize(self::MODEL.'-viewAny');
         $departments = Department::all();
         $positions = Position::all();
-        $lawyers = Admin::where('position_id',2)->get();
+        $leaders = Admin::where('position_id',2)->get();
 
         $segment = $request->segment(2);
 
@@ -45,25 +45,27 @@ class AdminsController extends Controller
             $is_super = 1;
             
         }
-        elseif($segment=='lawyers'){
-            $title = __('messages.lawyers');
-            $add_title = __('messages.lawyer');
+        elseif($segment=='leaders'){
+
+            $userId = Auth::id();
+            $objAdmin = Admin::find($userId);
+
+            
+            $title =  $objAdmin->is_super == 1 ? __('messages.leaders') : __('messages.group_info');
+            $add_title = __('messages.leader');
             $department_id = 2;
             $position_id = 2;
             $is_super = 0;
         }
 
-        elseif($segment=='secretariats'){
-            $title = __('messages.secretariats');
-            $add_title = __('messages.secretariat');
-            $department_id = 3;
-            $position_id = 3;
-            $is_super = 0;
-        }
+
+        $Governorates = ["الاردن","فلسطين","سوريا","العراق","مصر","ليبيا","اليمن","اللبنان","الكويت","السعودية","الإمارات","قطر","عُمان","البحرين","المغرب","السودان","جنوب السودان","الجزائر","موريتانيا","تونس","الصومال","جيبوتي","جزر القمر","أثيوبيا","أذربيجان","أرمينيا","أستراليا","أفغانستان","ألبانيا","ألمانيا","أندورا","أنغولا"
+        ];
+
 
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'lawyers' => $lawyers]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates]);
     }
 
     /**
@@ -73,7 +75,7 @@ class AdminsController extends Controller
      */
     public function create()
     {
-        $this->authorize(self::MODEL.'-store');
+        //$this->authorize(self::MODEL.'-store');
     }
 
     /**
@@ -84,7 +86,7 @@ class AdminsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize(self::MODEL.'-store');
+        //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
@@ -121,7 +123,7 @@ class AdminsController extends Controller
      */
     public function show($id)
     {
-        $this->authorize(self::MODEL.'-viewAny');
+        //$this->authorize(self::MODEL.'-viewAny');
     }
 
     /**
@@ -132,7 +134,7 @@ class AdminsController extends Controller
      */
     public function edit($id)
     {
-        $this->authorize(self::MODEL.'-update');
+        //$this->authorize(self::MODEL.'-update');
         $Admin  = Admin::find($id);
         @$Admin->position->department;
 
@@ -148,22 +150,43 @@ class AdminsController extends Controller
      */
     public function update(Request $request, Admin $Admin)
     {
-        $this->authorize(self::MODEL.'-update');
+        //$this->authorize(self::MODEL.'-update');
         if(empty($request->password)){
                $validator = Validator::make($request->all(),[
                 'name' => ['required', 'string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
-                // 'email' => ['required', 'string', 'email', 'max:255','unique:admins,email,'.Auth::guard('admin')->id().',id'],
                 'email' => 'required|email|max:255',
+                'registration_type' => 'required',
+                'group_classification' => 'required',
+                'group_name' => 'required',
+                'date_establishment' => 'required',
+                'registration_number' => 'required',
+                'website' => 'required',
+                'governorate' => 'required',
+                'district' => 'required',
+                'street_name' => 'required',
+                'building_number' => 'required',
+                'workplace' => 'required',
+                'job' => 'required',
             ]);
         }else{
             $validator = Validator::make($request->all(),[
                 'name' => ['required', 'string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
-                //'department_id' => ['required', 'integer'],
-                //'position_id' => ['required', 'integer'],
                 'password' => ['required', Rules\Password::defaults()],
+                'registration_type' => 'required',
+                'group_classification' => 'required',
+                'group_name' => 'required',
+                'date_establishment' => 'required',
+                'registration_number' => 'required',
+                'website' => 'required',
+                'governorate' => 'required',
+                'district' => 'required',
+                'street_name' => 'required',
+                'building_number' => 'required',
+                'workplace' => 'required',
+                'job' => 'required',
             ]);
         }
 
@@ -178,9 +201,18 @@ class AdminsController extends Controller
         $objAdmin->email = $request->email;
         $objAdmin->phone = $request->phone;
         $objAdmin->address = $request->address;
-        //$objAdmin->position_id = $request->position_id;
-//        $objAdmin->is_super = $request->select_is_super;
-
+        $objAdmin->registration_type = $request->registration_type;
+        $objAdmin->group_classification = $request->group_classification;
+        $objAdmin->group_name = $request->group_name;
+        $objAdmin->date_establishment = $request->date_establishment;
+        $objAdmin->registration_number = $request->registration_number;
+        $objAdmin->website = $request->website;
+        $objAdmin->governorate = $request->governorate;
+        $objAdmin->district = $request->district;
+        $objAdmin->street_name = $request->street_name;
+        $objAdmin->building_number = $request->building_number;
+        $objAdmin->workplace = $request->workplace;
+        $objAdmin->job = $request->job;
         if(!empty($request->password)){
             $objAdmin->password = Hash::make($request->password);
         }
@@ -193,7 +225,7 @@ class AdminsController extends Controller
     public function deletelawyer(Request $request , $id)
     {  
 
-        $this->authorize(self::MODEL.'-update');
+        //$this->authorize(self::MODEL.'-update');
         
         $validator = Validator::make($request->all(),[
             'lawyer_id' => ['required', 'integer'],
@@ -233,14 +265,14 @@ class AdminsController extends Controller
      */
     public function destroy($id)
     {
-        $this->authorize(self::MODEL.'-delete');
+        //$this->authorize(self::MODEL.'-delete');
         $Admin = Admin::where('id',$id)->delete();
         return response()->json(['Admin'=>$Admin]);
     }
 
     public function deleteAdmins(Request $request)
     {
-        $this->authorize(self::MODEL.'-delete');
+        //$this->authorize(self::MODEL.'-delete');
         $Admin = Admin::whereIn('id',$request->ids)->delete();
         return response()->json(['Admin'=>$Admin]);
     }
@@ -248,7 +280,7 @@ class AdminsController extends Controller
     public function get(Request $request)
     {
 
-        $this->authorize(self::MODEL.'-viewAny');
+        //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             '#'   => true,
@@ -275,28 +307,46 @@ class AdminsController extends Controller
             $position_id = 1;
         }
 
-        elseif($segment=='lawyers'){
+        elseif($segment=='leaders'){
             $position_id = 2;
         }
 
-        elseif($segment=='secretariats'){            
-            $position_id = 3;
-        }
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
 
         $active = $request->active;
 
-        $alldata = Admin::where('position_id',$position_id)->get();
-
-        if($active=='All'){
-            $alldata = Admin::withTrashed()->where('position_id',$position_id)->get();
-        }
-        elseif($active=='Active'){
+        if($objAdmin->is_super == 1){
             $alldata = Admin::where('position_id',$position_id)->get();
-        }
-        elseif($active=='DeActive'){
-            $alldata = Admin::onlyTrashed()->where('position_id',$position_id)->get();
+
+            if($active=='All'){
+                $alldata = Admin::withTrashed()->where('position_id',$position_id)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = Admin::where('position_id',$position_id)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = Admin::onlyTrashed()->where('position_id',$position_id)->get();
+            }
+
+        }else{
+
+
+            $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+
+            if($active=='All'){
+                $alldata = Admin::withTrashed()->where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = Admin::onlyTrashed()->where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+            }
+
         }
 
+    
 
 
         $alldataResult=array();
@@ -467,7 +517,7 @@ class AdminsController extends Controller
     public function Promotion(Request $request , $id)
     {  
 
-        $this->authorize(self::MODEL.'-update');
+        //$this->authorize(self::MODEL.'-update');
 
         $validator = Validator::make($request->all(),[
             'department_id' => ['required', 'integer'],

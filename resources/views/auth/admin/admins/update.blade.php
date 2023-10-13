@@ -33,6 +33,171 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
+                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="registration_type" id="registration_type_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
+                                <option value="">Choose</option>
+                                <option value="harah">حرة</option>
+                                <option value="muqiaduh">مقيدة</option>
+                            </select>
+                            <!--end::Select-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.group_classification') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select name="group_classification" id="group_classification_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
+                                <option value="">Choose</option>
+                                <option value="kashfih">كشفية</option>
+                                <option value="irshad">ارشادية</option>
+                            </select>
+                            <!--end::Select-->
+                        </div>
+                        <!--end::Input group-->
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.group_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.group_name') }}" name="group_name"  id="group_name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.date_establishment') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.date_establishment') }}" name="date_establishment"  id="date_establishment_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.email') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.email') }}" name="email"  id="email_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.website') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.website') }}" name="website"  id="website_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        
+
+                        
+
+                       <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">{{ __('messages.governorate') }}</span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <select name="governorate" id="governorate_update" aria-label="{{ __('messages.Select') }} {{ __('messages.governorate') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.governorate') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
+                                <option value="">{{ __('messages.Select') }} {{ __('messages.governorate') }}</option>
+
+                                @foreach($Governorates as $governorate)
+                                    <option value="{{ $governorate }}">
+                                        {{ $governorate }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                     
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.district') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.district') }}" name="district"  id="district_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.street_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.street_name') }}" name="street_name"  id="street_name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.building_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.building_number') }}" name="building_number"  id="building_number_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
@@ -53,82 +218,30 @@
                         </div>
                         <!--end::Input group-->
 
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.email') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.email') }}" name="email"  id="email_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-
 
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">{{ __('messages.address') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.workplace') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid" name="address"  id="address_update"></textarea>
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.workplace') }}" name="workplace"  id="workplace_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
 
-                        {{-- <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-7 fv-row">
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.Departments') }}</span>
-                            </label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="department_id" id="department_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.Department') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.Department') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
-                                <option value="">{{ __('messages.Select') }} {{ __('messages.Department') }}</option>
-
-                                @foreach($departments as $department)
-                                    <option value="{{ $department->id }}">
-                                        {{ $department->display_name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.job') }}" name="job"  id="job_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
-
-                        <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-7 fv-row">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.Positions') }}</span>
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <select name="position_id" id="position_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.Positions') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.Positions') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
-                                @foreach($positions as $position)
-                                    <option value="{{ $position->id }}">
-                                        {{ $position->display_name }}
-                                    </option>
-                                @endforeach
-
-
-                            </select>
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group--> --}}
 
 
                         <!--begin::Input group-->
@@ -142,30 +255,7 @@
                         </div>
                         <!--end::Input group-->
 
-                       {{--  <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password_confirmation') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password_confirmation') }}" name="password_confirmation"  id="password_confirmation_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group--> --}}
-
-                            {{-- <!--begin::Input group-->
-                            <div class="fv-row mb-7">
-                                <!--begin::Label-->
-                                <label class="required fs-5 fw-bold mb-2">{{ __('messages.super_admin') }}</label>
-                                <!--end::Label-->
-                                <!--begin::Select-->
-                                <select name="is_super" id="select_is_super_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.is_super') }}" class="form-select form-select-solid">
-                                    <option value="1">{{ __('messages.super_admin') }}</option>
-                                    <option value="0">{{ __('messages.normal_admin') }}</option>
-                                </select>
-                                <!--end::Select-->
-                            </div>
-                            <!--end::Input group--> --}}
+                       
 
                     </div>
                     <!--end::Scroll-->

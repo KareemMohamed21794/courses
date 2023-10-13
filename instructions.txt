@@ -1,0 +1,61 @@
+1- migration 
+	php artisan make:migration create_departments_table
+	php artisan make:migration add_paid_to_users_table --table=users
+	php artisan migrate
+	(5 min)
+2- Model 
+	php artisan make:model Department
+	(5 min)
+3- Faker
+	php artisan make:factory DepartmentFactory --model=Department
+	(5 min)
+4- Seeder
+	php artisan make:seeder DepartmentsTableSeeder
+	php artisan db:seed --class=DepartmentsTableSeeder
+	(5 min)
+
+5- Route
+
+6- controller 
+	php artisan make:controller Admin/DepartmentsController --resource
+7- views + js
+
+
+//===================================================//
+https://www.codermen.com/how-to-make-multi-auth-in-laravel-8/
+
+
+=======
+//====================================//
+
+1-first add new route like admin_auth.php
+let's say client_auth.php
+
+1-first add new route like admin_auth.php
+let's say client_auth.php
+ 
+2- Then creat new controller let's say 
+ClientAuthenticatedSessionController 
+
+3- then add Auth guard [client] in 
+config / auth.php
+
+4- then add new request called 
+ClientLoginRequest
+
+
+//=============================================//
+
+git clone https://github.com/mahmoudali29/easygam3a.git         >>>>>> first time
+
+git add .   >>>>>> add all new changes 
+
+git commit -m "First Push"   >>>> add message to your commit 
+
+
+git push    >>> push online
+
+
+git pull    >>>> to get new updates 
+
+

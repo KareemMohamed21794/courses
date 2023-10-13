@@ -5,11 +5,11 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\AdminsController;
 use App\Http\Controllers\Admin\ClientsController;
 use App\Http\Controllers\Admin\PermissionsController;
-
-
-
-
- 
+use App\Http\Controllers\Admin\SecondaryRegistrationsController;
+use App\Http\Controllers\Admin\AdministrativeFinancialReportsController;
+use App\Http\Controllers\Admin\BoardDirectorMeetingsController;
+use App\Http\Controllers\Admin\PermitsController;
+use App\Http\Controllers\Admin\QualificationleadersController; 
 
 
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
@@ -32,11 +32,11 @@ Route::middleware('auth:admin')->group(function () {
 
 		# Start Admins
 		Route::get('/admins/get', [AdminsController::class, 'get']);
-		Route::get('/lawyers/get', [AdminsController::class, 'get']);
+		Route::get('/leaders/get', [AdminsController::class, 'get']);
 		Route::get('/secretariats/get', [AdminsController::class, 'get']);
 		Route::resource('/admins', AdminsController::class);
 		Route::DELETE('/delete_admins', [AdminsController::class,'deleteAdmins']);
-		Route::resource('/lawyers', AdminsController::class);
+		Route::resource('/leaders', AdminsController::class);
 		Route::resource('/secretariats', AdminsController::class);
 		Route::PATCH('/promotion/{id}', [AdminsController::class, 'Promotion']);
 
@@ -46,8 +46,41 @@ Route::middleware('auth:admin')->group(function () {
 
 		# End Admins
 
+
+		# Start secondary_registration
+		Route::get('/secondary_registrations/get', [SecondaryRegistrationsController::class, 'get']);
+		Route::resource('/secondary_registrations', SecondaryRegistrationsController::class);
+		Route::DELETE('/delete_secondary_registrations', [SecondaryRegistrationsController::class,'deleteSecondaryRegistrations']);
+		# End secondary_registration
+
+
+		# Start administrative_financial_report
+		Route::get('/administrative_financial_reports/get', [AdministrativeFinancialReportsController::class, 'get']);
+		Route::resource('/administrative_financial_reports', AdministrativeFinancialReportsController::class);
+		Route::DELETE('/delete_administrative_financial_reports', [AdministrativeFinancialReportsController::class,'deleteAdministrativeFinancialReport']);
+		# End administrative_financial_report
+
+
+		# Start board_director_meetings
+		Route::get('/board_director_meetings/get', [BoardDirectorMeetingsController::class, 'get']);
+		Route::resource('/board_director_meetings', BoardDirectorMeetingsController::class);
+		Route::DELETE('/delete_board_director_meetings', [BoardDirectorMeetingsController::class,'deleteBoardDirectorMeetings']);
+		# End board_director_meetings
+
 	
-         
+       # Start permits
+		Route::get('/permits/get', [PermitsController::class, 'get']);
+		Route::resource('/permits', PermitsController::class);
+		Route::DELETE('/delete_permits', [PermitsController::class,'deletepermits']);
+		# End permits
+
+
+
+		 # Start qualification_leaders
+		Route::get('/qualification_leaders/get', [QualificationleadersController::class, 'get']);
+		Route::resource('/qualification_leaders', QualificationleadersController::class);
+		Route::DELETE('/delete_qualification_leaders', [QualificationleadersController::class,'deletequalification_leaders']);
+		# End qualification_leaders
 
 
 

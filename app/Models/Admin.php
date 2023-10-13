@@ -28,6 +28,18 @@ class Admin extends Authenticatable
         'position_id',
         'phone',
         'address',
+        'registration_type',
+        'group_classification',
+        'group_name',
+        'date_establishment',
+        'registration_number',
+        'website',
+        'governorate',
+        'district',
+        'street_name',
+        'building_number',
+        'workplace',
+        'job',
     ];
 
     /**

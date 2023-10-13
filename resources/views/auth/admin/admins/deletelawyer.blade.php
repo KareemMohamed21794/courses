@@ -36,16 +36,16 @@
                         <div class="d-flex flex-column mb-7 fv-row">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.lawyers') }}</span>
+                                <span class="required">{{ __('messages.leaders') }}</span>
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select  name="lawyer_id" id="lawyer_id" aria-label="{{ __('messages.Select') }} {{ __('messages.lawyers') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.lawyers') }}" data-dropdown-parent="#kt_modal_deletelawyer" data-control="select2" class="form-select form-select-solid fw-bolder">
-                                <option value="">{{ __('messages.Select') }} {{ __('messages.lawyers') }}</option>
+                            <select  name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.leaders') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.leaders') }}" data-dropdown-parent="#kt_modal_deletelawyer" data-control="select2" class="form-select form-select-solid fw-bolder">
+                                <option value="">{{ __('messages.Select') }} {{ __('messages.leaders') }}</option>
 
-                                @foreach($lawyers as $lawyer)
-                                    <option value="{{ $lawyer->id }}">
-                                        {{ $lawyer->name }}
+                                @foreach($leaders as $leader)
+                                    <option value="{{ $leader->id }}">
+                                        {{ $leader->name }}
                                     </option>
                                 @endforeach
                             </select>
