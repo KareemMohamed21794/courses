@@ -130,7 +130,7 @@ class SecondaryRegistrationsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        
             $validator = Validator::make($request->all(),[
-                'secondary_registration' => ['required'],
+                // 'secondary_registration' => ['required'],
                 'year' => ['required'],
             ]);
    
@@ -206,16 +206,16 @@ class SecondaryRegistrationsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = File::get();
+           $alldata = File::where('type','secondary_registration')->get();
         
             if($active=='All'){
-                $alldata = File::withTrashed()->get();
+                $alldata = File::where('type','secondary_registration')->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::get();
+                $alldata = File::where('type','secondary_registration')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->get();
+                $alldata = File::where('type','secondary_registration')->onlyTrashed()->get();
             }
         }else{
 

@@ -36,7 +36,7 @@
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
-                            <select onchange="RegistrationTypeUpdate(this.value)" name="registration_type" id="registration_type_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
+                            <select onchange="RegistrationTypeUpdate(this.value)" name="registration_type" id="registration_type_update"  data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
                                 <option value="">Choose</option>
                                 <option value="harah">حرة</option>
                                 <option value="muqiaduh">مقيدة</option>
@@ -65,7 +65,7 @@
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.group_classification') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
-                            <select name="group_classification" id="group_classification_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
+                            <select name="group_classification" id="group_classification_update"  data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
                                 <option value="">Choose</option>
                                 <option value="kashfih">كشفية</option>
                                 <option value="irshad">ارشادية</option>

@@ -293,6 +293,7 @@ function NaturalActivity(value) {
    $("#other_activity_description").show();
    }else{
     $("#other_activity_description").hide();
+    $("#activity_description").val(null);
    }
 }
 
@@ -303,5 +304,6 @@ function Alwahda(value) {
    $("#other_alwahda_description").show();
    }else{
     $("#other_alwahda_description").hide();
+    $("#alwahda_description").val(null);
    }
 }

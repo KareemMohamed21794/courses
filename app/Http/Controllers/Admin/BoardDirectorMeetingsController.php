@@ -126,7 +126,7 @@ class BoardDirectorMeetingsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        
             $validator = Validator::make($request->all(),[
-                'board_director_meetings' => ['required'],
+                // 'board_director_meetings' => ['required'],
                 'year' => ['required'],
             ]);
    
@@ -202,16 +202,16 @@ class BoardDirectorMeetingsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = File::get();
+           $alldata = File::where('type','board_director_meetings')->get();
         
             if($active=='All'){
-                $alldata = File::withTrashed()->get();
+                $alldata = File::where('type','board_director_meetings')->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::get();
+                $alldata = File::where('type','board_director_meetings')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->get();
+                $alldata = File::where('type','board_director_meetings')->onlyTrashed()->get();
             }
         }else{
 

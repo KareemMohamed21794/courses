@@ -139,8 +139,8 @@ class AdministrativeFinancialReportsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        
             $validator = Validator::make($request->all(),[
-                'administrative_financial1' => ['required'],
-                'administrative_financial2' => ['required'],
+                // 'administrative_financial1' => ['required'],
+                // 'administrative_financial2' => ['required'],
                 'year' => ['required'],
             ]);
    
@@ -230,16 +230,16 @@ class AdministrativeFinancialReportsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = File::get();
+           $alldata = File::where('type','administrative_financial')->get();
         
             if($active=='All'){
-                $alldata = File::withTrashed()->get();
+                $alldata = File::where('type','administrative_financial')->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::get();
+                $alldata = File::where('type','administrative_financial')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->get();
+                $alldata = File::where('type','administrative_financial')->onlyTrashed()->get();
             }
         }else{
 

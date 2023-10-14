@@ -16,21 +16,21 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'administrative_financial1': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                   // 'administrative_financial1': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
 
-                    'administrative_financial2': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                   //  'administrative_financial2': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
 
                     'year': {
                         validators: {

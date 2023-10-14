@@ -447,20 +447,19 @@ function getData(id) {
             jQuery('#address_update').val(data.address);
             jQuery('#governorate_update').val(data.governorate);
             jQuery('#governorate_update').select2();
-            jQuery('#position_id_update').val(data.position.id);
+           // jQuery('#position_id_update').val(data.position.id);
             jQuery('#registration_type_update').val(data.registration_type);
-            jQuery("#registration_type_update").select2("val", ""+data.registration_type+"");
+           // jQuery("#registration_type_update").select2("val", ""+data.registration_type+"");
             jQuery('#group_classification_update').val(data.group_classification);
-            jQuery("#group_classification_update").select2("val", ""+data.group_classification+"");
+          //  jQuery("#group_classification_update").select2("val", ""+data.group_classification+"");
             
             if(data.registration_type == 'muqiaduh'){
                 $("#registration_alhayyuh_almuqayaduh_update").show();
             }else{
-               
                 $("#registration_alhayyuh_almuqayaduh_update").hide();
             }
 
-            jQuery(`#position_id_update option[value="${data.position.id}"]`).attr("selected", "selected");
+           // jQuery(`#position_id_update option[value="${data.position.id}"]`).attr("selected", "selected");
         },
         error: function (data) {
             Swal.fire({
@@ -519,7 +518,9 @@ function RegistrationTypeUpdate(value) {
    if(value == 'muqiaduh'){
 
    $("#registration_alhayyuh_almuqayaduh_update").show();
+   
    }else{
     $("#registration_alhayyuh_almuqayaduh_update").hide();
+    $('#alhayyuh_almuqayaduh_update').val(null);
    }
 }

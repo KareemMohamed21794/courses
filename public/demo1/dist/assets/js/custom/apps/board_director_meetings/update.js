@@ -16,13 +16,13 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'board_director_meetings': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                   // 'board_director_meetings': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
 
 
                     'year': {

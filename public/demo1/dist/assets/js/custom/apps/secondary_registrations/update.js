@@ -16,13 +16,13 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'secondary_registration': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                   // 'secondary_registration': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
 
 
                     'year': {
