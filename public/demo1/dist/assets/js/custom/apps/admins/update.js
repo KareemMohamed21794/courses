@@ -453,6 +453,12 @@ function getData(id) {
             jQuery('#group_classification_update').val(data.group_classification);
             jQuery("#group_classification_update").select2("val", ""+data.group_classification+"");
             
+            if(data.registration_type == 'muqiaduh'){
+                $("#registration_alhayyuh_almuqayaduh_update").show();
+            }else{
+               
+                $("#registration_alhayyuh_almuqayaduh_update").hide();
+            }
 
             jQuery(`#position_id_update option[value="${data.position.id}"]`).attr("selected", "selected");
         },
@@ -507,4 +513,13 @@ function getPositions(department_id) {
         }
     });
     //======= End Ajxa ========//
+}
+
+function RegistrationTypeUpdate(value) {
+   if(value == 'muqiaduh'){
+
+   $("#registration_alhayyuh_almuqayaduh_update").show();
+   }else{
+    $("#registration_alhayyuh_almuqayaduh_update").hide();
+   }
 }

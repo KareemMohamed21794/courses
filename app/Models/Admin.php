@@ -29,6 +29,7 @@ class Admin extends Authenticatable
         'phone',
         'address',
         'registration_type',
+        'alhayyuh_almuqayaduh',
         'group_classification',
         'group_name',
         'date_establishment',

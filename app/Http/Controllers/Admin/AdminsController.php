@@ -204,6 +204,7 @@ class AdminsController extends Controller
         $objAdmin->phone = $request->phone;
         $objAdmin->address = $request->address;
         $objAdmin->registration_type = $request->registration_type;
+        $objAdmin->alhayyuh_almuqayaduh = $request->alhayyuh_almuqayaduh;
         $objAdmin->group_classification = $request->group_classification;
         $objAdmin->group_name = $request->group_name;
         $objAdmin->date_establishment = $request->date_establishment;

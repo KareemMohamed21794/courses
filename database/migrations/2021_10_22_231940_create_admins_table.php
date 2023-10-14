@@ -23,6 +23,7 @@ class CreateAdminsTable extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->enum('registration_type', ['harah', 'muqiaduh'])->nullable();
+            $table->string('alhayyuh_almuqayaduh')->nullable();
             $table->enum('group_classification', ['kashfih', 'irshad'])->nullable();
             $table->string('group_name')->nullable();
             $table->date('date_establishment')->nullable();

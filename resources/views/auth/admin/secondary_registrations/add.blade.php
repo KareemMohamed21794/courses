@@ -39,10 +39,27 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">Document/File</label>
+                            <label class=" fs-6 fw-bold mb-2">نموذج التسجيل</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="Document/File" name="secondary_registration"  id="secondary_registration"  />
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج التسجيل" name="secondary_registration"  id="secondary_registration"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">السنه</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            @if($objAdmin->is_super == 1)
+                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year"  id="year"  />
+                            @else
+                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year" readonly="" id="year" value="{{now()->year}}" />
+                            @endif
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

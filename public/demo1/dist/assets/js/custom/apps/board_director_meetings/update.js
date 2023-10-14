@@ -23,6 +23,15 @@ var KTModalBranchesUpdate = function () {
                             }
                         }
                     },
+
+
+                    'year': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
                     
                 },
                 plugins: {
@@ -226,7 +235,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            
+            jQuery('#year_update').val(data.year);
       
            var image_path =  '../images/files/'
             // Get the image element by its id

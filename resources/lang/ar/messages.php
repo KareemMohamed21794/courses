@@ -483,6 +483,7 @@ return [
     'month'=>'شهر',
     'both'=>'كلاهما ',
     'registration_type'=>'نوع التسجيل',
+    'alhayyuh_almuqayaduh'=>'الهيئه المقيده',
     'group_classification'=>'تصنيف المجموعه',
     'group_name'=>'اسم المجموعه',
     'date_establishment'=>'تاريخ التاسيس',

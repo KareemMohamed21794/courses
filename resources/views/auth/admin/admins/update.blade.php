@@ -36,12 +36,25 @@
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
-                            <select name="registration_type" id="registration_type_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
+                            <select onchange="RegistrationTypeUpdate(this.value)" name="registration_type" id="registration_type_update" data-control="select2" data-hide-search="true" data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
                                 <option value="">Choose</option>
                                 <option value="harah">حرة</option>
                                 <option value="muqiaduh">مقيدة</option>
                             </select>
                             <!--end::Select-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh_update">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.alhayyuh_almuqayaduh') }}" name="alhayyuh_almuqayaduh"  id="alhayyuh_almuqayaduh_update" />
+                            <!--end::Input-->
                         </div>
                         <!--end::Input group-->
 
@@ -198,10 +211,10 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

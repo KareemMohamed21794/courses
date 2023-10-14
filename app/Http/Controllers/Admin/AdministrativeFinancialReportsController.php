@@ -27,8 +27,11 @@ class AdministrativeFinancialReportsController extends Controller
     {
         $title = __('messages.administrative_financial_report');
         $add_title = __('messages.administrative_financial_report');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $exsistdata = File::where('admin_id',$userId)->where('type','administrative_financial')->where('year',date('Y'))->first();
 
-        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title]);
+        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
     }
 
     /**
@@ -54,6 +57,7 @@ class AdministrativeFinancialReportsController extends Controller
         $validator = Validator::make($request->all(),[
             'administrative_financial1' => ['required'],
             'administrative_financial2' => ['required'],
+            'year' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -62,6 +66,12 @@ class AdministrativeFinancialReportsController extends Controller
 
 
         $userId = Auth::id();
+
+        $exsistdata = File::where('admin_id',$userId)->where('type','administrative_financial')->where('year',date('Y'))->first();
+      
+        if($exsistdata){
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
 
         $administrative_financial1 = '';
         $administrative_financial2 = '';
@@ -86,6 +96,7 @@ class AdministrativeFinancialReportsController extends Controller
             'administrative_financial2' =>  $administrative_financial2,
             'admin_id' =>  $userId,
             'type' =>  'administrative_financial',
+            'year' =>  $request->year,
         ]);
 
         return response()->json(['File'=>$File]);
@@ -130,6 +141,7 @@ class AdministrativeFinancialReportsController extends Controller
             $validator = Validator::make($request->all(),[
                 'administrative_financial1' => ['required'],
                 'administrative_financial2' => ['required'],
+                'year' => ['required'],
             ]);
    
 
@@ -142,6 +154,7 @@ class AdministrativeFinancialReportsController extends Controller
 
 
         $objFile = File::find($id);
+        $objFile->year = $request->year;
         if(!empty($request->file('administrative_financial1'))){
             $oldImage = $objFile->administrative_financial1;
             $file = $request->file('administrative_financial1');
@@ -199,6 +212,9 @@ class AdministrativeFinancialReportsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'administrative_financial1'   => true,
+            'administrative_financial2'   => true,
+            'year'   => true,
             'created_at'   => true,
         ];
 
@@ -250,6 +266,11 @@ class AdministrativeFinancialReportsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                 "administrative_financial1" => '
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial1) . '">download<a>',
+                 "administrative_financial2" => '
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial2) . '">download<a>',
+                "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

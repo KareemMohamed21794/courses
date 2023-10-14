@@ -26,8 +26,11 @@ class BoardDirectorMeetingsController extends Controller
     {
         $title = __('messages.board_director_meetings');
         $add_title = __('messages.board_director_meetings');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $exsistdata = File::where('admin_id',$userId)->where('type','board_director_meetings')->where('year',date('Y'))->first();
 
-        return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title]);
+        return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
     }
 
     /**
@@ -52,6 +55,7 @@ class BoardDirectorMeetingsController extends Controller
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
             'board_director_meetings' => ['required'],
+            'year' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +64,11 @@ class BoardDirectorMeetingsController extends Controller
 
 
         $userId = Auth::id();
+        $exsistdata = File::where('admin_id',$userId)->where('type','board_director_meetings')->where('year',date('Y'))->first();
+      
+        if($exsistdata){
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
 
         $board_director_meetings = '';
 
@@ -74,6 +83,7 @@ class BoardDirectorMeetingsController extends Controller
             'board_director_meetings' =>  $board_director_meetings,
             'admin_id' =>  $userId,
             'type' =>  'board_director_meetings',
+            'year' =>  $request->year,
         ]);
 
         return response()->json(['File'=>$File]);
@@ -117,6 +127,7 @@ class BoardDirectorMeetingsController extends Controller
        
             $validator = Validator::make($request->all(),[
                 'board_director_meetings' => ['required'],
+                'year' => ['required'],
             ]);
    
 
@@ -129,6 +140,7 @@ class BoardDirectorMeetingsController extends Controller
 
 
         $objFile = File::find($id);
+        $objFile->year = $request->year;
         if(!empty($request->file('board_director_meetings'))){
             $oldImage = $objFile->board_director_meetings;
             $file = $request->file('board_director_meetings');
@@ -173,6 +185,8 @@ class BoardDirectorMeetingsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'board_director_meetings'   => true,
+            'year'   => true,
             'created_at'   => true,
         ];
 
@@ -224,6 +238,9 @@ class BoardDirectorMeetingsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "board_director_meetings" => '
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>',
+                "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

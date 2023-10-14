@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('secondary_registration')->nullable();
             $table->string('administrative_financial1')->nullable();
             $table->string('administrative_financial2')->nullable();
+            $table->string('year')->nullable();
             $table->string('board_director_meetings')->nullable();
             $table->enum('type', ['secondary_registration', 'administrative_financial','board_director_meetings'])->nullable();
             $table->timestamps();

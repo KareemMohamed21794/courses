@@ -124,9 +124,15 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.activity_name') }}</th>
+                            <th>{{ __('messages.nature_activity') }}</th>
+                            <th>{{ __('messages.activity_description') }}</th>
                             <th>{{ __('messages.place_activity') }}</th>
                             <th>{{ __('messages.activity_history') }}</th>
+                            <th>{{ __('messages.number_days') }}</th>
+                            <th>{{ __('messages.alwahda') }}</th>
+                            <th>{{ __('messages.alwahda_description') }}</th>
                             <th>{{ __('messages.activity_leader') }}</th>
+                            <th>{{ __('messages.number_leader') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>

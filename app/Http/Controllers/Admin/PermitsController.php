@@ -180,7 +180,7 @@ class PermitsController extends Controller
 
 
     public function get(Request $request)
-    {
+    { 
 
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
@@ -188,9 +188,15 @@ class PermitsController extends Controller
             '#'   => true,
             'id'   => true,
             'activity_name'=> true,
+            'nature_activity'=>true,
+            'activity_description'=>true,
             'place_activity' =>true,
             'activity_history' =>true,
+            'number_days'=>true,
+            'alwahda'=>true,
+            'alwahda_description'=>true,
             'activity_leader'=>true,
+            'number_leader'=>true,
             'created_at'   => true,
         ];
 
@@ -234,18 +240,56 @@ class PermitsController extends Controller
 
         }
 
-
-
         $alldataResult=array();
 
         foreach($alldata as $objdata){
+            $nature_activity = '';
+            if($objdata->nature_activity == "camp"){
+                $nature_activity = 'مخيم';
+            }elseif ($objdata->nature_activity == "trip") {
+                $nature_activity = 'رحلة';
+            }elseif ($objdata->nature_activity == "marching") {
+                $nature_activity = 'مسير';
+            }elseif ($objdata->nature_activity == "overnight") {
+                $nature_activity = 'مبيت';
+            }elseif ($objdata->nature_activity == "evening") {
+                $nature_activity = 'امسيه';
+            }elseif ($objdata->nature_activity == "other") {
+                $nature_activity = 'اخرى';
+            }
+
+
+
+            $alwahda = '';
+            if($objdata->alwahda == "ashbal"){
+                $alwahda = 'اشبال /  زهرات';
+            }elseif ($objdata->alwahda == "kashaf") {
+                $alwahda = 'كشاف / مرشدات';
+            }elseif ($objdata->alwahda == "mutaqadimu") {
+                $alwahda = 'متقدم / متقدمات ';
+            }elseif ($objdata->alwahda == "jawaluh") {
+                $alwahda = 'جواله / دليلات';
+            }elseif ($objdata->alwahda == "almajmueuh") {
+                $alwahda = 'المجموعه';
+            }elseif ($objdata->alwahda == " اولياء الامور") {
+                $alwahda = 'اخرى';
+            }elseif ($objdata->alwahda == "other") {
+                $alwahda = 'اخرى';
+            }
+
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                 "activity_name"=> $objdata->activity_name,
+                "nature_activity"=> $nature_activity,
+                "activity_description"=> $objdata->activity_description,
                 "place_activity" =>$objdata->place_activity,
                 "activity_history" =>$objdata->activity_history,
+                "number_days" =>$objdata->number_days,
+                "alwahda" =>$alwahda,
+                "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
+                "number_leader"=>$objdata->number_leader,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

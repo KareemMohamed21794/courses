@@ -26,8 +26,12 @@ class SecondaryRegistrationsController extends Controller
     {
         $title = __('messages.secondary_registration');
         $add_title = __('messages.secondary_registration');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
 
-        return view('auth.admin.secondary_registrations.index',['title' => $title, 'add_title' => $add_title]);
+
+        return view('auth.admin.secondary_registrations.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
     }
 
     /**
@@ -49,18 +53,26 @@ class SecondaryRegistrationsController extends Controller
     public function store(Request $request)
     {
         //$this->authorize(self::MODEL.'-store');
-         // print_r('here'); die;
+         //print_r($request->year); die;
         $validator = Validator::make($request->all(),[
             'secondary_registration' => ['required'],
+            'year' => ['required'],
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
-      
+
 
 
         $userId = Auth::id();
+
+        $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
+      
+        if($exsistdata){
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
+
 
         $secondary_registration = '';
 
@@ -75,6 +87,7 @@ class SecondaryRegistrationsController extends Controller
             'secondary_registration' =>  $secondary_registration,
             'admin_id' =>  $userId,
             'type' =>  'secondary_registration',
+            'year' =>  $request->year,
         ]);
 
         return response()->json(['File'=>$File]);
@@ -118,6 +131,7 @@ class SecondaryRegistrationsController extends Controller
        
             $validator = Validator::make($request->all(),[
                 'secondary_registration' => ['required'],
+                'year' => ['required'],
             ]);
    
 
@@ -130,6 +144,7 @@ class SecondaryRegistrationsController extends Controller
 
 
         $objFile = File::find($id);
+        $objFile->year = $request->year;
         if(!empty($request->file('secondary_registration'))){
             $oldImage = $objFile->secondary_registration;
             $file = $request->file('secondary_registration');
@@ -174,6 +189,8 @@ class SecondaryRegistrationsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'secondary_registration'   => true,
+            'year'   => true,
             'created_at'   => true,
         ];
 
@@ -225,6 +242,9 @@ class SecondaryRegistrationsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                 "secondary_registration" => '
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
+                "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

@@ -81,7 +81,7 @@
                             <!--end::Menu 1-->
                             <!--end::Filter-->
                             <!--begin::Export-->
-                            <div id="export_buttons" style="margin-left: 10px;"></div>
+                            <!-- <div id="export_buttons" style="margin-left: 10px;"></div> -->
                             <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -123,7 +123,8 @@
                                 </div>
                             </th>
                             <th>#</th>
-                        
+                            <th> ملف محضر اجتماع مجلس الاداره</th>
+                             <th>السنه</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>
@@ -147,7 +148,7 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
-   
+   <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
 @endsection
 
 @section('scripts')
