@@ -19,6 +19,8 @@
 
 <input type="hidden" name="sucessful_edit" id="sucessful_edit" value="{{ __('messages.sucessful_edit') }}">
 
+<input type="hidden" name="base_url" id="base_url" value="{{ url('') }}">
+
 
 @if(Auth::guard('admin')->check())
 <input type="hidden" name="guard" id="guard" value="admin">
@@ -59,7 +61,7 @@
         <!--end::Page Vendor Stylesheets-->
         @endif
 
-        @if (Request::segment(2)=='admins' || Request::segment(2)=='clients' || Request::segment(2)=='reports' || Request::segment(2)=='problems'  || Request::segment(2)=='permissions' || Request::segment(2)=='positions' || Request::segment(2)=='departments' || Request::segment(2)=='problems_other_person_other_lawer'  || Request::segment(2)=='client_files' || Request::segment(2)=='lawyers' || Request::segment(2)=='secretariats' || Request::segment(2)=='problems_procedure' || Request::segment(2)=='problems_files' || Request::segment(2)=='problems_procedure_files' )
+        @if (Request::segment(2)=='admins' || Request::segment(2)=='clients' || Request::segment(2)=='reports' || Request::segment(2)=='leaders' )
             <!--begin::Page Vendor Stylesheets(used by this page)-->
             <link href="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
             <!--end::Page Vendor Stylesheets-->

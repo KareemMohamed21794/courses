@@ -91,7 +91,7 @@ class AdminsController extends Controller
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:admins'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'department_id' => ['required', 'integer'],
             'position_id' => ['required', 'integer'],
             'password' => ['required', Rules\Password::defaults()],
@@ -100,6 +100,8 @@ class AdminsController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
+
+         
 
         $admin = Admin::create([
             'name' => $request->name,

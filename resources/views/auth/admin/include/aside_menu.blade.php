@@ -14,7 +14,7 @@ fill: #009EF7;
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
         <a href="{{ url('/admin') }}">
-            <img alt="Logo" src="{{ asset('public/images/PrivateScout Logo PNG-01.png'); }}" class="h-25px logo" /> 
+            <img alt="Logo" src="{{ asset('public/images/logo.png'); }}" class="h-25px logo" /> 
         </a>
         <!--end::Logo-->
 

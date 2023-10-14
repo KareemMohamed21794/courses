@@ -2,7 +2,7 @@
 <html lang="en">
     <!--begin::Head-->
     <head><base href="../../../">
-        <title>دخول الاداره : قلم</title>
+        <title>دخول الاداره : تواصل</title>
         <meta charset="utf-8" />
         <link rel="shortcut icon" href="{{ asset('demo1/dist/assets/media/logos/favicon.ico') }}" />
         <!--begin::Fonts-->
@@ -49,7 +49,7 @@
                             </a>
                             <!--end::Logo-->
                             <!--begin::Title-->
-                            <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">مرحبا بك فى قلم</h1>
+                            <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">مرحبا بك فى تواصل</h1>
                             <!--end::Title-->
                             <!--begin::Description-->
                             {{-- <p class="fw-bold fs-2" style="color: #986923;">Discover Amazing Account System

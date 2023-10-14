@@ -106,14 +106,7 @@ var KTDatatablesServerSide = function () {
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_promotion" data-id=`+row.id+`>
-                                    ترقيه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+ 
                             `;
                         }
 

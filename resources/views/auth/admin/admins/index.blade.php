@@ -145,8 +145,7 @@
             <!--begin::Modals-->
             @include('auth.admin.admins.add')
             @include('auth.admin.admins.update')
-            @include('auth.admin.admins.promotion')
-            @include('auth.admin.admins.deletelawyer')
+             
             <!--begin::Modal - Adjust Balance-->
             @include('auth.admin.admins.export')
             <!--end::Modal - New Card-->
@@ -169,9 +168,7 @@
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/list/list.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/update.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/promotion.js') }}"></script>
-
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/deletelawyer.js') }}"></script>
+     
     <!--end::Page Custom Javascript-->
 @endsection
 
