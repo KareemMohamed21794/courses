@@ -111,7 +111,7 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                             @if($objAdmin->is_super == 1)
-                            <span class="menu-title"> {{ __('messages.leaders') }}</span>
+                            <span class="menu-title"> {{ __('messages.scout_groups') }}</span>
                             @else
                             <span class="menu-title"> {{ __('messages.group_info') }}</span>
                             @endif
@@ -163,6 +163,9 @@ fill: #009EF7;
                 </div>
 
 
+
+
+
                   <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='board_director_meetings' ? 'active' : '' }}" href="{{ url('admin/board_director_meetings') }}">
                           <span class="menu-icon">
@@ -180,6 +183,9 @@ fill: #009EF7;
                         <span class="menu-title">{{ __('messages.board_director_meetings') }}</span>
                     </a>
                 </div>
+
+
+            
 
 
                  <div class="menu-item">
@@ -220,6 +226,77 @@ fill: #009EF7;
                         <span class="menu-title">{{ __('messages.qualification_leaders') }}</span>
                     </a>
                 </div>
+
+
+
+
+              
+
+
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
+                  Request::segment(2)=='report_secondary_registrations' ||
+                  Request::segment(2)=='report_administrative_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders'  ? 'show here' : '' }}">
+
+
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg height="24" viewBox="-2 0 428 428" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m317 278.90625-25 25.402344c-.71875.839844-1.648438 1.476562-2.691406 1.84375l-62.886719 20.847656h38.695313c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8h-213.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h166.382813c-.679688 0-1.3125-.738281-1.875-1.300781-2.140626-2.105469-2.890626-5.253907-1.929688-8.097657l4.820312-14.601562h-167.398437c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h172.746094l11.28125-33.898438c.28125-1.105468.835937-2.121093 1.617187-2.949218l79.246094-79.507813v-89.644531h-72.089844c-4.417968 0-7.910156-3.128906-7.910156-7.550781v-73.449219h-237v428h317zm-264.890625-31.90625h113.007813c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8h-113.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8zm213.007813 136h-213.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h213.007813c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8zm0 0"/>
+                                    <path d="m253 11.808594v53.191406h53.554688zm0 0"/>
+                                    <path d="m234.945312 307.640625 37.027344-12.378906-24.648437-24.648438zm0 0"/>
+                                    <path d="m286.765625 287.425781 101.289063-101.511719-31.382813-31.382812-101.511719 101.289062zm0 0"/>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">{{ __('messages.reports') }}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+
+                            
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_secondary_registrations' ? 'active' : '' }}" href="{{ url('admin/report_secondary_registrations') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_secondary_registration') }}</span>
+                                </a>
+                            </div>
+
+
+                             <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_administrative_financial' ? 'active' : '' }}" href="{{ url('admin/report_administrative_financial') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_administrative_financial') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_board_director_meetings' ? 'active' : '' }}" href="{{ url('admin/report_board_director_meetings') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_board_director_meetings') }}</span>
+                                </a>
+                            </div>
+
+
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_qualification_leaders' ? 'active' : '' }}" href="{{ url('admin/report_qualification_leaders') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_qualification_leaders') }}</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
 
 
 

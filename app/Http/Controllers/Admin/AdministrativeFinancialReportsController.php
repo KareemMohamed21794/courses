@@ -419,4 +419,19 @@ class AdministrativeFinancialReportsController extends Controller
 
         return $data;
     }
+
+
+    public function ReportAdministrativeFinancial()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_administrative_financial');
+        
+        return view('auth.admin.administrative_financial_reports.report_administrative_financial', [
+            'title' => $title,
+        ]);
+    }
+
+
+
 }

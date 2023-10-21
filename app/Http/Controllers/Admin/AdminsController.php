@@ -51,8 +51,8 @@ class AdminsController extends Controller
             $objAdmin = Admin::find($userId);
 
             
-            $title =  $objAdmin->is_super == 1 ? __('messages.leaders') : __('messages.group_info');
-            $add_title = __('messages.leader');
+            $title =  $objAdmin->is_super == 1 ? __('messages.scout_groups') : __('messages.group_info');
+            $add_title = __('messages.scout_group');
             $department_id = 2;
             $position_id = 2;
             $is_super = 0;

@@ -51,6 +51,12 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/secondary_registrations/get', [SecondaryRegistrationsController::class, 'get']);
 		Route::resource('/secondary_registrations', SecondaryRegistrationsController::class);
 		Route::DELETE('/delete_secondary_registrations', [SecondaryRegistrationsController::class,'deleteSecondaryRegistrations']);
+
+		Route::get('/report_secondary_registrations', [SecondaryRegistrationsController::class, 'ReportSecondaryRegistrations']);
+
+		Route::get('/report_secondary_registrations_get', [SecondaryRegistrationsController::class, 'ReportSecondaryRegistrationsGet']);
+
+		Route::get('/report_secondary_registrations_get_list', [SecondaryRegistrationsController::class, 'report_secondary_registrations_get_list']);
 		# End secondary_registration
 
 
@@ -58,6 +64,11 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/administrative_financial_reports/get', [AdministrativeFinancialReportsController::class, 'get']);
 		Route::resource('/administrative_financial_reports', AdministrativeFinancialReportsController::class);
 		Route::DELETE('/delete_administrative_financial_reports', [AdministrativeFinancialReportsController::class,'deleteAdministrativeFinancialReport']);
+
+
+		Route::get('/report_administrative_financial', [AdministrativeFinancialReportsController::class, 'ReportAdministrativeFinancial']);
+
+		
 		# End administrative_financial_report
 
 
@@ -65,6 +76,11 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/board_director_meetings/get', [BoardDirectorMeetingsController::class, 'get']);
 		Route::resource('/board_director_meetings', BoardDirectorMeetingsController::class);
 		Route::DELETE('/delete_board_director_meetings', [BoardDirectorMeetingsController::class,'deleteBoardDirectorMeetings']);
+
+
+		Route::get('/report_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportBoardDirectorMeetings']);
+
+	
 		# End board_director_meetings
 
 	
@@ -80,6 +96,16 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/qualification_leaders/get', [QualificationleadersController::class, 'get']);
 		Route::resource('/qualification_leaders', QualificationleadersController::class);
 		Route::DELETE('/delete_qualification_leaders', [QualificationleadersController::class,'deletequalification_leaders']);
+
+
+		Route::get('/report_qualification_leaders', [QualificationleadersController::class, 'ReportQualificationLeaders']);
+
+		Route::get('/report_qualification_leaders_get', [QualificationleadersController::class, 'ReportQualificationLeadersGet']);
+
+		Route::get('/report_qualification_leaders_get_list', [QualificationleadersController::class, 'ReportQualificationLeadersGetlist']);
+
+
+	
 		# End qualification_leaders
 
 

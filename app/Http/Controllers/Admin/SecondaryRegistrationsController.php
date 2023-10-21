@@ -393,4 +393,192 @@ class SecondaryRegistrationsController extends Controller
 
         return $data;
     }
+
+
+
+    public function ReportSecondaryRegistrations()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_secondary_registration');
+        
+        return view('auth.admin.secondary_registrations.report_secondary_registrations', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ReportSecondaryRegistrationsGet()
+    {
+        
+
+        
+        $year = @$_GET['year'];
+        $type = @$_GET['type'];
+
+      
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+       if($type == 'secondary_registration'){
+            $title = __('messages.report_secondary_registration');
+           
+        }elseif ($type == 'administrative_financial') {
+            $title = __('messages.report_administrative_financial');
+        }else{
+            $title = __('messages.report_board_director_meetings');
+        }
+        
+
+
+        return view('auth.admin.secondary_registrations.report_secondary_registrations_get', ['title' => $title,'year' => $year,'type' => $type]);
+    }
+
+
+
+    public function report_secondary_registrations_get_list(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            'id'   => true,
+            'name'   => true,
+            'email'   => true,
+        
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+        $alldata = Admin::where('is_super','!=',1);
+        $alldata = $alldata->get();
+
+
+         if($request->type == 'secondary_registration'){
+            $title = __('messages.report_secondary_registration');
+           
+            $ArrAdminFilesID = File::where('type','secondary_registration')->where('year',$request->year)->pluck('admin_id')->toArray();
+
+            $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
+
+
+
+        }elseif ($request->type == 'administrative_financial') {
+            $title = __('messages.report_administrative_financial');
+
+            $ArrAdminFilesID = File::where('type','administrative_financial')->where('year',$request->year)->pluck('admin_id')->toArray();
+
+            $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
+        }else{
+            $title = __('messages.report_board_director_meetings');
+
+            $ArrAdminFilesID = File::where('type','board_director_meetings')->where('year',$request->year)->pluck('admin_id')->toArray();
+
+            $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
+        }
+
+
+
+        $alldataResult = array();
+
+        foreach ($alldata as $objdata) {
+
+
+            $alldataResult[] = array(
+                "id" => $objdata->id,
+                "name" => @$objdata->name,
+                "email" => @$objdata->email,
+               
+            );
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
 }

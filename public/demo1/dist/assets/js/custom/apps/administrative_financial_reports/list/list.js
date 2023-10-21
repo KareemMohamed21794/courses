@@ -289,15 +289,15 @@ var KTDatatablesServerSide = function () {
 
 
                     } else if (result.dismiss === 'cancel') {
-                        Swal.fire({
-                            text: RowName + " لم يتم حذفه. ",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "حسنًا ، حسنًا!",
-                            customClass: {
-                                confirmButton: "btn fw-bold btn-primary",
-                            }
-                        });
+                        // Swal.fire({
+                        //     text: RowName + " لم يتم حذفه. ",
+                        //     icon: "error",
+                        //     buttonsStyling: false,
+                        //     confirmButtonText: "حسنًا ، حسنًا!",
+                        //     customClass: {
+                        //         confirmButton: "btn fw-bold btn-primary",
+                        //     }
+                        // });
                     }
                 });
             })
@@ -429,15 +429,15 @@ var KTDatatablesServerSide = function () {
 
 
                 } else if (result.dismiss === 'cancel') {
-                    Swal.fire({
-                        text: "لم يتم حذف المحدد.",
-                        icon: "error",
-                        buttonsStyling: false,
-                        confirmButtonText: "حسنًا ، حسنًا!",
-                        customClass: {
-                            confirmButton: "btn fw-bold btn-primary",
-                        }
-                    });
+                    // Swal.fire({
+                    //     text: "لم يتم حذف المحدد.",
+                    //     icon: "error",
+                    //     buttonsStyling: false,
+                    //     confirmButtonText: "حسنًا ، حسنًا!",
+                    //     customClass: {
+                    //         confirmButton: "btn fw-bold btn-primary",
+                    //     }
+                    // });
                 }
             });
         });

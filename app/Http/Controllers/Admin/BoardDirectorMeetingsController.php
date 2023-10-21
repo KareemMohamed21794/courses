@@ -389,5 +389,21 @@ class BoardDirectorMeetingsController extends Controller
 
         return $data;
     }
+
+
+    public function ReportBoardDirectorMeetings()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_board_director_meetings');
+        
+        return view('auth.admin.board_director_meetings.report_board_director_meetings', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+
 }
 

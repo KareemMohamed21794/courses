@@ -108,17 +108,21 @@
                         <div id="accordion_update">
                             <!-- Section 1 -->
                             <div class="card" id="card_update1">
-                                <div class="card-header" id="headingOne_update">
+                                <div class="card-header" id="headingOne_update" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_update" aria-expanded="true" aria-controls="collapseOne_update">
                                           مساعد قائد وحده   
                                         </button>
                                     </h5>
                                 </div>
-                                <div id="collapseOne_update" class="collapse" aria-labelledby="headingOne_update" data-parent="#accordion_update">
+                                <div id="collapseOne_update" class="collapse" aria-labelledby="headingOne_update" data-parent="#accordion_update" style="display: none;">
                                     <div class="card-body">
                                          <!--begin::group-->
-                                        <div id="musaeid_qayid_wahdah_update">
+                                       
+                                       <!--end::group-->
+                                    </div>
+                                </div>
+                                 <div id="musaeid_qayid_wahdah_update">
 
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7" >
@@ -182,24 +186,25 @@
                                             <!--end::Input group-->
                                           
                                         </div>
-                                       <!--end::group-->
-                                    </div>
-                                </div>
                             </div>
 
                             <!-- Section 2 -->
                             <div class="card" id="card_update2">
-                                <div class="card-header" id="headingTwo_update">
+                                <div class="card-header" id="headingTwo_update" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo_update" aria-expanded="false" aria-controls="collapseTwo_update">
                                         قائد وحدة شارة خشبية  
                                         </button>
                                     </h5>
                                 </div>
-                                <div id="collapseTwo_update" class="collapse" aria-labelledby="headingTwo_update" data-parent="#accordion_update">
+                                <div id="collapseTwo_update" class="collapse" aria-labelledby="headingTwo_update" data-parent="#accordion_update" style="display: none;">
                                     <div class="card-body">
                                         <!--begin::group-->
-                                        <div id="qayid_wahda_update">
+                                        
+                                       <!--end::group-->
+                                    </div>
+                                </div>
+                                <div id="qayid_wahda_update">
 
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7" >
@@ -263,24 +268,26 @@
                                             <!--end::Input group-->
                                           
                                         </div>
-                                       <!--end::group-->
-                                    </div>
-                                </div>
                             </div>
 
                             <!-- Section 3 -->
                             <div class="card" id="card_update3">
-                                <div class="card-header" id="headingThree_update">
+                                <div class="card-header" id="headingThree_update" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree_update" aria-expanded="false" aria-controls="collapseThree_update">
                                         مساعد قائد تدريب
                                         </button>
                                     </h5>
                                 </div>
-                                <div id="collapseThree_update" class="collapse" aria-labelledby="headingThree_update" data-parent="#accordion_update">
+                                <div id="collapseThree_update" class="collapse" aria-labelledby="headingThree_update" data-parent="#accordion_update" style="display: none;">
                                     <div class="card-body">
                                         <!--begin::group-->
-                                        <div id="musaeid_qayid_tadrib_update">
+                                        
+                                       <!--end::group-->
+                                    </div>
+                                </div>
+
+                                <div id="musaeid_qayid_tadrib_update">
 
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7" >
@@ -344,24 +351,25 @@
                                             <!--end::Input group-->
                                           
                                         </div>
-                                       <!--end::group-->
-                                    </div>
-                                </div>
                             </div>
 
                             <!-- Section 4 -->
                             <div class="card" id="card_update4">
-                                <div class="card-header" id="headingFour_update">
+                                <div class="card-header" id="headingFour_update" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour_update" aria-expanded="false" aria-controls="collapseFour_update">
                                         قائد تدريب
                                         </button>
                                     </h5>
                                 </div>
-                                <div id="collapseFour_update" class="collapse" aria-labelledby="headingFour_update" data-parent="#accordion_update">
+                                <div id="collapseFour_update" class="collapse" aria-labelledby="headingFour_update" data-parent="#accordion_update" style="display: none;">
                                     <div class="card-body">
                                          <!--begin::group-->
-                                        <div id="qayid_tadrib_update">
+                                      
+                                       <!--end::group-->
+                                    </div>
+                                </div>
+                                  <div id="qayid_tadrib_update">
 
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7" >
@@ -425,9 +433,6 @@
                                             <!--end::Input group-->
                                           
                                         </div>
-                                       <!--end::group-->
-                                    </div>
-                                </div>
                             </div>
                         </div>
                          <!-- END  MAIN Section  -->

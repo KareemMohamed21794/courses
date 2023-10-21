@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PDFController;
-
+use App\Http\Controllers\Admin\QualificationleadersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +34,7 @@ Route::get('export_clients', [PDFController::class, 'ExportClients']);
 Route::get('export_procedures', [PDFController::class, 'ExportProcedures']);
 Route::get('export_cases', [PDFController::class, 'ExportCases']);
 Route::get('send_email', [PDFController::class, 'send_email']);
+Route::get('export_qualification_leaders', [QualificationleadersController::class, 'ExportQualificationLeaders']);
 require __DIR__.'/auth.php';
 
 require __DIR__.'/admin_auth.php';
