@@ -133,6 +133,9 @@ var KTModalBranchesUpdate = function () {
         
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -165,6 +168,9 @@ var KTModalBranchesUpdate = function () {
         });
 
         closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({

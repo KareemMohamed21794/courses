@@ -189,6 +189,9 @@ var KTModalAdd = function () {
 		});
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -222,6 +225,9 @@ var KTModalAdd = function () {
         });
 
 		closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
 			e.preventDefault();
 
             Swal.fire({
