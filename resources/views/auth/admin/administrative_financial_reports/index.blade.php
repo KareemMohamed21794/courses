@@ -123,6 +123,7 @@
                                 </div>
                             </th>
                             <th>#</th>
+                            <th>{{ __('messages.scout_groups') }}</th>
                             <th> ملف التقرير الاداري</th>
                             <th> ملف التقرير المالي</th>
                             <th>السنه</th>

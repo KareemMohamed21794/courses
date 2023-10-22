@@ -138,7 +138,7 @@ fill: #009EF7;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                        <span class="menu-title">{{ __('messages.secondary_registration') }}</span>
+                        <span class="menu-title">{{ __('messages.secondary_registrations') }}</span>
                     </a>
                 </div>
 
@@ -158,7 +158,7 @@ fill: #009EF7;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                        <span class="menu-title">{{ __('messages.administrative_financial_report') }}</span>
+                        <span class="menu-title">{{ __('messages.administrative_financial_reports') }}</span>
                     </a>
                 </div>
 

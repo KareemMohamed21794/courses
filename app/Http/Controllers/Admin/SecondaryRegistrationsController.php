@@ -31,7 +31,10 @@ class SecondaryRegistrationsController extends Controller
         $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
 
 
-        return view('auth.admin.secondary_registrations.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
+        $leaders = Admin::get();
+
+
+        return view('auth.admin.secondary_registrations.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
     }
 
     /**
@@ -85,7 +88,7 @@ class SecondaryRegistrationsController extends Controller
 
         $File = File::create([
             'secondary_registration' =>  $secondary_registration,
-            'admin_id' =>  $userId,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             'type' =>  'secondary_registration',
             'year' =>  $request->year,
         ]);
@@ -114,6 +117,7 @@ class SecondaryRegistrationsController extends Controller
     {
         //$this->authorize(self::MODEL.'-update');
         $File  = File::find($id);
+        @$File->Admin;
 
         return response()->json($File);
     }
@@ -141,10 +145,11 @@ class SecondaryRegistrationsController extends Controller
 
         $secondary_registration = '';
 
-
+        $userId = Auth::id();
 
         $objFile = File::find($id);
         $objFile->year = $request->year;
+        $objFile->admin_id = $request->leader_id ? $request->leader_id : $userId;
         if(!empty($request->file('secondary_registration'))){
             $oldImage = $objFile->secondary_registration;
             $file = $request->file('secondary_registration');
@@ -189,6 +194,7 @@ class SecondaryRegistrationsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'leader'   => true,
             'secondary_registration'   => true,
             'year'   => true,
             'created_at'   => true,
@@ -242,6 +248,7 @@ class SecondaryRegistrationsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "leader" => $objdata->Admin->name,
                  "secondary_registration" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
                 "year" => $objdata->year,
@@ -428,7 +435,7 @@ class SecondaryRegistrationsController extends Controller
         }elseif ($type == 'administrative_financial') {
             $title = __('messages.report_administrative_financial');
         }else{
-            $title = __('messages.report_board_director_meetings');
+            $title = __('messages.board_director_meeting');
         }
         
 
@@ -478,7 +485,7 @@ class SecondaryRegistrationsController extends Controller
 
             $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
         }else{
-            $title = __('messages.report_board_director_meetings');
+            $title = __('messages.report_board_director_meeting');
 
             $ArrAdminFilesID = File::where('type','board_director_meetings')->where('year',$request->year)->pluck('admin_id')->toArray();
 

@@ -24,13 +24,15 @@ class BoardDirectorMeetingsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.board_director_meetings');
-        $add_title = __('messages.board_director_meetings');
+        $title = __('messages.board_director_meeting');
+        $add_title = __('messages.board_director_meeting');
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $exsistdata = File::where('admin_id',$userId)->where('type','board_director_meetings')->where('year',date('Y'))->first();
 
-        return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
+        $leaders = Admin::get();
+
+        return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
     }
 
     /**
@@ -81,7 +83,7 @@ class BoardDirectorMeetingsController extends Controller
 
         $File = File::create([
             'board_director_meetings' =>  $board_director_meetings,
-            'admin_id' =>  $userId,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             'type' =>  'board_director_meetings',
             'year' =>  $request->year,
         ]);
@@ -110,6 +112,7 @@ class BoardDirectorMeetingsController extends Controller
     {
         //$this->authorize(self::MODEL.'-update');
         $File  = File::find($id);
+        @$File->Admin;
 
         return response()->json($File);
     }
@@ -137,10 +140,11 @@ class BoardDirectorMeetingsController extends Controller
 
         $board_director_meetings = '';
 
-
+        $userId = Auth::id();
 
         $objFile = File::find($id);
         $objFile->year = $request->year;
+        $objFile->admin_id = $request->leader_id ? $request->leader_id : $userId;
         if(!empty($request->file('board_director_meetings'))){
             $oldImage = $objFile->board_director_meetings;
             $file = $request->file('board_director_meetings');
@@ -185,6 +189,7 @@ class BoardDirectorMeetingsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'leader'   => true,
             'board_director_meetings'   => true,
             'year'   => true,
             'created_at'   => true,
@@ -238,6 +243,7 @@ class BoardDirectorMeetingsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "leader" => $objdata->Admin->name,
                 "board_director_meetings" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>',
                 "year" => $objdata->year,

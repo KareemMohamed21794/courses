@@ -123,6 +123,7 @@
                                 </div>
                             </th>
                             <th>#</th>
+                            <th>{{ __('messages.scout_groups') }}</th>
                             <th> ملف محضر اجتماع مجلس الاداره</th>
                              <th>السنه</th>
                             <th>{{ __('messages.created_at') }}</th>

@@ -31,9 +31,27 @@
                     <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_add_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_header" data-kt-scroll-wrappers="#kt_modal_add_scroll" data-kt-scroll-offset="300px">
                       
+                    @if($objAdmin->is_super == 1)
 
-                    
 
+                     <!--begin::Input group-->
+                        <div class="d-flex flex-column mb-7 fv-row">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">{{ __('messages.scout_groups') }}</span>
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
+                                 <option value="">{{ __('messages.scout_groups') }}</option >
+                                    @foreach($leaders as $leader)
+                                        <option value="{{$leader->id}}">{{ $leader->name }}</option>
+                                    @endforeach
+                            </select>
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                    @endif
 
 
                          <!--begin::Input group-->

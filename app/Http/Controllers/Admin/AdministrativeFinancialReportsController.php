@@ -31,7 +31,9 @@ class AdministrativeFinancialReportsController extends Controller
         $objAdmin = Admin::find($userId);
         $exsistdata = File::where('admin_id',$userId)->where('type','administrative_financial')->where('year',date('Y'))->first();
 
-        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata]);
+        $leaders = Admin::get();
+
+        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
     }
 
     /**
@@ -94,7 +96,7 @@ class AdministrativeFinancialReportsController extends Controller
         $File = File::create([
             'administrative_financial1' =>  $administrative_financial1,
             'administrative_financial2' =>  $administrative_financial2,
-            'admin_id' =>  $userId,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             'type' =>  'administrative_financial',
             'year' =>  $request->year,
         ]);
@@ -123,6 +125,7 @@ class AdministrativeFinancialReportsController extends Controller
     {
         //$this->authorize(self::MODEL.'-update');
         $File  = File::find($id);
+        @$File->Admin;
 
         return response()->json($File);
     }
@@ -151,10 +154,11 @@ class AdministrativeFinancialReportsController extends Controller
 
         $administrative_financial1 = '';
         $administrative_financial2 = '';
-
+        $userId = Auth::id();
 
         $objFile = File::find($id);
         $objFile->year = $request->year;
+        $objFile->admin_id = $request->leader_id ? $request->leader_id : $userId;
         if(!empty($request->file('administrative_financial1'))){
             $oldImage = $objFile->administrative_financial1;
             $file = $request->file('administrative_financial1');
@@ -212,6 +216,7 @@ class AdministrativeFinancialReportsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'leader'   => true,
             'administrative_financial1'   => true,
             'administrative_financial2'   => true,
             'year'   => true,
@@ -266,6 +271,7 @@ class AdministrativeFinancialReportsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "leader" => $objdata->Admin->name,
                  "administrative_financial1" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial1) . '">download<a>',
                  "administrative_financial2" => '
