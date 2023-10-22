@@ -16,15 +16,23 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'administrative_financial1': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                   // 'administrative_financial1': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
 
-                    'administrative_financial2': {
+                   //  'administrative_financial2': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
+
+                    'year': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -234,7 +242,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-           
+            jQuery('#year_update').val(data.year);
            
            var image_path =  '../images/files/'
             // Get the image element by its id

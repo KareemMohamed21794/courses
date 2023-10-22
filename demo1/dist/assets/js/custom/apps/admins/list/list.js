@@ -9,8 +9,7 @@ var KTDatatablesServerSide = function () {
 
     var segment = $("#segment").val();
     var is_super = $("#is_super").val();
-    var base_url = $("#base_url").val();
-    let main_url = base_url+"/admin/"+segment+"/get";
+    let main_url = "/admin/"+segment+"/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -107,14 +106,7 @@ var KTDatatablesServerSide = function () {
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_promotion" data-id=`+row.id+`>
-                                    ترقيه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+ 
                             `;
                         }
 

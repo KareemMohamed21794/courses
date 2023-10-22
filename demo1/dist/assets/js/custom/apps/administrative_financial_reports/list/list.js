@@ -6,7 +6,7 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-
+    var is_super = $("#is_super").val();
     let main_url = "/admin/administrative_financial_reports/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
@@ -40,6 +40,9 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
+                { data: 'administrative_financial1' },
+                { data: 'administrative_financial2' },
+                { data: 'year' },
                 { data: 'created_at' },
                 { data: null },
             ],
@@ -104,6 +107,30 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
+                        var AdminContent = '';
+                         // Check if segment is 'Admin'
+                        if (is_super === '1') {
+                            AdminContent = `
+
+                               <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                        `+edit_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+ 
+                            `;
+                        }
+
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
@@ -121,21 +148,7 @@ var KTDatatablesServerSide = function () {
                                
 
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
-                                        `+edit_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
-                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                               `+AdminContent+`
                             </div>
                             <!--end::Menu-->
                         `;

@@ -346,6 +346,7 @@ function NaturalActivityUpdate(value) {
    $("#other_activity_description_update").show();
    }else{
     $("#other_activity_description_update").hide();
+    $("#activity_description_update").val(null);
    }
 }
 
@@ -356,6 +357,7 @@ function AlwahdaUpdate(value) {
    $("#other_alwahda_description_update").show();
    }else{
     $("#other_alwahda_description_update").hide();
+    $("#alwahda_description_update").val(null);
    }
 }
 

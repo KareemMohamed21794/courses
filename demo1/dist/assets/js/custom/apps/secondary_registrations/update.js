@@ -16,7 +16,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'secondary_registration': {
+                   // 'secondary_registration': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
+
+
+                    'year': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -227,7 +236,7 @@ function getData(id) {
         success: function (data) {
             jQuery('#id').val(data.id);
             
-            jQuery('#phone1_update').val(data.phone1);
+            jQuery('#year_update').val(data.year);
            
            
            var image_path =  '../images/files/'

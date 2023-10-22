@@ -34,6 +34,15 @@ var KTModalAdd = function () {
                         }
                     },
 
+
+                    'year': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
                    
 
 

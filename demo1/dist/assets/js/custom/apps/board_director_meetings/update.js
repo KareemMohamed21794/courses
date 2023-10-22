@@ -16,7 +16,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'board_director_meetings': {
+                   // 'board_director_meetings': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
+
+
+                    'year': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -226,7 +235,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            
+            jQuery('#year_update').val(data.year);
       
            var image_path =  '../images/files/'
             // Get the image element by its id
