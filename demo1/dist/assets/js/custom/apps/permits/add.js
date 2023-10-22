@@ -189,6 +189,9 @@ var KTModalAdd = function () {
 		});
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -222,6 +225,9 @@ var KTModalAdd = function () {
         });
 
 		closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
 			e.preventDefault();
 
             Swal.fire({
@@ -293,6 +299,7 @@ function NaturalActivity(value) {
    $("#other_activity_description").show();
    }else{
     $("#other_activity_description").hide();
+    $("#activity_description").val(null);
    }
 }
 
@@ -303,5 +310,6 @@ function Alwahda(value) {
    $("#other_alwahda_description").show();
    }else{
     $("#other_alwahda_description").hide();
+    $("#alwahda_description").val(null);
    }
 }

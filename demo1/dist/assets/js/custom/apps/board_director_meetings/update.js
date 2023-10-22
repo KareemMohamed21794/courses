@@ -16,7 +16,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'board_director_meetings': {
+                   // 'board_director_meetings': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
+
+
+                    'year': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -124,6 +133,9 @@ var KTModalBranchesUpdate = function () {
         
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -156,6 +168,9 @@ var KTModalBranchesUpdate = function () {
         });
 
         closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -226,7 +241,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            
+            jQuery('#year_update').val(data.year);
       
            var image_path =  '../images/files/'
             // Get the image element by its id

@@ -134,6 +134,9 @@ var KTModalBranchesUpdate = function () {
         
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -166,6 +169,9 @@ var KTModalBranchesUpdate = function () {
         });
 
         closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -265,30 +271,39 @@ function getData(id) {
 
 
             if(data.current_qualification == 'musaeid_qayid_wahdah'){
-            $("#musaeid_qayid_wahdah_update").show();
-            $("#qayid_wahda_update").hide();
-            $("#musaeid_qayid_tadrib_update").hide();
-            $("#qayid_tadrib_update").hide();
+
+            $("#card_update1").show(300);
+            $("#card_update2").hide(300);
+            $("#card_update3").hide(300);
+            $("#card_update4").hide(300);
            }else if(data.current_qualification == 'qayid_wahda'){
-            $("#musaeid_qayid_wahdah_update").show();
-            $("#qayid_wahda_update").show();
-            $("#musaeid_qayid_tadrib_update").hide();
-            $("#qayid_tadrib_update").hide();
+
+            $("#card_update1").show(300);
+            $("#card_update2").show(300);
+            $("#card_update3").hide(300);
+            $("#card_update4").hide(300);
+
            }else if(data.current_qualification == 'musaeid_qayid_tadrib'){
-            $("#musaeid_qayid_wahdah_update").show();
-            $("#qayid_wahda_update").show();
-            $("#musaeid_qayid_tadrib_update").show();
-            $("#qayid_tadrib_update").hide();
+
+            $("#card_update1").show(300);
+            $("#card_update2").show(300);
+            $("#card_update3").show(300);
+            $("#card_update4").hide(300);
+
            }else if(data.current_qualification == 'qayid_tadrib'){
-            $("#musaeid_qayid_wahdah_update").show();
-            $("#qayid_wahda_update").show();
-            $("#musaeid_qayid_tadrib_update").show();
-            $("#qayid_tadrib_update").show();
+
+
+            $("#card_update1").show(300);
+            $("#card_update2").show(300);
+            $("#card_update3").show(300);
+            $("#card_update4").show(300);
+
            }else{
-            $("#musaeid_qayid_wahdah_update").hide();
-            $("#qayid_wahda_update").hide();
-            $("#musaeid_qayid_tadrib_update").hide();
-            $("#qayid_tadrib_update").hide();
+
+            $("#card_update1").hide(300);
+            $("#card_update2").hide(300);
+            $("#card_update3").hide(300);
+            $("#card_update4").hide(300);
            }
         
 
@@ -314,32 +329,104 @@ function getData(id) {
 
 
 function CurrentQualificationUpdate(value) {
-   
+   $("#accordion_update").show(300);
    if(value == 'musaeid_qayid_wahdah'){
-    $("#musaeid_qayid_wahdah_update").show();
-    $("#qayid_wahda_update").hide();
-    $("#musaeid_qayid_tadrib_update").hide();
-    $("#qayid_tadrib_update").hide();
+   
+
+    $("#card_update1").show(300);
+    $("#card_update2").hide(300);
+    $("#card_update3").hide(300);
+    $("#card_update4").hide(300);
+
+    $("#study_history_qw_update").val(null);
+    $("#place_study_qw_update").val(null);
+    $("#organizer_qw_update").val(null);
+    $("#rent_date_qw_update").val(null);
+    $("#rent_number_qw_update").val(null);
+
+    $("#study_history_mqt_update").val(null);
+    $("#place_study_mqt_update").val(null);
+    $("#organizer_mqt_update").val(null);
+    $("#rent_date_mqt_update").val(null);
+    $("#rent_number_mqt_update").val(null);
+
+    $("#study_history_qt_update").val(null);
+    $("#place_study_qt_update").val(null);
+    $("#organizer_qt_update").val(null);
+    $("#rent_date_qt_update").val(null);
+    $("#rent_number_qt_update").val(null);
+
    }else if(value == 'qayid_wahda'){
-    $("#musaeid_qayid_wahdah_update").show();
-    $("#qayid_wahda_update").show();
-    $("#musaeid_qayid_tadrib_update").hide();
-    $("#qayid_tadrib_update").hide();
+
+    $("#card_update1").show(300);
+    $("#card_update2").show(300);
+    $("#card_update3").hide(300);
+    $("#card_update4").hide(300);
+
+
+    $("#study_history_mqt_update").val(null);
+    $("#place_study_mqt_update").val(null);
+    $("#organizer_mqt_update").val(null);
+    $("#rent_date_mqt_update").val(null);
+    $("#rent_number_mqt_update").val(null);
+
+    $("#study_history_qt_update").val(null);
+    $("#place_study_qt_update").val(null);
+    $("#organizer_qt_update").val(null);
+    $("#rent_date_qt_update").val(null);
+    $("#rent_number_qt_update").val(null);
+
+
    }else if(value == 'musaeid_qayid_tadrib'){
-    $("#musaeid_qayid_wahdah_update").show();
-    $("#qayid_wahda_update").show();
-    $("#musaeid_qayid_tadrib_update").show();
-    $("#qayid_tadrib_update").hide();
+
+    $("#card_update1").show(300);
+    $("#card_update2").show(300);
+    $("#card_update3").show(300);
+    $("#card_update4").hide(300);
+
+    $("#study_history_qt_update").val(null);
+    $("#place_study_qt_update").val(null);
+    $("#organizer_qt_update").val(null);
+    $("#rent_date_qt_update").val(null);
+    $("#rent_number_qt_update").val(null);
+
    }else if(value == 'qayid_tadrib'){
-    $("#musaeid_qayid_wahdah_update").show();
-    $("#qayid_wahda_update").show();
-    $("#musaeid_qayid_tadrib_update").show();
-    $("#qayid_tadrib_update").show();
+
+    $("#card_update1").show(300);
+    $("#card_update2").show(300);
+    $("#card_update3").show(300);
+    $("#card_update4").show(300);
+
    }else{
-    $("#musaeid_qayid_wahdah_update").hide();
-    $("#qayid_wahda_update").hide();
-    $("#musaeid_qayid_tadrib_update").hide();
-    $("#qayid_tadrib_update").hide();
+
+    $("#card_update1").hide(300);
+    $("#card_update2").hide(300);
+    $("#card_update3").hide(300);
+    $("#card_update4").hide(300);
+
+    $("#study_history_mqw_update").val(null);
+    $("#place_study_mqw_update").val(null);
+    $("#organizer_mqw_update").val(null);
+    $("#rent_date_mqw_update").val(null);
+    $("#rent_number_mqw_update").val(null);
+
+    $("#study_history_qw_update").val(null);
+    $("#place_study_qw_update").val(null);
+    $("#organizer_qw_update").val(null);
+    $("#rent_date_qw_update").val(null);
+    $("#rent_number_qw_update").val(null);
+
+    $("#study_history_mqt_update").val(null);
+    $("#place_study_mqt_update").val(null);
+    $("#organizer_mqt_update").val(null);
+    $("#rent_date_mqt_update").val(null);
+    $("#rent_number_mqt_update").val(null);
+
+    $("#study_history_qt_update").val(null);
+    $("#place_study_qt_update").val(null);
+    $("#organizer_qt_update").val(null);
+    $("#rent_date_qt_update").val(null);
+    $("#rent_number_qt_update").val(null);
    }
 }
 

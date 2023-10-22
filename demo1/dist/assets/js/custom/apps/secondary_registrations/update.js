@@ -16,7 +16,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'secondary_registration': {
+                   // 'secondary_registration': {
+                   //      validators: {
+                   //          notEmpty: {
+                   //              message: 'هذا الحقل مطلوب'
+                   //          }
+                   //      }
+                   //  },
+
+
+                    'year': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -124,6 +133,9 @@ var KTModalBranchesUpdate = function () {
         
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -156,6 +168,9 @@ var KTModalBranchesUpdate = function () {
         });
 
         closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -227,7 +242,7 @@ function getData(id) {
         success: function (data) {
             jQuery('#id').val(data.id);
             
-            jQuery('#phone1_update').val(data.phone1);
+            jQuery('#year_update').val(data.year);
            
            
            var image_path =  '../images/files/'

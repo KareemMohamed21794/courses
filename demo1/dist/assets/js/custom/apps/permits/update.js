@@ -188,6 +188,9 @@ var KTModalBranchesUpdate = function () {
         
 
         cancelButton.addEventListener('click', function (e) {
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -220,6 +223,9 @@ var KTModalBranchesUpdate = function () {
         });
 
         closeButton.addEventListener('click', function(e){
+            form.reset(); // Reset form
+            modal.hide(); // Hide modal
+            return false;
             e.preventDefault();
 
             Swal.fire({
@@ -346,6 +352,7 @@ function NaturalActivityUpdate(value) {
    $("#other_activity_description_update").show();
    }else{
     $("#other_activity_description_update").hide();
+    $("#activity_description_update").val(null);
    }
 }
 
@@ -356,6 +363,7 @@ function AlwahdaUpdate(value) {
    $("#other_alwahda_description_update").show();
    }else{
     $("#other_alwahda_description_update").hide();
+    $("#alwahda_description_update").val(null);
    }
 }
 
