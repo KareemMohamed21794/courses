@@ -232,7 +232,7 @@ fill: #009EF7;
 
               
 
-
+                @if($objAdmin->is_super == 1)
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
                   Request::segment(2)=='report_secondary_registrations' ||
                   Request::segment(2)=='report_administrative_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders'  ? 'show here' : '' }}">
@@ -298,7 +298,7 @@ fill: #009EF7;
                         </div>
                     </div>
 
-
+                 @endif
 
                
                 
