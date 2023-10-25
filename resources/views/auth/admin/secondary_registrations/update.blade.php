@@ -69,13 +69,13 @@
                            <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">السنه</label>
+                            <label class=" fs-6 fw-bold mb-2">السنة</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             @if($objAdmin->is_super == 1)
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year"  id="year_update"  />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year"  id="year_update"  />
                             @else
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year" readonly="" id="year_update" value="{{now()->year}}" />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year" readonly="" id="year_update" value="{{now()->year}}" />
                             @endif
                             <!--end::Input-->
                         </div>

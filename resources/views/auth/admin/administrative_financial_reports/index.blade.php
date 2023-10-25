@@ -123,10 +123,10 @@
                                 </div>
                             </th>
                             <th>#</th>
-                            <th>{{ __('messages.scout_groups') }}</th>
-                            <th> ملف التقرير الاداري</th>
+                            <th>{{ __('messages.scout_group') }}</th>
+                            <th> ملف التقرير الإداري</th>
                             <th> ملف التقرير المالي</th>
-                            <th>السنه</th>
+                            <th>السنة</th>
                         
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>

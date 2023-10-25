@@ -4,6 +4,11 @@
 
  <style>
     /* Add custom styles for the accordion */
+
+    #musaeid_qayid_wahdah , #qayid_wahda,#musaeid_qayid_tadrib,#qayid_tadrib{
+        padding: 15px;
+    }
+
     #accordion .card {
         border: 1px solid #e0e0e0;
         margin-bottom: 10px;
@@ -87,7 +92,7 @@
                             <select onchange="CurrentQualification(this.value)" name="current_qualification" id="current_qualification" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">
                                 <option value="">{{ __('messages.current_qualification') }}</option>
                                 <option value="ghayr_muahal">غير مؤهل</option>
-                                <option value="musaeid_qayid_wahdah">مساعد قائد وحده   </option>
+                                <option value="musaeid_qayid_wahdah">مساعد قائد وحدة   </option>
                                 <option value="qayid_wahda">قائد وحدة شارة خشبية   </option>
                                 <option value="musaeid_qayid_tadrib">مساعد قائد تدريب</option>
                                 <option value="qayid_tadrib">قائد تدريب</option>
@@ -102,7 +107,7 @@
                                 <div class="card-header" id="headingOne" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                          مساعد قائد وحده   
+                                          مساعد قائد وحدة   
                                         </button>
                                     </h5>
                                 </div>
@@ -114,7 +119,7 @@
                                         <!--end::group-->
                                     </div>
                                 </div>
-                                  <div id="musaeid_qayid_wahdah">
+                                <div id="musaeid_qayid_wahdah">
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->

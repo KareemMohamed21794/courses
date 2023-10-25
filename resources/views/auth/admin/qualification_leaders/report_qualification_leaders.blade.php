@@ -42,12 +42,12 @@
                                <!--begin::Input group-->
                             <div class="row mb-6">
                                 <!--begin::Label-->
-                                <label class="col-lg-4 col-form-label  fw-bold fs-6">{{ __('messages.leaders') }}</label>
+                                <label class="col-lg-4 col-form-label  fw-bold fs-6"> المجموعة الكشفية</label>
                                 <!--end::Label-->
                                 <!--begin::Col-->
                                 <div class="col-lg-8 fv-row">
-                                    <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt_account_profile_details" id="leader_id" name="leader_id" >
-                                        <option value="">{{ __('messages.leaders') }}</option >
+                                    <select class="form-select form-select-solid fw-bolder"  data-placeholder="Select option" data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt_account_profile_details" id="leader_id" name="leader_id" >
+                                        <option value="">الكل</option >
                                         @foreach($leaders as $leader)
                                             <option value="{{$leader->id}}">{{ $leader->name }}</option>
                                         @endforeach
@@ -69,7 +69,7 @@
                             <select  name="current_qualification" id="current_qualification" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">
                                 <option value="">{{ __('messages.current_qualification') }}</option>
                                 <option value="ghayr_muahal">غير مؤهل</option>
-                                <option value="musaeid_qayid_wahdah">مساعد قائد وحده   </option>
+                                <option value="musaeid_qayid_wahdah">مساعد قائد وحدة   </option>
                                 <option value="qayid_wahda">قائد وحدة شارة خشبية   </option>
                                 <option value="musaeid_qayid_tadrib">مساعد قائد تدريب</option>
                                 <option value="qayid_tadrib">قائد تدريب</option>

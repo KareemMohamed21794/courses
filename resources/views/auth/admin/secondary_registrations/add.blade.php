@@ -38,12 +38,12 @@
                         <div class="d-flex flex-column mb-7 fv-row">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.scout_groups') }}</span>
+                                <span class="required">{{ __('messages.scout_group') }}</span>
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
-                                 <option value="">{{ __('messages.scout_groups') }}</option >
+                            <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
+                                 <option value="">{{ __('messages.Select') }}</option >
                                     @foreach($leaders as $leader)
                                         <option value="{{$leader->id}}">{{ $leader->name }}</option>
                                     @endforeach
@@ -70,13 +70,13 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">السنه</label>
+                            <label class=" fs-6 fw-bold mb-2">السنة</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             @if($objAdmin->is_super == 1)
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year"  id="year"  />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year"  id="year"  />
                             @else
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year" readonly="" id="year" value="{{now()->year}}" />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year" readonly="" id="year" value="{{now()->year}}" />
                             @endif
                             <!--end::Input-->
                         </div>

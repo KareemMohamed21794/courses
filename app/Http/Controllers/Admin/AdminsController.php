@@ -52,7 +52,7 @@ class AdminsController extends Controller
 
             
             $title =  $objAdmin->is_super == 1 ? __('messages.scout_groups') : __('messages.group_info');
-            $add_title = __('messages.scout_group');
+            $add_title ="مجموعة كشفية";;
             $department_id = 2;
             $position_id = 2;
             $is_super = 0;

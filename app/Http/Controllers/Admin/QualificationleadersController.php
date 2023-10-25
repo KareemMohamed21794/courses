@@ -26,8 +26,8 @@ class QualificationleadersController extends Controller
      */
     public function index()
     {
-        $title = __('messages.qualification_leaders');
-        $add_title = __('messages.qualification_leaders');
+        $title = __('messages.qualification_leader');
+        $add_title = __('messages.qualification_leader');
 
         return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title]);
     }

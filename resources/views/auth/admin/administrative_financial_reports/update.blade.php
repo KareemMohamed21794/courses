@@ -38,12 +38,12 @@
                         <div class="d-flex flex-column mb-7 fv-row">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.scout_groups') }}</span>
+                                <span class="required">{{ __('messages.scout_group') }}</span>
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="leader_id" id="leader_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
-                                <option value="">{{ __('messages.scout_groups') }}</option >
+                            <select name="leader_id" id="leader_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
+                                <option value="">{{ __('messages.scout_group') }}</option >
                                     @foreach($leaders as $leader)
                                         <option value="{{$leader->id}}">{{ $leader->name }}</option>
                                     @endforeach
@@ -57,10 +57,10 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">ارفاق ملف التقرير الاداري</label>
+                            <label class=" fs-6 fw-bold mb-2">ارفاق ملف التقرير الإداري</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="ارفاق ملف التقرير الاداري" name="administrative_financial1"   />
+                            <input type="file" class="form-control form-control-solid" placeholder="ارفاق ملف التقرير الإداري" name="administrative_financial1"   />
                              <a  download id="href_administrative_financial1">
                             <img id="administrative_financial1_update"  alt="administrative_financial1" width="100" height="100" >
                            </a>
@@ -88,13 +88,13 @@
                            <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">السنه</label>
+                            <label class=" fs-6 fw-bold mb-2">السنة</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             @if($objAdmin->is_super == 1)
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year"  id="year_update"  />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year"  id="year_update"  />
                             @else
-                            <input type="text" class="form-control form-control-solid" placeholder="السنه" name="year" readonly="" id="year_update" value="{{now()->year}}" />
+                            <input type="text" class="form-control form-control-solid" placeholder="السنة" name="year" readonly="" id="year_update" value="{{now()->year}}" />
                             @endif
                             <!--end::Input-->
                         </div>

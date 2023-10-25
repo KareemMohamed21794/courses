@@ -95,7 +95,7 @@
                            <select onchange="CurrentQualificationUpdate(this.value)" name="current_qualification" id="current_qualification_update" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">
                                 <option value="">{{ __('messages.current_qualification') }}</option>
                                 <option value="ghayr_muahal">غير مؤهل</option>
-                                <option value="musaeid_qayid_wahdah">مساعد قائد وحده</option>
+                                <option value="musaeid_qayid_wahdah">مساعد قائد وحدة</option>
                                 <option value="qayid_wahda">"قائد وحدة "شارة خشبية </option>
                                 <option value="musaeid_qayid_tadrib">مساعد قائد تدريب</option>
                                 <option value="qayid_tadrib">قائد تدريب</option>
@@ -111,7 +111,7 @@
                                 <div class="card-header" id="headingOne_update" style="background-color:silver">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne_update" aria-expanded="true" aria-controls="collapseOne_update">
-                                          مساعد قائد وحده   
+                                          مساعد قائد وحدة   
                                         </button>
                                     </h5>
                                 </div>

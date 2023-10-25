@@ -123,10 +123,10 @@
                                 </div>
                             </th>
                             <th>#</th>
-                            <th>{{ __('messages.scout_groups') }}</th>
+                            <th>{{ __('messages.scout_group') }}</th>
                             <th>نموذج التسجيل</th>
 
-                             <th>السنه</th>
+                             <th>السنة</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>

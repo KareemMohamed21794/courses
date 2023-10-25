@@ -24,7 +24,7 @@ class PermitsController extends Controller
     public function index()
     {
         $title = __('messages.permits');
-        $add_title = __('messages.permits');
+        $add_title = __('messages.permit');
 
         return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title]);
     }
