@@ -643,7 +643,7 @@ class SecondaryRegistrationsController extends Controller
             // Make sure to retrieve the Arabic name correctly from your database column
             $row['leader_name']  = $File->Admin->name;
             
-            $row['secondary_registration']  ='<a href="' . asset('public/images/files/' . $File->secondary_registration) . '" download><button>Download</button></a>';
+            $row['secondary_registration']  =asset('public/images/files/' . $File->secondary_registration);
 
             $row['year']  = $File->year;
          
