@@ -80,9 +80,11 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            <!--begin::Export-->
-                           <!--  <div id="export_buttons" style="margin-left: 10px;"></div> -->
-                            <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal">
+                             <!--begin::Export-->
+                        <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
+                           <a href="{{url('admin/export_administrative_financial')}}" class="menu-link px-3">
+                            <button type="button" class="btn btn-light-primary me-3" >
+                           <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -94,6 +96,7 @@
                             
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
+                        </a>
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->

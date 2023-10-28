@@ -410,6 +410,70 @@ class BoardDirectorMeetingsController extends Controller
 
 
 
+           public function ExportBoardDirectorMeetings(Request $request)
+{
+
+
+    $fileName = 'export_board_director_meetings.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = File::where('type','board_director_meetings')->get();
+    
+    }else{
+
+        $Files = File::where('admin_id',$userId)->where('type','board_director_meetings')->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),' ملف محضر اجتماع مجلس الاداره','السنة');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['board_director_meetings']  =asset('public/images/files/' . $File->board_director_meetings);
+
+            $row['year']  = $File->year;
+         
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['board_director_meetings'],$row['year']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+
 
 }
 

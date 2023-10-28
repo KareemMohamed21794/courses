@@ -440,4 +440,70 @@ class AdministrativeFinancialReportsController extends Controller
 
 
 
+        public function ExportAdministrativeFinancial(Request $request)
+{
+
+
+    $fileName = 'export_administrative_financial.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = File::where('type','administrative_financial')->get();
+    
+    }else{
+
+        $Files = File::where('admin_id',$userId)->where('type','administrative_financial')->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),' ملف التقرير الإداري',' ملف التقرير المالي','السنة');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['administrative_financial1']  =asset('public/images/files/' . $File->administrative_financial1);
+
+            $row['administrative_financial2']  =asset('public/images/files/' . $File->administrative_financial2);
+
+            $row['year']  = $File->year;
+         
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['administrative_financial1'],$row['administrative_financial2'],$row['year']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+
 }

@@ -70,6 +70,9 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('/report_administrative_financial', [AdministrativeFinancialReportsController::class, 'ReportAdministrativeFinancial']);
 
+
+		Route::get('export_administrative_financial', [AdministrativeFinancialReportsController::class, 'ExportAdministrativeFinancial']);
+
 		
 		# End administrative_financial_report
 
@@ -81,6 +84,8 @@ Route::middleware('auth:admin')->group(function () {
 
 
 		Route::get('/report_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportBoardDirectorMeetings']);
+
+		Route::get('export_board_director_meetings', [BoardDirectorMeetingsController::class, 'ExportBoardDirectorMeetings']);
 
 	
 		# End board_director_meetings
