@@ -74,7 +74,8 @@
                              
                             <th>#</th>
                             <th>{{ __('messages.name') }}</th>
-                         
+                            <th>{{ __('messages.phone') }}</th>
+                            <th>{{ __('messages.address') }}</th>
                             <th>{{ __('messages.email') }}</th>
                           
                          <!--    <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> -->

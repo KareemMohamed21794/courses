@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
+use PDF;
+use TCPDF;
+use Carbon\Carbon;
 
 class SecondaryRegistrationsController extends Controller
 {
@@ -453,6 +456,8 @@ class SecondaryRegistrationsController extends Controller
         $columnsDefault = [
             'id'   => true,
             'name'   => true,
+            'phone'   => true,
+            'address'   => true,
             'email'   => true,
         
         ];
@@ -502,6 +507,8 @@ class SecondaryRegistrationsController extends Controller
             $alldataResult[] = array(
                 "id" => $objdata->id,
                 "name" => @$objdata->name,
+                "phone" => @$objdata->phone,
+                "address" => @$objdata->address,
                 "email" => @$objdata->email,
                
             );
@@ -587,5 +594,68 @@ class SecondaryRegistrationsController extends Controller
 
         return json_encode($result, JSON_PRETTY_PRINT);
     }
+
+
+    public function ExportSecondaryRegistrations(Request $request)
+{
+
+
+    $fileName = 'export_secondary_registrations.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = File::where('type','secondary_registration')->get();
+    
+    }else{
+
+        $Files = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),'نموذج التسجيل','السنة');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['secondary_registration']  ='<a href="' . asset('public/images/files/' . $File->secondary_registration) . '" download><button>Download</button></a>';
+
+            $row['year']  = $File->year;
+         
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['secondary_registration'],$row['year']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
 
 }

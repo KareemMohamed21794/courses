@@ -26,7 +26,9 @@ class PermitsController extends Controller
         $title = __('messages.permits');
         $add_title = __('messages.permit');
 
-        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title]);
+        $leaders = Admin::get();
+
+        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }
 
     /**
@@ -78,7 +80,7 @@ class PermitsController extends Controller
             'alwahda_description' =>  $request->alwahda_description,
             'activity_leader' =>  $request->activity_leader,
             'number_leader' =>  $request->number_leader,
-            'admin_id' =>  $userId,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
         ]);
 
@@ -106,6 +108,7 @@ class PermitsController extends Controller
     {
         //$this->authorize(self::MODEL.'-update');
         $Permit  = Permit::find($id);
+        @$Permit->Admin;
 
         return response()->json($Permit);
     }
@@ -138,11 +141,11 @@ class PermitsController extends Controller
         }
 
         $secondary_registration = '';
-
+        $userId = Auth::id();
 
 
         $objPermit = Permit::find($id);
-
+        $objPermit->admin_id = $request->leader_id ? $request->leader_id : $userId;
         $objPermit->activity_name =  $request->activity_name;
         $objPermit->nature_activity =  $request->nature_activity;
         $objPermit->activity_description =  $request->activity_description;
@@ -187,6 +190,7 @@ class PermitsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'leader'   => true,
             'activity_name'=> true,
             'nature_activity'=>true,
             'activity_description'=>true,
@@ -280,6 +284,7 @@ class PermitsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "leader" => $objdata->Admin->name,
                 "activity_name"=> $objdata->activity_name,
                 "nature_activity"=> $nature_activity,
                 "activity_description"=> $objdata->activity_description,

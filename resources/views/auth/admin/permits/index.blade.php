@@ -123,6 +123,7 @@
                                 </div>
                             </th>
                             <th>#</th>
+                            <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.activity_name') }}</th>
                             <th>{{ __('messages.nature_activity') }}</th>
                             <th>{{ __('messages.activity_description') }}</th>

@@ -57,6 +57,8 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/report_secondary_registrations_get', [SecondaryRegistrationsController::class, 'ReportSecondaryRegistrationsGet']);
 
 		Route::get('/report_secondary_registrations_get_list', [SecondaryRegistrationsController::class, 'report_secondary_registrations_get_list']);
+
+		Route::get('export_secondary_registrations', [SecondaryRegistrationsController::class, 'ExportSecondaryRegistrations']);
 		# End secondary_registration
 
 

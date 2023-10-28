@@ -28,8 +28,9 @@ class QualificationleadersController extends Controller
     {
         $title = __('messages.qualification_leader');
         $add_title = __('messages.qualification_leader');
+        $leaders = Admin::get();
 
-        return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title]);
+        return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }
 
     /**
@@ -87,7 +88,7 @@ class QualificationleadersController extends Controller
             'organizer_qt' =>  $request->organizer_qt,
             'rent_date_qt' =>  $request->rent_date_qt,
             'rent_number_qt' =>  $request->rent_number_qt,
-            'admin_id' =>  $userId,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
         ]);
 
@@ -115,7 +116,7 @@ class QualificationleadersController extends Controller
     {
         //$this->authorize(self::MODEL.'-update');
         $QualificationLeader  = QualificationLeader::find($id);
-
+        @$QualificationLeader->Admin;
         return response()->json($QualificationLeader);
     }
 
@@ -141,9 +142,9 @@ class QualificationleadersController extends Controller
         }
 
        
-
+        $userId = Auth::id();
         $objQualificationLeader = QualificationLeader::find($id);
-
+        $objQualificationLeader->admin_id = $request->leader_id ? $request->leader_id : $userId;
         $objQualificationLeader->leader_name =  $request->leader_name;
         $objQualificationLeader->current_qualification =  $request->current_qualification;
         $objQualificationLeader->study_history_mqw =  $request->study_history_mqw;
@@ -201,6 +202,7 @@ class QualificationleadersController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
+            'leader'   => true,
             'leader_name'=> true,
             'created_at'   => true,
         ];
@@ -253,6 +255,7 @@ class QualificationleadersController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "leader" => $objdata->Admin->name,
                 "leader_name"=> $objdata->leader_name,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );

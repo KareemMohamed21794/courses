@@ -296,7 +296,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            
+            jQuery('#leader_id_update').val(data.admin.id);
             jQuery('#activity_name_update').val(data.activity_name);
             jQuery('#nature_activity_update').val(data.nature_activity);
             jQuery('#activity_description_update').val(data.activity_description);
