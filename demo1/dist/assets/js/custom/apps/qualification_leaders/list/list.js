@@ -42,6 +42,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'id' },
                 { data: 'leader' },
                 { data: 'leader_name' },
+                { data: 'current_qualification' },
                 { data: 'created_at' },
                 { data: null },
             ],
