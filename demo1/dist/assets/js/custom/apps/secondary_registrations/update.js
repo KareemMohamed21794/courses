@@ -243,6 +243,8 @@ function getData(id) {
             jQuery('#id').val(data.id);
             
             jQuery('#year_update').val(data.year);
+
+             jQuery('#leader_id_update').val(data.admin.id);
            
            
            var image_path =  '../images/files/'

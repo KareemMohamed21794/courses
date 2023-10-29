@@ -40,6 +40,7 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
+                { data: 'leader' },
                 { data: 'board_director_meetings' },
                 { data: 'year' },
                 { data: 'created_at' },

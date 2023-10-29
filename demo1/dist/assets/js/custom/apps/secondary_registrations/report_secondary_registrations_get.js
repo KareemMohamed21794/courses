@@ -47,6 +47,8 @@ var KTDatatablesServerSide = function () {
         
                 { data: 'id' },
                 { data: 'name' },
+                { data: 'phone' },
+                { data: 'address' },
                 { data: 'email' },
                 // { data: 'print' },
                 // { data: null },
@@ -99,7 +101,7 @@ var KTDatatablesServerSide = function () {
                     charset: 'UTF-8',
                     bom: true,
                     exportOptions: {
-                        columns: ':not(:last-child,:first-child)',
+                        columns: ':not(:first-child)',
                     }
                 }
             ],

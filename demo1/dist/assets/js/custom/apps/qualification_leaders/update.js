@@ -242,7 +242,7 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            
+            jQuery('#leader_id_update').val(data.admin.id);
             jQuery('#leader_name_update').val(data.leader_name);
             jQuery('#current_qualification_update').val(data.current_qualification);
             jQuery('#study_history_mqw_update').val(data.study_history_mqw);

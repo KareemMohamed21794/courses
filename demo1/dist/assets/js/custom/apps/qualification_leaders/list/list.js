@@ -40,6 +40,7 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
+                { data: 'leader' },
                 { data: 'leader_name' },
                 { data: 'created_at' },
                 { data: null },
