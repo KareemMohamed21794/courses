@@ -544,6 +544,7 @@ return [
     'organizer_qt'=>'المنظم  ',
     'rent_date_qt'=>'تاريخ الإجارة  ',
     'rent_number_qt'=>'رقم الإجارة  ',
+    'total_leaders'=>'عدد القادة الكلي   ',
 
  ];
 

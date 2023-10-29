@@ -73,10 +73,15 @@ class SecondaryRegistrationsController extends Controller
 
         $userId = Auth::id();
 
+        if($request->leader_id){
+           $userId = $request->leader_id;
+        }
+
         $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
-      
+
         if($exsistdata){
-            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+            return response()->json(["message" => "هذا السجل موجود من قبل"], Response::HTTP_BAD_REQUEST);
+
         }
 
 

@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Warehouse;
-use App\Models\InvoiceHeader;
-use App\Models\InvoiceFooter;
-use App\Models\PurchaseFooter;
-use App\Models\PurchaseHeader;
-use App\Models\ManufactureHeader;
-use App\Models\Problem;
-use App\Models\ProblemProcedure;
-use App\Models\Client;
+
 use App\Models\Admin;
+use App\Models\File;
+use App\Models\Permit;
+use App\Models\QualificationLeader;
+
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataImport;
@@ -50,105 +46,23 @@ class HomeController extends Controller
 
         $count_admins = Admin::where('position_id',1)->count();
         $count_lawyers = Admin::where('position_id',2)->count();
-         
+        $count_leaders = Admin::where('is_super',0)->count();
         
+        $count_secondary_registrations = File::where('type','secondary_registration')->where('year',date('Y'))->count();
+
+        $count_administrative_financial_reports = File::where('type','administrative_financial')->where('year',date('Y'))->count();
+
+        $count_board_director_meetings = File::where('type','board_director_meetings')->where('year',date('Y'))->count();
+
+        $count_permits = Permit::count();
+        $count_qualificationLeaders = QualificationLeader::count();
+        $count_qualificationLeaders = QualificationLeader::count();
+
         
-        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers]);
+        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_financial_reports' => $count_administrative_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders]);
     }
 
-    public function update_warehouses()
-    { 
-        // ini_set('max_execution_time', '0');
-        // ini_set('memory_limit', '20000M');
-        // set_time_limit(0);
-
-        // $arrProducts = Product::all();
-
-        
-
-        // foreach ($arrProducts as $objProduct) {
-        //     $product_id = $objProduct->id;
-        //     $product_quantity = 0;
-            
-
-        //     $objWarehouse = Warehouse::where('product_id',$product_id)->first();
-        //     $product_quantity+=$objWarehouse->quantity;
-
-            
-        //     $arrPurhases = PurchaseHeader::join('purchase_footers', 'purchase_headers.id', '=', 'purchase_footers.purchase_header_id')
-        //     ->select('purchase_footers.product_quantity','purchase_footers.created_at','purchase_headers.id')
-        //     ->where('product_id',$product_id)
-        //     ->where('status','approved')
-        //     ->get();
-
-
-        //     foreach ($arrPurhases as $objPurhase) {
-        //         $product_quantity+= $objPurhase->product_quantity;
-        //     }
-
-
-        //     $arrManufactureHeader = ManufactureHeader::where('product_id',$product_id)
-        //     ->where('is_product',1)
-        //     ->where('status','delivered')
-        //     ->get();
-
-            
-        //     foreach ($arrManufactureHeader as $objManufacture) {
-        //         $product_quantity+= $objManufacture->deliver_quantity;
-        //     }
-
-        //     $arrReturns = ItemReturn::where('product_id',$product_id)->get();
-
-        //     foreach ($arrReturns as $objReturn) {
-        //         $product_quantity+= $objReturn->quantity;
-        //     }
-
-        //     $arrSales = InvoiceHeader::join('invoice_footers', 'invoice_headers.id', '=', 'invoice_footers.invoice_header_id')
-        //     ->select('invoice_footers.productQuantity','invoice_footers.created_at','invoice_headers.id')
-        //     ->where('product_id',$product_id)
-        //     ->where('status','approved')
-        //     ->get();
-
-        //     foreach ($arrSales as $objSale) {
-        //         $product_quantity-= $objSale->productQuantity;
-        //     }
-
-
-        //     $arrManufactures = ManufactureHeader::join('manufacture_footers', 'manufacture_headers.id', '=', 'manufacture_footers.manufacture_header_id')
-        //     ->select('manufacture_footers.productQuantity','manufacture_footers.created_at','manufacture_headers.id')
-        //     ->where('manufacture_footers.product_id',$product_id)
-        //     ->where('status','approved')
-        //     ->get();
-
-
-        //     foreach ($arrManufactures as $objManufacture) {
-        //         $product_quantity-= $objManufacture->productQuantity;
-        //     }
-
-
-        //     $arrManufactures = ManufactureHeader::join('manufacture_footers', 'manufacture_headers.id', '=', 'manufacture_footers.manufacture_header_id')
-        //     ->select('manufacture_footers.productQuantity','manufacture_footers.created_at','manufacture_headers.id')
-        //     ->where('manufacture_footers.product_id',$product_id)
-        //     ->where('status','delivered')
-        //     ->get();
-
-
-        //     foreach ($arrManufactures as $objManufacture) {
-        //         $product_quantity-= $objManufacture->productQuantity;
-        //     }
-
-        //     $objProduct = Product::find($product_id);
-        //     $objProduct->quantity = $product_quantity;
-        //     $objProduct->save();            
-
-            
-        // }
-        
-       
-        print_r('test'); die;
-
-
-    }
+     
 
     public function upload_csv()
     {

@@ -26,7 +26,7 @@ class QualificationleadersController extends Controller
      */
     public function index()
     {
-        $title = __('messages.qualification_leader');
+        $title = __('messages.qualification_leaders');
         $add_title = __('messages.qualification_leader');
         $leaders = Admin::get();
 
