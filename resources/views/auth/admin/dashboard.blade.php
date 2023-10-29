@@ -198,7 +198,7 @@
                     <div class="row g-5 g-xl-8">
                          
 
-                        <div class="col-xl-3">
+                        <div class="col-xl">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -248,7 +248,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl-3">
+                        <div class="col-xl">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -298,7 +298,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl-3">
+                        <div class="col-xl">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -348,7 +348,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl-3">
+                        <div class="col-xl">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -398,7 +398,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl-3">
+                        <div class="col-xl">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
