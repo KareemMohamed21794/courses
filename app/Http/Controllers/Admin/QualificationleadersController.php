@@ -204,6 +204,7 @@ class QualificationleadersController extends Controller
             'id'   => true,
             'leader'   => true,
             'leader_name'=> true,
+            'current_qualification'=> true,
             'created_at'   => true,
         ];
 
@@ -252,11 +253,26 @@ class QualificationleadersController extends Controller
         $alldataResult=array();
 
         foreach($alldata as $objdata){
+
+            if($objdata->current_qualification == 'musaeid_qayid_wahdah'){
+            $current_qualification = 'مساعد قائد وحده   ';
+           }else if($objdata->current_qualification == 'qayid_wahda'){
+            $current_qualification = 'قائد وحدة شارة خشبية   ';
+           }else if($objdata->current_qualification == 'musaeid_qayid_tadrib'){
+            $current_qualification = 'مساعد قائد تدريب';
+           }else if($objdata->current_qualification == 'qayid_tadrib'){
+            $current_qualification = 'قائد تدريب';
+           }else{
+            $current_qualification = 'غير مؤهل';
+           }
+
+
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                 "leader" => $objdata->Admin->name,
                 "leader_name"=> $objdata->leader_name,
+                "current_qualification"=> @$current_qualification,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

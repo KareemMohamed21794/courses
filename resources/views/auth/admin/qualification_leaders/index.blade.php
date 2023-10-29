@@ -127,6 +127,7 @@
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.leader_name') }}</th>
+                            <th>{{ __('messages.current_qualification') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>

@@ -56,10 +56,14 @@ class HomeController extends Controller
 
         $count_permits = Permit::count();
         $count_qualificationLeaders = QualificationLeader::count();
-        $count_qualificationLeaders = QualificationLeader::count();
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')->count();
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')->count();
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')->count();
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')->count();
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')->count();
 
         
-        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_financial_reports' => $count_administrative_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders]);
+        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_financial_reports' => $count_administrative_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib]);
     }
 
      
