@@ -28,7 +28,7 @@ class QualificationleadersController extends Controller
     {
         $title = __('messages.qualification_leaders');
         $add_title = __('messages.qualification_leader');
-        $leaders = Admin::get();
+        $leaders = Admin::where('is_super',0)->get();
 
         return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }
@@ -270,7 +270,7 @@ class QualificationleadersController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->name,
+                "leader" => $objdata->Admin->group_name,
                 "leader_name"=> $objdata->leader_name,
                 "current_qualification"=> @$current_qualification,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),

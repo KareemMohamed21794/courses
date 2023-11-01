@@ -7,7 +7,8 @@ var KTDatatablesServerSide = function () {
     var dt;
     var filterPayment;
     var is_super = $("#is_super").val();
-    let main_url = "/admin/administrative_financial_reports/get";
+    var firstSegment = $("#firstSegment").val();
+    let main_url = "/admin/administrative_financial_reports/get?firstSegment="+firstSegment;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -41,8 +42,7 @@ var KTDatatablesServerSide = function () {
                 { data: '#' },
                 { data: 'id' },
                 { data: 'leader' },
-                { data: 'administrative_financial1' },
-                { data: 'administrative_financial2' },
+                { data: 'file' },
                 { data: 'year' },
                 { data: 'created_at' },
                 { data: null },

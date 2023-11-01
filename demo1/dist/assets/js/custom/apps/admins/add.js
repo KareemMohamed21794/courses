@@ -18,66 +18,156 @@ var KTModalAdd = function () {
 			form,
 			{
 				fields: {
+                    'registration_type': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'group_classification': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'group_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'date_establishment': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'registration_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'email': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'website': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'governorate': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'district': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'street_name': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'building_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'workplace': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'job': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
                     'name': {
-						validators: {
-							notEmpty: {
-								message: 'مطلوب اسم'
-							}
-						}
-					},
+                        validators: {
+                            notEmpty: {
+                                message: 'مطلوب اسم'
+                            }
+                        }
+                    },
 
+                    'username': {
+                        validators: {
+                            notEmpty: {
+                                message: 'مطلوب  اسم المستخدم'
+                            }
+                        }
+                    },
 
-					'username': {
-						validators: {
-							notEmpty: {
-								message: 'مطلوب  اسم المستخدم'
-							}
-						}
-					},
-
-					'email': {
-						validators: {
-							notEmpty: {
-								message: 'البريد الالكتروني مطلوب'
-							},
-							emailAddress: {
-								message: 'البريد الإلكتروني غير صالح'
-							}
-						}
-					},
-
-                    // 'department_id': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'القسم مطلوب'
-                    //         }
-                    //     }
-                    // },
-
-                    // 'position_id': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'الوظيفة مطلوبة'
-                    //         }
-                    //     }
-                    // },
-
-					'password': {
-						validators: {
-							notEmpty: {
-								message: 'كلمة المرور مطلوبة'
-							}
-						}
-					},
-
-					'password_confirmation': {
-						validators: {
-							notEmpty: {
-								message: 'تأكيد كلمة المرور مطلوب'
-							}
-						}
-					},
-
+                    'email': {
+                        validators: {
+                            notEmpty: {
+                                message: 'البريد الالكتروني مطلوب'
+                            },
+                            emailAddress: {
+                                message: 'البريد الإلكتروني غير صالح'
+                            }
+                        }
+                    },
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -110,16 +200,30 @@ var KTModalAdd = function () {
 
 			        	var formData = {
 			            	name: jQuery('#name').val(),
-			            	username: jQuery('#username').val(),
-			            	email: jQuery('#email').val(),
+                            username: jQuery('#username').val(),
+                            email: jQuery('#email').val(),
+                            // department_id: $("#department_id").val(),
+                            // position_id: $("#position_id").val(),
+                            password: jQuery('#password').val(),
+                            password_confirmation: jQuery('#password_confirmation').val(),
+                            //select_is_super: jQuery('#select_is_super').val(),
+                            phone: jQuery('#phone').val(),
+                            address: jQuery('#address').val(),
+                            registration_type: jQuery('#registration_type').val(),
+                            group_classification: jQuery('#group_classification').val(),
+                            group_name: jQuery('#group_name').val(),
+                            date_establishment: jQuery('#date_establishment').val(),
+                            registration_number: jQuery('#registration_number').val(),
+                            website: jQuery('#website').val(),
+                            governorate: jQuery('#governorate').val(),
+                            district: jQuery('#district').val(),
+                            street_name: jQuery('#street_name').val(),
+                            building_number: jQuery('#building_number').val(),
+                            workplace: jQuery('#workplace').val(),
+                            job: jQuery('#job').val(),
                             department_id: $("#department_id").val(),
                             position_id: $("#position_id").val(),
-			            	password: jQuery('#password').val(),
-			            	password_confirmation: jQuery('#password_confirmation').val(),
-
-			            	select_is_super: jQuery('#select_is_super').val(),
-			            	phone: jQuery('#phone').val(),
-			            	address: jQuery('#address').val(),
+                            select_is_super: jQuery('#select_is_super').val(),
 			        	};
 
 			        	var type = "POST";

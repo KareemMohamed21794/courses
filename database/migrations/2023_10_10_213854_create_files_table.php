@@ -22,7 +22,7 @@ class CreateFilesTable extends Migration
             $table->string('administrative_financial2')->nullable();
             $table->string('year')->nullable();
             $table->string('board_director_meetings')->nullable();
-            $table->enum('type', ['secondary_registration', 'administrative_financial','board_director_meetings'])->nullable();
+            $table->enum('type', ['secondary_registration', 'administrative','financial','board_director_meetings'])->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

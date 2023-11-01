@@ -498,6 +498,8 @@ return [
     'secondary_registration'=>'السجل السنوي',
     'report_secondary_registration'=>'تقرير  عدم ارفاق السجل السنوي',
     'administrative_financial_reports'=>'التقارير  الإدارة المالية للعام',
+    'administrative'=>' التقرير الادارى للعام',
+    'financial'=>'التقارير المالى للعام',
     'administrative_financial_report'=>'تقرير  الإدارة المالية للعام',
     'report_administrative_financial'=>'تقرير  عدم ارفاق   الإدارة  المالية للعام',
     'board_director_meetings'=>'محاضر اجتماعات مجلس الإدارة',

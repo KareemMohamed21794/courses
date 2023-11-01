@@ -26,7 +26,7 @@ class PermitsController extends Controller
         $title = __('messages.permits');
         $add_title = __('messages.permit');
 
-        $leaders = Admin::get();
+        $leaders = Admin::where('is_super',0)->get();
 
         return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }
@@ -284,7 +284,7 @@ class PermitsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->name,
+                "leader" => $objdata->Admin->group_name,
                 "activity_name"=> $objdata->activity_name,
                 "nature_activity"=> $nature_activity,
                 "activity_description"=> $objdata->activity_description,

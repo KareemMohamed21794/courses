@@ -4,7 +4,7 @@
     <head><base href="../../../">
         <title>دخول الاداره : قلم</title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="{{ asset('demo1/dist/assets/media/logos/favicon.ico') }}" />
+        <link rel="shortcut icon" href="https://tawasol.privatescouts.org/public/images/logo.png" />
         <!--begin::Fonts-->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
         <!--end::Fonts-->

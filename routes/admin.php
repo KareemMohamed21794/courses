@@ -65,6 +65,14 @@ Route::middleware('auth:admin')->group(function () {
 		# Start administrative_financial_report
 		Route::get('/administrative_financial_reports/get', [AdministrativeFinancialReportsController::class, 'get']);
 		Route::resource('/administrative_financial_reports', AdministrativeFinancialReportsController::class);
+
+
+		Route::resource('/administrative', AdministrativeFinancialReportsController::class);
+
+		Route::resource('/financial', AdministrativeFinancialReportsController::class);
+
+		
+
 		Route::DELETE('/delete_administrative_financial_reports', [AdministrativeFinancialReportsController::class,'deleteAdministrativeFinancialReport']);
 
 

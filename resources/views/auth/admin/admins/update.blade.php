@@ -33,6 +33,43 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.username') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input style="cursor: not-allowed;" type="text" readonly class="form-control form-control-solid" placeholder="{{ __('messages.username') }}" name="username_update"  id="username_update"  autocomplete="false" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        @if(request()->segment(2)=='admins')
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        @endif
+
+                        @if(request()->segment(2)=='leaders')
+                        
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
@@ -44,6 +81,7 @@
                             <!--end::Select-->
                         </div>
                         <!--end::Input group-->
+                        
 
 
 
@@ -111,7 +149,9 @@
                         </div>
                         <!--end::Input group-->
 
-                         <!--begin::Input group-->
+                        @endif
+
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
@@ -134,7 +174,7 @@
                         </div>
                         <!--end::Input group-->
 
-
+                        @if(request()->segment(2)=='leaders')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -219,17 +259,9 @@
                         </div>
                         <!--end::Input group-->
 
+                        
+                        
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.username') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input style="cursor: not-allowed;" type="text" readonly class="form-control form-control-solid" placeholder="{{ __('messages.username') }}" name="username_update"  id="username_update"  autocomplete="false" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
 
 
 
@@ -255,18 +287,9 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @endif
 
-
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                        
 
                        
 

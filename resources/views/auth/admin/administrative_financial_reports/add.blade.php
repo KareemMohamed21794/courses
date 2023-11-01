@@ -55,8 +55,8 @@
                     
 
 
-
-                         <!--begin::Input group-->
+                        @if($firstSegment=='administrative')
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">ارفاق ملف التقرير الإداري</label>
@@ -66,6 +66,7 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @else
 
 
                          <!--begin::Input group-->
@@ -78,6 +79,8 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+
+                        @endif
 
 
                          <!--begin::Input group-->
@@ -99,7 +102,7 @@
 
 
                          
-  
+                        <input type="hidden" name="firstSegment" id="firstSegment" value="{{ $firstSegment }}">
                        
  
                     </div>

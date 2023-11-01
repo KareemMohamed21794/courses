@@ -30,7 +30,7 @@ class BoardDirectorMeetingsController extends Controller
         $objAdmin = Admin::find($userId);
         $exsistdata = File::where('admin_id',$userId)->where('type','board_director_meetings')->where('year',date('Y'))->first();
 
-        $leaders = Admin::get();
+        $leaders = Admin::where('is_super',0)->get();
 
         return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
     }
@@ -249,7 +249,7 @@ class BoardDirectorMeetingsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->name,
+                "leader" => $objdata->Admin->group_name,
                 "board_director_meetings" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>',
                 "year" => $objdata->year,

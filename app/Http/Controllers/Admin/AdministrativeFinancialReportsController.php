@@ -23,17 +23,29 @@ class AdministrativeFinancialReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $title = __('messages.administrative_financial_report');
-        $add_title = __('messages.administrative_financial_report');
+    public function index(request $request)
+    {   
+
+        //print_r($firstSegment = request()->segment(2)); die;
+        $firstSegment = $firstSegment = request()->segment(2);
+        if($firstSegment=='administrative')
+        {
+            $title = __('messages.administrative');
+            $add_title = __('messages.administrative');
+        }else{
+            $title = __('messages.financial');
+            $add_title = __('messages.financial');
+        }
+        
+        
+
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $exsistdata = File::where('admin_id',$userId)->where('type','administrative_financial')->where('year',date('Y'))->first();
 
-        $leaders = Admin::get();
+        $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
+        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders,'firstSegment'=>$firstSegment]);
     }
 
     /**
@@ -57,8 +69,8 @@ class AdministrativeFinancialReportsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
-            'administrative_financial1' => ['required'],
-            'administrative_financial2' => ['required'],
+            // 'administrative_financial1' => ['required'],
+            // 'administrative_financial2' => ['required'],
             'year' => ['required'],
         ]);
 
@@ -102,7 +114,7 @@ class AdministrativeFinancialReportsController extends Controller
             'administrative_financial1' =>  $administrative_financial1,
             'administrative_financial2' =>  $administrative_financial2,
             'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
-            'type' =>  'administrative_financial',
+            'type' =>  $request->firstSegment,
             'year' =>  $request->year,
         ]);
 
@@ -222,8 +234,7 @@ class AdministrativeFinancialReportsController extends Controller
             '#'   => true,
             'id'   => true,
             'leader'   => true,
-            'administrative_financial1'   => true,
-            'administrative_financial2'   => true,
+            'file'   => true,
             'year'   => true,
             'created_at'   => true,
         ];
@@ -238,30 +249,34 @@ class AdministrativeFinancialReportsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+
+        $type = $request->firstSegment;
+
         if($objAdmin->is_super == 1){
 
-           $alldata = File::where('type','administrative_financial')->get();
+           
+           $alldata = File::where('type',$type)->get();
         
             if($active=='All'){
-                $alldata = File::where('type','administrative_financial')->withTrashed()->get();
+                $alldata = File::where('type',$type)->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('type','administrative_financial')->get();
+                $alldata = File::where('type',$type)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::where('type','administrative_financial')->onlyTrashed()->get();
+                $alldata = File::where('type',$type)->onlyTrashed()->get();
             }
         }else{
 
-            $alldata = File::where('admin_id',$userId)->where('type','administrative_financial')->get();
+            $alldata = File::where('admin_id',$userId)->where('type',$type)->get();
             if($active=='All'){
-                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type','administrative_financial')->get();
+                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type',$type)->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('admin_id',$userId)->where('type','administrative_financial')->get();
+                $alldata = File::where('admin_id',$userId)->where('type',$type)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type','administrative_financial')->get();
+                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type',$type)->get();
             }
 
 
@@ -272,15 +287,15 @@ class AdministrativeFinancialReportsController extends Controller
 
         $alldataResult=array();
 
+        $fileColumn = ($request->firstSegment == 'administrative') ? 'administrative_financial1' : 'administrative_financial2';
+        
         foreach($alldata as $objdata){
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->name,
-                 "administrative_financial1" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial1) . '">download<a>',
-                 "administrative_financial2" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial2) . '">download<a>',
+                "leader" => $objdata->Admin->group_name,
+                "file" => '
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->$fileColumn) . '">download<a>',
                 "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );

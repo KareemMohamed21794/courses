@@ -34,7 +34,7 @@ class SecondaryRegistrationsController extends Controller
         $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
 
 
-        $leaders = Admin::get();
+        $leaders = Admin::where('is_super',0)->get();
 
 
         return view('auth.admin.secondary_registrations.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
@@ -256,7 +256,7 @@ class SecondaryRegistrationsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->name,
+                "leader" => $objdata->Admin->group_name,
                  "secondary_registration" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
                 "year" => $objdata->year,

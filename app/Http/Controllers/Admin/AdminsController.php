@@ -101,6 +101,8 @@ class AdminsController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
+ 
+         
          
 
         $admin = Admin::create([
@@ -112,6 +114,19 @@ class AdminsController extends Controller
             'is_super' => $request->select_is_super,
             'phone' => $request->phone,
             'address' => $request->address,
+            'registration_type' => $request->registration_type,
+            'alhayyuh_almuqayaduh' => $request->alhayyuh_almuqayaduh,
+            'group_classification' => $request->group_classification,
+            'group_name' => $request->group_name,
+            'date_establishment' => $request->date_establishment,
+            'registration_number' => $request->registration_number,
+            'website' => $request->website,
+            'governorate' => $request->governorate,
+            'district' => $request->district,
+            'street_name' => $request->street_name,
+            'building_number' => $request->building_number,
+            'workplace' => $request->workplace,
+            'job' => $request->job,
         ]);
 
         return response()->json(['admin'=>$admin]);
@@ -158,18 +173,18 @@ class AdminsController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
-                'registration_type' => 'required',
-                'group_classification' => 'required',
-                'group_name' => 'required',
-                'date_establishment' => 'required',
-                'registration_number' => 'required',
-                'website' => 'required',
-                'governorate' => 'required',
-                'district' => 'required',
-                'street_name' => 'required',
-                'building_number' => 'required',
-                'workplace' => 'required',
-                'job' => 'required',
+                // 'registration_type' => 'required',
+                // 'group_classification' => 'required',
+                // 'group_name' => 'required',
+                // 'date_establishment' => 'required',
+                // 'registration_number' => 'required',
+                // 'website' => 'required',
+                // 'governorate' => 'required',
+                // 'district' => 'required',
+                // 'street_name' => 'required',
+                // 'building_number' => 'required',
+                // 'workplace' => 'required',
+                // 'job' => 'required',
             ]);
         }else{
             $validator = Validator::make($request->all(),[
@@ -177,18 +192,18 @@ class AdminsController extends Controller
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
                 'password' => ['required', Rules\Password::defaults()],
-                'registration_type' => 'required',
-                'group_classification' => 'required',
-                'group_name' => 'required',
-                'date_establishment' => 'required',
-                'registration_number' => 'required',
-                'website' => 'required',
-                'governorate' => 'required',
-                'district' => 'required',
-                'street_name' => 'required',
-                'building_number' => 'required',
-                'workplace' => 'required',
-                'job' => 'required',
+                // 'registration_type' => 'required',
+                // 'group_classification' => 'required',
+                // 'group_name' => 'required',
+                // 'date_establishment' => 'required',
+                // 'registration_number' => 'required',
+                // 'website' => 'required',
+                // 'governorate' => 'required',
+                // 'district' => 'required',
+                // 'street_name' => 'required',
+                // 'building_number' => 'required',
+                // 'workplace' => 'required',
+                // 'job' => 'required',
             ]);
         }
 

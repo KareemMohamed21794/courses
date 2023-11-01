@@ -127,8 +127,7 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th> ملف التقرير الإداري</th>
-                            <th> ملف التقرير المالي</th>
+                            <th>الملف</th>
                             <th>السنة</th>
                         
                             <th>{{ __('messages.created_at') }}</th>
@@ -155,6 +154,8 @@
     </div>
     <!--end::Post-->
    <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
+
+   <input type="hidden" name="firstSegment" id="firstSegment" value="{{ $firstSegment }}">
 @endsection
 
 @section('scripts')

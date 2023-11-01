@@ -5,13 +5,13 @@
         <!--begin::Menu-->
         <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
             <div class="menu-item me-lg-1">
-                <a class="menu-link active py-3" href="javascript:void(0)">
-                    <span class="menu-title">{{ __('messages.welcome') }} {{ $objAdmin->name }}</span>
-                </a>
+                 
+                    <span style="color: #009EF7;" class="menu-title">{{ __('messages.welcome') }} {{ $objAdmin->name }}</span>
+                  
             </div>
 
             <!--begin::Notifications-->
-            <div class="d-flex align-items-center ms-1 ms-lg-3">
+            <div style="display: none !important;" class="d-flex align-items-center ms-1 ms-lg-3">
                 <!--begin::Menu- wrapper-->
                 <div class="btn btn-icon btn-active-light-primary position-relative w-30px h-30px w-md-40px h-md-40px" data-kt-menu-trigger="click" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
                     <!--begin::Svg Icon | path: icons/duotune/general/gen022.svg-->
