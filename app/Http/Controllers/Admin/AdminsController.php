@@ -59,13 +59,25 @@ class AdminsController extends Controller
         }
 
 
-        $Governorates = ["الاردن","فلسطين","سوريا","العراق","مصر","ليبيا","اليمن","اللبنان","الكويت","السعودية","الإمارات","قطر","عُمان","البحرين","المغرب","السودان","جنوب السودان","الجزائر","موريتانيا","تونس","الصومال","جيبوتي","جزر القمر","أثيوبيا","أذربيجان","أرمينيا","أستراليا","أفغانستان","ألبانيا","ألمانيا","أندورا","أنغولا"
+        $Governorates = [
+            "عمّان",
+            "إربد",
+            "البلقاء",
+            "الزرقاء",
+            "العقبة",
+            "جرش",
+            "عجلون",
+            "الكرك",
+            "مأدبا",
+            "الطفيلة",
+            "المفرق",
+            "معان"
         ];
 
 
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin]);
     }
 
     /**

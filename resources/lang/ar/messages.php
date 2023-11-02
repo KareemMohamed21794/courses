@@ -506,7 +506,7 @@ return [
     'board_director_meeting'=>'محضر اجتماعات مجلس الإدارة',
     'report_board_director_meetings'=>'تقرير  عدم ارفاق محضر اجتماعات مجلس الإدارة',
     'permits'=>'التصاريح',
-    'permit'=>'تصريح',
+    'permit'=>' طلب تصريح',
     'activity_name'=>' اسم النشاط',
     'nature_activity'=>'طبيعه النشاط',
     'activity_description'=>'وصف النشاط',

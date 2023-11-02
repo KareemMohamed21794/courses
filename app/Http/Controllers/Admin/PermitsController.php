@@ -295,7 +295,7 @@ class PermitsController extends Controller
                 "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
                 "number_leader"=>$objdata->number_leader,
-                "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
         }
 

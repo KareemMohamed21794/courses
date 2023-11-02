@@ -24,7 +24,7 @@
     }
 
     #accordion .card-header button {
-        color: #333;
+        color: white;
         text-decoration: none;
         padding: 10px;
         width: 100%;
@@ -128,7 +128,7 @@
                         <div id="accordion">
                             <!-- Section 1 -->
                             <div class="card" id="card1" >
-                                <div class="card-header" id="headingOne" style="background-color:silver">
+                                <div class="card-header" id="headingOne" style="background-color:#000000">
                                     <h5 class="mb-0">
                                         <button  type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                           مساعد قائد وحدة   
@@ -199,7 +199,7 @@
 
                             <!-- Section 2 -->
                             <div class="card" id="card2">
-                                <div class="card-header" id="headingTwo" style="background-color:silver">
+                                <div class="card-header" id="headingTwo" style="background-color:#00008B">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                         قائد وحدة شارة خشبية  
@@ -270,7 +270,7 @@
 
                             <!-- Section 3 -->
                             <div class="card" id="card3">
-                                <div class="card-header" id="headingThree" style="background-color:silver">
+                                <div class="card-header" id="headingThree" style="background-color:#8B0000">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                         مساعد قائد تدريب
@@ -340,7 +340,7 @@
 
                             <!-- Section 4 -->
                             <div class="card" id="card4">
-                                <div class="card-header" id="headingFour" style="background-color:silver">
+                                <div class="card-header" id="headingFour" style="background-color:#006400">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                         قائد تدريب

@@ -46,7 +46,14 @@ fill: #009EF7;
                     </div>
                 </div>
 
-                <div class="menu-item">
+                
+
+
+                @if(Request::segment(1)=='admin')
+                     
+                   @if($objAdmin->is_super == 1)
+                    
+                    <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -65,9 +72,7 @@ fill: #009EF7;
                 </div>
 
 
-                @if(Request::segment(1)=='admin')
-                     
-                   @if($objAdmin->is_super == 1)
+
                     <div class="menu-item">
                         <a class="menu-link {{ Request::segment(2)=='admins'  ? 'active' : '' }}" href="{{ url('/admin/admins') }}">
                             <span class="menu-icon">

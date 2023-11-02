@@ -276,8 +276,9 @@ var KTModalBranchesUpdate = function () {
 
                                             // Enable submit button after loading
                                             submitButton.disabled = false;
+                                            location.reload();
 
-                                            $("#kt_datatable_table").DataTable().ajax.reload();
+                                            //$("#kt_datatable_table").DataTable().ajax.reload();
                                             // Redirect to branchs list page
                                             //window.location = form.getAttribute("data-kt-redirect");
                                         }

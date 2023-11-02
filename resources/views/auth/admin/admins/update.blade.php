@@ -41,6 +41,7 @@
                         </div>
                         <!--end::Input group-->
 
+                        @if($objAdmin->is_super)
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -51,6 +52,7 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @endif
 
                         @if(request()->segment(2)=='admins')
                         <!--begin::Input group-->
