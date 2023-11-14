@@ -53,7 +53,18 @@
                         </div>
                         <!--end::Input group-->
                     @endif
-                      
+                        
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.permit_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.permit_number') }}" name="permit_number"  id="permit_number" value="{{ $permit_number }}" readonly />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">

@@ -1,0 +1,149 @@
+@font-face {
+  font-family: "Bahij-Yakout";
+  src: url("./Bahij-Yakout.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+.login-body {
+  margin: 0;
+  padding: 0;
+  font-family: "Bahij-Yakout";
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+.login-body h1,
+.login-body h2,
+.login-body h3 {
+  font-weight: 400;
+  margin: 0;
+}
+
+.main_login {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+  background-image: url("./Asset-1.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.login-right-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 15px;
+}
+
+.login-right-side-top-items {
+  display: flex;
+  align-items: start;
+  gap: 50px;
+}
+
+.right-side-logo img {
+  max-width: 200px;
+  margin: auto;
+}
+
+.login-right-side .login-form-input label {
+  display: block;
+  font-size: 1.25em;
+  margin-bottom: 6px;
+}
+
+.login-right-side .login-form-input input {
+  border: 0px;
+  background-color: #431f66;
+  color: #fff;
+  font-size: 1.25em;
+  border-radius: 8px;
+  padding: 8px 12px;
+  outline: unset;
+  width: 280px;
+}
+
+.login-form-input,
+.login-form-checkbox {
+  margin-bottom: 16px;
+}
+
+.login-form-checkbox input {
+  margin: 0 0 0 4px;
+  vertical-align: middle;
+}
+
+.login-form-note p {
+  margin: 16px 0 0 0;
+  font-size: 1.25em;
+  text-align: center;
+}
+
+.login-left-side {
+  background-color: #431f66;
+  text-align: center;
+  padding: 50px 25px 15px 25px;
+  color: #ffffff;
+  width: 38%;
+  display: flex;
+  flex-direction: column;
+}
+
+.vector-div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.number-in-title {
+  color: #d8bc48;
+  font-size: 2em;
+}
+
+.login-logo {
+  margin-bottom: 16px;
+}
+
+.login-left-side h2 {
+  margin-bottom: 16px;
+}
+
+.login-form-submit-button {
+  border: 0;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1em;
+  padding: 8px 0;
+  background-color: #1b9d53;
+  color: #fff;
+  font-size: 1.25em;
+  border-radius: 8px;
+}
+
+.login-form-submit-button:hover {
+  opacity: 0.8;
+}
+
+@media only screen and (max-width: 990px) {
+  .main_login {
+    flex-wrap: wrap;
+  }
+  .login-left-side {
+    width: 100%;
+  }
+  .login-right-side-top-items {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 590px) {
+  .login-right-side-top-items {
+    gap: 10px;
+  }
+}

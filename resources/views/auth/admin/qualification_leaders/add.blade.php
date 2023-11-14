@@ -150,7 +150,13 @@
                                                 <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.study_history_mqw') }}" name="study_history_mqw" id="study_history_mqw" />
+                                                 <select class="form-control form-control-solid" name="study_history_mqw" id="study_history_mqw">
+                                                    <option value="" selected disabled>{{ __('messages.study_history_mqw') }}</option>
+                                                    @for ($year = 1970; $year <= 2050; $year++)
+                                                        <option value="{{ $year }}">{{ $year }}</option>
+                                                    @endfor
+                                                </select>
+
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -221,7 +227,12 @@
                                                 <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_qw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.study_history_qw') }}" name="study_history_qw" id="study_history_qw" />
+                                                <select class="form-control form-control-solid" name="study_history_qw" id="study_history_qw">
+                                                    <option value="" selected disabled>{{ __('messages.study_history_qw') }}</option>
+                                                    @for ($year = 1970; $year <= 2050; $year++)
+                                                        <option value="{{ $year }}">{{ $year }}</option>
+                                                    @endfor
+                                                </select>
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -291,7 +302,12 @@
                                                 <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.study_history_mqt') }}" name="study_history_mqt" id="study_history_mqt" />
+                                                <select class="form-control form-control-solid" name="study_history_mqt" id="study_history_mqt">
+                                                    <option value="" selected disabled>{{ __('messages.study_history_mqt') }}</option>
+                                                    @for ($year = 1970; $year <= 2050; $year++)
+                                                        <option value="{{ $year }}">{{ $year }}</option>
+                                                    @endfor
+                                                </select>
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->
@@ -361,7 +377,12 @@
                                                 <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_qt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.study_history_qt') }}" name="study_history_qt" id="study_history_qt" />
+                                                <select class="form-control form-control-solid" name="study_history_qt" id="study_history_qt">
+                                                    <option value="" selected disabled>{{ __('messages.study_history_qt') }}</option>
+                                                    @for ($year = 1970; $year <= 2050; $year++)
+                                                        <option value="{{ $year }}">{{ $year }}</option>
+                                                    @endfor
+                                                </select>
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Input group-->

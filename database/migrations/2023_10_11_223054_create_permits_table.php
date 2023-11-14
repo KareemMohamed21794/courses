@@ -27,6 +27,8 @@ class CreatePermitsTable extends Migration
             $table->text('alwahda_description')->nullable();
             $table->string('activity_leader')->nullable();
             $table->string('number_leader')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('permit_number')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

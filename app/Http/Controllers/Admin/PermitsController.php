@@ -28,7 +28,44 @@ class PermitsController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
+
+        $can_add = 1;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+        if($objAdmin->is_super){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+            $can_accept = 1;
+            $can_reject = 1;
+        }else{
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 0;
+            $can_print = 1;
+            $can_accept = 0;
+            $can_reject = 0;
+        }
+
+        $registration_number = $objAdmin->registration_number;
+        
+        $Permit_count = Permit::count();
+        $Permit_count = $Permit_count+1000;
+
+        $fourDigitCount = str_pad($Permit_count, 4, '0', STR_PAD_LEFT);
+
+        $permit_number = "م ق أ /$registration_number/ $fourDigitCount";
+
+         
+
+        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject, 'permit_number'=>$permit_number]);
     }
 
     /**
@@ -70,6 +107,7 @@ class PermitsController extends Controller
         $userId = Auth::id();
 
         $Permit = Permit::create([
+            'permit_number' =>  $request->permit_number,
             'activity_name' =>  $request->activity_name,
             'nature_activity' =>  $request->nature_activity,
             'activity_description' =>  $request->activity_description,
@@ -201,6 +239,9 @@ class PermitsController extends Controller
             'alwahda_description'=>true,
             'activity_leader'=>true,
             'number_leader'=>true,
+            'permit_status'=>true,
+            'permit_number'=>true,
+            
             'created_at'   => true,
         ];
 
@@ -281,6 +322,15 @@ class PermitsController extends Controller
                 $alwahda = 'اخرى';
             }
 
+            if($objdata->status=='pending'){
+                $status = "معلقه";
+            }elseif ($objdata->status=='approved') {
+                $status = "مقبول";
+            }
+            elseif ($objdata->status=='rejected') {
+                $status = "مرفوض";
+            }
+
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
@@ -295,6 +345,9 @@ class PermitsController extends Controller
                 "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
                 "number_leader"=>$objdata->number_leader,
+                "permit_status"=>$status,
+                "permit_number"=>$objdata->permit_number,
+                
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
         }
@@ -443,4 +496,28 @@ class PermitsController extends Controller
 
         return $data;
     }
+
+    public function accept_permit(Request $request, $id)
+    {
+         
+
+        $objPermit = Permit::find($id);
+        $objPermit->status = "approved";       
+        $objPermit->save();
+        return redirect('/admin/permits');
+
+    }
+
+    public function reject_permit(Request $request, $id)
+    {
+         
+
+        $objPermit = Permit::find($id);
+        $objPermit->status = "rejected";       
+        $objPermit->save();
+        return redirect('/admin/permits');
+
+    }
+
+    
 }

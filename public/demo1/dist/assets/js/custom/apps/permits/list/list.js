@@ -13,7 +13,50 @@ var KTDatatablesServerSide = function () {
     var delete_lang = $("#delete_lang").val();
 
     
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    var can_accept = $("#can_accept").val();
+    var can_reject = $("#can_reject").val();
 
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    var display_accept = "none";
+    var display_reject = "none";
+    
+    
+
+    
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
+
+    if(can_accept==1){
+        var display_accept = "";
+    }
+
+    if(can_reject==1){
+        var display_reject = "";
+    }
 
 
     // Private functions
@@ -51,6 +94,8 @@ var KTDatatablesServerSide = function () {
                 { data: 'alwahda_description' },
                 { data: 'activity_leader' },
                 { data: 'number_leader' },
+                { data: 'permit_status' },
+                { data: 'permit_number' },
                 { data: 'created_at' },
                 { data: null },
             ],
@@ -105,6 +150,22 @@ var KTDatatablesServerSide = function () {
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                
+                               <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:`+display_accept+`">
+                                    <a href="/admin/accept_permit/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
+                                        مقبول
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:`+display_reject+`">
+                                    <a href="/admin/reject_permit/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
+                                        مرفوض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
 
                                 <!--begin::Menu item-->
@@ -116,7 +177,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>

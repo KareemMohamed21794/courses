@@ -95,6 +95,18 @@
 
 
                         <!--begin::Input group-->
+                        <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.alhayyuh_almuqayaduh_number') }}" name="alhayyuh_almuqayaduh_number"  id="alhayyuh_almuqayaduh_number" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.group_classification') }}</label>
@@ -262,7 +274,7 @@
                         <!--end::Input group-->
 
 
-                         <!--begin::Input group-->
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
@@ -272,6 +284,42 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leaders_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leaders_number') }}" name="leaders_number"  id="leaders_number" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.persons_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.persons_number') }}" name="persons_number"  id="persons_number" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.groups') }}" name="groups"  id="groups" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                        
 
                         <input type="hidden" name="department_id" id="department_id" value="{{ $department_id }}">
                         <input type="hidden" name="position_id" id="position_id" value="{{ $position_id }}">

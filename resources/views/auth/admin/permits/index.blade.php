@@ -1,6 +1,14 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
+    
+    <input type="hidden" name="can_add" id="can_add" value="{{ $can_add }}">
+    <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
+    <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
+    <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
+    <input type="hidden" name="can_accept" id="can_accept" value="{{ $can_accept }}">
+    <input type="hidden" name="can_reject" id="can_reject" value="{{ $can_reject }}">
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -134,6 +142,8 @@
                             <th>{{ __('messages.alwahda_description') }}</th>
                             <th>{{ __('messages.activity_leader') }}</th>
                             <th>{{ __('messages.number_leader') }}</th>
+                            <th>{{ __('messages.permit_status') }}</th>
+                            <th>{{ __('messages.permit_number') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>

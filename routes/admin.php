@@ -103,6 +103,11 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/permits/get', [PermitsController::class, 'get']);
 		Route::resource('/permits', PermitsController::class);
 		Route::DELETE('/delete_permits', [PermitsController::class,'deletepermits']);
+
+		Route::get('/accept_permit/{id}', [PermitsController::class, 'accept_permit']);
+		
+		Route::get('/reject_permit/{id}', [PermitsController::class, 'reject_permit']);
+		
 		# End permits
 
 

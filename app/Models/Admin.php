@@ -30,6 +30,7 @@ class Admin extends Authenticatable
         'address',
         'registration_type',
         'alhayyuh_almuqayaduh',
+        'alhayyuh_almuqayaduh_number',
         'group_classification',
         'group_name',
         'date_establishment',
@@ -41,6 +42,9 @@ class Admin extends Authenticatable
         'building_number',
         'workplace',
         'job',
+        'leaders_number',
+        'persons_number',
+        'groups',
     ];
 
     /**

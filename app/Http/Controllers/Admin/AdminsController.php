@@ -128,6 +128,7 @@ class AdminsController extends Controller
             'address' => $request->address,
             'registration_type' => $request->registration_type,
             'alhayyuh_almuqayaduh' => $request->alhayyuh_almuqayaduh,
+            'alhayyuh_almuqayaduh_number' => $request->alhayyuh_almuqayaduh_number,
             'group_classification' => $request->group_classification,
             'group_name' => $request->group_name,
             'date_establishment' => $request->date_establishment,
@@ -139,6 +140,9 @@ class AdminsController extends Controller
             'building_number' => $request->building_number,
             'workplace' => $request->workplace,
             'job' => $request->job,
+            'leaders_number' => $request->leaders_number,
+            'persons_number' => $request->persons_number,
+            'groups' => $request->groups,
         ]);
 
         return response()->json(['admin'=>$admin]);
@@ -243,6 +247,13 @@ class AdminsController extends Controller
         $objAdmin->building_number = $request->building_number;
         $objAdmin->workplace = $request->workplace;
         $objAdmin->job = $request->job;
+        $objAdmin->alhayyuh_almuqayaduh = $request->alhayyuh_almuqayaduh;
+        $objAdmin->alhayyuh_almuqayaduh_number = $request->alhayyuh_almuqayaduh_number;
+        $objAdmin->leaders_number = $request->leaders_number;
+        $objAdmin->persons_number = $request->persons_number;
+        $objAdmin->groups = $request->groups;
+
+
         if(!empty($request->password)){
             $objAdmin->password = Hash::make($request->password);
         }

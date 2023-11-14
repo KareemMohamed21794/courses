@@ -502,7 +502,7 @@ return [
     'financial'=>'التقارير المالى للعام',
     'administrative_financial_report'=>'تقرير  الإدارة المالية للعام',
     'report_administrative_financial'=>'تقرير  عدم ارفاق   الإدارة  المالية للعام',
-    'board_director_meetings'=>'محاضر اجتماعات مجلس الإدارة',
+    'board_director_meetings'=>'محاضر إجتماعات الهيئة العامة',
     'board_director_meeting'=>'محضر اجتماعات مجلس الإدارة',
     'report_board_director_meetings'=>'تقرير  عدم ارفاق محضر اجتماعات مجلس الإدارة',
     'permits'=>'التصاريح',
@@ -547,6 +547,19 @@ return [
     'rent_date_qt'=>'تاريخ الإجارة  ',
     'rent_number_qt'=>'رقم الإجارة  ',
     'total_leaders'=>'عدد القادة الكلي   ',
+    'permit_status'=>'حاله التصريح',
+    'permit_number'=>'رقم الطلب',
+    'alhayyuh_almuqayaduh_number'=>'رقم الهيئة المقيدة / مجلس الإدارة',
+
+    'leaders_number'=>'عدد القادة',
+    'persons_number'=>'عدد الأفراد',
+    'groups'=>'الفرق',
+    
+
+    
+    
+    
+    
 
  ];
 
