@@ -554,6 +554,7 @@ return [
     'leaders_number'=>'عدد القادة',
     'persons_number'=>'عدد الأفراد',
     'groups'=>'الفرق',
+    'Download_Form'=>'تحميل النموذج',
     
 
     

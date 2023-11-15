@@ -97,6 +97,20 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                         </a>
+
+                        <!--begin::Download Form-->
+                         <a href="https://www.google.com/" class="menu-link px-3">
+                            <button type="button" class="btn btn-light-primary me-3" >
+                         
+                            <span class="svg-icon svg-icon-2">
+                               
+                            </span>
+                            
+                            <!--end::Svg Icon-->{{ __('messages.Download_Form') }}</button>
+                           
+                        </a>
+                        <!--end::Download Form-->
+
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->

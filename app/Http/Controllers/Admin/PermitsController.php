@@ -97,6 +97,7 @@ class PermitsController extends Controller
             'alwahda' => ['required'],
             'activity_leader' => ['required', 'string', 'max:255'],
             'number_leader' => ['required'],
+            'leaders_names' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -118,6 +119,7 @@ class PermitsController extends Controller
             'alwahda_description' =>  $request->alwahda_description,
             'activity_leader' =>  $request->activity_leader,
             'number_leader' =>  $request->number_leader,
+            'leaders_names' =>  $request->leaders_names,
             'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
         ]);
@@ -171,6 +173,7 @@ class PermitsController extends Controller
                 'alwahda' => ['required'],
                 'activity_leader' => ['required', 'string', 'max:255'],
                 'number_leader' => ['required'],
+                'leaders_names' => ['required'],
             ]);
    
 
@@ -194,6 +197,7 @@ class PermitsController extends Controller
         $objPermit->alwahda_description =  $request->alwahda_description;
         $objPermit->activity_leader =  $request->activity_leader;
         $objPermit->number_leader =  $request->number_leader;
+        $objPermit->leaders_names =  $request->leaders_names;
        
         $objPermit->save();
         return response()->json(['objPermit'=>$objPermit]);

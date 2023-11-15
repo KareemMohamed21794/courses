@@ -211,6 +211,21 @@
                         <!--end::Input group-->
 
 
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">اسماء القاده المشاركين / يرجي كتابه كل اسم قائد في سطر </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <textarea class="form-control form-control-solid"  name="leaders_names"  id="leaders_names">
+                                
+                            </textarea>
+                            
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
 
         
                        

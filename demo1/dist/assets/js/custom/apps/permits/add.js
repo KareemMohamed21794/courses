@@ -89,6 +89,14 @@ var KTModalAdd = function () {
                         }
                     },
 
+                    'leaders_names': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
                    
 
 
