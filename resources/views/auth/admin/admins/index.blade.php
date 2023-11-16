@@ -129,7 +129,7 @@
                                 </div>
                             </th>
                             <th>#</th>
-                            <th>{{ __('messages.name') }}</th>
+                            <th>{{ __('messages.group_name') }}</th>
                             <th>{{ __('messages.username') }}</th>
                             <th>{{ __('messages.email') }}</th>
                             <th>{{ __('messages.phone') }}</th>

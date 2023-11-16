@@ -526,4 +526,32 @@ class AdministrativeFinancialReportsController extends Controller
 
 
 
+
+ public function ReportArchiveAdministrative()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = 'التقرير الإداري للعام';
+        
+        return view('auth.admin.administrative_financial_reports.report_archive_administrative', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+
+     public function ReportArchiveFinancial()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = 'التقرير المالي للعام';
+        
+        return view('auth.admin.administrative_financial_reports.report_archive_financial', [
+            'title' => $title,
+        ]);
+    }
+
+
+
 }

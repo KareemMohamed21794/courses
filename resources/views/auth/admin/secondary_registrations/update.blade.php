@@ -43,7 +43,7 @@
                             <select name="leader_id" id="leader_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_groups') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
                                 <option value="">{{ __('messages.scout_groups') }}</option >
                                     @foreach($leaders as $leader)
-                                        <option value="{{$leader->id}}">{{ $leader->name }}</option>
+                                        <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
                                     @endforeach
                             </select>
                             <!--end::Input-->
@@ -54,7 +54,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">نموذج التسجيل</label>
+                            <label class="required fs-6 fw-bold mb-2">نموذج التسجيل</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="file" class="form-control form-control-solid" placeholder="نموذج التسجيل" name="secondary_registration"   />
@@ -69,7 +69,7 @@
                            <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">السنة</label>
+                            <label class="required fs-6 fw-bold mb-2">السنة</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             @if($objAdmin->is_super == 1)

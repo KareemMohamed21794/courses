@@ -41,6 +41,18 @@
                         </div>
                         <!--end::Input group-->
 
+
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.group_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.group_name') }}" name="group_name"  id="group_name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
                         @if($objAdmin->is_super)
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -76,7 +88,7 @@
                             <!--end::Label-->
                             <!--begin::Select-->
                             <select onchange="RegistrationTypeUpdate(this.value)" name="registration_type" id="registration_type_update"  data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
-                                <option value="">Choose</option>
+                                <option value="">اختر</option>
                                 <option value="harah">حرة</option>
                                 <option value="muqiaduh">مقيدة</option>
                             </select>
@@ -118,7 +130,7 @@
                             <!--end::Label-->
                             <!--begin::Select-->
                             <select name="group_classification" id="group_classification_update"  data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
-                                <option value="">Choose</option>
+                                <option value="">اختر</option>
                                 <option value="kashfih">كشفية</option>
                                 <option value="irshad">ارشادية</option>
                             </select>
@@ -126,16 +138,7 @@
                         </div>
                         <!--end::Input group-->
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.group_name') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.group_name') }}" name="group_name"  id="group_name_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                        
 
 
 
@@ -168,7 +171,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone_update" />
@@ -331,7 +334,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.groups') }}" name="groups"  id="groups_update" />
+                            <textarea class="form-control form-control-solid"  name="groups"  id="groups_update" /></textarea>
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

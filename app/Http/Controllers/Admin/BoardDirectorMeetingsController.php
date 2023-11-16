@@ -415,6 +415,18 @@ class BoardDirectorMeetingsController extends Controller
     }
 
 
+    public function ReportArchiveBoardDirectorMeetings()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = 'تقرير محاضر اجتماعات الهيئة العامة';
+        
+        return view('auth.admin.board_director_meetings.report_archive_board_director_meetings', [
+            'title' => $title,
+        ]);
+    }
+
+
 
            public function ExportBoardDirectorMeetings(Request $request)
 {

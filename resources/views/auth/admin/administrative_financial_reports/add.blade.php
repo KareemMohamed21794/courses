@@ -45,7 +45,7 @@
                             <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
                                  <option value="">{{ __('messages.Select') }}</option >
                                     @foreach($leaders as $leader)
-                                        <option value="{{$leader->id}}">{{ $leader->name }}</option>
+                                        <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
                                     @endforeach
                             </select>
                             <!--end::Input-->
@@ -59,7 +59,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">ارفاق ملف التقرير الإداري</label>
+                            <label class="required fs-6 fw-bold mb-2">ارفاق ملف التقرير الإداري</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="file" class="form-control form-control-solid" placeholder="ارفاق ملف التقرير الإداري" name="administrative_financial1"  id="administrative_financial1"  />
@@ -72,7 +72,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">ارفاق ملف التقرير المالي</label>
+                            <label class="required fs-6 fw-bold mb-2">ارفاق ملف التقرير المالي</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="file" class="form-control form-control-solid" placeholder="ارفاق ملف التقرير المالي" name="administrative_financial2"  id="administrative_financial2"  />
@@ -86,7 +86,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">السنة</label>
+                            <label class="required fs-6 fw-bold mb-2">السنة</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             @if($objAdmin->is_super == 1)

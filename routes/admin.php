@@ -59,6 +59,18 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/report_secondary_registrations_get_list', [SecondaryRegistrationsController::class, 'report_secondary_registrations_get_list']);
 
 		Route::get('export_secondary_registrations', [SecondaryRegistrationsController::class, 'ExportSecondaryRegistrations']);
+
+
+       ///// archive
+
+
+		Route::get('/report_archive_secondary_registrations', [SecondaryRegistrationsController::class, 'ReportArchiveSecondaryRegistrations']);
+
+		Route::get('/report_archive_secondary_registrations_get', [SecondaryRegistrationsController::class, 'ReportArchiveSecondaryRegistrationsGet']);
+
+		Route::get('/report_archive_secondary_registrations_get_list', [SecondaryRegistrationsController::class, 'report_archive_secondary_registrations_get_list']);
+
+		Route::get('export_archive_secondary_registrations', [SecondaryRegistrationsController::class, 'ExportArchiveSecondaryRegistrations']);
 		# End secondary_registration
 
 
@@ -78,6 +90,11 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('/report_administrative_financial', [AdministrativeFinancialReportsController::class, 'ReportAdministrativeFinancial']);
 
+        //archive
+		Route::get('/report_archive_administrative', [AdministrativeFinancialReportsController::class, 'ReportArchiveAdministrative']);
+		Route::get('/report_archive_financial', [AdministrativeFinancialReportsController::class, 'ReportArchiveFinancial']);
+		///
+
 
 		Route::get('export_administrative_financial', [AdministrativeFinancialReportsController::class, 'ExportAdministrativeFinancial']);
 
@@ -92,6 +109,11 @@ Route::middleware('auth:admin')->group(function () {
 
 
 		Route::get('/report_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportBoardDirectorMeetings']);
+
+
+       //archive
+		Route::get('/report_archive_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportArchiveBoardDirectorMeetings']);
+		///
 
 		Route::get('export_board_director_meetings', [BoardDirectorMeetingsController::class, 'ExportBoardDirectorMeetings']);
 

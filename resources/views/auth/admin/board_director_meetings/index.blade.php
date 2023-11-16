@@ -141,7 +141,7 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th> ملف محضر اجتماع مجلس الاداره</th>
+                            <th> ملف    محضر اجتماعات الهيئة العامة</th>
                              <th>السنة</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>

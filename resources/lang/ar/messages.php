@@ -486,8 +486,8 @@ return [
     'both'=>'كلاهما ',
     'registration_type'=>'نوع التسجيل',
     'alhayyuh_almuqayaduh'=>'الهيئه المقيده',
-    'group_classification'=>'تصنيف المجموعه',
-    'group_name'=>'اسم المجموعه',
+    'group_classification'=>'تصنيف  المجموعة',
+    'group_name'=>'اسم  المجموعة',
     'date_establishment'=>'تاريخ التاسيس',
     'registration_number'=>'رقم التسجيل',
     'website'=>'الموقع الالكتروني',
@@ -498,12 +498,12 @@ return [
     'secondary_registration'=>'السجل السنوي',
     'report_secondary_registration'=>'تقرير  عدم ارفاق السجل السنوي',
     'administrative_financial_reports'=>'التقارير  الإدارة المالية للعام',
-    'administrative'=>' التقرير الادارى للعام',
-    'financial'=>'التقارير المالى للعام',
+    'administrative'=>'التقرير الإداري للعام',
+    'financial'=>'التقرير المالي للعام',
     'administrative_financial_report'=>'تقرير  الإدارة المالية للعام',
     'report_administrative_financial'=>'تقرير  عدم ارفاق   الإدارة  المالية للعام',
     'board_director_meetings'=>'محاضر إجتماعات الهيئة العامة',
-    'board_director_meeting'=>'محضر اجتماعات مجلس الإدارة',
+    'board_director_meeting'=>'محضر اجتماعات الهيئة العامة',
     'report_board_director_meetings'=>'تقرير  عدم ارفاق محضر اجتماعات مجلس الإدارة',
     'permits'=>'التصاريح',
     'permit'=>' طلب تصريح',
@@ -555,7 +555,7 @@ return [
     'persons_number'=>'عدد الأفراد',
     'groups'=>'الفرق',
     'Download_Form'=>'تحميل النموذج',
-    
+    'archives'=>'الارشيف',
 
     
     

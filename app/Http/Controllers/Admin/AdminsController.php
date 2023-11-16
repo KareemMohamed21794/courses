@@ -33,6 +33,9 @@ class AdminsController extends Controller
 
         $segment = $request->segment(2);
 
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
         $add_title = "";
         $department_id = 1;
         $position_id = 1;
@@ -47,10 +50,6 @@ class AdminsController extends Controller
         }
         elseif($segment=='leaders'){
 
-            $userId = Auth::id();
-            $objAdmin = Admin::find($userId);
-
-            
             $title =  $objAdmin->is_super == 1 ? __('messages.scout_groups') : __('messages.group_info');
             $add_title ="مجموعة كشفية";;
             $department_id = 2;
@@ -326,7 +325,7 @@ class AdminsController extends Controller
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
-            'name'   => true,
+            'group_name'   => true,
             'username'   => true,
             'email'   => true,
             'phone'   => true,
@@ -399,7 +398,7 @@ class AdminsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "name" => $objdata->name,
+                "group_name" => $objdata->group_name,
                 "username"=> $objdata->username,
                 "email" => $objdata->email,
                 "phone" => $objdata->phone,
