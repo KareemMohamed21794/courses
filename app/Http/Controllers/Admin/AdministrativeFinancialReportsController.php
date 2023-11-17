@@ -97,7 +97,7 @@ class AdministrativeFinancialReportsController extends Controller
 
          if(!empty($request->file('administrative_financial1'))){
             $file = $request->file('administrative_financial1');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $administrative_financial1 = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $administrative_financial1);
         }
@@ -105,7 +105,7 @@ class AdministrativeFinancialReportsController extends Controller
 
         if(!empty($request->file('administrative_financial2'))){
             $file = $request->file('administrative_financial2');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $administrative_financial2 = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $administrative_financial2);
         }
@@ -179,12 +179,12 @@ class AdministrativeFinancialReportsController extends Controller
         if(!empty($request->file('administrative_financial1'))){
             $oldImage = $objFile->administrative_financial1;
             $file = $request->file('administrative_financial1');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $administrative_financial1 = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $administrative_financial1);
             $objFile->administrative_financial1 = $administrative_financial1;
             if($objFile->save()){
-               @unlink("images/files/".$oldImage);
+               @unlink("public/images/files/".$oldImage);
             }
         }
 
@@ -192,12 +192,12 @@ class AdministrativeFinancialReportsController extends Controller
          if(!empty($request->file('administrative_financial2'))){
             $oldImage = $objFile->administrative_financial2;
             $file = $request->file('administrative_financial2');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $administrative_financial2 = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $administrative_financial2);
             $objFile->administrative_financial2 = $administrative_financial2;
             if($objFile->save()){
-               @unlink("images/files/".$oldImage);
+               @unlink("public/images/files/".$oldImage);
             }
         }
         $objFile->save();

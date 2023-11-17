@@ -40,7 +40,7 @@ class PermitsController extends Controller
 
         if($objAdmin->is_super){
             $can_add = 1;
-            $can_update = 1;
+            $can_update = 0;
             $can_delete = 1;
             $can_print = 1;
             $can_accept = 1;

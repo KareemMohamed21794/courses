@@ -523,13 +523,13 @@ return [
     'leader_name'=>'اسم القائد',
     'current_qualification'=>'المؤهل الحالي',
 
-    'study_history_mqw'=>'تاريخ  الدراسة  ',
+    'study_history_mqw'=>'سنة الدراسة',
     'place_study_mqw'=>'مكان  الدراسة   ',
     'organizer_mqw'=>'المنظم  ',
     'rent_date_mqw'=>'تاريخ الإجارة  ',
     'rent_number_mqw'=>'رقم الإجارة  ',
 
-    'study_history_qw'=>'تاريخ  الدراسة  ',
+    'study_history_qw'=>'سنة الدراسة',
     'place_study_qw'=>'مكان  الدراسة  ',
     'organizer_qw'=>'المنظم  ',
     'rent_date_qw'=>'تاريخ الإجارة  ',
@@ -541,7 +541,7 @@ return [
     'rent_date_mqt'=>'تاريخ الإجارة ',
     'rent_number_mqt'=>'رقم الإجارة ',
 
-    'study_history_qt'=>'تاريخ  الدراسة  ',
+    'study_history_qt'=>'سنة الدراسة',
     'place_study_qt'=>'مكان  الدراسة   ',
     'organizer_qt'=>'المنظم  ',
     'rent_date_qt'=>'تاريخ الإجارة  ',

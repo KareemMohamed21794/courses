@@ -46,7 +46,7 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
-                { data: 'name' },
+                { data: 'group_name' },
                 { data: 'username' },
                 { data: 'email' },
                 { data: 'phone' },

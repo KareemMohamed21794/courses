@@ -88,6 +88,7 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
+
                     'leaders_names': {
                         validators: {
                             notEmpty: {
@@ -316,7 +317,6 @@ function getData(id) {
             jQuery('#activity_leader_update').val(data.activity_leader);
             jQuery('#number_leader_update').val(data.number_leader);
             jQuery('#leaders_names_update').val(data.leaders_names);
-            
 
             if(data.nature_activity == 'other'){
                 $("#other_activity_description_update").show();

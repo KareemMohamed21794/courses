@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\QualificationleadersController;
 use App\Http\Controllers\Admin\AdministrativeFinancialReportsController;
 use App\Http\Controllers\Admin\BoardDirectorMeetingsController;
 use App\Http\Controllers\Admin\SecondaryRegistrationsController;
+use App\Http\Controllers\Admin\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +38,7 @@ Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
 Route::get('export_clients', [PDFController::class, 'ExportClients']);
 Route::get('export_procedures', [PDFController::class, 'ExportProcedures']);
 Route::get('export_cases', [PDFController::class, 'ExportCases']);
-Route::get('send_email', [PDFController::class, 'send_email']);
+Route::get('send_email', [HomeController::class, 'send_email']);
 Route::get('export_qualification_leaders', [QualificationleadersController::class, 'ExportQualificationLeaders']);
 
 

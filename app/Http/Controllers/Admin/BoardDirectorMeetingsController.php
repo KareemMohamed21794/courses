@@ -82,7 +82,7 @@ class BoardDirectorMeetingsController extends Controller
 
          if(!empty($request->file('board_director_meetings'))){
             $file = $request->file('board_director_meetings');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $board_director_meetings = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $board_director_meetings);
         }
@@ -154,12 +154,12 @@ class BoardDirectorMeetingsController extends Controller
         if(!empty($request->file('board_director_meetings'))){
             $oldImage = $objFile->board_director_meetings;
             $file = $request->file('board_director_meetings');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $board_director_meetings = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $board_director_meetings);
             $objFile->board_director_meetings = $board_director_meetings;
             if($objFile->save()){
-               @unlink("images/files/".$oldImage);
+               @unlink("public/images/files/".$oldImage);
             }
         }
         $objFile->save();

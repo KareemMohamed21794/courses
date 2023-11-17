@@ -224,6 +224,11 @@ var KTModalAdd = function () {
                             department_id: $("#department_id").val(),
                             position_id: $("#position_id").val(),
                             select_is_super: jQuery('#select_is_super').val(),
+                            alhayyuh_almuqayaduh: jQuery('#alhayyuh_almuqayaduh').val(),
+                            alhayyuh_almuqayaduh_number: jQuery('#alhayyuh_almuqayaduh_number').val(),
+                            leaders_number: jQuery('#leaders_number').val(),
+                            persons_number: jQuery('#persons_number').val(),
+                            groups: jQuery('#groups').val(),
 			        	};
 
 			        	var type = "POST";

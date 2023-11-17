@@ -89,7 +89,7 @@ class SecondaryRegistrationsController extends Controller
 
          if(!empty($request->file('secondary_registration'))){
             $file = $request->file('secondary_registration');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $secondary_registration = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $secondary_registration);
         }
@@ -161,12 +161,12 @@ class SecondaryRegistrationsController extends Controller
         if(!empty($request->file('secondary_registration'))){
             $oldImage = $objFile->secondary_registration;
             $file = $request->file('secondary_registration');
-            $destinationPath = "images/files";
+            $destinationPath = "public/images/files";
             $secondary_registration = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $secondary_registration);
             $objFile->secondary_registration = $secondary_registration;
             if($objFile->save()){
-               @unlink("images/files/".$oldImage);
+               @unlink("public/images/files/".$oldImage);
             }
         }
         $objFile->save();
@@ -511,7 +511,7 @@ class SecondaryRegistrationsController extends Controller
 
             $alldataResult[] = array(
                 "id" => $objdata->id,
-                "name" => @$objdata->name,
+                "name" => @$objdata->group_name,
                 "phone" => @$objdata->phone,
                 "address" => @$objdata->address,
                 "email" => @$objdata->email,

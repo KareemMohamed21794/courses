@@ -169,7 +169,7 @@ var KTDatatablesServerSide = function () {
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3"  style="display:`+display_edit+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>

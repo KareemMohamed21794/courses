@@ -241,6 +241,12 @@ var KTModalBranchesUpdate = function () {
                             building_number: jQuery('#building_number_update').val(),
                             workplace: jQuery('#workplace_update').val(),
                             job: jQuery('#job_update').val(),
+                            alhayyuh_almuqayaduh: jQuery('#alhayyuh_almuqayaduh_update').val(),
+                            alhayyuh_almuqayaduh_number: jQuery('#alhayyuh_almuqayaduh_number_update').val(),
+                            leaders_number: jQuery('#leaders_number_update').val(),
+                            persons_number: jQuery('#persons_number_update').val(),
+                            groups: jQuery('#groups_update').val(),
+                            
                            
                         };
 
@@ -276,8 +282,9 @@ var KTModalBranchesUpdate = function () {
 
                                             // Enable submit button after loading
                                             submitButton.disabled = false;
+                                            location.reload();
 
-                                            $("#kt_datatable_table").DataTable().ajax.reload();
+                                            //$("#kt_datatable_table").DataTable().ajax.reload();
                                             // Redirect to branchs list page
                                             //window.location = form.getAttribute("data-kt-redirect");
                                         }
@@ -451,13 +458,25 @@ function getData(id,action) {
             jQuery('#registration_type_update').val(data.registration_type);
            // jQuery("#registration_type_update").select2("val", ""+data.registration_type+"");
             jQuery('#group_classification_update').val(data.group_classification);
-          //  jQuery("#group_classification_update").select2("val", ""+data.group_classification+"");
+          //  jQuery("#group_cassification_update").select2("val", ""+data.group_classification+"");
             
-            if(data.registration_type == 'muqiaduh'){
-                $("#registration_alhayyuh_almuqayaduh_update").show();
-            }else{
-                $("#registration_alhayyuh_almuqayaduh_update").hide();
-            }
+
+            jQuery('#alhayyuh_almuqayaduh_update').val(data.alhayyuh_almuqayaduh);
+            jQuery('#alhayyuh_almuqayaduh_number_update').val(data.alhayyuh_almuqayaduh_number);
+            
+            jQuery('#leaders_number_update').val(data.leaders_number);
+            jQuery('#persons_number_update').val(data.persons_number);
+            jQuery('#groups_update').val(data.groups);
+
+
+            // if(data.registration_type == 'muqiaduh'){
+            //     $("#registration_alhayyuh_almuqayaduh_update").show();
+            // }else{
+            //     $("#registration_alhayyuh_almuqayaduh_update").hide();
+            // }
+
+l
+
 
            // jQuery(`#position_id_update option[value="${data.position.id}"]`).attr("selected", "selected");
         },

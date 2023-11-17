@@ -89,6 +89,8 @@ var KTModalAdd = function () {
                         }
                     },
 
+
+
                     'leaders_names': {
                         validators: {
                             notEmpty: {
