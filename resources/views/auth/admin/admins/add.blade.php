@@ -109,7 +109,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.alhayyuh_almuqayaduh_number') }}" name="alhayyuh_almuqayaduh_number"  id="alhayyuh_almuqayaduh_number" />
