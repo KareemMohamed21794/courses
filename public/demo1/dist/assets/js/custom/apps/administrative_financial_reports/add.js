@@ -23,8 +23,8 @@ var KTModalAdd = function () {
                             },
                             file: {
                                 maxSize: 8 * 1024 * 1024, // 8 MB
-                                extensions: ['pdf', 'doc', 'docx'],
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون الامتداد PDF أو Word (doc, docx)'
+                                extensions: ['pdf', 'doc', 'docx','docm','dot','dotx','dotm','xls','xlsx','xlsm','xlsb'],
+                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون الامتداد PDF أو Word (doc, docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb)'
                             }
                         }
                     },
@@ -35,8 +35,8 @@ var KTModalAdd = function () {
                             },
                             file: {
                                 maxSize: 8 * 1024 * 1024, // 8 MB
-                                extensions: ['pdf', 'doc', 'docx'],
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون الامتداد PDF أو Word (doc, docx)'
+                                extensions: ['pdf', 'doc', 'docx','docm','dot','dotx','dotm','xls','xlsx','xlsm','xlsb'],
+                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون الامتداد PDF أو Word (doc, docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb)'
                             }
                         }
                     },
