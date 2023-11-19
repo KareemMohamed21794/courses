@@ -293,7 +293,7 @@ class AdministrativeFinancialReportsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                 "file" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->$fileColumn) . '">download<a>',
                 "year" => $objdata->year,

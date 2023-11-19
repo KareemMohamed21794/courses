@@ -270,7 +270,7 @@ class QualificationleadersController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                 "leader_name"=> $objdata->leader_name,
                 "current_qualification"=> @$current_qualification,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),

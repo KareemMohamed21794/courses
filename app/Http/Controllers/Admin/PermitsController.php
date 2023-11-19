@@ -338,7 +338,7 @@ class PermitsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                 "activity_name"=> $objdata->activity_name,
                 "nature_activity"=> $nature_activity,
                 "activity_description"=> $objdata->activity_description,

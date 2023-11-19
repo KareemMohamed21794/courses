@@ -256,7 +256,7 @@ class SecondaryRegistrationsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                  "secondary_registration" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
                 "year" => $objdata->year,
@@ -783,7 +783,7 @@ public function ReportArchiveSecondaryRegistrations()
 
             $alldataResult[] = array(
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                 "file" => $file,
                 "year" => $objdata->year,
                

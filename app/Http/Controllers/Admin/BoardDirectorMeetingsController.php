@@ -249,7 +249,7 @@ class BoardDirectorMeetingsController extends Controller
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "leader" => $objdata->Admin->group_name,
+                "leader" => @$objdata->Admin->group_name,
                 "board_director_meetings" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>',
                 "year" => $objdata->year,
