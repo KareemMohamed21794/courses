@@ -21,6 +21,11 @@ var KTModalAdd = function () {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
+                            },
+                            file: {
+                                maxSize: 8 * 1024 * 1024, // 8 MB
+                                extensions: ['pdf', 'doc', 'docx'],
+                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون الامتداد PDF أو Word (doc, docx)'
                             }
                         }
                     },
