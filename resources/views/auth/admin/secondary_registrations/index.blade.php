@@ -147,7 +147,7 @@
 
                              <th>السنة</th>
                             <th>{{ __('messages.created_at') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
+                            {{-- <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th> --}}
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">
