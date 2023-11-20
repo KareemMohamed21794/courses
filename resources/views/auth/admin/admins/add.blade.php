@@ -42,8 +42,8 @@
                         </div>
                         <!--end::Input group-->
 
-
-                          <!--begin::Input group-->
+                        @if($segment=='leaders')
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.group_name') }}</label>
@@ -53,6 +53,7 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @endif
                         
 
                         <!--begin::Input group-->
@@ -79,6 +80,7 @@
                         </div>
                         <!--end::Input group-->
 
+                        @if($segment=='leaders')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -133,10 +135,6 @@
                         </div>
                         <!--end::Input group-->
 
-                       
-
-
-
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -161,7 +159,10 @@
                         </div>
                         <!--end::Input group-->
 
-                         <!--begin::Input group-->
+                        @endif
+
+
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
@@ -183,10 +184,10 @@
                         </div>
                         <!--end::Input group-->
 
-                        
+                        @if($segment=='leaders')
 
 
-                      <!--begin::Input group-->
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.website') }}</label>
@@ -323,7 +324,7 @@
                         <!--end::Input group-->
 
 
-                        
+                        @endif
 
                         <input type="hidden" name="department_id" id="department_id" value="{{ $department_id }}">
                         <input type="hidden" name="position_id" id="position_id" value="{{ $position_id }}">
