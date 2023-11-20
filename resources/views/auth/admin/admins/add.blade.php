@@ -87,7 +87,7 @@
                             <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
-                            <select onchange="RegistrationTypeUpdate(this.value)" name="registration_type" id="registration_type"  data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
+                            <select onchange="RegistrationType(this.value)" name="registration_type" id="registration_type"  data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
                                 <option value="">اختر</option>
                                 <option value="harah">حرة</option>
                                 <option value="muqiaduh">مقيدة</option>
@@ -97,7 +97,7 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh">
+                        <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_id">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</label>
                             <!--end::Label-->
@@ -109,7 +109,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh">
+                        <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_number_id">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
                             <!--end::Label-->
@@ -317,8 +317,8 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                           
-                            <textarea class="form-control form-control-solid"  name="groups"  id="groups" /></textarea>
+                            <input type="number" class="form-control form-control-solid" placeholder="{{ __('messages.groups') }}" name="groups"  id="groups" />
+                            
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

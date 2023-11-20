@@ -238,7 +238,7 @@
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.leader_name') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->leader_name }}</th>
+                                            <th class="pb-2">{{ $objAdmin->name }}</th>
                                         </tr>
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">

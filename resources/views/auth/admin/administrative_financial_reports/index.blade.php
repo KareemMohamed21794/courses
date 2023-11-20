@@ -80,6 +80,7 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
+                            @if($objAdmin->is_super == 1)
                              <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
                            <a href="{{url('admin/export_administrative_financial')}}" class="menu-link px-3">
@@ -97,6 +98,7 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                         </a>
+                        @endif
 
                          <!--begin::Download Form-->
                          <a href="https://www.google.com/" class="menu-link px-3">

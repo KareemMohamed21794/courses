@@ -49,7 +49,7 @@
                                     <select class="form-select form-select-solid fw-bolder"  data-placeholder="Select option" data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt_account_profile_details" id="leader_id" name="leader_id" >
                                         <option value="">الكل</option >
                                         @foreach($leaders as $leader)
-                                            <option value="{{$leader->id}}">{{ $leader->name }}</option>
+                                            <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -45,7 +45,7 @@
                             <select name="leader_id" id="leader_id_update" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
                                 <option value="">{{ __('messages.scout_group') }}</option >
                                     @foreach($leaders as $leader)
-                                        <option value="{{$leader->id}}">{{ $leader->name }}</option>
+                                        <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
                                     @endforeach
                             </select>
                             <!--end::Input-->

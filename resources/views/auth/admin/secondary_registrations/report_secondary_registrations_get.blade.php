@@ -51,6 +51,16 @@
                             </span>
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
+                            @if($type == 'secondary_registration')
+                            <a href="{{ url('admin/report_secondary_registrations') }}" class="menu-link px-3">
+                            @elseif($type == 'administrative_financial')
+                            <a href="{{ url('admin/report_administrative_financial') }}" class="menu-link px-3">
+                            @else
+                            <a href="{{ url('admin/report_board_director_meetings') }}" class="menu-link px-3">
+                            @endif
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">العوده</button>
+                            </button>
+                            </a>
                              
                         </div>
                         <!--end::Toolbar-->

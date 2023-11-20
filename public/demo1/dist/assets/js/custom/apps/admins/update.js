@@ -469,11 +469,17 @@ function getData(id,action) {
             jQuery('#groups_update').val(data.groups);
 
 
-            // if(data.registration_type == 'muqiaduh'){
-            //     $("#registration_alhayyuh_almuqayaduh_update").show();
-            // }else{
-            //     $("#registration_alhayyuh_almuqayaduh_update").hide();
-            // }
+            if(data.registration_type == 'muqiaduh'){
+                $("#alhayyuh_almuqayaduh_id_update").show();
+                $("#alhayyuh_almuqayaduh_number_id_update").show();
+            }else if(data.registration_type == 'harah'){
+                $("#alhayyuh_almuqayaduh_id_update").hide();
+                $("#alhayyuh_almuqayaduh_number_id_update").show();
+               
+            }else{
+                $("#alhayyuh_almuqayaduh_id_update").hide();
+                $("#alhayyuh_almuqayaduh_number_id_update").hide();
+            }
 
 l
 
@@ -543,13 +549,18 @@ function getPositions(department_id) {
     //======= End Ajxa ========//
 }
 
+
 function RegistrationTypeUpdate(value) {
    if(value == 'muqiaduh'){
-
-   $("#registration_alhayyuh_almuqayaduh_update").show();
+    $("#alhayyuh_almuqayaduh_id_update").show();
+    $("#alhayyuh_almuqayaduh_number_id_update").show();
+   
+   }else if(value == 'harah'){
+    $("#alhayyuh_almuqayaduh_id_update").hide();
+    $("#alhayyuh_almuqayaduh_number_id_update").show();
    
    }else{
-    $("#registration_alhayyuh_almuqayaduh_update").hide();
-    $('#alhayyuh_almuqayaduh_update').val(null);
+    $("#alhayyuh_almuqayaduh_id_update").hide();
+    $("#alhayyuh_almuqayaduh_number_id_update").hide();
    }
 }

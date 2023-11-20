@@ -80,6 +80,7 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
+                             @if($objAdmin->is_super == 1)
                             <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
                            <a href="{{url('admin/export_secondary_registrations')}}" class="menu-link px-3">
@@ -98,7 +99,7 @@
                             <!--end::Export-->
                         </a>
 
-
+                        @endif
                         <!--begin::Download Form-->
                          <a href="https://www.google.com/" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >

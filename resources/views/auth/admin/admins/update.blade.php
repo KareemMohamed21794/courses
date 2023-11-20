@@ -102,7 +102,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7" id="registration_alhayyuh_almuqayaduh_update">
+                        <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_id_update">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</label>
                             <!--end::Label-->
@@ -114,7 +114,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_number_id_update">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
                             <!--end::Label-->
@@ -336,7 +336,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid"  name="groups"  id="groups_update" /></textarea>
+                            <input type="number" class="form-control form-control-solid" placeholder="{{ __('messages.groups') }}" name="groups"  id="groups_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
