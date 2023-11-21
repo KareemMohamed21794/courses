@@ -399,3 +399,29 @@ var KTModalAdd = function () {
 KTUtil.onDOMContentLoaded(function () {
 	KTModalAdd.init();
 });
+
+
+$( document).ready(function() {
+
+    $("#alhayyuh_almuqayaduh_id").hide();
+    $("#alhayyuh_almuqayaduh_number_id").hide();
+   
+});
+
+
+function RegistrationType(value) {
+   if(value == 'muqiaduh'){
+    $("#alhayyuh_almuqayaduh_id").show();
+    $("#alhayyuh_almuqayaduh_number_id").show();
+   
+   }else if(value == 'harah'){
+    $("#alhayyuh_almuqayaduh_id").hide();
+    $("#alhayyuh_almuqayaduh_number_id").show();
+    $('#alhayyuh_almuqayaduh').val(null);
+   }else{
+    $("#alhayyuh_almuqayaduh_id").hide();
+    $("#alhayyuh_almuqayaduh_number_id").hide();
+    $('#alhayyuh_almuqayaduh').val(null);
+    $('#alhayyuh_almuqayaduh_number').val(null);
+   }
+}

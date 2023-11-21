@@ -16,7 +16,17 @@ var KTModalAdd = function () {
             form,
             {
                 fields: {
-                    'administrative_financial1': {
+
+                    'group_type': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'file': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -28,19 +38,17 @@ var KTModalAdd = function () {
                             }
                         }
                     },
-                    'administrative_financial2': {
+                    
+                    'file_name': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
-                            },
-                            file: {
-                                maxSize: 8 * 1024 * 1024, // 8 MB
-                                extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
                             }
                         }
                     },
-                    'year': {
+
+
+                    'description': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -239,7 +247,16 @@ KTUtil.onDOMContentLoaded(function () {
 });
 
 $( document ).ready(function() {
-    $("#availability_date_id").hide();
-
-
+    $("#group_div").hide();
 });
+
+
+function group_classification(value) {
+
+   if(value == 'group_name'){
+    $("#group_div").show();
+   }else{
+    $("#group_div").hide();
+   
+   }
+}
