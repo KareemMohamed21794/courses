@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\AdministrativeFinancialReportsController;
 use App\Http\Controllers\Admin\BoardDirectorMeetingsController;
 use App\Http\Controllers\Admin\PermitsController;
 use App\Http\Controllers\Admin\QualificationleadersController; 
+use App\Http\Controllers\Admin\AdvertisementsController;
+use App\Http\Controllers\Admin\InformationsController;
 
 
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
@@ -149,6 +151,24 @@ Route::middleware('auth:admin')->group(function () {
 
 	
 		# End qualification_leaders
+
+
+
+		# Start advertisements
+		Route::get('/advertisements/get', [AdvertisementsController::class, 'get']);
+		Route::resource('/advertisements', AdvertisementsController::class);
+		Route::DELETE('/delete_advertisements', [AdvertisementsController::class,'deleteadvertisements']);
+		Route::get('export_advertisements', [AdvertisementsController::class, 'ExportAdvertisements']);
+		# End advertisements
+
+
+
+		# Start requests
+		Route::get('/requests/get', [InformationsController::class, 'get']);
+		Route::resource('/requests', InformationsController::class);
+		Route::DELETE('/delete_requests', [InformationsController::class,'deleterequests']);
+		Route::get('export_requests', [InformationsController::class, 'ExportRequests']);
+		# End requests
 
 
 

@@ -80,10 +80,10 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            @if($objAdmin->is_super == 1)
-                            <!--begin::Export-->
+                           
+                             <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
-                           <a href="{{url('admin/export_secondary_registrations')}}" class="menu-link px-3">
+                           <a href="{{url('admin/export_requests')}}" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >
                            <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -98,26 +98,13 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                         </a>
+                       
 
-                        @endif
-                        <!--begin::Download Form-->
-                         <a href="https://www.google.com/" class="menu-link px-3">
-                            <button type="button" class="btn btn-light-primary me-3" >
-                         
-                            <span class="svg-icon svg-icon-2">
-                               
-                            </span>
-                            
-                            <!--end::Svg Icon-->{{ __('messages.Download_Form') }}</button>
-                           
-                        </a>
-                        <!--end::Download Form-->
-
-
+                         @if($objAdmin->is_super == 0)
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->
-                          
+                           @endif
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
@@ -144,11 +131,12 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th>نموذج التسجيل</th>
-
-                             <th>السنة</th>
+                            <th>الملف</th>
+                            <th>اسم الملف</th>
+                            <th>الشرح</th>
+                        
                             <th>{{ __('messages.created_at') }}</th>
-                            {{-- <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th> --}}
+                            {{-- <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> --}}
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">
@@ -160,10 +148,10 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-            @include('auth.admin.secondary_registrations.add')
-            @include('auth.admin.secondary_registrations.update')
+            @include('auth.admin.requests.add')
+            @include('auth.admin.requests.update')
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.secondary_registrations.export')
+            @include('auth.admin.requests.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
@@ -171,6 +159,8 @@
     </div>
     <!--end::Post-->
    <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
+
+
 @endsection
 
 @section('scripts')
@@ -179,10 +169,10 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/secondary_registrations/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/secondary_registrations/list/list.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/secondary_registrations/add.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/secondary_registrations/update.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/update.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->

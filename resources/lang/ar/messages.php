@@ -556,11 +556,11 @@ return [
     'groups'=>'الفرق',
     'Download_Form'=>'تحميل النموذج',
     'archives'=>'الارشيف',
+    'advertisements'=>'إعلانات',
+    'advertisement'=>'إعلان',
+    'requests'=>'طلبات',
+    'request'=>'طلب',
 
-    
-    
-    
-    
 
  ];
 
