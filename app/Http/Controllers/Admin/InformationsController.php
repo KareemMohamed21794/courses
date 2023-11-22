@@ -52,7 +52,7 @@ class InformationsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
-            'description' => ['required', 'string', 'max:255'],
+            // 'description' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
             'file' => ['required'],
         ]);
@@ -127,7 +127,7 @@ class InformationsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        
             $validator = Validator::make($request->all(),[
-               'description' => ['required', 'string', 'max:255'],
+               // 'description' => ['required', 'string', 'max:255'],
                 'file_name' => ['required', 'string', 'max:255'],
                 'file' => ['required'],
             ]);

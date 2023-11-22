@@ -253,6 +253,26 @@
 
 
 
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.leaders_number') }}</th>
+                                            <th class="pb-2">{{ $objAdmin->leaders_number }}</th>
+                                        </tr>
+
+
+
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.persons_number') }}</th>
+                                            <th class="pb-2">{{ $objAdmin->persons_number }}</th>
+                                        </tr>
+
+
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.groups') }}</th>
+                                            <th class="pb-2">{{ $objAdmin->groups }}</th>
+                                        </tr>
+
+
+
                                           
                                     </thead>
                                   

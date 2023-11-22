@@ -419,7 +419,7 @@ class BoardDirectorMeetingsController extends Controller
     {
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = 'تقرير محاضر اجتماعات الهيئة العامة';
+        $title = ' محاضر اجتماعات الهيئة العامة';
         
         return view('auth.admin.board_director_meetings.report_archive_board_director_meetings', [
             'title' => $title,

@@ -90,7 +90,10 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_administrative_financial_reports', [AdministrativeFinancialReportsController::class,'deleteAdministrativeFinancialReport']);
 
 
-		Route::get('/report_administrative_financial', [AdministrativeFinancialReportsController::class, 'ReportAdministrativeFinancial']);
+		Route::get('/report_administrative', [AdministrativeFinancialReportsController::class, 'ReportAdministrative']);
+
+
+		Route::get('/report_financial', [AdministrativeFinancialReportsController::class, 'ReportFinancial']);
 
         //archive
 		Route::get('/report_archive_administrative', [AdministrativeFinancialReportsController::class, 'ReportArchiveAdministrative']);

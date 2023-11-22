@@ -63,7 +63,7 @@
                             </div>
                             <!--end::Input group-->
 
-        <input type="hidden" name="type" id="type" value="administrative_financial">
+        <input type="hidden" name="type" id="type" value="financial">
 
 
                         </div>

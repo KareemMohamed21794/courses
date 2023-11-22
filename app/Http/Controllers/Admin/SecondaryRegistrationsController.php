@@ -440,8 +440,10 @@ class SecondaryRegistrationsController extends Controller
        if($type == 'secondary_registration'){
             $title = __('messages.report_secondary_registration');
            
-        }elseif ($type == 'administrative_financial') {
-            $title = __('messages.report_administrative_financial');
+        }elseif ($type == 'administrative') {
+            $title = __('messages.report_administrative');
+        }elseif ($type == 'financial') {
+            $title = __('messages.report_financial');
         }else{
             $title = __('messages.board_director_meeting');
         }
@@ -488,10 +490,16 @@ class SecondaryRegistrationsController extends Controller
 
 
 
-        }elseif ($request->type == 'administrative_financial') {
-            $title = __('messages.report_administrative_financial');
+        }elseif ($request->type == 'administrative') {
+            $title = __('messages.report_administrative');
 
-            $ArrAdminFilesID = File::where('type','administrative_financial')->where('year',$request->year)->pluck('admin_id')->toArray();
+            $ArrAdminFilesID = File::where('type','administrative')->where('year',$request->year)->pluck('admin_id')->toArray();
+
+            $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
+        }elseif ($request->type == 'financial') {
+            $title = __('messages.report_financial');
+
+            $ArrAdminFilesID = File::where('type','financial')->where('year',$request->year)->pluck('admin_id')->toArray();
 
             $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
         }else{
@@ -673,7 +681,7 @@ public function ReportArchiveSecondaryRegistrations()
     {
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = 'تقرير التسجيل السنوي';
+        $title = ' التسجيل السنوي';
         
         return view('auth.admin.secondary_registrations.report_archive_secondary_registrations', [
             'title' => $title,
@@ -696,14 +704,13 @@ public function ReportArchiveSecondaryRegistrations()
         $objAdmin = Admin::find($userId);
 
        if($type == 'secondary_registration_archive'){
-            $title = 'تقرير التسجيل السنوي';
-           
+            $title = ' التسجيل السنوي';
         }elseif ($type == 'administrative_archive') {
             $title = 'التقرير الإداري للعام';
         }elseif ($type == 'financial_archive'){
             $title = 'التقرير المالي للعام';
         }else{
-            $title = 'تقرير محاضر اجتماعات الهيئة العامة';
+            $title = ' محاضر اجتماعات الهيئة العامة';
         }
         
 

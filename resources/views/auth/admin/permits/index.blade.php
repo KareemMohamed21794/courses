@@ -89,6 +89,7 @@
                             <!--end::Menu 1-->
                             <!--end::Filter-->
                             <!--begin::Export-->
+                            @if($objAdmin->is_super == 1)
                             <div id="export_buttons" style="margin-left: 10px;"></div>
                             <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -102,6 +103,7 @@
                             
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
+                            @endif
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ $add_title }}</button>
                             <!--end::Add-->

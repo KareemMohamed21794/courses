@@ -10,7 +10,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_add_header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">{{ __('messages.Add') }} {{$title}}</h2>
+                    <h2 class="fw-bolder">{{ __('messages.Add') }} {{$add_title}}</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div id="kt_modal_add_close" class="btn btn-icon btn-sm btn-active-icon-primary">
@@ -39,9 +39,10 @@
                             <!--begin::Select-->
                             <select onchange="group_classification(this.value)" name="group_type" id="group_type"  data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
                                 <option value="">اختر</option>
+                                <option value="all">الكل</option>
                                 <option value="kashfih">كشفية</option>
                                 <option value="irshad">ارشادية</option>
-                                <option value="all">الكل</option>
+                                
                                 <option value="group_name">اسم المجموعة</option>
                             </select>
                             <!--end::Select-->
@@ -105,7 +106,7 @@
                           <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">الشرح</label>
+                            <label class=" fs-6 fw-bold mb-2">الشرح</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
