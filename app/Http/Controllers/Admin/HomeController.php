@@ -115,7 +115,7 @@ class HomeController extends Controller
 
         $data = ['content' => 'This is the email content.']; // Data to pass to the view
 
-        $fromEmail = 'info@privatescouts.org'; 
+        $fromEmail = 'mahmoud.ali.29992@gmail.com'; 
         // The "from" email address
 
         Mail::send('emails.accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
