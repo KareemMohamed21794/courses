@@ -77,7 +77,7 @@ return [
     'country' => 'بلد',
     'governorate' => 'محافظة',
     'city' => 'مدينة',
-    'district' => 'حي',
+    'district' => 'الحي',
     'post_number' => 'الرقم البريدى',
     'building_number' => 'رقم المبنى',
     'street_name' => 'اسم الشارع',

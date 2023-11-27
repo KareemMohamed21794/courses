@@ -46,7 +46,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'file_name' },
                 { data: 'description' },
                 { data: 'created_at' },
-                // { data: null },
+                { data: null },
             ],
             buttons: [
                 // 'copy',
@@ -131,6 +131,23 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
  
                             `;
+                        }else{
+
+
+                            AdminContent = `
+
+                               
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+ 
+                            `;
+
                         }
 
                         return `

@@ -129,11 +129,11 @@
                                 </div>
                             </th>
                             <th>#</th>
-                            <th>{{ __('messages.group_name') }}</th>
+                            <!-- <th>{{ __('messages.group_name') }}</th> -->
                             <th>{{ __('messages.username') }}</th>
                             <th>{{ __('messages.email') }}</th>
                             <th>{{ __('messages.phone') }}</th>
-                            <th>{{ __('messages.address') }}</th>
+                            <!-- <th>{{ __('messages.address') }}</th> -->
                             {{-- <th>{{ __('messages.super_admin') }}</th> --}}
                             {{-- <th>{{ __('messages.Positions') }}</th> --}}
                             <th>{{ __('messages.created_at') }}</th>
@@ -174,12 +174,12 @@
                                             @endif
                                         </tr>
 
-                                        @if($objAdmin->alhayyuh_almuqayaduh)
+                                        <!-- @if($objAdmin->alhayyuh_almuqayaduh)
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</th>
                                             <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh }}</th>
                                         </tr>
-                                        @endif
+                                        @endif -->
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.group_classification') }}</th>
@@ -195,6 +195,20 @@
                                             <th class="pb-2">{{ __('messages.group_name') }}</th>
                                             <th class="pb-2">{{ $objAdmin->group_name }}</th>
                                         </tr>
+
+                                        
+                                         @if($objAdmin->registration_type == 'harah')
+                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">رقم مجلس الإدارة</th>
+                                            <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh_number }}</th>
+                                        </tr>
+                                        @else($objAdmin->registration_type == 'muqiaduh')
+
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">رقم الهيئة المقيدة </th>
+                                            <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh }}</th>
+                                        </tr>
+                                        @endif
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.date_establishment') }}</th>
@@ -224,6 +238,11 @@
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.governorate') }}</th>
                                             <th class="pb-2">{{ $objAdmin->governorate }}</th>
+                                        </tr>
+
+                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.district') }}</th>
+                                            <th class="pb-2">{{ $objAdmin->district }}</th>
                                         </tr>
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">

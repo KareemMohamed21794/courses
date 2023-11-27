@@ -438,14 +438,14 @@ class SecondaryRegistrationsController extends Controller
         $objAdmin = Admin::find($userId);
 
        if($type == 'secondary_registration'){
-            $title = __('messages.report_secondary_registration');
+            $title = __('messages.report_secondary_registration') . ' - ' . 'سنة ' .$year;
            
         }elseif ($type == 'administrative') {
-            $title = __('messages.report_administrative');
+            $title = __('messages.report_administrative') . ' - ' . 'سنة ' .$year;
         }elseif ($type == 'financial') {
-            $title = __('messages.report_financial');
+            $title = __('messages.report_financial') . ' - ' . 'سنة ' .$year;
         }else{
-            $title = __('messages.board_director_meeting');
+            $title = __('messages.report_board_director_meetings') . ' - ' . 'سنة ' .$year;
         }
         
 
@@ -704,13 +704,13 @@ public function ReportArchiveSecondaryRegistrations()
         $objAdmin = Admin::find($userId);
 
        if($type == 'secondary_registration_archive'){
-            $title = ' التسجيل السنوي';
+            $title = 'أرشيف  التسجيل السنوي'  . ' - ' . 'سنة ' .$year;
         }elseif ($type == 'administrative_archive') {
-            $title = 'التقرير الإداري للعام';
+            $title = 'أرشيف  الإداري للعام'  . ' - ' . 'سنة ' .$year;
         }elseif ($type == 'financial_archive'){
-            $title = 'التقرير المالي للعام';
+            $title = 'أرشيف  المالي للعام'  . ' - ' . 'سنة ' .$year;
         }else{
-            $title = ' محاضر اجتماعات الهيئة العامة';
+            $title = 'أرشيف  محاضر اجتماعات الهيئة العامة'  . ' - ' . 'سنة ' .$year;
         }
         
 

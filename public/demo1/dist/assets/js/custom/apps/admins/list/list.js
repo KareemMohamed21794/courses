@@ -46,11 +46,11 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
-                { data: 'group_name' },
+                // { data: 'group_name' },
                 { data: 'username' },
                 { data: 'email' },
                 { data: 'phone' },
-                { data: 'address' },
+                // { data: 'address' },
                 // { data: 'super_admin' },
                 // { data: 'position_name' },
                 { data: 'created_at' },

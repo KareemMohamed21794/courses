@@ -486,7 +486,7 @@ class QualificationleadersController extends Controller
         } 
 
 
-        if($request->current_qualification){
+        if($request->current_qualification != 'all'){
             $alldata = $alldata->where('current_qualification',$request->current_qualification);
         } 
 
@@ -506,8 +506,10 @@ class QualificationleadersController extends Controller
             $current_qualification = 'مساعد قائد تدريب';
            }else if($objdata->current_qualification == 'qayid_tadrib'){
             $current_qualification = 'قائد تدريب';
-           }else{
+           }elseif($objdata->current_qualification == 'ghayr_muahal'){
             $current_qualification = 'غير مؤهل';
+           }else{
+            $current_qualification = @$objdata->current_qualification;
            }
         
 
