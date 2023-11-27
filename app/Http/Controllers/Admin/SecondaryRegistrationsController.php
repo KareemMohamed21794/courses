@@ -681,7 +681,7 @@ public function ReportArchiveSecondaryRegistrations()
     {
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = ' التسجيل السنوي';
+        $title = 'أرشيف  التسجيل السنوي';
         
         return view('auth.admin.secondary_registrations.report_archive_secondary_registrations', [
             'title' => $title,
@@ -743,20 +743,20 @@ public function ReportArchiveSecondaryRegistrations()
 
 
         if($request->type == 'secondary_registration_archive'){
-            $title = 'تقرير التسجيل السنوي';
+            $title = 'أرشيف التسجيل السنوي';
            
             $alldata = File::where('type','secondary_registration')->where('year',$request->year)->orderBy('id')->get();
 
         }elseif ($request->type == 'administrative_archive') {
-           $title = 'التقرير الإداري للعام';
+           $title = 'الأرشيف الإداري للعام';
            
            $alldata = File::where('type','administrative')->where('year',$request->year)->get();
         }elseif ($request->type == 'financial_archive'){
-            $title = 'التقرير المالي للعام';
+            $title = 'الأرشيف المالي للعام';
            
             $alldata = File::where('type','financial')->where('year',$request->year)->get();
         }else{
-            $title = 'تقرير محاضر اجتماعات الهيئة العامة';
+            $title = 'أرشيف محاضر اجتماعات الهيئة العامة';
            
             $alldata = File::where('type','board_director_meetings')->where('year',$request->year)->get();
         }
