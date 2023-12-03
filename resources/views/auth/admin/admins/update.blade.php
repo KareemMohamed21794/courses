@@ -42,6 +42,24 @@
                         <!--end::Input group-->
 
 
+                        @if(request()->segment(2)=='admins')
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        @endif
+
+
+
+
+
+
                         @if(request()->segment(2)=='leaders')
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -55,31 +73,9 @@
                         <!--end::Input group-->
                         @endif
 
-                        @if($objAdmin->is_super)
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        @endif
+                       
 
-                        @if(request()->segment(2)=='admins')
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        @endif
+                        
 
                         @if(request()->segment(2)=='leaders')
                         
@@ -170,6 +166,19 @@
 
                         @endif
 
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.email') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.email') }}" name="email"  id="email_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -182,17 +191,21 @@
                         <!--end::Input group-->
 
 
+                         @if($objAdmin->is_super)
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.email') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.email') }}" name="email"  id="email_update" />
+                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @endif
 
+
+                      
                         @if(request()->segment(2)=='leaders')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">

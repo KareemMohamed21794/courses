@@ -46,7 +46,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'file_name' },
                 { data: 'description' },
                 { data: 'created_at' },
-                // { data: null },
+                 { data: null },
             ],
             buttons: [
                 // 'copy',

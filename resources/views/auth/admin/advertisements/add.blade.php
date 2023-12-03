@@ -62,8 +62,8 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="admin_id[]" id="admin_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder" multiple>
-                                <option value="0">{{ __('messages.Select') }} {{ __('messages.scout_group') }}</option>
+                            <select name="admin_id[]" id="admin_id" aria-label="{{ __('messages.Select') }} " data-control="select2" data-placeholder="{{ __('messages.Select') }} " data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder" multiple>
+                                <option value="0">{{ __('messages.Select') }} </option>
                                 
                                  @foreach($leaders as $leader)
                                         <option value="{{$leader->id}}">{{ $leader->group_name }}</option>

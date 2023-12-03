@@ -67,7 +67,7 @@
                             <!--begin::Input-->
                              <div class="col-lg-8 fv-row">
                             <select  name="current_qualification" id="current_qualification" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">
-                                <option value="">{{ __('messages.current_qualification') }}</option>
+                                <option value="all">الكل</option>
                                 <option value="ghayr_muahal">غير مؤهل</option>
                                 <option value="musaeid_qayid_wahdah">مساعد قائد وحدة   </option>
                                 <option value="qayid_wahda">قائد وحدة شارة خشبية   </option>

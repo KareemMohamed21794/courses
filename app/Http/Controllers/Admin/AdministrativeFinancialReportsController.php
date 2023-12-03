@@ -544,7 +544,7 @@ class AdministrativeFinancialReportsController extends Controller
     {
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = 'التقرير الإداري للعام';
+        $title = 'أرشيف  الإداري للعام';
         
         return view('auth.admin.administrative_financial_reports.report_archive_administrative', [
             'title' => $title,
@@ -558,7 +558,7 @@ class AdministrativeFinancialReportsController extends Controller
     {
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = 'التقرير المالي للعام';
+        $title = 'أرشيف  المالي للعام';
         
         return view('auth.admin.administrative_financial_reports.report_archive_financial', [
             'title' => $title,

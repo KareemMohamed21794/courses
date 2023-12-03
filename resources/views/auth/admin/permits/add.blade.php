@@ -10,7 +10,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_add_header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">{{ __('messages.Add') }} {{$title}}</h2>
+                    <h2 class="fw-bolder"> {{$add_title}}</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div id="kt_modal_add_close" class="btn btn-icon btn-sm btn-active-icon-primary">
@@ -214,10 +214,10 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">اسماء القاده المشاركين / يرجي كتابه كل اسم قائد في سطر </label>
+                            <label class="required fs-6 fw-bold mb-2">اسماء القادة المشاركين - يرجى كتابة اسم كل قائد في سطر جديد</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid"  name="leaders_names"  id="leaders_names">
+                            <textarea class="form-control form-control-solid"  name="leaders_names"  id="leaders_names" rows="1">
                                 
                             </textarea>
                             

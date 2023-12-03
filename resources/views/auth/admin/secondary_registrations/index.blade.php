@@ -144,7 +144,7 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th>نموذج التسجيل</th>
+                            <th>الملف</th>
 
                              <th>السنة</th>
                             <th>{{ __('messages.created_at') }}</th>
