@@ -101,7 +101,7 @@
 
                         @endif
                         <!--begin::Download Form-->
-                         <a href="https://www.google.com/" class="menu-link px-3">
+                         <a href="{{ url('public/') }}/secondary_registrations.xlsx" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">

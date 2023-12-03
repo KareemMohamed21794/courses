@@ -101,7 +101,11 @@
                         @endif
 
                          <!--begin::Download Form-->
-                         <a href="https://www.google.com/" class="menu-link px-3">
+                        @if($firstSegment=='administrative')
+                        <a href="{{ url('public/') }}/administrative.docx" class="menu-link px-3">
+                        @else
+                        <a href="{{ url('public/') }}/financial.xlsx" class="menu-link px-3">
+                        @endif    
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">
