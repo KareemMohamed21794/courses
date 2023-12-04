@@ -52,7 +52,7 @@ class AdvertisementsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
-            // 'description' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
             'group_type' => ['required'],
             'file' => ['required'],
@@ -102,7 +102,7 @@ class AdvertisementsController extends Controller
             $Advertisement = Advertisement::create([
             'admin_id' =>  $objGroup,
             'group_type' =>  $request->group_type,
-            'file' =>  $file,
+            'file' =>  $document,
             'file_name' =>  $request->file_name,
             'description' =>  $request->description,
             ]);
@@ -151,7 +151,7 @@ class AdvertisementsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        
             $validator = Validator::make($request->all(),[
-               // 'description' => ['required', 'string', 'max:255'],
+               'description' => ['required', 'string', 'max:255'],
                 'file_name' => ['required', 'string', 'max:255'],
                 'file' => ['required'],
             ]);

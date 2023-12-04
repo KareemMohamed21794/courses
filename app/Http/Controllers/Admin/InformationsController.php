@@ -78,7 +78,7 @@ class InformationsController extends Controller
         $Information = Information::create([
         'admin_id' => $userId,
         'group_type' =>  $request->group_type,
-        'file' =>  $file,
+        'file' =>  $document,
         'file_name' =>  $request->file_name,
         'description' =>  $request->description,
         ]);

@@ -101,7 +101,7 @@
                         @endif
 
                         <!--begin::Download Form-->
-                         <a href="{{ url('public/') }}/board_director_meetings.docx" class="menu-link px-3">
+                         <a href="{{ url('public/') }}/board_director_meetings.doc" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">

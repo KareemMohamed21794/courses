@@ -332,7 +332,7 @@ class PermitsController extends Controller
                 $status = "مقبول";
 
                 if($objAdmin->is_super == 0){
-                    $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تنزيل التصريح</>";
+                    $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تحميل الموافقة</>";
                 }
 
             }

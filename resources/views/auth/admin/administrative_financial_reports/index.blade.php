@@ -102,7 +102,7 @@
 
                          <!--begin::Download Form-->
                         @if($firstSegment=='administrative')
-                        <a href="{{ url('public/') }}/administrative.docx" class="menu-link px-3">
+                        <a href="{{ url('public/') }}/administrative.doc" class="menu-link px-3">
                         @else
                         <a href="{{ url('public/') }}/financial.xlsx" class="menu-link px-3">
                         @endif    

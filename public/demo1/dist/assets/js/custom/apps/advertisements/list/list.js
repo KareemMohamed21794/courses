@@ -46,7 +46,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'file_name' },
                 { data: 'description' },
                 { data: 'created_at' },
-                 { data: null },
+                { data: null },
             ],
             buttons: [
                 // 'copy',
@@ -107,7 +107,7 @@ var KTDatatablesServerSide = function () {
                     targets: -1,
                     data: null,
                     orderable: false,
-                    className: 'text-end',
+                    className: 'text-end permission',
                     render: function (data, type, row) {
                         var AdminContent = '';
                          // Check if segment is 'Admin'
