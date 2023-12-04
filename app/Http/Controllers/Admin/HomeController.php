@@ -10,8 +10,8 @@ use App\Models\Admin;
 use App\Models\File;
 use App\Models\Permit;
 use App\Models\QualificationLeader;
-
-
+use App\Models\Advertisement;
+use App\Models\Information;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\DataImport;
 use DB;
@@ -34,9 +34,9 @@ class HomeController extends Controller
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        if($objAdmin->is_super == 0){
-             return redirect('admin/leaders');
-        }
+        // if($objAdmin->is_super == 0){
+        //      return redirect('admin/leaders');
+        // }
         $problemNotifications = array();
 
         
@@ -51,9 +51,36 @@ class HomeController extends Controller
         $count_lawyers = Admin::where('position_id',2)->count();
         $count_leaders = Admin::where('is_super',0)->count();
         
-        $count_secondary_registrations = File::where('type','secondary_registration')->where('year',date('Y'))->count();
+       
+       if($objAdmin->is_super == 0){
+        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('year',date('Y'))->count();
 
-        $count_administrative_financial_reports = File::where('type','administrative_financial')->where('year',date('Y'))->count();
+        $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('year',date('Y'))->count();
+
+        $count_financial_reports = File::where('admin_id',$objAdmin->id)->where('type','financial')->where('year',date('Y'))->count();
+
+        $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')->where('year',date('Y'))->count();
+
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->count();
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->count();
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')->count();
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')->count();
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')->count();
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')->count();
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')->count();
+
+        $leaders_number = Admin::where('id',$objAdmin->id)->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->sum('groups');
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->count();
+        $requests = Information::where('admin_id',$objAdmin->id)->count();
+
+       }else{
+         $count_secondary_registrations = File::where('type','secondary_registration')->where('year',date('Y'))->count();
+
+        $count_administrative_reports = File::where('type','administrative')->where('year',date('Y'))->count();
+
+        $count_financial_reports = File::where('type','financial')->where('year',date('Y'))->count();
 
         $count_board_director_meetings = File::where('type','board_director_meetings')->where('year',date('Y'))->count();
 
@@ -65,12 +92,16 @@ class HomeController extends Controller
         $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')->count();
         $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')->count();
 
-
         $leaders_number = Admin::sum('leaders_number');
         $persons_number = Admin::sum('persons_number');
         $groups = Admin::sum('groups');
+        $Advertisements = Advertisement::count();
+        $requests = Information::count();
 
-        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_financial_reports' => $count_administrative_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib,'leaders_number' => $leaders_number,'persons_number' => $persons_number,'groups' => $groups]);
+       }
+
+
+        return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_reports' => $count_administrative_reports,'count_financial_reports' => $count_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib,'leaders_number' => $leaders_number,'persons_number' => $persons_number,'groups' => $groups,'Advertisements' => $Advertisements,'requests' => $requests]);
     }
 
      

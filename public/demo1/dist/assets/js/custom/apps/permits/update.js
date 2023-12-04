@@ -288,7 +288,7 @@ KTUtil.onDOMContentLoaded(function () {
     KTModalBranchesUpdate.init();
 });
 
-function getData(id) {
+function getData(id,action) {
     //======= Start Ajxa ========//
     $.ajaxSetup({
         headers: {
@@ -350,6 +350,16 @@ function getData(id) {
         }
     });
     //======= End Ajxa ========//
+
+    if (action == 2) {
+    // Disable all input and select elements
+        $('input, select').prop('disabled', true);
+        $('#kt_modal_update_submit').hide();
+    } else {
+        // Enable all input and select elements
+        $('input, select').prop('disabled', false);
+        $('#kt_modal_update_submit').show();
+    }
 }
 
 

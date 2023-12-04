@@ -23,8 +23,17 @@ class InformationsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.requests');
-        $add_title = __('messages.request');
+
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super == 1){
+            $title = __('messages.incoming');
+            $add_title = __('messages.incoming');
+        }else{
+            $title = __('messages.requests');
+            $add_title = __('messages.request');
+        }
+        
 
         $leaders = Admin::where('is_super',0)->get();
 

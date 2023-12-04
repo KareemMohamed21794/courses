@@ -23,8 +23,16 @@ class AdvertisementsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.advertisements');
-        $add_title = __('messages.advertisement');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super == 1){
+            $title = __('messages.issued');
+            $add_title = __('messages.issued');
+        }else{
+            $title = __('messages.advertisements');
+            $add_title = __('messages.advertisement');
+        }
+        
 
         $leaders = Admin::where('is_super',0)->get();
 

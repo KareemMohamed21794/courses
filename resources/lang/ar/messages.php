@@ -548,6 +548,7 @@ return [
     'rent_date_qt'=>'تاريخ الإجارة  ',
     'rent_number_qt'=>'رقم الإجارة  ',
     'total_leaders'=>'عدد القادة الكلي   ',
+    'number_individuals_training_leaders'=>'عدد الأفراد في تأهيل القادة',
     'permit_status'=>'حاله التصريح',
     'permit_number'=>'رقم الطلب',
     'alhayyuh_almuqayaduh_number'=>'رقم الهيئة المقيدة ',
@@ -563,6 +564,8 @@ return [
     'advertisement'=>'إعلان',
     'requests'=>'طلبات',
     'request'=>'طلب',
+    'issued'=>'صادر',
+    'incoming'=>'وارد',
 
 
  ];
