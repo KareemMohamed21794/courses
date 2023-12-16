@@ -340,7 +340,8 @@ class PermitsController extends Controller
                 $status = "<span style='color:green;font-weight:bold'>مقبول</span>";
 
                 if($objAdmin->is_super == 0){
-                    $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تحميل الموافقة</>";
+                    // $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تحميل الموافقة</>";
+                    $status = "<a href = 'download_approve_form'>تحميل الموافقة</>";
                 }
 
             }
@@ -534,6 +535,16 @@ class PermitsController extends Controller
         $objPermit->save();
         return redirect('/admin/permits');
 
+    }
+
+
+
+
+    public function DownloadApproveForm()
+    {
+        $title = 'تصريح نشاط' ;
+        return view('auth.admin.permits.download_approve_form',['title' => $title]);
+       
     }
 
     

@@ -135,6 +135,7 @@ Route::middleware('auth:admin')->group(function () {
 		
 		Route::get('/reject_permit/{id}', [PermitsController::class, 'reject_permit']);
 		
+		Route::get('/download_approve_form', [PermitsController::class, 'DownloadApproveForm']);
 		# End permits
 
 
@@ -162,6 +163,8 @@ Route::middleware('auth:admin')->group(function () {
 		Route::resource('/advertisements', AdvertisementsController::class);
 		Route::DELETE('/delete_advertisements', [AdvertisementsController::class,'deleteadvertisements']);
 		Route::get('export_advertisements', [AdvertisementsController::class, 'ExportAdvertisements']);
+        
+
 		# End advertisements
 
 
