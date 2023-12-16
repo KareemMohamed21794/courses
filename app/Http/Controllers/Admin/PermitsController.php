@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
+use TCPDF;
 
 class PermitsController extends Controller
 {
@@ -332,7 +333,7 @@ class PermitsController extends Controller
                 $status = "مقبول";
 
                 if($objAdmin->is_super == 0){
-                    $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تحميل الموافقة</>";
+                    $status = "<a href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
                 }
 
             }
@@ -526,6 +527,31 @@ class PermitsController extends Controller
         $objPermit->save();
         return redirect('/admin/permits');
 
+    }
+
+    public function download_approvement($id)
+    {
+        $title = "Hello";
+        $date = date('Y-m-d');
+        $clientName = "John Doe";
+        $lawyerName = "Jane Smith";
+        $transactions = [
+            "Transaction 1",
+            "Transaction 2",
+            "Transaction 3"
+        ];
+
+        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        $pdf->setPrintHeader(false); // Disable header
+        $pdf->SetFont('dejavusans', '', 12, '', false);
+        $pdf->AddPage();
+
+        $viewData = compact('title', 'date', 'clientName', 'lawyerName', 'transactions');
+        $html = view('auth.admin.permits.approvement', $viewData)->render();
+
+        $pdf->writeHTML($html);
+
+        $pdf->Output('filename.pdf', 'D');
     }
 
     

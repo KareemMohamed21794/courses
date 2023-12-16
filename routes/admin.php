@@ -191,6 +191,8 @@ Route::middleware('auth:admin')->group(function () {
 	    Route::post('upload_csv_save', [HomeController::class, 'upload_csv_save']);
 	    Route::get('/update_warehouses', [HomeController::class, 'update_warehouses']);
 
+	    Route::get('/download_approvement/{id}', [PermitsController::class, 'download_approvement']);
+	    
 	   
 
 	});
