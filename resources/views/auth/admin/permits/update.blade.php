@@ -32,6 +32,17 @@
                     <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_update_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_header" data-kt-scroll-wrappers="#kt_modal_update_scroll" data-kt-scroll-offset="300px">
 
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.number_order') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.number_order') }}" name="number_order"  id="number_order_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
 
                         @if($objAdmin->is_super == 1)
                          <!--begin::Input group-->
@@ -182,6 +193,18 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.activity_leader') }}" name="activity_leader"  id="activity_leader_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.number_participants') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.number_participants') }}" name="number_participants"  id="number_participants_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

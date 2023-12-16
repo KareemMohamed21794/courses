@@ -30,8 +30,10 @@ class InformationsController extends Controller
             $title = __('messages.incoming');
             $add_title = __('messages.incoming');
         }else{
-            $title = __('messages.requests');
-            $add_title = __('messages.request');
+            $title = __('messages.incoming');
+            $add_title = __('messages.incoming');
+            // $title = __('messages.requests');
+            // $add_title = __('messages.request');
         }
         
 
@@ -192,9 +194,11 @@ class InformationsController extends Controller
 
     public function get(Request $request)
     { 
-
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
+        if($objAdmin->is_super == 1){
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
@@ -205,6 +209,19 @@ class InformationsController extends Controller
             'created_at'   => true,
         ];
 
+        }else{
+
+            $columnsDefault = [
+            '#'   => true,
+            'id'   => true,
+            'file'=> true,
+            'file_name'=>true,
+            'description'=>true,
+            'created_at'   => true,
+        ];
+
+        }
+
         if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
             $columnsDefault = [];
             foreach ( $request->columnsDef as $field ) {
@@ -212,8 +229,7 @@ class InformationsController extends Controller
             }
         }
 
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
+       
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
@@ -248,6 +264,8 @@ class InformationsController extends Controller
         $alldataResult=array();
  
         foreach($alldata as $objdata){
+
+            if($objAdmin->is_super == 1){
           
             $alldataResult[] = array(
                 "#" => $objdata->id,
@@ -258,7 +276,23 @@ class InformationsController extends Controller
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
+
+            }else{
+
+                $alldataResult[] = array(
+                "#" => $objdata->id,
+                "id" => $objdata->id,
+                
+                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
+                "file_name"=> $objdata->file_name,
+                "description"=> $objdata->description,
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+
+            }
         }
+
+
 
        $alldata =$alldataResult ;
 

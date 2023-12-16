@@ -98,6 +98,8 @@ class PermitsController extends Controller
             'activity_leader' => ['required', 'string', 'max:255'],
             'number_leader' => ['required'],
             'leaders_names' => ['required'],
+            'number_participants' => ['required'],
+            'number_order' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -119,6 +121,8 @@ class PermitsController extends Controller
             'alwahda_description' =>  $request->alwahda_description,
             'activity_leader' =>  $request->activity_leader,
             'number_leader' =>  $request->number_leader,
+            'number_participants' =>  $request->number_participants,
+            'number_order' =>  $request->number_order,
             'leaders_names' =>  $request->leaders_names,
             'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
@@ -174,6 +178,8 @@ class PermitsController extends Controller
                 'activity_leader' => ['required', 'string', 'max:255'],
                 'number_leader' => ['required'],
                 'leaders_names' => ['required'],
+                'number_participants' => ['required'],
+                'number_order' => ['required'],
             ]);
    
 
@@ -197,6 +203,8 @@ class PermitsController extends Controller
         $objPermit->alwahda_description =  $request->alwahda_description;
         $objPermit->activity_leader =  $request->activity_leader;
         $objPermit->number_leader =  $request->number_leader;
+        $objPermit->number_participants =  $request->number_participants;
+        $objPermit->number_order =  $request->number_order;
         $objPermit->leaders_names =  $request->leaders_names;
        
         $objPermit->save();
@@ -329,7 +337,7 @@ class PermitsController extends Controller
             if($objdata->status=='pending'){
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
-                $status = "مقبول";
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>";
 
                 if($objAdmin->is_super == 0){
                     $status = "<a href = 'http://tawasol.privatescouts.org/public/templeta_tasareh.doc'>تحميل الموافقة</>";
@@ -337,7 +345,7 @@ class PermitsController extends Controller
 
             }
             elseif ($objdata->status=='rejected') {
-                $status = "مرفوض";
+                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
             }
 
             $alldataResult[] = array(

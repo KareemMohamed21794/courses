@@ -158,7 +158,8 @@ fill: #009EF7;
                             @if($objAdmin->is_super == 1)
                             <span class="menu-title"> {{ __('messages.issued') }}</span>
                             @else
-                            <span class="menu-title"> {{ __('messages.advertisements') }}</span>
+                            <span class="menu-title"> {{ __('messages.issued') }}</span>
+                            <!-- <span class="menu-title"> {{ __('messages.advertisements') }}</span> -->
                             @endif
                         
                     </a>
@@ -180,7 +181,8 @@ fill: #009EF7;
                             @if($objAdmin->is_super == 1)
                             <span class="menu-title"> {{ __('messages.incoming') }}</span>
                             @else
-                            <span class="menu-title"> {{ __('messages.requests') }}</span>
+                            <span class="menu-title"> {{ __('messages.incoming') }}</span>
+                            <!-- <span class="menu-title"> {{ __('messages.requests') }}</span> -->
                             @endif
                         
                     </a>
@@ -555,7 +557,7 @@ fill: #009EF7;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">أرشيف  الإداري للعام</span>
+                                    <span class="menu-title">أرشيف    الإداري السنوي</span>
                                 </a>
                             </div>
 
@@ -564,7 +566,7 @@ fill: #009EF7;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">أرشيف  المالي للعام</span>
+                                    <span class="menu-title">أرشيف    المالي السنوي</span>
                                 </a>
                             </div>
 

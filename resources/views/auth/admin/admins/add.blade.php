@@ -87,7 +87,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
+                            <label class=" fs-5 fw-bold mb-2">{{ __('messages.registration_type') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
                             <select onchange="RegistrationType(this.value)" name="registration_type" id="registration_type"  data-placeholder="{{ __('messages.registration_type') }}" class="form-select form-select-solid">
@@ -102,7 +102,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_id">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.alhayyuh_almuqayaduh') }}" name="alhayyuh_almuqayaduh"  id="alhayyuh_almuqayaduh" />
@@ -114,7 +114,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7" id="alhayyuh_almuqayaduh_number_id">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2" id="labelElement">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
+                            <label class=" fs-6 fw-bold mb-2" id="labelElement">{{ __('messages.alhayyuh_almuqayaduh_number') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid"  name="alhayyuh_almuqayaduh_number"  id="alhayyuh_almuqayaduh_number" />
@@ -126,7 +126,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.group_classification') }}</label>
+                            <label class=" fs-5 fw-bold mb-2">{{ __('messages.group_classification') }}</label>
                             <!--end::Label-->
                             <!--begin::Select-->
                             <select name="group_classification" id="group_classification"  data-placeholder="{{ __('messages.group_classification') }}" class="form-select form-select-solid">
@@ -141,7 +141,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.date_establishment') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.date_establishment') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.date_establishment') }}" name="date_establishment"  id="date_establishment" />
@@ -151,16 +151,7 @@
 
 
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                        
 
                         @endif
 
@@ -168,7 +159,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone" />
@@ -192,11 +183,22 @@
 
                         @if($segment=='leaders')
 
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.website') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.website') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.website') }}" name="website"  id="website" />
@@ -208,7 +210,7 @@
                         <div class="d-flex flex-column mb-7 fv-row">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
-                                <span class="required">{{ __('messages.governorate') }}</span>
+                                <span class="">{{ __('messages.governorate') }}</span>
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
@@ -229,7 +231,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.district') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.district') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.district') }}" name="district"  id="district" />
@@ -241,7 +243,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.street_name') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.street_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.street_name') }}" name="street_name"  id="street_name" />
@@ -253,7 +255,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.building_number') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.building_number') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.building_number') }}" name="building_number"  id="building_number" />
@@ -264,7 +266,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name" />
@@ -275,7 +277,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.workplace') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.workplace') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.workplace') }}" name="workplace"  id="workplace" />
@@ -287,7 +289,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.job') }}" name="job"  id="job" />
@@ -298,7 +300,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leaders_number') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.leaders_number') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leaders_number') }}" name="leaders_number"  id="leaders_number" />
@@ -309,7 +311,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.persons_number') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.persons_number') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.persons_number') }}" name="persons_number"  id="persons_number" />
@@ -320,7 +322,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.groups') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="number" class="form-control form-control-solid" placeholder="{{ __('messages.groups') }}" name="groups"  id="groups" />

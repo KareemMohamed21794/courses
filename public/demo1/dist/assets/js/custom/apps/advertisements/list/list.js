@@ -13,7 +13,28 @@ var KTDatatablesServerSide = function () {
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
 
-    
+    var adminColumns = [
+    { data: '#' },
+    { data: 'id' },
+    { data: 'admin_id' },
+    { data: 'file' },
+    { data: 'file_name' },
+    { data: 'description' },
+    { data: 'created_at' },
+    { data: null },
+   ];
+
+    var userColumns = [
+        { data: '#' },
+        { data: 'id' },
+        { data: 'file' },
+        { data: 'file_name' },
+        { data: 'description' },
+        { data: 'created_at' },
+        { data: null },
+    ];
+
+     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
 
 
 
@@ -38,16 +59,7 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: [
-                { data: '#' },
-                { data: 'id' },
-                { data: 'admin_id' },
-                { data: 'file' },
-                { data: 'file_name' },
-                { data: 'description' },
-                { data: 'created_at' },
-                { data: null },
-            ],
+            columns: chosenColumns,
             buttons: [
                 // 'copy',
                 // {
