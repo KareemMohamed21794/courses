@@ -70,10 +70,19 @@ var KTDatatablesServerSide = function () {
                     targets: 0,
                     orderable: false,
                     render: function (data) {
+                        if (is_super === '1') {
                         return `
                             <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
+                        }else{
+
+                            return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="visibility: hidden;">
+                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
+                            </div>`;
+
+                        }
                     }
                 },
                 // {

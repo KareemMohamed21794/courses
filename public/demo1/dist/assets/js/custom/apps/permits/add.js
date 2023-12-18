@@ -17,6 +17,15 @@ var KTModalAdd = function () {
 			{
 				fields: {
 
+
+                     'number_order': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
                     'activity_name': {
                         validators: {
                             notEmpty: {
@@ -88,6 +97,18 @@ var KTModalAdd = function () {
                             }
                         }
                     },
+
+
+                     'number_participants': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
 
 
 

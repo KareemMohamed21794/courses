@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Permit extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['admin_id','activity_name','permit_number','nature_activity','activity_description','place_activity','activity_history','number_days','alwahda','alwahda_description','activity_leader','number_leader','leaders_names'];
+    protected $fillable = ['admin_id','activity_name','permit_number','nature_activity','activity_description','place_activity','activity_history','number_days','alwahda','alwahda_description','activity_leader','number_leader','leaders_names','number_participants','number_order'];
 
 
      public function Admin()

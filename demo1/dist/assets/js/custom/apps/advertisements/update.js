@@ -24,13 +24,13 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    'description': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'description': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
                     'file': {
                         validators: {

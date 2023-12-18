@@ -47,29 +47,13 @@ fill: #009EF7;
                 </div> --}}
 
                 
-
+              
 
                 @if(Request::segment(1)=='admin')
                      
                    @if($objAdmin->is_super == 1)
                     
-                    <div class="menu-item">
-                    <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
-                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">{{ __('messages.Dashboard') }} </span>
-                    </a>
-                </div>
+                    
 
 
 
@@ -100,6 +84,25 @@ fill: #009EF7;
                         </a>
                     </div>
                     @endif
+
+
+                    <div class="menu-item">
+                    <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
+                        <span class="menu-icon">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
+                                    <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="black" />
+                                    <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="black" />
+                                    <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </span>
+                        <span class="menu-title">{{ __('messages.Dashboard') }} </span>
+                    </a>
+                </div>
                   
                     <div class="menu-item">
                         <a class="menu-link {{ Request::segment(2)=='leaders'  ? 'active' : '' }}" href="{{ url('/admin/leaders') }}">
@@ -152,7 +155,13 @@ fill: #009EF7;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                        <span class="menu-title">{{ __('messages.advertisements') }}</span>
+                            @if($objAdmin->is_super == 1)
+                            <span class="menu-title"> {{ __('messages.issued') }}</span>
+                            @else
+                            <span class="menu-title"> {{ __('messages.issued') }}</span>
+                            <!-- <span class="menu-title"> {{ __('messages.advertisements') }}</span> -->
+                            @endif
+                        
                     </a>
                 </div>
 
@@ -169,7 +178,13 @@ fill: #009EF7;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                        <span class="menu-title">{{ __('messages.requests') }}</span>
+                            @if($objAdmin->is_super == 1)
+                            <span class="menu-title"> {{ __('messages.incoming') }}</span>
+                            @else
+                            <span class="menu-title"> {{ __('messages.incoming') }}</span>
+                            <!-- <span class="menu-title"> {{ __('messages.requests') }}</span> -->
+                            @endif
+                        
                     </a>
                 </div>
 
@@ -542,7 +557,7 @@ fill: #009EF7;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">أرشيف  الإداري للعام</span>
+                                    <span class="menu-title">أرشيف    الإداري السنوي</span>
                                 </a>
                             </div>
 
@@ -551,7 +566,7 @@ fill: #009EF7;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">أرشيف  المالي للعام</span>
+                                    <span class="menu-title">أرشيف    المالي السنوي</span>
                                 </a>
                             </div>
 

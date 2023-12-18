@@ -23,8 +23,18 @@ class AdvertisementsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.advertisements');
-        $add_title = __('messages.advertisement');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super == 1){
+            $title = __('messages.issued');
+            $add_title = __('messages.issued');
+        }else{
+            $title = __('messages.issued');
+            $add_title = __('messages.issued');
+            // $title = __('messages.advertisements');
+            // $add_title = __('messages.advertisement');
+        }
+        
 
         $leaders = Admin::where('is_super',0)->get();
 
@@ -207,9 +217,12 @@ class AdvertisementsController extends Controller
 
     public function get(Request $request)
     { 
-
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
+
+         if($objAdmin->is_super == 1){
         $columnsDefault = [
             '#'   => true,
             'id'   => true,
@@ -219,6 +232,21 @@ class AdvertisementsController extends Controller
             'description'=>true,
             'created_at'   => true,
         ];
+
+        }else{
+
+            $columnsDefault = [
+            '#'   => true,
+            'id'   => true,
+            'file'=> true,
+            'file_name'=>true,
+            'description'=>true,
+            'created_at'   => true,
+        ];
+
+        }
+
+
 
         if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
             $columnsDefault = [];
@@ -263,8 +291,11 @@ class AdvertisementsController extends Controller
         $alldataResult=array();
  
         foreach($alldata as $objdata){
+
+
+            if($objAdmin->is_super == 1){
           
-            $alldataResult[] = array(
+             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
@@ -273,6 +304,23 @@ class AdvertisementsController extends Controller
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
+            }else{
+
+               $alldataResult[] = array(
+                "#" => $objdata->id,
+                "id" => $objdata->id,
+              
+                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
+                "file_name"=> $objdata->file_name,
+                "description"=> $objdata->description,
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+
+            }
+
+
+          
+           
         }
 
        $alldata =$alldataResult ;

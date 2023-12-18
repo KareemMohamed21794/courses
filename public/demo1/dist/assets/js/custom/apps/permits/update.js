@@ -16,6 +16,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
+
+                    'number_order': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
                     'activity_name': {
                         validators: {
                             notEmpty: {
@@ -81,6 +91,14 @@ var KTModalBranchesUpdate = function () {
 
 
                     'number_leader': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'number_participants': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -288,7 +306,7 @@ KTUtil.onDOMContentLoaded(function () {
     KTModalBranchesUpdate.init();
 });
 
-function getData(id) {
+function getData(id,action) {
     //======= Start Ajxa ========//
     $.ajaxSetup({
         headers: {
@@ -317,6 +335,8 @@ function getData(id) {
             jQuery('#activity_leader_update').val(data.activity_leader);
             jQuery('#number_leader_update').val(data.number_leader);
             jQuery('#leaders_names_update').val(data.leaders_names);
+            jQuery('#number_participants_update').val(data.number_participants);
+            jQuery('#number_order_update').val(data.number_order);
 
             if(data.nature_activity == 'other'){
                 $("#other_activity_description_update").show();
@@ -350,6 +370,16 @@ function getData(id) {
         }
     });
     //======= End Ajxa ========//
+
+    if (action == 2) {
+    // Disable all input and select elements
+        $('input, select').prop('disabled', true);
+        $('#kt_modal_update_submit').hide();
+    } else {
+        // Enable all input and select elements
+        $('input, select').prop('disabled', false);
+        $('#kt_modal_update_submit').show();
+    }
 }
 
 
