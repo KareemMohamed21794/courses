@@ -33,10 +33,6 @@
             line-height: 1.4;
         }
 
-        #approvement img {
-            width: 100%;
-        }
-
         #approvement table {
             border-collapse: collapse;
         }
@@ -44,6 +40,11 @@
         #approvement .header,
         #approvement .footer {
             text-align: center;
+        }
+
+        .header img,
+        .footer img {
+            width: 100%;
         }
 
         .approvementBody {
@@ -71,6 +72,10 @@
             margin-bottom: 24px;
         }
 
+        .approvementInfo table {
+            margin: auto;
+        }
+
         .approvementInfo th,
         .approvementInfo td {
             border: 1px solid #dddddd;
@@ -89,13 +94,21 @@
             text-align: center;
         }
 
-        .approvementSignature h3 {
+        .approvementSignature {
             margin-right: auto;
             margin-top: 0;
             margin-bottom: 0;
             text-align: center;
             width: fit-content;
+            font-size: 1.17em;
             line-height: 1.4;
+            font-weight: bold;
+        }
+
+        .approvementSignature img {
+            width: 120px;
+            margin: auto;
+            display: block;
         }
     </style>
 </head>
@@ -171,11 +184,10 @@
                 <h3>واقبلوا الاحترام</h3>
             </div>
             <div class="approvementSignature">
-                <h3>
-                    رئيس القطـــاع
-                    <br />
-                    الحسـن علي نصـــر
-                </h3>
+                رئيس القطـــاع
+                <br />
+                <img src="./signture.png" />
+                الحسـن علي نصـــر
             </div>
         </section>
         <footer class="footer">

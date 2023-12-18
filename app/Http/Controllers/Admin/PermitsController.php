@@ -539,7 +539,7 @@ class PermitsController extends Controller
     }
 
  
-    public function DownloadApproveForm()
+    public function download_approvement()
     {
         $title = 'تصريح نشاط' ;
         return view('auth.admin.permits.download_approve_form',['title' => $title]);

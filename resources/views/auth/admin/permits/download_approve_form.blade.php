@@ -116,7 +116,7 @@
 <body onload="window.print()">
     <main id="approvement">
         <header class="header">
-            <img src="{{url('/header.jpg')}}" alt="Header" />
+            <img src="https://tawasol.privatescouts.org/public/approvement/header.jpg" alt="Header" />
         </header>
         <section class="approvementBody">
             <div class="approvementNum">
@@ -186,12 +186,12 @@
             <div class="approvementSignature">
                 رئيس القطـــاع
                 <br />
-                <img src="./signture.png" />
+                <img src="https://tawasol.privatescouts.org/public/approvement/signture.png" />
                 الحسـن علي نصـــر
             </div>
         </section>
         <footer class="footer">
-            <img src="./footer.jpg" alt="Footer" />
+            <img src="https://tawasol.privatescouts.org/public/approvement/footer.jpg" alt="Footer" />
         </footer>
     </main>
 </body>
