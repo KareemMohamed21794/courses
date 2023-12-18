@@ -143,20 +143,28 @@
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
                             </th>
+
                             @else
+
                             <th class="w-10px pe-2" style="visibility: hidden;">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
                             </th>
+                           
                             @endif
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>الملف</th>
 
                              <th>السنة</th>
+                              <th>حاله التسجيل السنوي</th>
                             <th>{{ __('messages.created_at') }}</th>
-                            {{-- <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th> --}}
+                            @if($objAdmin->is_super == 1)
+                            <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
+                            @else
+                            <th class="text-end min-w-100px actions" style="visibility: hidden;">{{ __('messages.Actions') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">

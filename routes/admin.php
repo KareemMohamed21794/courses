@@ -63,6 +63,12 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('export_secondary_registrations', [SecondaryRegistrationsController::class, 'ExportSecondaryRegistrations']);
 
 
+
+		Route::get('/accept_second_registration/{id}', [SecondaryRegistrationsController::class, 'accept_second_registration']);
+		
+		Route::get('/reject_second_registration/{id}', [SecondaryRegistrationsController::class, 'reject_second_registration']);
+
+        Route::get('/download_secondary_registration/{id}', [SecondaryRegistrationsController::class, 'download_secondary_registration']);
        ///// archive
 
 

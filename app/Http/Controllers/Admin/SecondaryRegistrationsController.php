@@ -205,6 +205,7 @@ class SecondaryRegistrationsController extends Controller
             'leader'   => true,
             'secondary_registration'   => true,
             'year'   => true,
+            'status'   => true,
             'created_at'   => true,
         ];
 
@@ -253,6 +254,23 @@ class SecondaryRegistrationsController extends Controller
         $alldataResult=array();
 
         foreach($alldata as $objdata){
+            $status = "معلقه";
+            if($objdata->status=='pending'){
+                $status = "معلقه";
+            }elseif ($objdata->status=='approved') {
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>";
+
+                if($objAdmin->is_super == 0){
+ 
+                    $status = "<a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل الموافقة</>";
+                }
+
+            }
+            elseif ($objdata->status=='rejected') {
+                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
+            }
+
+
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
@@ -260,6 +278,7 @@ class SecondaryRegistrationsController extends Controller
                  "secondary_registration" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
                 "year" => $objdata->year,
+                "status"=>$status,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }
@@ -940,5 +959,36 @@ public function ReportArchiveSecondaryRegistrations()
 
     return response()->stream($callback, 200, $headers);
 }
+
+
+public function accept_second_registration(Request $request, $id)
+    {
+         
+
+        $objFile = File::find($id);
+        $objFile->status = "approved";       
+        $objFile->save();
+        return redirect('/admin/secondary_registrations');
+
+    }
+
+    public function reject_second_registration(Request $request, $id)
+    {
+         
+
+        $objFile = File::find($id);
+        $objFile->status = "rejected";       
+        $objFile->save();
+        return redirect('/admin/secondary_registrations');
+
+    }
+
+
+     public function download_secondary_registration($id)
+    {
+        $title = 'تصريح نشاط' ;
+        $objFile = File::find($id);
+        return view('auth.admin.secondary_registrations.download_secondary_registration',['title' => $title,'objFile'=>$objFile]);
+    }
 
 }

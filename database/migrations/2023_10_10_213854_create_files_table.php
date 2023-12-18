@@ -23,6 +23,7 @@ class CreateFilesTable extends Migration
             $table->string('year')->nullable();
             $table->string('board_director_meetings')->nullable();
             $table->enum('type', ['secondary_registration', 'administrative','financial','board_director_meetings'])->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });
