@@ -82,6 +82,7 @@
             text-align: right;
             padding: 8px;
             width: 200px;
+            
         }
 
         .approvementInfo th {
@@ -124,11 +125,11 @@
                     <tbody>
                         <tr>
                             <th class="two-cell">الرقم:</th>
-                            <td>م ق أ/ 00/00 000</td>
+                            <td>{{@$objPermit->permit_number}}</td>
                         </tr>
                         <tr>
                             <th class="two-cell">التاريخ:</th>
-                            <td>00/00/2023</td>
+                            <td>{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,8 +138,8 @@
                 <p><strong>السيد قائد <span class="scoutName">مجموعة خالد بن الوليد الكشفية</span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
-                    إشارة لكتابكم رقم <span class="bookNum">م ك/00/00</span>، تاريخ <span
-                        class="date">00/00/2023</span>، والمتضمن طلب إقامة نشاط تطوعي، أعلمكم بأنّه لا مانع لدى مجلس
+                    إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->permit_number}}</span>، تاريخ <span
+                        class="date">{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</span>، والمتضمن طلب إقامة نشاط تطوعي، أعلمكم بأنّه لا مانع لدى مجلس
                     القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي:
                 </p>
             </div>
@@ -146,31 +147,59 @@
                 <table>
                     <tr>
                         <th>نوع النشاط</th>
-                        <td>النوع</td>
+                        @if(@$objPermit->nature_activity == "camp")
+                            <td>مخيم</td>
+                        @elseif (@$objPermit->nature_activity == "trip") 
+                           <td>رحلة</td>
+                        @elseif (@$objPermit->nature_activity == "marching") 
+                            <td>مسير</td>
+                        @elseif (@$objPermit->nature_activity == "overnight") 
+                            <td>مبيت</td>
+                        @elseif (@$objPermit->nature_activity == "evening") 
+                            <td>امسيه</td>
+                        @elseif (@$objPermit->nature_activity == "other") 
+                           <td>اخرى</td>
+                        @endif
+                       
                     </tr>
                     <tr>
                         <th>مكان النشاط</th>
-                        <td>المكان</td>
+                        <td>{{@$objPermit->place_activity}}</td>
                     </tr>
                     <tr>
                         <th>تاريخ النشاط</th>
-                        <td>00/00/2023</td>
+                        <td>{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</td>
                     </tr>
                     <tr>
                         <th>عدد المشاركين</th>
-                        <td>25</td>
+                        <td>{{@$objPermit->number_participants}}</td>
                     </tr>
                     <tr>
                         <th>الوحدة</th>
-                        <td>الاسم</td>
+                        @if(@$objPermit->alwahda == "ashbal")
+                            <td>اشبال /  زهرات</td>
+                        @elseif (@$objPermit->alwahda == "kashaf") 
+                           <td>كشاف / مرشدات</td>
+                        @elseif (@$objPermit->alwahda == "mutaqadimu") 
+                            <td>متقدم / متقدمات </td>
+                        @elseif (@$objPermit->alwahda == "jawaluh") 
+                            <td>جواله / دليلات</td>
+                        @elseif (@$objPermit->alwahda == "almajmueuh") 
+                            <td>المجموعه</td>
+                        @elseif (@$objPermit->alwahda == "awlia_alamwr") 
+                           <td> اولياء الامور</td>
+                        @elseif (@$objPermit->alwahda == "other") 
+                           <td>اخرى</td>
+                        @endif
+                       
                     </tr>
                     <tr>
                         <th>قائدة النشاط</th>
-                        <td>فلان الفلاني</td>
+                        <td>{{@$objPermit->activity_leader}}</td>
                     </tr>
                     <tr>
                         <th>عدد القادة المشاركين</th>
-                        <td>20</td>
+                        <td>{{@$objPermit->number_leader}}</td>
                     </tr>
                 </table>
             </div>

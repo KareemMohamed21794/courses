@@ -329,8 +329,8 @@ class PermitsController extends Controller
                 $alwahda = 'جواله / دليلات';
             }elseif ($objdata->alwahda == "almajmueuh") {
                 $alwahda = 'المجموعه';
-            }elseif ($objdata->alwahda == " اولياء الامور") {
-                $alwahda = 'اخرى';
+            }elseif ($objdata->alwahda == "awlia_alamwr") {
+                $alwahda = ' اولياء الامور';
             }elseif ($objdata->alwahda == "other") {
                 $alwahda = 'اخرى';
             }
@@ -539,10 +539,11 @@ class PermitsController extends Controller
     }
 
  
-    public function download_approvement()
+    public function download_approvement($id)
     {
         $title = 'تصريح نشاط' ;
-        return view('auth.admin.permits.download_approve_form',['title' => $title]);
+        $objPermit = Permit::find($id);
+        return view('auth.admin.permits.download_approve_form',['title' => $title,'objPermit'=>$objPermit]);
     }
 
     
