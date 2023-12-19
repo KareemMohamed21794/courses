@@ -262,7 +262,7 @@ class SecondaryRegistrationsController extends Controller
 
                 if($objAdmin->is_super == 0){
  
-                    $status = "<a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل الموافقة</>";
+                    $status = "<a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";
                 }
 
             }
