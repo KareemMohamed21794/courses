@@ -984,10 +984,35 @@ public function accept_second_registration(Request $request, $id)
     }
 
 
-     public function download_secondary_registration($id)
+    public function download_secondary_registration($id)
     {
-        $title = 'تصريح نشاط' ;
+        $title = 'تحميل الشهاده' ;
         $objFile = File::find($id);
+
+
+        // $title = "Hello";
+        // $date = date('Y-m-d');
+        // $clientName = "John Doe";
+        // $lawyerName = "Jane Smith";
+        // $transactions = [
+        //     "Transaction 1",
+        //     "Transaction 2",
+        //     "Transaction 3"
+        // ];
+
+        // $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+        // $pdf->setPrintHeader(false); // Disable header
+        // $pdf->SetFont('dejavusans', '', 12, '', false);
+        // $pdf->AddPage();
+
+        // $viewData = compact('objFile');
+        // $html = view('auth.admin.secondary_registrations.download_secondary_registration', $viewData)->render();
+
+        // $pdf->writeHTML($html);
+
+        // $pdf->Output('filename.pdf', 'D');
+
+
         return view('auth.admin.secondary_registrations.download_secondary_registration',['title' => $title,'objFile'=>$objFile]);
     }
 
