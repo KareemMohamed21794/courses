@@ -13,9 +13,28 @@ var KTDatatablesServerSide = function () {
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
 
-    
+    var adminColumns = [
+    { data: '#' },
+    { data: 'id' },
+    { data: 'admin_id' },
+    { data: 'file' },
+    { data: 'file_name' },
+    { data: 'description' },
+    { data: 'created_at' },
+    { data: null },
+   ];
 
+    var userColumns = [
+        { data: '#' },
+        { data: 'id' },
+        { data: 'file' },
+        { data: 'file_name' },
+        { data: 'description' },
+        { data: 'created_at' },
+        { data: null },
+    ];
 
+     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
 
     // Private functions
     var initDatatable = function () {
@@ -38,16 +57,7 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: [
-                { data: '#' },
-                { data: 'id' },
-                { data: 'admin_id' },
-                { data: 'file' },
-                { data: 'file_name' },
-                { data: 'description' },
-                { data: 'created_at' },
-                // { data: null },
-            ],
+            columns:chosenColumns,
             buttons: [
                 // 'copy',
                 // {
@@ -131,6 +141,23 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
  
                             `;
+                        }else{
+
+
+                            AdminContent = `
+
+                               
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+ 
+                            `;
+
                         }
 
                         return `

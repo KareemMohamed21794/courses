@@ -413,11 +413,13 @@ function RegistrationType(value) {
    if(value == 'muqiaduh'){
     $("#alhayyuh_almuqayaduh_id").show();
     $("#alhayyuh_almuqayaduh_number_id").show();
+    $("#labelElement").text('رقم الهيئة المقيدة ');
    
    }else if(value == 'harah'){
     $("#alhayyuh_almuqayaduh_id").hide();
     $("#alhayyuh_almuqayaduh_number_id").show();
     $('#alhayyuh_almuqayaduh').val(null);
+    $("#labelElement").text('رقم مجلس الإدارة');
    }else{
     $("#alhayyuh_almuqayaduh_id").hide();
     $("#alhayyuh_almuqayaduh_number_id").hide();

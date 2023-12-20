@@ -472,9 +472,11 @@ function getData(id,action) {
             if(data.registration_type == 'muqiaduh'){
                 $("#alhayyuh_almuqayaduh_id_update").show();
                 $("#alhayyuh_almuqayaduh_number_id_update").show();
+                $("#labelElement_update").text('رقم الهيئة المقيدة ');
             }else if(data.registration_type == 'harah'){
                 $("#alhayyuh_almuqayaduh_id_update").hide();
                 $("#alhayyuh_almuqayaduh_number_id_update").show();
+                $("#labelElement_update").text('رقم مجلس الإدارة');
                
             }else{
                 $("#alhayyuh_almuqayaduh_id_update").hide();
@@ -554,10 +556,12 @@ function RegistrationTypeUpdate(value) {
    if(value == 'muqiaduh'){
     $("#alhayyuh_almuqayaduh_id_update").show();
     $("#alhayyuh_almuqayaduh_number_id_update").show();
+    $("#labelElement_update").text('رقم الهيئة المقيدة ');
    
    }else if(value == 'harah'){
     $("#alhayyuh_almuqayaduh_id_update").hide();
     $("#alhayyuh_almuqayaduh_number_id_update").show();
+    $("#labelElement_update").text('رقم مجلس الإدارة');
    
    }else{
     $("#alhayyuh_almuqayaduh_id_update").hide();
