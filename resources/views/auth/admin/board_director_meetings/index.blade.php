@@ -154,7 +154,11 @@
                             <th> الملف  </th>
                              <th>السنة</th>
                             <th>{{ __('messages.created_at') }}</th>
-                            {{-- <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> --}}
+                             @if($objAdmin->is_super == 1)
+                            <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
+                            @else
+                            <th class="text-end min-w-100px actions" style="visibility: hidden;">{{ __('messages.Actions') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">

@@ -568,6 +568,7 @@ return [
     'incoming'=>'وارد',
     'number_participants'=>'عدد المشاركين',
     'number_order'=>'رقم الطلب',
+    'Info'=>'معلومات',
 
  ];
 

@@ -18,21 +18,21 @@ var KTModalAdd = function () {
 			form,
 			{
 				fields: {
-                    'registration_type': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'registration_type': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
-                    'group_classification': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'group_classification': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'group_name': {
@@ -45,13 +45,13 @@ var KTModalAdd = function () {
 
 
 
-                    'date_establishment': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'date_establishment': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'registration_number': {
@@ -62,84 +62,78 @@ var KTModalAdd = function () {
                         }
                     },
 
-                    'phone': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'phone': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
-                    'email': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    
 
-                    'website': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'website': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
-                    'governorate': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'governorate': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
 
-                    'district': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'district': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
 
-                    'street_name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'street_name': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
-                    'building_number': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'building_number': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
-                    'workplace': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'workplace': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
-                    'job': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'job': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'name': {
@@ -413,7 +407,7 @@ function RegistrationType(value) {
    if(value == 'muqiaduh'){
     $("#alhayyuh_almuqayaduh_id").show();
     $("#alhayyuh_almuqayaduh_number_id").show();
-    $("#labelElement").text('رقم الهيئة المقيدة ');
+    $("#labelElement").text('رقم الهيئة المقيدة/مجلس الإدارة');
    
    }else if(value == 'harah'){
     $("#alhayyuh_almuqayaduh_id").hide();

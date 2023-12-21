@@ -30,10 +30,8 @@ class InformationsController extends Controller
             $title = __('messages.incoming');
             $add_title = __('messages.incoming');
         }else{
-            $title = __('messages.incoming');
-            $add_title = __('messages.incoming');
-            // $title = __('messages.requests');
-            // $add_title = __('messages.request');
+            $title = __('messages.issued');
+            $add_title = __('messages.issued');
         }
         
 
@@ -203,8 +201,9 @@ class InformationsController extends Controller
             '#'   => true,
             'id'   => true,
             'admin_id'   => true,
-            'file'=> true,
             'file_name'=>true,
+            'file'=> true,
+            
             'description'=>true,
             'created_at'   => true,
         ];
@@ -214,8 +213,9 @@ class InformationsController extends Controller
             $columnsDefault = [
             '#'   => true,
             'id'   => true,
-            'file'=> true,
             'file_name'=>true,
+            'file'=> true,
+            
             'description'=>true,
             'created_at'   => true,
         ];
@@ -271,8 +271,9 @@ class InformationsController extends Controller
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
                 "file_name"=> $objdata->file_name,
+                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
+                
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
@@ -282,9 +283,9 @@ class InformationsController extends Controller
                 $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                
-                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
                 "file_name"=> $objdata->file_name,
+                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
+                
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
