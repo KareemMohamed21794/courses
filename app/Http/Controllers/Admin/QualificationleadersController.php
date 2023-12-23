@@ -445,12 +445,30 @@ class QualificationleadersController extends Controller
         
         $leader_id = @$_GET['leader_id'];
         $current_qualification = @$_GET['current_qualification'];
+        
 
-      
+        $objAdmin_data = Admin::find($leader_id);
+        $obj_admin_name = $objAdmin_data ? $objAdmin_data->group_name : 'الكل';
+
+        if($current_qualification == 'musaeid_qayid_wahdah'){
+            $title_qualification = 'مساعد قائد وحده   ';
+           }else if($current_qualification == 'qayid_wahda'){
+            $title_qualification = 'قائد وحدة شارة خشبية   ';
+           }else if($current_qualification == 'musaeid_qayid_tadrib'){
+            $title_qualification = 'مساعد قائد تدريب';
+           }else if($current_qualification == 'qayid_tadrib'){
+            $title_qualification = 'قائد تدريب';
+           }elseif($current_qualification == 'ghayr_muahal'){
+            $title_qualification = 'غير مؤهل';
+           }else{
+            $title_qualification = 'الكل';
+           }
+
+        
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        $title = __('messages.report_qualification_leaders');
+        $title = __('messages.report_qualification_leaders'). ' - ' .$obj_admin_name. ' - ' .$title_qualification;
 
         return view('auth.admin.qualification_leaders.report_qualification_leaders_get', ['title' => $title,'leader_id' => $leader_id,'current_qualification' => $current_qualification]);
     }
