@@ -17,8 +17,9 @@ var KTDatatablesServerSide = function () {
     { data: '#' },
     { data: 'id' },
     { data: 'admin_id' },
-    { data: 'file' },
     { data: 'file_name' },
+    { data: 'file' },
+    
     { data: 'description' },
     { data: 'created_at' },
     { data: null },
@@ -27,8 +28,9 @@ var KTDatatablesServerSide = function () {
     var userColumns = [
         { data: '#' },
         { data: 'id' },
+          { data: 'file_name' },
         { data: 'file' },
-        { data: 'file_name' },
+      
         { data: 'description' },
         { data: 'created_at' },
         { data: null },
@@ -127,7 +129,7 @@ var KTDatatablesServerSide = function () {
                             AdminContent = `
 
                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="">
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>

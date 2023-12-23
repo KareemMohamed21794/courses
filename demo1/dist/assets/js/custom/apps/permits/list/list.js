@@ -135,6 +135,8 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
+                        // console.log(row.permit_status);
+                        if(row.permit_status!='معلقه') display_edit = "none";
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`

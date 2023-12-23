@@ -268,6 +268,11 @@ function CurrentQualification(value) {
 
 
    }else if(value == 'qayid_wahda'){
+
+    // Remove the 'required' class from labels within #card1
+    $("#card1 label.required").removeClass("required");
+
+
     $("#card1").show(300);
     $("#card2").show(300);
     $("#card3").hide(300);
@@ -287,6 +292,11 @@ function CurrentQualification(value) {
 
 
    }else if(value == 'musaeid_qayid_tadrib'){
+    
+    // Remove the 'required' class from labels within #card1
+    $("#card1 label.required").removeClass("required");
+    $("#card2 label.required").removeClass("required");     
+
     $("#card1").show(300);
     $("#card2").show(300);
     $("#card3").show(300);
@@ -304,6 +314,10 @@ function CurrentQualification(value) {
     $("#card4").show(300);
    }else{
     
+    // Remove the 'required' class from labels within #card1
+    $("#card1 label.required").removeClass("required");
+    $("#card2 label.required").removeClass("required");
+    $("#card3 label.required").removeClass("required");    
 
     $("#card1").hide(300);
     $("#card2").hide(300);
