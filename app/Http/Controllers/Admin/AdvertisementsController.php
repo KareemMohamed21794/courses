@@ -29,10 +29,8 @@ class AdvertisementsController extends Controller
             $title = __('messages.issued');
             $add_title = __('messages.issued');
         }else{
-            $title = __('messages.issued');
-            $add_title = __('messages.issued');
-            // $title = __('messages.advertisements');
-            // $add_title = __('messages.advertisement');
+            $title = __('messages.incoming');
+            $add_title = __('messages.incoming');
         }
         
 
@@ -79,15 +77,15 @@ class AdvertisementsController extends Controller
 
         if($request->group_type == 'kashfih'){
 
-           $arrGroups =  Admin::where('group_classification','kashfih')->pluck('id')->toArray();
+           $arrGroups =  Admin::where('group_classification','kashfih')->whereNull('deleted_at')->pluck('id')->toArray();
 
         }elseif($request->group_type == 'irshad'){
 
-            $arrGroups =  Admin::where('group_classification','irshad')->pluck('id')->toArray();
+            $arrGroups =  Admin::where('group_classification','irshad')->whereNull('deleted_at')->pluck('id')->toArray();
 
         }elseif($request->group_type == 'all'){
 
-            $arrGroups =  Admin::pluck('id')->toArray();
+            $arrGroups =  Admin::whereNull('deleted_at')->pluck('id')->toArray();
             
         }elseif($request->group_type == 'group_name'){
 
@@ -227,8 +225,9 @@ class AdvertisementsController extends Controller
             '#'   => true,
             'id'   => true,
             'admin_id'   => true,
-            'file'=> true,
             'file_name'=>true,
+            'file'=> true,
+            
             'description'=>true,
             'created_at'   => true,
         ];
@@ -238,8 +237,9 @@ class AdvertisementsController extends Controller
             $columnsDefault = [
             '#'   => true,
             'id'   => true,
+             'file_name'=>true,
             'file'=> true,
-            'file_name'=>true,
+           
             'description'=>true,
             'created_at'   => true,
         ];
@@ -299,8 +299,9 @@ class AdvertisementsController extends Controller
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
                 "file_name"=> $objdata->file_name,
+                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
+                
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
@@ -309,9 +310,9 @@ class AdvertisementsController extends Controller
                $alldataResult[] = array(
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-              
+               "file_name"=> $objdata->file_name,
                 "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
-                "file_name"=> $objdata->file_name,
+               
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );

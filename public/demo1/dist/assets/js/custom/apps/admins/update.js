@@ -19,21 +19,21 @@ var KTModalBranchesUpdate = function () {
             {
                 fields: {
 
-                    'registration_type': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'registration_type': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
-                    'group_classification': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'group_classification': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'group_name': {
@@ -46,13 +46,13 @@ var KTModalBranchesUpdate = function () {
 
 
 
-                    'date_establishment': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'date_establishment': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'registration_number': {
@@ -63,84 +63,77 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    'phone': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-
-                    'email': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-                    'website': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-                    'governorate': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'phone': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
 
-                    'district': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'website': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
+
+                    // 'governorate': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
 
-                    'street_name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'district': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
-                    'building_number': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+
+                    // 'street_name': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
-                    'workplace': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+                    // 'building_number': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
-                    'job': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
+
+                    // 'workplace': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
+
+                    // 'job': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         }
+                    //     }
+                    // },
 
 
                     'name': {
@@ -506,10 +499,14 @@ l
     // Disable all input and select elements
         $('input, select').prop('disabled', true);
         $('#kt_modal_update_submit').hide();
+        var heading = document.getElementById("myHeading");
+        heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'المدير';
     } else {
         // Enable all input and select elements
         $('input, select').prop('disabled', false);
         $('#kt_modal_update_submit').show();
+        var heading = document.getElementById("myHeading");
+        heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'مدير';
     }
 }
 
@@ -556,7 +553,7 @@ function RegistrationTypeUpdate(value) {
    if(value == 'muqiaduh'){
     $("#alhayyuh_almuqayaduh_id_update").show();
     $("#alhayyuh_almuqayaduh_number_id_update").show();
-    $("#labelElement_update").text('رقم الهيئة المقيدة ');
+    $("#labelElement_update").text('رقم الهيئة المقيدة/مجلس الإدارة');
    
    }else if(value == 'harah'){
     $("#alhayyuh_almuqayaduh_id_update").hide();
