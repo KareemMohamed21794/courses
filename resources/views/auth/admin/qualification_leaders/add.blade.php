@@ -100,7 +100,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <label fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="leader_name" id="leader_name" />
@@ -110,7 +110,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.current_qualification') }}</label>
+                            <label fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.current_qualification') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <select onchange="CurrentQualification(this.value)" name="current_qualification" id="current_qualification" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">
@@ -147,7 +147,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.study_history_mqw') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                  <select class="form-control form-control-solid" name="study_history_mqw" id="study_history_mqw">
@@ -163,7 +163,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.place_study_mqw') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.place_study_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.place_study_mqw') }}" name="place_study_mqw" id="place_study_mqw" />
@@ -173,7 +173,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.organizer_mqw') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.organizer_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.organizer_mqw') }}" name="organizer_mqw" id="organizer_mqw" />
@@ -183,7 +183,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.rent_date_mqw') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.rent_date_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.rent_date_mqw') }}" name="rent_date_mqw" id="rent_date_mqw" />
@@ -193,7 +193,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.rent_number_mqw') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.rent_number_mqw') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.rent_number_mqw') }}" name="rent_number_mqw" id="rent_number_mqw" />
@@ -299,7 +299,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.study_history_mqt') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.study_history_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <select class="form-control form-control-solid" name="study_history_mqt" id="study_history_mqt">
@@ -314,7 +314,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.place_study_mqt') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.place_study_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.place_study_mqt') }}" name="place_study_mqt" id="place_study_mqt" />
@@ -324,7 +324,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.organizer_mqt') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.organizer_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.organizer_mqt') }}" name="organizer_mqt" id="organizer_mqt" />
@@ -334,7 +334,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.rent_date_mqt') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.rent_date_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.rent_date_mqt') }}" name="rent_date_mqt" id="rent_date_mqt" />
@@ -344,7 +344,7 @@
                                             <!--begin::Input group-->
                                             <div class="fv-row mb-7">
                                                 <!--begin::Label-->
-                                                <label class=" fs-6 fw-bold mb-2">{{ __('messages.rent_number_mqt') }}</label>
+                                                <label class="required fs-6 fw-bold mb-2">{{ __('messages.rent_number_mqt') }}</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.rent_number_mqt') }}" name="rent_number_mqt" id="rent_number_mqt" />

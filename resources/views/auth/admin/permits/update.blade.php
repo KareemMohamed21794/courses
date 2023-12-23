@@ -229,9 +229,7 @@
                             <label class="required fs-6 fw-bold mb-2">اسماء القادة المشاركين - يرجى كتابة اسم كل قائد في سطر جديد </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid"  name="leaders_names"  id="leaders_names_update" rows="1">
-                                
-                            </textarea>
+                            <textarea class="form-control form-control-solid"  name="leaders_names"  id="leaders_names_update" rows="1"> </textarea>
                             
                             <!--end::Input-->
                         </div>
