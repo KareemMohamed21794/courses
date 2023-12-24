@@ -543,20 +543,6 @@ class PermitsController extends Controller
     {
         $title = 'تصريح نشاط' ;
         $objPermit = Permit::find($id);
- 
-
-        $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->setPrintHeader(false); // Disable header
-        $pdf->SetFont('dejavusans', '', 12, '', false);
-        $pdf->AddPage();
-
-        $viewData = compact('title', 'objPermit');
-        $html = view('auth.admin.permits.download_approve_form', $viewData)->render();
-
-        $pdf->writeHTML($html);
-
-        $pdf->Output("$title.pdf", 'D');
-
         return view('auth.admin.permits.download_approve_form',['title' => $title,'objPermit'=>$objPermit]);
     }
 
