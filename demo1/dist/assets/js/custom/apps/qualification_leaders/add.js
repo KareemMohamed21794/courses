@@ -308,16 +308,19 @@ function CurrentQualification(value) {
     $("#rent_date_qt").val(null);
     $("#rent_number_qt").val(null);
    }else if(value == 'qayid_tadrib'){
+
+    // Remove the 'required' class from labels within #card1
+    $("#card1 label.required").removeClass("required");
+    $("#card2 label.required").removeClass("required");
+    $("#card3 label.required").removeClass("required");  
+
     $("#card1").show(300);
     $("#card2").show(300);
     $("#card3").show(300);
     $("#card4").show(300);
    }else{
     
-    // Remove the 'required' class from labels within #card1
-    $("#card1 label.required").removeClass("required");
-    $("#card2 label.required").removeClass("required");
-    $("#card3 label.required").removeClass("required");    
+      
 
     $("#card1").hide(300);
     $("#card2").hide(300);

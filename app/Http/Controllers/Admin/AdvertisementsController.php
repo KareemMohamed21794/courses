@@ -77,15 +77,15 @@ class AdvertisementsController extends Controller
 
         if($request->group_type == 'kashfih'){
 
-           $arrGroups =  Admin::where('group_classification','kashfih')->whereNull('deleted_at')->pluck('id')->toArray();
+           $arrGroups =  Admin::where('group_classification','kashfih')->whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
 
         }elseif($request->group_type == 'irshad'){
 
-            $arrGroups =  Admin::where('group_classification','irshad')->whereNull('deleted_at')->pluck('id')->toArray();
+            $arrGroups =  Admin::where('group_classification','irshad')->whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
 
         }elseif($request->group_type == 'all'){
 
-            $arrGroups =  Admin::whereNull('deleted_at')->pluck('id')->toArray();
+            $arrGroups =  Admin::whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
             
         }elseif($request->group_type == 'group_name'){
 

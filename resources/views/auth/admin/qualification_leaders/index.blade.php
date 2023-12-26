@@ -169,3 +169,11 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
+@if($objAdmin->is_super == 0)
+<style type="text/css">
+    .group_name{
+        display: none;
+    }
+</style>
+@endif
+

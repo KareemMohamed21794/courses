@@ -476,6 +476,29 @@ function getData(id,action) {
                 $("#alhayyuh_almuqayaduh_number_id_update").hide();
             }
 
+            if (action == 2) {
+            // Disable all input and select elements
+                // alert(data.is_super);
+                // alert(action)
+                $('input, select').prop('disabled', true);
+                $('#kt_modal_update_submit').hide();
+                var heading = document.getElementById("myHeading");
+
+                if(data.is_super==1){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'المدير';
+                }else{
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'مجموعة كشفية';
+                }
+
+                
+            } else {
+                // Enable all input and select elements
+                $('input, select').prop('disabled', false);
+                $('#kt_modal_update_submit').show();
+                var heading = document.getElementById("myHeading");
+                heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'مدير';
+            }
+
 l
 
 
@@ -495,19 +518,7 @@ l
     });
     //======= End Ajxa ========//
 
-    if (action == 2) {
-    // Disable all input and select elements
-        $('input, select').prop('disabled', true);
-        $('#kt_modal_update_submit').hide();
-        var heading = document.getElementById("myHeading");
-        heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'المدير';
-    } else {
-        // Enable all input and select elements
-        $('input, select').prop('disabled', false);
-        $('#kt_modal_update_submit').show();
-        var heading = document.getElementById("myHeading");
-        heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'مدير';
-    }
+
 }
 
 function getPositions(department_id) {

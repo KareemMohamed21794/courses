@@ -143,6 +143,11 @@ var KTDatatablesServerSide = function () {
                         `;
                     },
                 },
+                {
+                    targets: 2,
+                    className: 'group_name',
+                     
+                },
             ],
             // // Add data-filter attribute
             // createdRow: function (row, data, dataIndex) {

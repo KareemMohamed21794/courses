@@ -373,6 +373,8 @@ function getData(id,action) {
 
     if (action == 2) {
     // Disable all input and select elements
+        var heading = document.getElementById("myHeading");
+        heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'تصريح';
         $('input, select').prop('disabled', true);
         $('#kt_modal_update_submit').hide();
     } else {

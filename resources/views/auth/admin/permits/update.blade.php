@@ -11,7 +11,7 @@
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_update_header">
                     <!--begin::Modal title-->
-                    <h2 class="fw-bolder">{{ __('messages.Update') }} {{$title}}</h2>
+                    <h2 class="fw-bolder" id="myHeading">{{ __('messages.Update') }} {{$title}}</h2>
                     <!--end::Modal title-->
                     <!--begin::Close-->
                     <div id="kt_modal_update_close" class="btn btn-icon btn-sm btn-active-icon-primary">
