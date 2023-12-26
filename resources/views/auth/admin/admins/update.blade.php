@@ -71,11 +71,47 @@
                         </div>
                         <!--end::Input group-->
 
+                         @if($objAdmin->is_super)
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+                        @endif
+
                        
 
                         
 
                         @if(request()->segment(2)=='leaders')
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                           <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
                         
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -171,33 +207,13 @@
                         <!--end::Input group-->
 
 
-                         @if($objAdmin->is_super)
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-                        @endif
+                        
 
 
                       
                         @if(request()->segment(2)=='leaders')
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                       
 
 
                         <!--begin::Input group-->
@@ -273,16 +289,7 @@
                         </div>
                         <!--end::Input group-->
 
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                     
 
                         
                         

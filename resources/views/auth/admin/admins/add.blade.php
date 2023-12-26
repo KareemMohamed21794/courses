@@ -69,11 +69,49 @@
                         </div>
                         <!--end::Input group-->
 
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
                         
 
                        
 
                         @if($segment=='leaders')
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -158,31 +196,13 @@
                         <!--end::Input group-->
 
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.password') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="password" class="form-control form-control-solid" placeholder="{{ __('messages.password') }}" name="password"  id="password" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                         
 
                       
 
                         @if($segment=='leaders')
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.registration_number') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.registration_number') }}" name="registration_number"  id="registration_number" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                       
 
 
                         <!--begin::Input group-->
@@ -253,16 +273,7 @@
                         </div>
                         <!--end::Input group-->
 
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                        
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
