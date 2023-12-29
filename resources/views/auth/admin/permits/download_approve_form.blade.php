@@ -125,7 +125,7 @@
                     <tbody>
                         <tr>
                             <th class="two-cell">الرقم:</th>
-                            <td>{{@$objPermit->permit_number}}</td>
+                            <td>{{@$objPermit->number_order}}</td>
                         </tr>
                         <tr>
                             <th class="two-cell">التاريخ:</th>
@@ -138,7 +138,7 @@
                 <p><strong>السيد قائد <span class="scoutName">مجموعة خالد بن الوليد الكشفية</span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
-                    إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->permit_number}}</span>، تاريخ <span
+                    إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span
                         class="date">{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</span>، والمتضمن طلب إقامة نشاط تطوعي، أعلمكم بأنّه لا مانع لدى مجلس
                     القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي:
                 </p>

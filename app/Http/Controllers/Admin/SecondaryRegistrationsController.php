@@ -258,7 +258,7 @@ class SecondaryRegistrationsController extends Controller
             if($objdata->status=='pending'){
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>";
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" .  "<br><a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";;
 
                 if($objAdmin->is_super == 0){
  
@@ -968,6 +968,31 @@ public function accept_second_registration(Request $request, $id)
         $objFile = File::find($id);
         $objFile->status = "approved";       
         $objFile->save();
+
+        // $objUser = $objFile->Admin;
+
+        // if(!empty($objUser->email)){
+        //     $recipient = $objUser->email;
+        //     $subject = 'موافقه نموذج التسجيل';
+
+        //     $data = ['content' => 'This is the email content.']; // Data to pass to the view
+
+        //     $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        //     // The "from" email address
+
+        //     Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+        //         $mail->to($recipient)
+        //             ->from($fromEmail) // Set the "from" email address
+        //             ->subject($subject);
+        //     });
+        // }
+        
+
+
+        // print_r($objUser); die;
+
+
+
         return redirect('/admin/secondary_registrations');
 
     }

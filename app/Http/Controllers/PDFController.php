@@ -324,14 +324,16 @@ class PDFController extends Controller
 public function send_email()
 {
     $recipient = 'mahmoud.ali.29992@gmail.com';
-    $subject = 'Subject of the Emailss';
+    $subject = 'Subject of the Email';
+
+    print_r('here'); die;
 
     $data = ['content' => 'This is the email content.']; // Data to pass to the view
 
-    $fromEmail = '_mainaccount@qalam.lawjo.net'; 
+    $fromEmail = 'mahmoud.ali.29992@gmail.com'; 
     // The "from" email address
 
-    Mail::send('emails.lawyer_notification', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+    Mail::send('emails.accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
         $mail->to($recipient)
             ->from($fromEmail) // Set the "from" email address
             ->subject($subject);

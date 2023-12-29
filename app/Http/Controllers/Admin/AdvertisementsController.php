@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
+use Illuminate\Support\Facades\Mail;
 
 class AdvertisementsController extends Controller
 {
@@ -107,6 +108,11 @@ class AdvertisementsController extends Controller
         $Advertisement = array();
         
         foreach ($arrGroups as $key => $objGroup) {
+
+
+            $objAdmin = Admin::find($objGroup);
+
+
             $Advertisement = Advertisement::create([
             'admin_id' =>  $objGroup,
             'group_type' =>  $request->group_type,
@@ -114,6 +120,29 @@ class AdvertisementsController extends Controller
             'file_name' =>  $request->file_name,
             'description' =>  $request->description,
             ]);
+
+             
+
+            if(!empty($objAdmin->email)){
+                $recipient = $objAdmin->email;
+                //$recipient = 'mahmoud.ali.29992@gmail.com';
+                $subject = "لديك وارد من مدير نظام تواصل";
+
+                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+
+                $fromEmail = 'admin@tawasol.privatescouts.org'; 
+                // The "from" email address
+
+                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                    $mail->to($recipient)
+                        ->from($fromEmail) // Set the "from" email address
+                        ->subject($subject);
+                });
+            }
+
+
+            # send email
+
         }
         
 

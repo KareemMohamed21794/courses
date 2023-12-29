@@ -13,6 +13,7 @@ use Validator;
 use Auth;
 use Lang;
 use TCPDF;
+use Illuminate\Support\Facades\Mail;
 
 class PermitsController extends Controller
 {
@@ -87,6 +88,13 @@ class PermitsController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+         
+        
+
+         
+
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
@@ -108,7 +116,7 @@ class PermitsController extends Controller
         }
 
 
-        $userId = Auth::id();
+        
 
         $Permit = Permit::create([
             'permit_number' =>  $request->permit_number,
@@ -128,6 +136,22 @@ class PermitsController extends Controller
             'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
         ]);
+
+
+        $recipient = 'admin@tawasol.com';
+        //$recipient = 'mahmoud.ali.29992@gmail.com';
+        $subject = 'طلب تصريح';
+
+        $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+
+        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        // The "from" email address
+
+        Mail::send('emails.permits_request', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+            $mail->to($recipient)
+                ->from($fromEmail) // Set the "from" email address
+                ->subject($subject);
+        });
 
         return response()->json(['Permit'=>$Permit]);
     }
@@ -338,7 +362,7 @@ class PermitsController extends Controller
             if($objdata->status=='pending'){
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>";
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
 
                 if($objAdmin->is_super == 0){
  
@@ -523,6 +547,26 @@ class PermitsController extends Controller
         $objPermit = Permit::find($id);
         $objPermit->status = "approved";       
         $objPermit->save();
+
+
+        if(!empty($objPermit->admin->email)){
+            $recipient = $objPermit->admin->email;
+            //$recipient = 'mahmoud.ali.29992@gmail.com';
+            $subject = "الرد على طلب: $objPermit->number_order ";
+
+            $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
+
+            $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            // The "from" email address
+
+            Mail::send('emails.permits_accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                $mail->to($recipient)
+                    ->from($fromEmail) // Set the "from" email address
+                    ->subject($subject);
+            });
+        }
+
+
         return redirect('/admin/permits');
 
     }
@@ -534,6 +578,29 @@ class PermitsController extends Controller
         $objPermit = Permit::find($id);
         $objPermit->status = "rejected";       
         $objPermit->save();
+
+        if(!empty($objPermit->admin->email)){
+            $recipient = $objPermit->admin->email;
+            //$recipient = 'mahmoud.ali.29992@gmail.com';
+            $subject = "الرد على طلب: $objPermit->number_order ";
+
+            $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
+
+            $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            // The "from" email address
+
+            Mail::send('emails.permits_reject', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                $mail->to($recipient)
+                    ->from($fromEmail) // Set the "from" email address
+                    ->subject($subject);
+            });
+        }
+        
+
+
+        
+
+
         return redirect('/admin/permits');
 
     }

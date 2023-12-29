@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
-
+use Illuminate\Support\Facades\Mail;
 class InformationsController extends Controller
 {
     private const MODEL ='Information';
@@ -72,7 +72,7 @@ class InformationsController extends Controller
 
 
         $userId = Auth::id();
-
+        $objAdmin = Admin::find($userId);
          $document = '';
 
          if(!empty($request->file('file'))){
@@ -91,6 +91,21 @@ class InformationsController extends Controller
         'file_name' =>  $request->file_name,
         'description' =>  $request->description,
         ]);
+
+        $recipient = 'admin@tawasol.com';
+        $recipient = 'mahmoud.ali.29992@gmail.com';
+        $subject = 'لديك وارد';
+
+        $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+
+        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        // The "from" email address
+
+        Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+            $mail->to($recipient)
+                ->from($fromEmail) // Set the "from" email address
+                ->subject($subject);
+        });
         
         
 
