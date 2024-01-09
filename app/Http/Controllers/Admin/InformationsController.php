@@ -197,7 +197,7 @@ class InformationsController extends Controller
         return response()->json(['Information'=>$Information]);
     }
 
-     public function delete_requests(Request $request)
+     public function deleterequests(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
         $Information = Information::whereIn('id',$request->ids)->delete();

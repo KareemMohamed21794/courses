@@ -179,7 +179,7 @@ class BoardDirectorMeetingsController extends Controller
         return response()->json(['File'=>$File]);
     }
 
-     public function deleteSecondaryRegistrations(Request $request)
+     public function deleteBoardDirectorMeetings(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
         $File = File::whereIn('id',$request->ids)->delete();

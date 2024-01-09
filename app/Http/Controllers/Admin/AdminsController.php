@@ -320,14 +320,15 @@ class AdminsController extends Controller
     public function get(Request $request)
     {
 
-        //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
-        $columnsDefault = [
+        $segment = $request->segment(2);
+        if($segment=='admins'){
+            $columnsDefault = [
             '#'   => true,
             'id'   => true,
             // 'name'   => true,
             'username'   => true,
-            'group_name'   => true,
+            // 'group_name'   => true,
             'email'   => true,
             'phone'   => true,
             // 'address'   => true,
@@ -335,6 +336,25 @@ class AdminsController extends Controller
             // "position_name" => true,
             'created_at'   => true,
         ];
+        }else{
+            $columnsDefault = [
+            '#'   => true,
+            'id'   => true,
+            // 'name'   => true,
+            'username'   => true,
+            'group_name'   => true,
+            'email'   => true,
+            'phone'   => true,
+            //'address'   => true,
+            // 'super_admin'   => true,
+            // "position_name" => true,
+            'created_at'   => true,
+        ];
+        }
+
+        //$this->authorize(self::MODEL.'-viewAny');
+        
+        
 
         if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
             $columnsDefault = [];
@@ -396,19 +416,37 @@ class AdminsController extends Controller
 
             $is_super = "Super Admin";
             if(!$objdata->is_super)  $is_super = "Normal Admin";
-            $alldataResult[] = array(
-                "#" => $objdata->id,
-                "id" => $objdata->id,
-                // "name" => $objdata->name,
-                "username"=> $objdata->username,
-                "group_name"=> $objdata->group_name,
-                "email" => $objdata->email,
-                "phone" => $objdata->phone,
-                // "address" => $objdata->address,
-                // "super_admin" => $is_super,
-                // "position_name" => @$objdata->position->display_name,
-                "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
-            );
+            if($segment=='admins'){
+
+                $alldataResult[] = array(
+                    "#" => $objdata->id,
+                    "id" => $objdata->id,
+                    // "name" => $objdata->name,
+                    "username"=> $objdata->username,
+                    //"group_name"=> $objdata->group_name,
+                    "email" => $objdata->email,
+                    "phone" => $objdata->phone,
+                    // "address" => $objdata->address,
+                    // "super_admin" => $is_super,
+                    // "position_name" => @$objdata->position->display_name,
+                    "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+                );
+            }else{
+                $alldataResult[] = array(
+                    "#" => $objdata->id,
+                    "id" => $objdata->id,
+                    // "name" => $objdata->name,
+                    "username"=> $objdata->username,
+                    "group_name"=> $objdata->group_name,
+                    "email" => $objdata->email,
+                    "phone" => $objdata->phone,
+                    //"address" => $objdata->address,
+                    // "super_admin" => $is_super,
+                    // "position_name" => @$objdata->position->display_name,
+                    "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+                );
+
+            }
         }
 
        $alldata =$alldataResult ;

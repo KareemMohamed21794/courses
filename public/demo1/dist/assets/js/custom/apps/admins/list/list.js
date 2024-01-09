@@ -9,6 +9,7 @@ var KTDatatablesServerSide = function () {
 
     var segment = $("#segment").val();
     var is_super = $("#is_super").val();
+    var type_segment = $("#type_segment").val();
     let main_url = "/admin/"+segment+"/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
@@ -19,7 +20,31 @@ var KTDatatablesServerSide = function () {
     var yes_delete = $("#yes_delete").val();
     var no_delete = $("#no_delete").val();
     
-    
+    var adminColumns = [
+    { data: '#' },
+    { data: 'id' },
+    { data: 'username' },
+    { data: 'email' },
+    { data: 'phone' },
+    { data: 'created_at' },
+    { data: null },
+   ];
+
+
+    var userColumns = [
+    { data: '#' },
+    { data: 'id' },
+    { data: 'username' },
+    { data: 'group_name' },
+    { data: 'email' },
+    { data: 'phone'},
+    //{ data: 'address'},
+    { data: 'created_at' },
+    { data: null },
+       
+    ];
+
+    var chosenColumns = type_segment === '0' ? userColumns : adminColumns;
 
 
     // Private functions
@@ -43,20 +68,7 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: [
-                { data: '#' },
-                { data: 'id' },
-                // { data: 'name' },
-                { data: 'username' },
-                { data: 'group_name' },
-                { data: 'email' },
-                { data: 'phone' },
-                // { data: 'address' },
-                // { data: 'super_admin' },
-                // { data: 'position_name' },
-                { data: 'created_at' },
-                { data: null },
-            ],
+            columns: chosenColumns,
             buttons: [
                 {
                     extend: 'excel',

@@ -42,6 +42,18 @@
                         <!--end::Input group-->
 
 
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
                       
 
 
@@ -67,6 +79,18 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.email') }}" name="email"  id="email_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                             <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -102,16 +126,7 @@
                         <!--end::Input group-->
 
 
-                           <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="name"  id="name_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                         
                         
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -195,16 +210,7 @@
                      
 
 
-                        <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone_update" />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                   
 
 
                         

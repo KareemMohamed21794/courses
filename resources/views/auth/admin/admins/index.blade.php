@@ -130,11 +130,16 @@
                             </th>
                             <th>#</th>
                             <!-- <th>{{ __('messages.name') }}</th> -->
+
                             <th>{{ __('messages.username') }}</th>
+                            @if($is_super == 0)
                             <th>{{ __('messages.group_name') }}</th>
+                            @endif
                             <th>{{ __('messages.email') }}</th>
                             <th>{{ __('messages.phone') }}</th>
-                            <!-- <th>{{ __('messages.address') }}</th> -->
+                           <!--  @if($is_super == 0)
+                            <th>{{ __('messages.address') }}</th>
+                            @endif -->
                             {{-- <th>{{ __('messages.super_admin') }}</th> --}}
                             {{-- <th>{{ __('messages.Positions') }}</th> --}}
                             <th>{{ __('messages.created_at') }}</th>
@@ -325,6 +330,7 @@
     <!--end::Post-->
     <input type="hidden" name="segment" id="segment" value="{{ $segment }}">
     <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
+    <input type="hidden" name="type_segment" id="type_segment" value="{{ $is_super }}">
 @endsection
 
 @section('scripts')
