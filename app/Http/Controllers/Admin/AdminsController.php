@@ -326,8 +326,8 @@ class AdminsController extends Controller
             $columnsDefault = [
             '#'   => true,
             'id'   => true,
-            // 'name'   => true,
             'username'   => true,
+            'name'   => true,
             // 'group_name'   => true,
             'email'   => true,
             'phone'   => true,
@@ -421,8 +421,8 @@ class AdminsController extends Controller
                 $alldataResult[] = array(
                     "#" => $objdata->id,
                     "id" => $objdata->id,
-                    // "name" => $objdata->name,
                     "username"=> $objdata->username,
+                    "name" => $objdata->name,
                     //"group_name"=> $objdata->group_name,
                     "email" => $objdata->email,
                     "phone" => $objdata->phone,

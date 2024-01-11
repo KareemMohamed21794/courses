@@ -24,6 +24,7 @@ var KTDatatablesServerSide = function () {
     { data: '#' },
     { data: 'id' },
     { data: 'username' },
+    { data: 'name' },
     { data: 'email' },
     { data: 'phone' },
     { data: 'created_at' },

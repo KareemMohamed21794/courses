@@ -6,7 +6,14 @@
         <div class="menu menu-lg-rounded menu-column menu-lg-row menu-state-bg menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-400 fw-bold my-5 my-lg-0 align-items-stretch" id="#kt_header_menu" data-kt-menu="true">
             <div class="menu-item me-lg-1">
                  
-                    <span style="color: #009EF7;" class="menu-title">{{ __('messages.welcome') }} {{ $objAdmin->group_name }}</span>
+                    <span style="color: #009EF7;" class="menu-title">{{ __('messages.welcome') }} 
+                        @if(Auth::user()->is_super)
+                        {{ $objAdmin->name }}
+                        @else
+                        {{ $objAdmin->group_name }}
+                        @endif
+                        
+                    </span>
                   
             </div>
 

@@ -258,11 +258,11 @@ class SecondaryRegistrationsController extends Controller
             if($objdata->status=='pending'){
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" .  "<br><a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";;
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" .  "<br><a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";;
 
                 if($objAdmin->is_super == 0){
  
-                    $status = "<a href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";
+                    $status = "<a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";
                 }
 
             }

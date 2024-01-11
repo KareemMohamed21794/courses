@@ -7,122 +7,155 @@
     <style>
         @font-face {
             font-family: 'Bahij_TheSansArabic';
-            src: url(./Bahij_TheSansArabic-Bold.ttf);
+            src: url(https://tawasol.privatescouts.org/public/certificate/Bahij_TheSansArabic-Bold.ttf);
             font-weight: bold;
             font-style: normal;
         }
 
         @font-face {
             font-family: 'Bahij_TheSansArabic';
-            src: url(./Bahij_TheSansArabic-Plain.ttf);
+            src: url(https://tawasol.privatescouts.org/public/certificate/Bahij_TheSansArabic-Plain.ttf);
             font-weight: normal;
             font-style: normal;
         }
 
         body {
             margin: 0;
+            padding: 0;
             overflow-x: hidden;
             font-family: 'Bahij_TheSansArabic';
+            direction: rtl;
         }
 
         #certificate {
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: space-between;
-            max-width: 1280px;
-            padding: 0px 20px;
+            height: 550px;
+            padding: 80px 60px;
             margin: auto;
-            direction: rtl;
-            font-size: 16px;
-            min-height: 100vh;
+            border-image-source: url('https://tawasol.privatescouts.org/public/certificate/border.png');
+            border-image-repeat: round;
+            border-image-slice: 47.5%;
+            border-image-width: auto;
+            border-image-outset: 0px;
         }
 
-        #certificate img {
-            width: 100%;
+        .logos {
+            display: flex;
+            justify-content: space-between;
         }
 
-        .scout-name {
-            position: absolute;
-            top: 470px;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .logos .logo {
+            max-width: 120px;
         }
 
-        .scout-name h1 {
+        .logos .asset {
+            max-width: 300px;
+            margin-top: 30px;
+        }
+
+        .certificate-text p {
+            text-align: center;
+            font-size: 20px;
+            color: #8d5f3e;
             margin: 0;
-            font-size: 3em;
+        }
+
+        .certificate-text .scout-name {
+            margin: 25px 0;
+            font-size: 2.5em;
             font-weight: bold;
+            color: #8d5f3e;
+            text-align: center;
+        }
+
+        .certificate-text .scout-date {
+            font-weight: bold;
+        }
+
+        .certificate-text .last-line {
+            margin-top: 20px;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .certificate-info td {
+            font-size: 16px;
             color: #8d5f3e;
         }
 
-        .certificate-signature {
-            position: absolute;
-            top: 750px;
-            left: 340px;
-            transform: translate(-50%, -50%);
+        .certificate-info th {
+            font-size: 16px;
+            color: #8d5f3e;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .certificate-signature p {
+            text-align: center;
+            margin: 0;
+            font-size: 18px;
+            color: #8d5f3e;
         }
 
         .certificate-signature img {
-            height: 90px;
-            width: auto;
-        }
-
-        .scout-date {
-            position: absolute;
-            right: 300px;
-            top: 727px;
-            transform: translate(-50%, -50%);
-        }
-
-        .scout-number {
-            position: absolute;
-            right: 324px;
-            top: 770px;
-            transform: translate(-50%, -50%);
-        }
-
-        .scout-date h3,
-        .scout-number h3 {
-            margin: 0;
-            font-weight: normal;
-            font-size: 1.17em;
-            color: #8d5f3e;
-        }
-
-        .scout-year {
-            position: absolute;
-            top: 554px;
-            right: 480px;
-            transform: translate(-50%, -50%);
-        }
-
-        .scout-year h2 {
-            margin: 0;
-            font-weight: bold;
-            font-size: 2em;
-            color: #8d5f3e;
+            margin-top: -40px;
+            width: 120px;
         }
     </style>
 </head>
 
-<body onload="window.print()">
+<body>
     <main id="certificate">
-        <img src="https://tawasol.privatescouts.org/public/certificate/certificate.jpg" />
-        <div class="scout-name">
-            <h1>{{ $objFile->Admin->group_name }}</h1>
+        <div class="logos">
+            <div>
+                <img class="logo" src="https://tawasol.privatescouts.org/public/certificate/Logo-01.png" />
+            </div>
+            <div>
+                <img class="asset" src="https://tawasol.privatescouts.org/public/certificate/Asset.png" />
+            </div>
+            <div>
+                <img class="logo" src="https://tawasol.privatescouts.org/public/certificate/Logo-02.png" />
+            </div>
         </div>
-        <div class="certificate-signature">
-            <img src="https://tawasol.privatescouts.org/public/certificate//signature.png" />
+        <div class="certificate-text">
+            <p>يشهد القطاع الكشفي والإرشادي الأهلي في جمعية الكشافة والمرشدات الأردنية بأنّ</p>
+            <h1 class="scout-name"> {{ $objFile->Admin->group_name }} </h1>
+            <p>مسجلة في القطاع للعام &#160 <span class="scout-date">{{ $objFile->year }}</span> &#160 وبناء عليها يمكنها
+                إقامة
+                الاجتماعات واللقاءات
+                والنشاطات الكشفية.
+            </p>
+            <p class="last-line">علماً بأن هذه الشهادة تصدر سنوياً بناء على تقديم السّجلات السنوية.</p>
         </div>
-        <div class="scout-date">
-            <h3>{{ date('d/m/Y') }}</h3>
-        </div>
-        <div class="scout-number">
-            <h3>{{ $objFile->Admin->registration_number }}</h3>
-        </div>
-        <div class="scout-year">
-            <h2>{{ $objFile->year }}</h2>
+        <div class="certificate-footer">
+            <div class="certificate-info">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td colspan="1">تاريخ الإصدار:</td>
+                            <th colspan="1"><span class="certificate-date">{{ date('Y/m/d') }}</span></th>
+                        </tr>
+                        <tr>
+                            <td colspan="1">رقم التسجيل:</td>
+                            <th colspan="1"><span class="scout-number">{{ $objFile->Admin->registration_number }}</span></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="certificate-signature">
+                <p>
+                    رئيس القطاع<br />
+                    الحسن علي نصر
+                </p>
+                <img src="https://tawasol.privatescouts.org/public/certificate/signature.png" />
+            </div>
         </div>
     </main>
 </body>

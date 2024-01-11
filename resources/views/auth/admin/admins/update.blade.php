@@ -42,7 +42,8 @@
                         <!--end::Input group-->
 
 
-                          <!--begin::Input group-->
+                        @if(request()->segment(2)=='admins')
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.name') }}</label>
@@ -52,6 +53,7 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+                        @endif
 
 
                       

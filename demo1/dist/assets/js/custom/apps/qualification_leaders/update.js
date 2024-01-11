@@ -225,7 +225,7 @@ KTUtil.onDOMContentLoaded(function () {
     KTModalBranchesUpdate.init();
 });
 
-function getData(id) {
+function getData(id,action) {
     //======= Start Ajxa ========//
     $.ajaxSetup({
         headers: {
@@ -305,6 +305,30 @@ function getData(id) {
             $("#card_update3").hide(300);
             $("#card_update4").hide(300);
            }
+
+
+           if (action == 2) {
+            // Disable all input and select elements
+                // alert(data.is_super);
+                // alert(action)
+                $('input, select').prop('disabled', true);
+                $('#kt_modal_update_submit').hide();
+                var heading = document.getElementById("myHeading");
+
+                if(data.is_super==1){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'تأهيل القادة';
+                }else{
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'تأهيل القادة';
+                }
+
+                
+            } else {
+                // Enable all input and select elements
+                $('input, select').prop('disabled', false);
+                $('#kt_modal_update_submit').show();
+                var heading = document.getElementById("myHeading");
+                heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'تأهيل القادة';
+            }
         
 
            

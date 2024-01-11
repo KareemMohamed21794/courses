@@ -129,9 +129,15 @@
                                 </div>
                             </th>
                             <th>#</th>
-                            <!-- <th>{{ __('messages.name') }}</th> -->
+                            
+
 
                             <th>{{ __('messages.username') }}</th>
+
+                            @if($segment=='admins')
+                                <th>{{ __('messages.name') }}</th>
+                            @endif
+
                             @if($is_super == 0)
                             <th>{{ __('messages.group_name') }}</th>
                             @endif

@@ -43,6 +43,7 @@
                         <!--end::Input group-->
 
 
+                        @if($segment=='admins')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -53,6 +54,8 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+
+                        @endif
 
 
 
@@ -84,7 +87,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.phone') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.phone') }}" name="phone"  id="phone" />
