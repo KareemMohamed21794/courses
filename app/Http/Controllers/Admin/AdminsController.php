@@ -100,7 +100,7 @@ class AdminsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:admins'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
             'department_id' => ['required', 'integer'],
@@ -185,7 +185,7 @@ class AdminsController extends Controller
         //$this->authorize(self::MODEL.'-update');
         if(empty($request->password)){
                $validator = Validator::make($request->all(),[
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
                 // 'registration_type' => 'required',
