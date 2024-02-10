@@ -239,6 +239,10 @@ var KTModalBranchesUpdate = function () {
                             leaders_number: jQuery('#leaders_number_update').val(),
                             persons_number: jQuery('#persons_number_update').val(),
                             groups: jQuery('#groups_update').val(),
+                            ashbal: jQuery('#ashbal_update').val(),
+                            kashafa: jQuery('#kashafa_update').val(),
+                            motakadem: jQuery('#motakadem_update').val(),
+                            gawala: jQuery('#gawala_update').val(),
                             
                            
                         };
@@ -460,6 +464,14 @@ function getData(id,action) {
             jQuery('#leaders_number_update').val(data.leaders_number);
             jQuery('#persons_number_update').val(data.persons_number);
             jQuery('#groups_update').val(data.groups);
+            jQuery('#ashbal_update').val(data.ashbal);
+            jQuery('#kashafa_update').val(data.kashafa);
+            jQuery('#motakadem_update').val(data.motakadem);
+            jQuery('#gawala_update').val(data.gawala);
+
+
+
+
 
 
             if(data.registration_type == 'muqiaduh'){
@@ -496,7 +508,7 @@ function getData(id,action) {
                 $('input, select').prop('disabled', false);
                 $('#kt_modal_update_submit').show();
                 var heading = document.getElementById("myHeading");
-                heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'مدير';
+                // heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' + 'مدير';
             }
 
 l

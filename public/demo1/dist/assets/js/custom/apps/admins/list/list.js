@@ -22,7 +22,7 @@ var KTDatatablesServerSide = function () {
     
     var adminColumns = [
     { data: '#' },
-    { data: 'id' },
+    { data: 'order' },
     { data: 'username' },
     { data: 'name' },
     { data: 'email' },
@@ -34,9 +34,10 @@ var KTDatatablesServerSide = function () {
 
     var userColumns = [
     { data: '#' },
-    { data: 'id' },
+    { data: 'order' },
     { data: 'username' },
     { data: 'group_name' },
+    { data: 'name' },
     { data: 'email' },
     { data: 'phone'},
     //{ data: 'address'},

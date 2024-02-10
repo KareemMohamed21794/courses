@@ -194,6 +194,7 @@ class BoardDirectorMeetingsController extends Controller
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'leader'   => true,
             'board_director_meetings'   => true,
@@ -245,9 +246,10 @@ class BoardDirectorMeetingsController extends Controller
 
         $alldataResult=array();
 
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
             $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "board_director_meetings" => '

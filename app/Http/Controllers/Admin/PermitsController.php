@@ -126,7 +126,7 @@ class PermitsController extends Controller
             'place_activity' =>  $request->place_activity,
             'activity_history' =>  $request->activity_history,
             'number_days' =>  $request->number_days,
-            'alwahda' =>  $request->alwahda,
+            'alwahda' => implode(',', $request->alwahda),
             'alwahda_description' =>  $request->alwahda_description,
             'activity_leader' =>  $request->activity_leader,
             'number_leader' =>  $request->number_leader,
@@ -215,6 +215,7 @@ class PermitsController extends Controller
         $secondary_registration = '';
         $userId = Auth::id();
 
+ 
 
         $objPermit = Permit::find($id);
         $objPermit->admin_id = $request->leader_id ? $request->leader_id : $userId;
@@ -224,7 +225,7 @@ class PermitsController extends Controller
         $objPermit->place_activity =  $request->place_activity;
         $objPermit->activity_history =  $request->activity_history;
         $objPermit->number_days =  $request->number_days;
-        $objPermit->alwahda =  $request->alwahda;
+        $objPermit->alwahda =  implode(',', $request->alwahda);
         $objPermit->alwahda_description =  $request->alwahda_description;
         $objPermit->activity_leader =  $request->activity_leader;
         $objPermit->number_leader =  $request->number_leader;
@@ -264,16 +265,17 @@ class PermitsController extends Controller
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'leader'   => true,
             'activity_name'=> true,
             'nature_activity'=>true,
-            'activity_description'=>true,
+            // 'activity_description'=>true,
             'place_activity' =>true,
             'activity_history' =>true,
             'number_days'=>true,
             'alwahda'=>true,
-            'alwahda_description'=>true,
+            // 'alwahda_description'=>true,
             'activity_leader'=>true,
             'number_leader'=>true,
             'permit_status'=>true,
@@ -324,7 +326,7 @@ class PermitsController extends Controller
 
         $alldataResult=array();
 
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
             $nature_activity = '';
             if($objdata->nature_activity == "camp"){
                 $nature_activity = 'مخيم';
@@ -343,30 +345,63 @@ class PermitsController extends Controller
 
 
             $alwahda = '';
-            if($objdata->alwahda == "ashbal"){
-                $alwahda = 'اشبال /  زهرات';
-            }elseif ($objdata->alwahda == "kashaf") {
-                $alwahda = 'كشاف / مرشدات';
-            }elseif ($objdata->alwahda == "mutaqadimu") {
-                $alwahda = 'متقدم / متقدمات ';
-            }elseif ($objdata->alwahda == "jawaluh") {
-                $alwahda = 'جواله / دليلات';
-            }elseif ($objdata->alwahda == "almajmueuh") {
-                $alwahda = 'المجموعه';
-            }elseif ($objdata->alwahda == "awlia_alamwr") {
-                $alwahda = ' اولياء الامور';
-            }elseif ($objdata->alwahda == "other") {
-                $alwahda = 'اخرى';
+            if (is_array($objdata->alwahda)) {
+                // If alwahda is an array, map each value to its corresponding Arabic value
+                $alwahda = array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $objdata->alwahda);
+                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
+            } else {
+                // If alwahda is a single comma-separated string, split it and map each value
+                $alwahdaValues = explode(',', $objdata->alwahda);
+                $alwahda = implode(', ', array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $alwahdaValues));
             }
+
 
             if($objdata->status=='pending'){
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
 
                 if($objAdmin->is_super == 0){
  
-                    $status = "<a href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
                 }
 
             }
@@ -376,16 +411,17 @@ class PermitsController extends Controller
 
             $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "activity_name"=> $objdata->activity_name,
                 "nature_activity"=> $nature_activity,
-                "activity_description"=> $objdata->activity_description,
+                // "activity_description"=> $objdata->activity_description,
                 "place_activity" =>$objdata->place_activity,
                 "activity_history" =>$objdata->activity_history,
                 "number_days" =>$objdata->number_days,
-                "alwahda" =>$alwahda,
-                "alwahda_description"=>$objdata->alwahda_description,
+                "alwahda" => $alwahda,
+                // "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
                 "number_leader"=>$objdata->number_leader,
                 "permit_status"=>$status,

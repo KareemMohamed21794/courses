@@ -45,6 +45,10 @@ class Admin extends Authenticatable
         'leaders_number',
         'persons_number',
         'groups',
+        'ashbal',
+        'kashafa',
+        'motakadem',
+        'gawala',
     ];
 
     /**

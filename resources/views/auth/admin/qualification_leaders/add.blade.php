@@ -100,7 +100,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <label class="fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.leader_name') }}" name="leader_name" id="leader_name" />
@@ -110,7 +110,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.current_qualification') }}</label>
+                            <label class="fs-6 fw-bold mb-26 fw-bold mb-2">{{ __('messages.current_qualification') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <select onchange="CurrentQualification(this.value)" name="current_qualification" id="current_qualification" data-placeholder="{{ __('messages.current_qualification') }}" class="form-select form-select-solid">

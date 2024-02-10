@@ -60,6 +60,20 @@
 
 
                         @if(request()->segment(2)=='leaders')
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.leader_name') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.name') }}" name="name"  id="name_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
@@ -248,8 +262,8 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="governorate" id="governorate_update" aria-label="{{ __('messages.Select') }} {{ __('messages.governorate') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.governorate') }}" data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
-                                <option value="">{{ __('messages.Select') }} {{ __('messages.governorate') }}</option>
+                            <select name="governorate" id="governorate_update" aria-label="{{ __('messages.Select') }} {{ __('messages.governorate') }}"   data-placeholder="{{ __('messages.Select') }} " data-dropdown-parent="#kt_modal_update" class="form-select form-select-solid fw-bolder">
+                                <option value="">{{ __('messages.Select') }} </option>
 
                                 @foreach($Governorates as $governorate)
                                     <option value="{{ $governorate }}">
@@ -350,6 +364,53 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.ashbal') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.ashbal') }}" name="ashbal"  id="ashbal_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.kashafa') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.kashafa') }}" name="kashafa"  id="kashafa_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.motakadem') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.motakadem') }}" name="motakadem"  id="motakadem_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.gawala') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.gawala') }}" name="gawala"  id="gawala_update" />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
 
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">

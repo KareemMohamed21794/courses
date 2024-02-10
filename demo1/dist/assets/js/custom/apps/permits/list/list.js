@@ -82,16 +82,17 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
                 { data: '#' },
-                { data: 'id' },
+                { data: 'order' },
+                // { data: 'id' },
                 { data: 'leader' },
                 { data: 'activity_name' },
                 { data: 'nature_activity' },
-                { data: 'activity_description' },
+                // { data: 'activity_description' },
                 { data: 'place_activity' },
                 { data: 'activity_history' },
                 { data: 'number_days' },
                 { data: 'alwahda' },
-                { data: 'alwahda_description' },
+                // { data: 'alwahda_description' },
                 { data: 'activity_leader' },
                 { data: 'number_leader' },
                 { data: 'permit_status' },
@@ -136,7 +137,7 @@ var KTDatatablesServerSide = function () {
                     className: 'text-end',
                     render: function (data, type, row) {
                         // console.log(row.permit_status);
-                        if(row.permit_status!='معلقه') display_edit = "none";
+                        if(row.permit_status!='معلقه') var display_edit = "none";
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`

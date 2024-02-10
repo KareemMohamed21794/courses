@@ -252,6 +252,7 @@ class AdvertisementsController extends Controller
          if($objAdmin->is_super == 1){
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'admin_id'   => true,
             'file_name'=>true,
@@ -265,6 +266,7 @@ class AdvertisementsController extends Controller
 
             $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
              'file_name'=>true,
             'file'=> true,
@@ -319,13 +321,14 @@ class AdvertisementsController extends Controller
 
         $alldataResult=array();
  
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
 
 
             if($objAdmin->is_super == 1){
           
              $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
                 "file_name"=> $objdata->file_name,
@@ -337,6 +340,7 @@ class AdvertisementsController extends Controller
             }else{
 
                $alldataResult[] = array(
+                "order" => $key+1,
                 "#" => $objdata->id,
                 "id" => $objdata->id,
                "file_name"=> $objdata->file_name,
@@ -504,66 +508,64 @@ class AdvertisementsController extends Controller
 
 
     public function ExportAdvertisements(Request $request)
-    {
+{
+    $fileName = 'export_advertisements.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    
+    if ($objAdmin->is_super == 1) {
+        $Advertisements = Advertisement::get();
+        $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح');
+    } else {
+        $Advertisements = Advertisement::where('admin_id', $userId)->get();
+        $columns = array('الملف', 'اسم الملف', 'الشرح');
+    }
 
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
 
-        $fileName = 'export_advertisements.csv';
-        
-        $userId = \Auth::id();
-        $objAdmin = Admin::find($userId);
-        if($objAdmin->is_super == 1){
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function () use ($Advertisements, $columns, $objAdmin) {
+        $file = fopen('php://output', 'w');
 
-           $Advertisements = Advertisement::get();
-        
-        }else{
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
 
-            $Advertisements = Advertisement::where('admin_id',$userId)->get();
+        // Write the column headers
+        fputcsv($file, $columns);
 
-        }
-        
-         
+        // Write the data rows
+        foreach ($Advertisements as $Advertisement) {
+            $row = array();
 
-        // Set the response headers with the correct character encoding
-        $headers = array(
-            "Content-type"        => "text/csv; charset=utf-8",
-            "Content-Disposition" => "attachment; filename=$fileName",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
-        );
-
-        // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),'الملف','اسم الملف' ,'الشرح');
-
-        // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
-        $callback = function() use ($Advertisements, $columns) {
-            $file = fopen('php://output', 'w');
-
-            // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
-            fputs($file, "\xEF\xBB\xBF");
-
-            // Write the column headers
-            fputcsv($file, $columns);
-
-            // Write the data rows
-            foreach ($Advertisements as $Advertisement) {
-                // Make sure to retrieve the Arabic name correctly from your database column
-                $row['admin_id']  = $Advertisement->Admin->group_name;
-                
-                $row['file']  =asset('public/images/advertisements/' . $Advertisement->file);
-
-                $row['file_name']  = $Advertisement->file_name;
-
-                $row['description']  = $Advertisement->description;
-             
-
-                // Write the row data to the CSV file
-                fputcsv($file, array($row['admin_id'],$row['file'],$row['file_name'],$row['description']));
+            if ($objAdmin->is_super == 1) {
+                // Show group_name only for super admin
+                $row['admin_id'] = $Advertisement->Admin->group_name;
             }
 
-            fclose($file);
-        };
+            $row['file'] = asset('public/images/advertisements/' . $Advertisement->file);
+            $row['file_name'] = $Advertisement->file_name;
+            $row['description'] = $Advertisement->description;
 
-        return response()->stream($callback, 200, $headers);
-    }
+            // Write the row data to the CSV file
+            if ($objAdmin->is_super == 1) {
+                fputcsv($file, array($row['admin_id'], $row['file'], $row['file_name'], $row['description']));
+            } else {
+                fputcsv($file, array($row['file'], $row['file_name'], $row['description']));
+            }
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
 }

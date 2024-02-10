@@ -80,7 +80,7 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            @if($objAdmin->is_super == 1)
+                            @if($objAdmin->is_super == 1 || $objAdmin->is_super == 0)
                              <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
                            <a href="{{url('admin/export_advertisements')}}" class="menu-link px-3">

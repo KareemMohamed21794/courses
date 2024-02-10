@@ -142,6 +142,10 @@ class AdminsController extends Controller
             'leaders_number' => $request->leaders_number,
             'persons_number' => $request->persons_number,
             'groups' => $request->groups,
+            'ashbal' => $request->ashbal,
+            'kashafa' => $request->kashafa,
+            'motakadem' => $request->motakadem,
+            'gawala' => $request->gawala,
         ]);
 
         return response()->json(['admin'=>$admin]);
@@ -203,7 +207,7 @@ class AdminsController extends Controller
             ]);
         }else{
             $validator = Validator::make($request->all(),[
-                'name' => ['required', 'string', 'max:255'],
+                'name' => ['string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
                 'password' => ['required', Rules\Password::defaults()],
@@ -251,6 +255,10 @@ class AdminsController extends Controller
         $objAdmin->leaders_number = $request->leaders_number;
         $objAdmin->persons_number = $request->persons_number;
         $objAdmin->groups = $request->groups;
+        $objAdmin->ashbal = $request->ashbal;
+        $objAdmin->kashafa = $request->kashafa;
+        $objAdmin->motakadem = $request->motakadem;
+        $objAdmin->gawala = $request->gawala;
 
 
         if(!empty($request->password)){
@@ -324,6 +332,7 @@ class AdminsController extends Controller
         $segment = $request->segment(2);
         if($segment=='admins'){
             $columnsDefault = [
+            'order'   => true,
             '#'   => true,
             'id'   => true,
             'username'   => true,
@@ -338,11 +347,12 @@ class AdminsController extends Controller
         ];
         }else{
             $columnsDefault = [
+            'order'   => true,
             '#'   => true,
             'id'   => true,
-            // 'name'   => true,
             'username'   => true,
             'group_name'   => true,
+            'name'   => true,
             'email'   => true,
             'phone'   => true,
             //'address'   => true,
@@ -412,13 +422,14 @@ class AdminsController extends Controller
 
         $alldataResult=array();
 
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
 
             $is_super = "Super Admin";
             if(!$objdata->is_super)  $is_super = "Normal Admin";
             if($segment=='admins'){
 
                 $alldataResult[] = array(
+                    "order" => $key+1,
                     "#" => $objdata->id,
                     "id" => $objdata->id,
                     "username"=> $objdata->username,
@@ -433,11 +444,12 @@ class AdminsController extends Controller
                 );
             }else{
                 $alldataResult[] = array(
+                    "order" => $key+1,
                     "#" => $objdata->id,
                     "id" => $objdata->id,
-                    // "name" => $objdata->name,
                     "username"=> $objdata->username,
                     "group_name"=> $objdata->group_name,
+                    "name" => $objdata->name,
                     "email" => $objdata->email,
                     "phone" => $objdata->phone,
                     //"address" => $objdata->address,

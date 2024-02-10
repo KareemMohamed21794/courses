@@ -223,6 +223,10 @@ var KTModalAdd = function () {
                             leaders_number: jQuery('#leaders_number').val(),
                             persons_number: jQuery('#persons_number').val(),
                             groups: jQuery('#groups').val(),
+                            ashbal: jQuery('#ashbal').val(),
+                            kashafa: jQuery('#kashafa').val(),
+                            motakadem: jQuery('#motakadem').val(),
+                            gawala: jQuery('#gawala').val(),
 			        	};
 
 			        	var type = "POST";

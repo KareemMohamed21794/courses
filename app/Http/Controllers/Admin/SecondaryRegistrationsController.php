@@ -201,6 +201,7 @@ class SecondaryRegistrationsController extends Controller
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'leader'   => true,
             'secondary_registration'   => true,
@@ -253,7 +254,7 @@ class SecondaryRegistrationsController extends Controller
 
         $alldataResult=array();
 
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
             $status = "معلقه";
             if($objdata->status=='pending'){
                 $status = "معلقه";
@@ -273,6 +274,7 @@ class SecondaryRegistrationsController extends Controller
 
             $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                  "secondary_registration" => '

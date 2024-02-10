@@ -491,8 +491,8 @@ return [
     'date_establishment'=>'تاريخ التاسيس',
     'registration_number'=>'رقم التسجيل',
     'website'=>'الموقع الالكتروني',
-    'workplace'=>'مكان العمل',
-    'job'=>'الوظيفة',
+    'workplace'=>'مكان عمل القائد',
+    'job'=>'وظيفة القائد',
     'group_info'=>'معلومات المجموعة',
     'secondary_registrations'=>'التسجيل السنوي',
     'secondary_registration'=>'السجل السنوي',
@@ -569,6 +569,10 @@ return [
     'number_participants'=>'عدد المشاركين',
     'number_order'=>'رقم الطلب',
     'Info'=>'معلومات',
+    'ashbal'=>'عدد الاشبال/الزهرات',
+    'kashafa'=>'عدد الكشاف/المرشدات',
+    'motakadem'=>'عدد المتقدم/المتقدمات',
+    'gawala'=>'عدد الجواله/الدليلات',
 
  ];
 

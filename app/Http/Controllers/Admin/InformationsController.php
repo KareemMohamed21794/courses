@@ -214,6 +214,7 @@ class InformationsController extends Controller
         if($objAdmin->is_super == 1){
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'admin_id'   => true,
             'file_name'=>true,
@@ -227,6 +228,7 @@ class InformationsController extends Controller
 
             $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'file_name'=>true,
             'file'=> true,
@@ -278,12 +280,13 @@ class InformationsController extends Controller
 
         $alldataResult=array();
  
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
 
             if($objAdmin->is_super == 1){
           
             $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
                 "file_name"=> $objdata->file_name,
@@ -297,6 +300,7 @@ class InformationsController extends Controller
 
                 $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "file_name"=> $objdata->file_name,
                 "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
@@ -460,25 +464,20 @@ class InformationsController extends Controller
 
 
 
-       public function ExportRequests(Request $request)
+    public function ExportRequests(Request $request)
     {
-
-
         $fileName = 'export_requests.csv';
         
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        if($objAdmin->is_super == 1){
-
-           $Informations = Information::get();
         
-        }else{
-
-            $Informations = Information::where('admin_id',$userId)->get();
-
+        if ($objAdmin->is_super == 1) {
+            $Informations = Information::get();
+            $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح');
+        } else {
+            $Informations = Information::where('admin_id', $userId)->get();
+            $columns = array('الملف', 'اسم الملف', 'الشرح');
         }
-        
-         
 
         // Set the response headers with the correct character encoding
         $headers = array(
@@ -489,11 +488,8 @@ class InformationsController extends Controller
             "Expires"             => "0"
         );
 
-        // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),'الملف','اسم الملف' ,'الشرح');
-
         // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
-        $callback = function() use ($Informations, $columns) {
+        $callback = function () use ($Informations, $columns, $objAdmin) {
             $file = fopen('php://output', 'w');
 
             // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
@@ -504,23 +500,29 @@ class InformationsController extends Controller
 
             // Write the data rows
             foreach ($Informations as $Information) {
-                // Make sure to retrieve the Arabic name correctly from your database column
-                $row['admin_id']  = $Information->Admin->group_name;
-                
-                $row['file']  =asset('public/images/requests/' . $Information->file);
+                $row = array();
 
-                $row['file_name']  = $Information->file_name;
+                if ($objAdmin->is_super == 1) {
+                    // Show group_name only for super admin
+                    $row['admin_id'] = $Information->Admin->group_name;
+                }
 
-                $row['description']  = $Information->description;
-             
+                $row['file'] = asset('public/images/requests/' . $Information->file);
+                $row['file_name'] = $Information->file_name;
+                $row['description'] = $Information->description;
 
                 // Write the row data to the CSV file
-                fputcsv($file, array($row['admin_id'],$row['file'],$row['file_name'],$row['description']));
+                if ($objAdmin->is_super == 1) {
+                    fputcsv($file, array($row['admin_id'], $row['file'], $row['file_name'], $row['description']));
+                } else {
+                    fputcsv($file, array($row['file'], $row['file_name'], $row['description']));
+                }
             }
 
             fclose($file);
         };
 
         return response()->stream($callback, 200, $headers);
-    }    
+    }
+    
 }

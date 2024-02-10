@@ -168,7 +168,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alwahda') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                           <select onchange="Alwahda(this.value)" name="alwahda" id="alwahda" data-placeholder="{{ __('messages.alwahda') }}" class="form-select form-select-solid">
+                           <select onchange="Alwahda(this.value)" name="alwahda[]" id="alwahda" data-placeholder="{{ __('messages.alwahda') }}" class="form-select form-select-solid" multiple>
                                 <option value="">{{ __('messages.alwahda') }}</option>
                                 <option value="ashbal">اشبال /  زهرات</option>
                                 <option value="kashaf">كشاف / مرشدات</option>

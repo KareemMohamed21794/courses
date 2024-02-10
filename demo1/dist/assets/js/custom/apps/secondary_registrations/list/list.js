@@ -16,7 +16,8 @@ var KTDatatablesServerSide = function () {
 
     var adminColumns = [
     { data: '#' },
-    { data: 'id' },
+    { data: 'order' },
+    // { data: 'id' },
     { data: 'leader' },
     { data: 'secondary_registration' },
     { data: 'year' },

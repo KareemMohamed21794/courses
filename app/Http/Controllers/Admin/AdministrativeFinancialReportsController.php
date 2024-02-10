@@ -232,6 +232,7 @@ class AdministrativeFinancialReportsController extends Controller
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'leader'   => true,
             'file'   => true,
@@ -289,9 +290,10 @@ class AdministrativeFinancialReportsController extends Controller
 
         $fileColumn = ($request->firstSegment == 'administrative') ? 'administrative_financial1' : 'administrative_financial2';
         
-        foreach($alldata as $objdata){
+        foreach($alldata as $key=> $objdata){
             $alldataResult[] = array(
                 "#" => $objdata->id,
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "file" => '

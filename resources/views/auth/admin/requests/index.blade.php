@@ -84,7 +84,7 @@
                              <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
 
-                        @if($objAdmin->is_super == 1)
+                        @if($objAdmin->is_super == 1 || $objAdmin->is_super == 0)
                            <a href="{{url('admin/export_requests')}}" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >
                            <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->

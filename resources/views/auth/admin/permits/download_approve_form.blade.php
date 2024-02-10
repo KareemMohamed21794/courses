@@ -1,7 +1,7 @@
 <html lang="ar">
 
 <head>
-    <title>تصريح نشاط</title>
+    <title>تصريح نشاط -  مجموعة  {{ $objPermit->Admin->group_name }}  - {{@$objPermit->place_activity}}-  {{@$objPermit->activity_leader}}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -19,7 +19,7 @@
             padding: 0px 20px;
             margin: auto;
             direction: rtl;
-            font-size: 16px;
+            font-size: 14px;
             min-height: 100vh;
         }
 
@@ -49,13 +49,13 @@
 
         .approvementBody {
             text-align: right;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
             margin-top: 8px;
         }
 
         .approvementNum,
         .approvementIntro {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
 
         .approvementNum .two-cell {
@@ -69,7 +69,7 @@
         }
 
         .approvementInfo {
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
 
         .approvementInfo table {
@@ -81,8 +81,15 @@
             border: 1px solid #dddddd;
             text-align: right;
             padding: 8px;
-            width: 200px;
-            
+            font-size: 14px;
+        }
+
+        .approvementInfo th {
+            width: 120px;
+        }
+
+        .approvementInfo td {
+            width: 300px;
         }
 
         .approvementInfo th {
@@ -101,20 +108,39 @@
             margin-bottom: 0;
             text-align: center;
             width: fit-content;
-            font-size: 1.17em;
+            font-size: 1em;
             line-height: 1.4;
             font-weight: bold;
+            display: flex;
+            gap: 20px;
+            align-items: center;
         }
 
-        .approvementSignature img {
+        .approvementSignature .signature {
+            width: 100px;
+            margin: auto;
+            display: block;
+        }
+
+        .approvementSignature .stamp {
             width: 120px;
             margin: auto;
             display: block;
         }
+
+        .leaders-list {
+            padding-right: 16px;
+            margin: 0;
+            column-count: 3;
+        }
+
+        .leaders-list li {
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 
-<body onload="window.print()">
+<body>
     <main id="approvement">
         <header class="header">
             <img src="https://tawasol.privatescouts.org/public/approvement/header.jpg" alt="Header" />
@@ -125,7 +151,7 @@
                     <tbody>
                         <tr>
                             <th class="two-cell">الرقم:</th>
-                            <td>{{@$objPermit->number_order}}</td>
+                            <td>{{@$objPermit->permit_number}}</td>
                         </tr>
                         <tr>
                             <th class="two-cell">التاريخ:</th>
@@ -135,7 +161,7 @@
                 </table>
             </div>
             <div class="approvementIntro">
-                <p><strong>السيد قائد <span class="scoutName">مجموعة خالد بن الوليد الكشفية</span> المحترم</strong></p>
+                <p><strong>السيد قائد <span class="scoutName">مجموعة  {{ $objPermit->Admin->group_name }} </span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
                     إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span
@@ -160,7 +186,6 @@
                         @elseif (@$objPermit->nature_activity == "other") 
                            <td>اخرى</td>
                         @endif
-                       
                     </tr>
                     <tr>
                         <th>مكان النشاط</th>
@@ -175,23 +200,65 @@
                         <td>{{@$objPermit->number_participants}}</td>
                     </tr>
                     <tr>
+
+
+                        <?php 
+
+                        $alwahda = '';
+            if (is_array($objPermit->alwahda)) {
+                // If alwahda is an array, map each value to its corresponding Arabic value
+                $alwahda = array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $objPermit->alwahda);
+                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
+            } else {
+                // If alwahda is a single comma-separated string, split it and map each value
+                $alwahdaValues = explode(',', $objPermit->alwahda);
+                $alwahda = implode(', ', array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $alwahdaValues));
+            }
+
+
+                        ?>
+
+
                         <th>الوحدة</th>
-                        @if(@$objPermit->alwahda == "ashbal")
-                            <td>اشبال /  زهرات</td>
-                        @elseif (@$objPermit->alwahda == "kashaf") 
-                           <td>كشاف / مرشدات</td>
-                        @elseif (@$objPermit->alwahda == "mutaqadimu") 
-                            <td>متقدم / متقدمات </td>
-                        @elseif (@$objPermit->alwahda == "jawaluh") 
-                            <td>جواله / دليلات</td>
-                        @elseif (@$objPermit->alwahda == "almajmueuh") 
-                            <td>المجموعه</td>
-                        @elseif (@$objPermit->alwahda == "awlia_alamwr") 
-                           <td> اولياء الامور</td>
-                        @elseif (@$objPermit->alwahda == "other") 
-                           <td>اخرى</td>
-                        @endif
-                       
+                        <td>{{ $alwahda }}</td>
                     </tr>
                     <tr>
                         <th>قائدة النشاط</th>
@@ -200,6 +267,20 @@
                     <tr>
                         <th>عدد القادة المشاركين</th>
                         <td>{{@$objPermit->number_leader}}</td>
+                    </tr>
+                    <tr>
+                        <th>اسماء القادة المشاركين</th>
+                        <td>
+                            <ul class="leaders-list">
+                                @php
+                                    $leadersArray = explode("\n", $objPermit->leaders_names);
+                                @endphp
+
+                                @foreach($leadersArray as $leader)
+                                    <li>{{ $leader }}</li>
+                                @endforeach
+                            </ul>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -213,11 +294,17 @@
                 <h3>واقبلوا الاحترام</h3>
             </div>
             <div class="approvementSignature">
-                رئيس القطـــاع
-                <br />
-                <img src="https://tawasol.privatescouts.org/public/approvement/signture.png" />
-                الحسـن علي نصـــر
+                <div>
+                    <img class="stamp" src="https://tawasol.privatescouts.org/public/approvement/stamp.png">
+                </div>
+                <div>
+                    رئيس القطـــاع
+                    <br />
+                    <img class="signature" src="https://tawasol.privatescouts.org/public/approvement/signature.png" />
+                    الحسـن علي نصـــر
+                </div>
             </div>
+
         </section>
         <footer class="footer">
             <img src="https://tawasol.privatescouts.org/public/approvement/footer.jpg" alt="Footer" />

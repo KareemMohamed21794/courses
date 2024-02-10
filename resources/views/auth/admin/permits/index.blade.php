@@ -136,12 +136,12 @@
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.activity_name') }}</th>
                             <th>{{ __('messages.nature_activity') }}</th>
-                            <th>{{ __('messages.activity_description') }}</th>
+                            {{-- <th>{{ __('messages.activity_description') }}sss</th> --}}
                             <th>{{ __('messages.place_activity') }}</th>
                             <th>{{ __('messages.activity_history') }}</th>
                             <th>{{ __('messages.number_days') }}</th>
                             <th>{{ __('messages.alwahda') }}</th>
-                            <th>{{ __('messages.alwahda_description') }}</th>
+                            {{-- <th>{{ __('messages.alwahda_description') }}22</th> --}}
                             <th>{{ __('messages.activity_leader') }}</th>
                             <th>{{ __('messages.number_leader') }}</th>
                             <th>{{ __('messages.permit_status') }}</th>
