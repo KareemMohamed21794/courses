@@ -58,7 +58,8 @@ class PermitsController extends Controller
 
         $registration_number = $objAdmin->registration_number;
         
-        $Permit_count = Permit::count();
+        $Permit_count = Permit::withTrashed()->count();
+        //print_r($Permit_count) ; die;
         $Permit_count = $Permit_count+1000;
 
         $fourDigitCount = str_pad($Permit_count, 4, '0', STR_PAD_LEFT);

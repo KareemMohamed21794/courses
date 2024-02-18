@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Advertisement;
+use App\Models\AdvertisementParent;
 use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
+use DB;
 use Illuminate\Support\Facades\Mail;
 
 class AdvertisementsController extends Controller
@@ -58,14 +60,17 @@ class AdvertisementsController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->authorize(self::MODEL.'-store');
-         // print_r('here'); die;
+        DB::beginTransaction(); // Start a database transaction
         $validator = Validator::make($request->all(),[
            // 'description' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
             'group_type' => ['required'],
             'file' => ['required'],
         ]);
+
+        $validator->sometimes('admin_id', 'required', function ($input) {
+            return $input->group_type == 'group_name';
+        });
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
@@ -106,14 +111,23 @@ class AdvertisementsController extends Controller
 
 
         $Advertisement = array();
+
+        $AdvertisementParent = new AdvertisementParent();
+        $AdvertisementParent->admin_id = NULL;
+        $AdvertisementParent->group_type = $request->group_type;
+        $AdvertisementParent->file = $document;
+        $AdvertisementParent->file_name = $request->file_name;
+        $AdvertisementParent->description = $request->description;
+        $AdvertisementParent->save();
+
         
         foreach ($arrGroups as $key => $objGroup) {
 
 
             $objAdmin = Admin::find($objGroup);
 
-
             $Advertisement = Advertisement::create([
+            'parent_id' =>  $AdvertisementParent->id,
             'admin_id' =>  $objGroup,
             'group_type' =>  $request->group_type,
             'file' =>  $document,
@@ -123,22 +137,22 @@ class AdvertisementsController extends Controller
 
              
 
-            if(!empty($objAdmin->email)){
-                $recipient = $objAdmin->email;
-                //$recipient = 'mahmoud.ali.29992@gmail.com';
-                $subject = "لديك وارد من مدير نظام تواصل";
+            // if(!empty($objAdmin->email)){
+            //     $recipient = $objAdmin->email;
+            //     //$recipient = 'mahmoud.ali.29992@gmail.com';
+            //     $subject = "لديك وارد من مدير نظام تواصل";
 
-                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+            //     $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-                $fromEmail = 'admin@tawasol.privatescouts.org'; 
-                // The "from" email address
+            //     $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            //     // The "from" email address
 
-                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                    $mail->to($recipient)
-                        ->from($fromEmail) // Set the "from" email address
-                        ->subject($subject);
-                });
-            }
+            //     Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+            //         $mail->to($recipient)
+            //             ->from($fromEmail) // Set the "from" email address
+            //             ->subject($subject);
+            //     });
+            // }
 
 
             # send email
@@ -146,7 +160,7 @@ class AdvertisementsController extends Controller
         }
         
 
-
+        DB::commit(); // Commit the transaction
         return response()->json(['Advertisement'=>$Advertisement]);
     }
 
@@ -291,16 +305,16 @@ class AdvertisementsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = Advertisement::get();
+           $alldata = AdvertisementParent::get();
         
             if($active=='All'){
-                $alldata = Advertisement::withTrashed()->get();
+                $alldata = AdvertisementParent::withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = Advertisement::get();
+                $alldata = AdvertisementParent::get();
             }
             elseif($active=='DeActive'){
-                $alldata = Advertisement::onlyTrashed()->get();
+                $alldata = AdvertisementParent::onlyTrashed()->get();
             }
         }else{
 
@@ -325,12 +339,36 @@ class AdvertisementsController extends Controller
 
 
             if($objAdmin->is_super == 1){
-          
-             $alldataResult[] = array(
+            
+            $groups = "";
+            if($objdata->group_type=='all'){
+                $groups = "الكل";
+            }elseif ($objdata->group_type=='kashfih') {
+                $groups = "كشفية";
+            }
+            elseif ($objdata->group_type=='irshad') {
+                $groups = "ارشادية";
+            }
+            elseif ($objdata->group_type=='group_name') {
+                 
+                foreach ($objdata->Advertisements as $key2=> $Advertisement) {
+                    if(count($objdata->Advertisements)==($key2+1)){
+                        $groups.=@$Advertisement->Admin->group_name;
+                    }else{
+                        $groups.=@$Advertisement->Admin->group_name." - ";
+                        
+                    }
+                    
+                }
+                
+            }
+                
+
+            $alldataResult[] = array(
                 "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
-                "admin_id" => @$objdata->Admin->group_name,
+                "admin_id" => @$groups,
                 "file_name"=> $objdata->file_name,
                 "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
                 

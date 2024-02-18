@@ -65,7 +65,7 @@
                         
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7" style="display: none;">
+                        <div class="fv-row mb-7" style="display: nonee;">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.permit_number') }}</label>
                             <!--end::Label-->

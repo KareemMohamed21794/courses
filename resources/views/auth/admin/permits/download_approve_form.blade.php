@@ -1,7 +1,7 @@
 <html lang="ar">
 
 <head>
-    <title>تصريح نشاط -  مجموعة  {{ $objPermit->Admin->group_name }}  - {{@$objPermit->place_activity}}-  {{@$objPermit->activity_leader}}</title>
+    <title>تصريح نشاط -    {{ $objPermit->Admin->group_name }}  - {{@$objPermit->place_activity}}-  {{@$objPermit->activity_leader}}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -161,13 +161,11 @@
                 </table>
             </div>
             <div class="approvementIntro">
-                <p><strong>السيد قائد <span class="scoutName">مجموعة  {{ $objPermit->Admin->group_name }} </span> المحترم</strong></p>
+                <p><strong>السيد/ة قائد/ة<span class="scoutName">  {{ $objPermit->Admin->group_name }} </span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
-                    إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span
-                        class="date">{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</span>، والمتضمن طلب إقامة نشاط تطوعي، أعلمكم بأنّه لا مانع لدى مجلس
-                    القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي:
-                </p>
+                 إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span class="date">{{date('d-m-Y',strtotime(@$objPermit->activity_history))}}</span>، والمتضمن طلب إقامة نشاط، أعلمكم بأنّه لا مانع لدى مجلس القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي: 
+             </p>
             </div>
             <div class="approvementInfo">
                 <table>
@@ -193,8 +191,14 @@
                     </tr>
                     <tr>
                         <th>تاريخ النشاط</th>
-                        <td>{{date('Y-m-d',strtotime(@$objPermit->created_at))}}</td>
+                        <td>{{date('Y-m-d',strtotime(@$objPermit->activity_history))}}</td>
                     </tr>
+
+                    <tr>
+                        <th>عدد الأيام</th>
+                        <td>{{@$objPermit->number_days}}</td>
+                    </tr>
+
                     <tr>
                         <th>عدد المشاركين</th>
                         <td>{{@$objPermit->number_participants}}</td>
@@ -261,7 +265,7 @@
                         <td>{{ $alwahda }}</td>
                     </tr>
                     <tr>
-                        <th>قائدة النشاط</th>
+                        <th>قائد  النشاط</th>
                         <td>{{@$objPermit->activity_leader}}</td>
                     </tr>
                     <tr>
