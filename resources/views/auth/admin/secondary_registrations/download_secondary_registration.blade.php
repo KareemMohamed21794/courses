@@ -140,7 +140,7 @@
                     <tbody>
                         <tr>
                             <td colspan="1">تاريخ الإصدار:</td>
-                            <th colspan="1"><span class="certificate-date">{{ date('Y/m/d') }}</span></th>
+                            <th colspan="1"><span class="certificate-date">{{ date('Y/m/d',strtotime($objFile->created_at)) }}</span></th>
                         </tr>
                         <tr>
                             <td colspan="1">رقم التسجيل:</td>

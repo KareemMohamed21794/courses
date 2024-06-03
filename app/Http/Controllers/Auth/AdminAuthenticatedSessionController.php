@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\AdminLoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Country;
 
 class AdminAuthenticatedSessionController extends Controller
 {
@@ -31,6 +32,26 @@ class AdminAuthenticatedSessionController extends Controller
         }
 
         return view('auth.admin.login');
+    }
+
+    public function create_new()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect('/admin');
+        }
+
+        if (Auth::guard('client')->check()) {
+            return redirect('/client');
+        }
+
+        if (Auth::guard('staff')->check()) {
+            return redirect('staff');
+        }
+
+        $arrCountries = Country::all();
+         
+
+        return view('auth.admin.login_new',compact('arrCountries'));
     }
 
 

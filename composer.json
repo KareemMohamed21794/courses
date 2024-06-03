@@ -17,6 +17,7 @@
         "spatie/laravel-backup": "^7.3",
         "spatie/laravel-permission": "^5.5",
         "tecnickcom/tcpdf": "^6.6",
+        "twilio/sdk": "^7.16",
         "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {
@@ -64,7 +65,8 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "process-timeout": 600
     },
     "minimum-stability": "dev",
     "prefer-stable": true

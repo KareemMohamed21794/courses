@@ -236,7 +236,7 @@
 
                           <div class="col-xl-3">
                             <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/administrative_financial_reports') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <a href="{{ url('admin/financial') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
@@ -254,7 +254,7 @@
 
                           <div class="col-xl-3">
                             <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/administrative_financial_reports') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <a href="{{ url('admin/administrative') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->

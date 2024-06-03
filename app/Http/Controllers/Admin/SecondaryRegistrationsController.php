@@ -631,66 +631,68 @@ class SecondaryRegistrationsController extends Controller
 
 
     public function ExportSecondaryRegistrations(Request $request)
-{
+    {
 
 
-    $fileName = 'export_secondary_registrations.csv';
-    
-    $userId = \Auth::id();
-    $objAdmin = Admin::find($userId);
-    if($objAdmin->is_super == 1){
+        $fileName = 'export_secondary_registrations.csv';
+        
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super == 1){
 
-       $Files = File::where('type','secondary_registration')->get();
-    
-    }else{
+           $Files = File::where('type','secondary_registration')->get();
+        
+        }else{
 
-        $Files = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
+            $Files = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
 
-    }
-    
-     
-
-    // Set the response headers with the correct character encoding
-    $headers = array(
-        "Content-type"        => "text/csv; charset=utf-8",
-        "Content-Disposition" => "attachment; filename=$fileName",
-        "Pragma"              => "no-cache",
-        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-        "Expires"             => "0"
-    );
-
-    // If you need to display Arabic column header, make sure to encode it as well
-    $columns = array(__('messages.scout_group'),'نموذج التسجيل','السنة');
-
-    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
-    $callback = function() use ($Files, $columns) {
-        $file = fopen('php://output', 'w');
-
-        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
-        fputs($file, "\xEF\xBB\xBF");
-
-        // Write the column headers
-        fputcsv($file, $columns);
-
-        // Write the data rows
-        foreach ($Files as $File) {
-            // Make sure to retrieve the Arabic name correctly from your database column
-            $row['leader_name']  = $File->Admin->name;
-            
-            $row['secondary_registration']  =asset('public/images/files/' . $File->secondary_registration);
-
-            $row['year']  = $File->year;
+        }
+        
          
 
-            // Write the row data to the CSV file
-            fputcsv($file, array($row['leader_name'],$row['secondary_registration'],$row['year']));
-        }
+        // Set the response headers with the correct character encoding
+        $headers = array(
+            "Content-type"        => "text/csv; charset=utf-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
 
-        fclose($file);
-    };
+        // If you need to display Arabic column header, make sure to encode it as well
+        $columns = array(__('messages.scout_group'),'نموذج التسجيل','السنة');
 
-    return response()->stream($callback, 200, $headers);
-}
+        // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+        $callback = function() use ($Files, $columns) {
+            $file = fopen('php://output', 'w');
+
+            // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+            fputs($file, "\xEF\xBB\xBF");
+
+            // Write the column headers
+            fputcsv($file, $columns);
+
+            // Write the data rows
+            foreach ($Files as $File) {
+                // Make sure to retrieve the Arabic name correctly from your database column
+                $row['leader_name']  = $File->Admin->name;
+                
+                $row['secondary_registration']  =asset('public/images/files/' . $File->secondary_registration);
+
+                $row['year']  = $File->year;
+
+                $group_name = $File->Admin->group_name;
+             
+
+                // Write the row data to the CSV file
+                fputcsv($file, array($group_name,$row['secondary_registration'],$row['year']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 
 
 

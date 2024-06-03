@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
+use App\Models\Advertisement;
 use Auth;
 use App\Models\Admin;
 class AppServiceProvider extends ServiceProvider
@@ -43,23 +44,22 @@ class AppServiceProvider extends ServiceProvider
             $userId = Auth::id();
             $objAdmin = Admin::find($userId);
 
-       
+             
+            $Advertisements = Advertisement::where('read',0)
+            ->where('admin_id',@$objAdmin->id)
+            ->get();
             
-         
+            
+            foreach ($Advertisements as $Advertisement) {
+                $notifications[] = [
+                    'source' => 'Advertisement',
+                    'id' => $Advertisement->id,
+                    'title' => "وارد",
+                    'body' => "لديك وارد من مدير نظام تواصل، يرجى التأكد منه، للمشاهدة ",
+                ];
+            }
 
-            // // Fetch notifications from another notification model
-            // $otherNotifications = AnotherNotificationModel::all();
-            // foreach ($otherNotifications as $notification) {
-            //     // Customize the logic for these notifications
-            //     // ...
-
-            //     $notifications[] = [
-            //         'source' => 'AnotherSource',
-            //         'id' => $notification->id,
-            //         'message' => 'Notification message here',
-            //         // ... other notification data
-            //     ];
-            // }
+             
 
             // // Add more similar blocks for other notification sources
 
