@@ -37,6 +37,7 @@ var KTDatatablesServerSide = function () {
     { data: 'order' },
     { data: 'username' },
     { data: 'group_name' },
+    { data: 'name' },
     { data: 'email' },
     { data: 'phone'},
     //{ data: 'address'},

@@ -25,10 +25,6 @@ Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'
                 ->middleware('guest:admin')
                 ->name('admin_login');
 
-// Route::get('/admin/login_new', [AdminAuthenticatedSessionController::class, 'create_new'])
-//                 ->middleware('guest:admin')
-//                 ->name('admin_login');                
-
 Route::post('admin/login', [AdminAuthenticatedSessionController::class, 'store'])
                 ->middleware('guest:admin');
 

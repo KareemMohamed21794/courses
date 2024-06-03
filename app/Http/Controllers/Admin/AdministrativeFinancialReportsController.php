@@ -253,8 +253,6 @@ class AdministrativeFinancialReportsController extends Controller
 
         $type = $request->firstSegment;
 
-         
-
         if($objAdmin->is_super == 1){
 
            

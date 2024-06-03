@@ -324,7 +324,7 @@ class PDFController extends Controller
 public function send_email()
 {
     $recipient = 'mahmoud.ali.29992@gmail.com';
-    $subject = 'Subject of the Email';
+    $subject = 'Subject of the Email from zohoo';
 
     print_r('here'); die;
 
