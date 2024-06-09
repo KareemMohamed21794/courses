@@ -18,6 +18,7 @@ var KTDatatablesServerSide = function () {
     { data: 'order' },
     // { data: 'id' },
     { data: 'admin_id' },
+    { data: 'categories' },
     { data: 'file_name' },
     { data: 'file' },
     
@@ -30,6 +31,7 @@ var KTDatatablesServerSide = function () {
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
+        { data: 'categories' },
           { data: 'file_name' },
         { data: 'file' },
       

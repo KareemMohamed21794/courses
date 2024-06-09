@@ -43,7 +43,7 @@
                         <!--end::Input group-->
 
 
-                        @if($segment=='admins')
+                        @if($segment!='leaders')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AdvertisementParent extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['admin_id','group_type','file','file_name','description'];
+    protected $fillable = ['admin_id','group_type','file','file_name','description','categories'];
 
     
      public function Advertisements()

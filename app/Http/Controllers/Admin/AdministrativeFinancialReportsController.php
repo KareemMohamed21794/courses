@@ -297,7 +297,7 @@ class AdministrativeFinancialReportsController extends Controller
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "file" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->$fileColumn) . '">download<a>',
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->$fileColumn) . '">تحميل الملف<a>',
                 "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
@@ -566,6 +566,18 @@ class AdministrativeFinancialReportsController extends Controller
             'title' => $title,
         ]);
     }
+
+
+
+     public function reject_accept($status,$id)
+    {
+       
+        $objFile = File::find($id);
+        $objFile->status = $status;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+    
 
 
 

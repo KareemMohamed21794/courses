@@ -49,6 +49,22 @@
                         </div>
                         <!--end::Input group-->
 
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.categories') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select  name="categories" id="categories"  data-placeholder="{{ __('messages.categories') }}" class="form-select form-select-solid">
+                                <option value="">اختر</option>
+                                <option value="mukhatibat">مخاطبات</option>
+                                <option value="tansibat">تنسيبات</option>
+                                
+                            </select>
+                            <!--end::Select-->
+                        </div>
+                        <!--end::Input group-->
+
 
 
 

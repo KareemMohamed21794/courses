@@ -42,7 +42,7 @@
                         <!--end::Input group-->
 
 
-                        @if(request()->segment(2)=='admins')
+                        @if(request()->segment(2)!='leaders')
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->

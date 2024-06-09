@@ -134,17 +134,17 @@
 
                             <th>{{ __('messages.username') }}</th>
 
-                            @if($segment=='admins')
+                            @if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers')
                                 <th>{{ __('messages.name') }}</th>
                             @endif
 
-                            @if($is_super == 0)
+                            @if($is_super == 0 && $segment=='leaders')
                             <th>{{ __('messages.group_name') }}</th>
                             <th>{{ __('messages.leader_name') }}</th>
                             @endif
                             <th>{{ __('messages.email') }}</th>
                             <th>{{ __('messages.phone') }}</th>
-                           <!--  @if($is_super == 0)
+                           <!--  @if($is_super == 0 && $segment=='leaders')
                             <th>{{ __('messages.address') }}</th>
                             @endif -->
                             {{-- <th>{{ __('messages.super_admin') }}</th> --}}

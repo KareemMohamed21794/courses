@@ -36,16 +36,24 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/admins/get', [AdminsController::class, 'get']);
 		Route::get('/leaders/get', [AdminsController::class, 'get']);
 		Route::get('/secretariats/get', [AdminsController::class, 'get']);
+		Route::get('/monitors/get', [AdminsController::class, 'get']);
+		Route::get('/training_commissioners/get', [AdminsController::class, 'get']);
+		Route::get('/treasurers/get', [AdminsController::class, 'get']);
 		Route::resource('/admins', AdminsController::class);
 		Route::DELETE('/delete_admins', [AdminsController::class,'deleteAdmins']);
 		Route::resource('/leaders', AdminsController::class);
 		Route::resource('/secretariats', AdminsController::class);
+		Route::resource('/monitors', AdminsController::class);
+		Route::resource('/training_commissioners', AdminsController::class);
+		Route::resource('/treasurers', AdminsController::class);
 		Route::PATCH('/promotion/{id}', [AdminsController::class, 'Promotion']);
 
 		Route::PATCH('/deletelawyer/{id}', [AdminsController::class, 'deletelawyer']);
 
-		
 
+       Route::get('/scouting_statistics', [HomeController::class, 'ScoutingStatistics']);
+		
+       Route::get('/indicative_statistics', [HomeController::class, 'IndicativeStatistics']);
 		# End Admins
 
 
@@ -87,6 +95,9 @@ Route::middleware('auth:admin')->group(function () {
 		Route::resource('/administrative_financial_reports', AdministrativeFinancialReportsController::class);
 
 
+		Route::get('/administrative_financial/{status}/{id}/reject_accept', [AdministrativeFinancialReportsController::class, 'reject_accept']);
+
+
 		Route::resource('/administrative', AdministrativeFinancialReportsController::class);
 
 		Route::resource('/financial', AdministrativeFinancialReportsController::class);
@@ -120,6 +131,9 @@ Route::middleware('auth:admin')->group(function () {
 
 
 		Route::get('/report_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportBoardDirectorMeetings']);
+
+
+		Route::get('/board_director_meetings/{status}/{id}/reject_accept', [BoardDirectorMeetingsController::class, 'reject_accept']);
 
 
        //archive
@@ -180,6 +194,7 @@ Route::middleware('auth:admin')->group(function () {
 		Route::resource('/requests', InformationsController::class);
 		Route::DELETE('/delete_requests', [InformationsController::class,'deleterequests']);
 		Route::get('export_requests', [InformationsController::class, 'ExportRequests']);
+		Route::get('/requests/{status}/{id}/reject_accept', [InformationsController::class, 'reject_accept']);
 		# End requests
 
 

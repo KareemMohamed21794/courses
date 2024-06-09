@@ -46,8 +46,8 @@ var KTDatatablesServerSide = function () {
        
     ];
 
-    var chosenColumns = type_segment === '0' ? userColumns : adminColumns;
-
+   // var chosenColumns = type_segment === '0' ? userColumns : adminColumns;
+    var chosenColumns = segment === 'leaders' ? userColumns : adminColumns;
 
     // Private functions
     var initDatatable = function () {

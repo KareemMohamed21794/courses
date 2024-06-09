@@ -34,7 +34,7 @@
                                     </span>
                                     <!--end::Svg Icon-->
                                     <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_leaders }}</div>
-                                    <div class="fw-bold text-gray-400">{{ __('messages.scout_groups') }}/{{ __('messages.indicative_groups') }}</div>
+                                    <div class="fw-bold text-gray-400">{{ __('messages.indicative_groups') }}</div>
                                 </div>
                                 <!--end::Body-->
                             </a>

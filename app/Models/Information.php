@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Information extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['admin_id','file','file_name','description'];
+    protected $fillable = ['admin_id','file','file_name','description','status'];
     protected $table = 'informations';
     
      public function Admin()

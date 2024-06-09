@@ -24,6 +24,14 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
+                    'categories': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
                     // 'description': {
                     //     validators: {
                     //         notEmpty: {
@@ -257,6 +265,9 @@ function getData(id) {
             jQuery('#id').val(data.id);
             jQuery('#description_update').val(data.description);
             jQuery('#file_name_update').val(data.file_name);
+
+            jQuery('#categories_update').val(data.categories);
+            jQuery("#categories_update").select2("val", ""+data.categories+"");
            
            var image_path =  '../images/advertisements/'
             // Get the image element by its id

@@ -290,7 +290,7 @@ class InformationsController extends Controller
                 "id" => $objdata->id,
                 "admin_id" => @$objdata->Admin->group_name,
                 "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
+                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">تحميل الملف<a>',
                 
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
@@ -303,7 +303,7 @@ class InformationsController extends Controller
                 "order" => $key+1,
                 "id" => $objdata->id,
                 "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">download<a>',
+                "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">تحميل الملف<a>',
                 
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
@@ -523,6 +523,17 @@ class InformationsController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+
+
+    public function reject_accept($status,$id)
+    {
+       
+        $objInformation = Information::find($id);
+        $objInformation->status = $status;
+        $objInformation->save();
+        return response()->json(['objInformation'=>$objInformation]);
     }
     
 }

@@ -133,11 +133,12 @@
                            @if($objAdmin->is_super == 1)
                             <th>{{ __('messages.scout_group') }}</th>
                             @endif
+                            <th>{{ __('messages.categories') }}</th>
                             <th>اسم الملف</th>
                             <th>الملف</th>
                             
                             <th>الشرح</th>
-                            <th>{{ __('messages.created_at') }}</th>
+                            <th>{{ __('messages.time_send') }}</th>
                            
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
                     

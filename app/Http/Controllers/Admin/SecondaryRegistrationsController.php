@@ -278,7 +278,7 @@ class SecondaryRegistrationsController extends Controller
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                  "secondary_registration" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>',
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">تحميل الملف<a>',
                 "year" => $objdata->year,
                 "status"=>$status,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
@@ -793,20 +793,20 @@ public function ReportArchiveSecondaryRegistrations()
 
             if($request->type == 'secondary_registration_archive'){
             $file ='
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">download<a>';
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">تحميل الملف<a>';
         
 
             }elseif ($request->type == 'administrative_archive') {
                $file ='
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial1) . '">download<a>';
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial1) . '">تحميل الملف<a>';
                
             }elseif ($request->type == 'financial_archive'){
                 $file ='
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial2) . '">download<a>';
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->administrative_financial2) . '">تحميل الملف<a>';
                
             }else{
                 $file ='
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>';
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">تحميل الملف<a>';
                
             }
 

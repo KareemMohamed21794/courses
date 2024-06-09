@@ -140,7 +140,7 @@
                             
                             <th>الشرح</th>
                         
-                             <th>{{ __('messages.created_at') }}</th>
+                             <th>{{ __('messages.time_arrival') }}</th>
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
                         </tr>
                         </thead>

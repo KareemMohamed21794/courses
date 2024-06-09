@@ -76,6 +76,7 @@ class AdvertisementsController extends Controller
             'file_name' => ['required', 'string', 'max:255'],
             'group_type' => ['required'],
             'file' => ['required'],
+            'categories' => ['required'],
         ]);
 
         $validator->sometimes('admin_id', 'required', function ($input) {
@@ -128,6 +129,7 @@ class AdvertisementsController extends Controller
         $AdvertisementParent->file = $document;
         $AdvertisementParent->file_name = $request->file_name;
         $AdvertisementParent->description = $request->description;
+        $AdvertisementParent->categories = $request->categories;
         $AdvertisementParent->save();
 
         
@@ -143,6 +145,7 @@ class AdvertisementsController extends Controller
             'file' =>  $document,
             'file_name' =>  $request->file_name,
             'description' =>  $request->description,
+            'categories' => $request->categories,
             ]);
  
 
@@ -223,6 +226,7 @@ class AdvertisementsController extends Controller
                //'description' => ['required', 'string', 'max:255'],
                 'file_name' => ['required', 'string', 'max:255'],
                 'file' => ['required'],
+                'categories' => ['required'],
             ]);
    
 
@@ -237,6 +241,7 @@ class AdvertisementsController extends Controller
         $objAdvertisement = Advertisement::find($id);
         $objAdvertisement->description = $request->description;
         $objAdvertisement->file_name = $request->file_name;
+        $objAdvertisement->categories = $request->categories;
         if(!empty($request->file('file'))){
             $oldImage = $objAdvertisement->file;
             $file = $request->file('file');
@@ -287,6 +292,7 @@ class AdvertisementsController extends Controller
             'order'   => true,
             'id'   => true,
             'admin_id'   => true,
+            'categories'=>true,
             'file_name'=>true,
             'file'=> true,
             
@@ -300,6 +306,7 @@ class AdvertisementsController extends Controller
             '#'   => true,
             'order'   => true,
             'id'   => true,
+            'categories'=>true,
              'file_name'=>true,
             'file'=> true,
            
@@ -355,10 +362,20 @@ class AdvertisementsController extends Controller
  
         foreach($alldata as $key=> $objdata){
 
-
+        
             if($objAdmin->is_super == 1){
             
             $groups = "";
+            $categories = "";
+
+
+            if($objdata->categories=='mukhatibat'){
+                $categories = "مخاطبات";
+            }elseif ($objdata->categories=='tansibat') {
+                $categories = "تنسيبات";
+            }
+
+
             if($objdata->group_type=='all'){
                 $groups = "الكل";
             }elseif ($objdata->group_type=='kashfih') {
@@ -387,8 +404,9 @@ class AdvertisementsController extends Controller
                 "order" => $key+1,
                 "id" => $objdata->id,
                 "admin_id" => @$groups,
+                "categories"=> @$categories,
                 "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
+                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
                 
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
@@ -399,8 +417,9 @@ class AdvertisementsController extends Controller
                 "order" => $key+1,
                 "#" => $objdata->id,
                 "id" => $objdata->id,
+                "categories"=> @$categories,
                "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">download<a>',
+                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
                
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),

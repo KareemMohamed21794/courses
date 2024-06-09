@@ -50,14 +50,15 @@ fill: #009EF7;
               
 
                 @if(Request::segment(1)=='admin')
-                     
-                 
 
 
-                    <div class="menu-item">
-                    <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
+                  Request::segment(2)=='' ||Request::segment(2)=='dashboard'||Request::segment(2)=='scouting_statistics'||Request::segment(2)=='indicative_statistics'? 'show here' : ''}}">
+
+
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <rect x="2" y="2" width="9" height="9" rx="2" fill="black" />
@@ -67,19 +68,140 @@ fill: #009EF7;
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">{{ __('messages.Dashboard') }}</span>
+                            <span class="menu-arrow"></span>
                         </span>
-                        <span class="menu-title">{{ __('messages.Dashboard') }} </span>
-                    </a>
-                </div>
+                        <div class="menu-sub menu-sub-accordion">
+
+                              <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.Main_Dashboard') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='scouting_statistics' ? 'active' : '' }}" href="{{ url('/admin/scouting_statistics') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.Scouting_statistics') }}</span>
+                                </a>
+                            </div>
 
 
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='indicative_statistics' ? 'active' : '' }}" href="{{ url('/admin/indicative_statistics') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.Indicative_statistics') }}</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                     
+                 
+
+
+      
                   @if($objAdmin->is_super == 1)
-                    
-                    
 
 
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers'? 'show here' : ''}}">
 
-                    <div class="menu-item">
+
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg clip-rule="evenodd" fill-rule="evenodd" height="24" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Icon">
+                                        <circle cx="11.5" cy="6.744" r="5.5"/>
+                                        <path d="m17.5 13.938c-1.966 0-3.562 1.596-3.562 3.562s1.596 3.563 3.562 3.563 3.563-1.597 3.563-3.563-1.597-3.562-3.563-3.562zm0 1.5c1.138 0 2.063.924 2.063 2.062s-.925 2.063-2.063 2.063-2.063-.925-2.063-2.063.925-2.062 2.063-2.062z"/>
+                                        <path d="m18.25 14.687v-1.687c0-.414-.336-.75-.75-.75s-.75.336-.75.75v1.688c0 .413.336.75.75.75.414-.001.75-.337.75-.751z"/>
+                                        <path d="m20.019 16.042 1.193-1.194c.293-.292.293-.768 0-1.06-.292-.293-.768-.293-1.06 0l-1.194 1.193c-.292.293-.292.768 0 1.061.293.292.768.292 1.061 0z"/>
+                                        <path d="m20.312 18.25h1.688c.414 0 .75-.336.75-.75s-.336-.75-.75-.75h-1.688c-.413 0-.749.336-.749.75-.001.414.336.75.749.75z"/>
+                                        <path d="m18.958 20.019 1.194 1.193c.292.293.768.293 1.06 0 .293-.292.293-.768 0-1.06l-1.193-1.194c-.293-.292-.768-.292-1.061 0-.292.293-.292.768 0 1.061z"/>
+                                        <path d="m16.75 20.312v1.688c0 .414.336.75.75.75s.75-.336.75-.75v-1.688c0-.413-.336-.749-.75-.75-.414 0-.75.337-.75.75z"/>
+                                        <path d="m14.981 18.958-1.193 1.194c-.293.292-.293.768 0 1.06.292.293.768.293 1.06 0l1.194-1.193c.292-.293.292-.768 0-1.061-.293-.292-.768-.292-1.061 0z"/>
+                                        <path d="m14.687 16.75h-1.687c-.414 0-.75.336-.75.75s.336.75.75.75h1.687c.414 0 .751-.336.75-.75 0-.414-.336-.75-.75-.75z"/>
+                                        <path d="m16.042 14.981-1.194-1.193c-.292-.293-.768-.293-1.06 0-.293.292-.293.768 0 1.06l1.193 1.194c.293.292.768.292 1.061 0 .292-.293.292-.768 0-1.061z"/>
+                                        <path d="m12.936 21.756c-.534-.686-.486-1.681.145-2.311l.194-.195h-.275c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75h.275l-.194-.195c-.656-.655-.682-1.704-.078-2.391-.49-.038-.992-.058-1.503-.058-3.322 0-6.263.831-8.089 2.076-1.393.95-2.161 2.157-2.161 3.424v1.45c0 .451.179.884.498 1.202.319.319.751.498 1.202.498z"/>
+                                        </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">{{ __('messages.Settings') }}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+
+                              <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='admins'  ? 'active' : '' }}" href="{{ url('/admin/admins') }}">
+                                    <span class="menu-icon">
+
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                               
+                            </span>
+                            <span class="menu-title"> {{ __('messages.Admins') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='secretariats' ? 'active' : '' }}" href="{{ url('/admin/secretariats') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.secretariats') }}</span>
+                                </a>
+                            </div>
+
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='monitors' ? 'active' : '' }}" href="{{ url('/admin/monitors') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.monitors') }}</span>
+                                </a>
+                            </div>
+
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='training_commissioners' ? 'active' : '' }}" href="{{ url('/admin/training_commissioners') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.training_commissioners') }}</span>
+                                </a>
+                            </div>
+
+
+                             <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='treasurers' ? 'active' : '' }}" href="{{ url('/admin/treasurers') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.treasurers') }}</span>
+                                </a>
+                            </div>
+
+
+                         
+
+                        </div>
+                    </div>
+
+
+                  {{--   <div class="menu-item">
                         <a class="menu-link {{ Request::segment(2)=='admins'  ? 'active' : '' }}" href="{{ url('/admin/admins') }}">
                             <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -104,7 +226,7 @@ fill: #009EF7;
                             </span>
                             <span class="menu-title"> {{ __('messages.Admins') }}</span>
                         </a>
-                    </div>
+                    </div> --}}
                     @endif
                   
                     <div class="menu-item">

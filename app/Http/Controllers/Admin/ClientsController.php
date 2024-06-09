@@ -870,7 +870,7 @@ class ClientsController extends Controller
                 "clients" => $objdata->client->display_name,
                 "file_name" => $objdata->file_name,
                 // "file" => '<img style=" width: 50px;height: 50px;" src="' . asset('storage/' . $objdata->file) . '" alt="Client Image">',
-                "download" => '<a target="_blank" href="' . asset('storage/app/public/' . $objdata->file) . '">download<a>',
+                "download" => '<a target="_blank" href="' . asset('storage/app/public/' . $objdata->file) . '">تحميل الملف<a>',
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

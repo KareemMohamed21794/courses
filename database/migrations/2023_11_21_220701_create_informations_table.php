@@ -20,6 +20,7 @@ class CreateInformationsTable extends Migration
             $table->string('file')->nullable();
             $table->string('file_name')->nullable();
             $table->string('description')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

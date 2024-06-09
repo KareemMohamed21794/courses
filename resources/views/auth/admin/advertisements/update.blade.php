@@ -32,7 +32,21 @@
                     <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_update_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_header" data-kt-scroll-wrappers="#kt_modal_update_scroll" data-kt-scroll-offset="300px">
                         
-
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-5 fw-bold mb-2">{{ __('messages.categories') }}</label>
+                            <!--end::Label-->
+                            <!--begin::Select-->
+                            <select  name="categories" id="categories_update"  data-placeholder="{{ __('messages.categories') }}" class="form-select form-select-solid">
+                                <option value="">اختر</option>
+                                <option value="mukhatibat">مخاطبات</option>
+                                <option value="tansibat">تنسيبات</option>
+                                
+                            </select>
+                            <!--end::Select-->
+                        </div>
+                        <!--end::Input group-->
                        
 
                          

@@ -253,7 +253,7 @@ class BoardDirectorMeetingsController extends Controller
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "board_director_meetings" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">download<a>',
+                <a target="_blank" href="' . asset('public/images/files/' . $objdata->board_director_meetings) . '">تحميل الملف<a>',
                 "year" => $objdata->year,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
@@ -491,6 +491,16 @@ class BoardDirectorMeetingsController extends Controller
 
     return response()->stream($callback, 200, $headers);
 }
+
+
+ public function reject_accept($status,$id)
+    {
+       
+        $objFile = File::find($id);
+        $objFile->status = $status;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
 
 
 

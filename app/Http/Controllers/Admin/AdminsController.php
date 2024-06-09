@@ -57,6 +57,48 @@ class AdminsController extends Controller
             $is_super = 0;
         }
 
+        elseif($segment=='secretariats'){
+
+            $title =   __('messages.secretariats') ;
+            $add_title = __('messages.secretariat');
+            $department_id = 2;
+            $position_id = 3;
+            $is_super = 0;
+        }
+
+
+        elseif($segment=='monitors'){
+
+            $title =   __('messages.monitors') ;
+            $add_title = __('messages.monitor');
+            $department_id = 2;
+            $position_id = 4;
+            $is_super = 0;
+        }
+
+
+
+        elseif($segment=='training_commissioners'){
+
+            $title =   __('messages.training_commissioners') ;
+            $add_title = __('messages.training_commissioner');
+            $department_id = 2;
+            $position_id = 5;
+            $is_super = 0;
+        }
+
+        elseif($segment=='treasurers'){
+
+            $title =   __('messages.treasurers') ;
+            $add_title = __('messages.treasurer'); 
+            $department_id = 2;
+            $position_id = 6;
+            $is_super = 0;
+        }
+
+
+
+
 
         $Governorates = [
             "عمّان",
@@ -330,7 +372,7 @@ class AdminsController extends Controller
 
         ini_set('memory_limit', '-1');
         $segment = $request->segment(2);
-        if($segment=='admins'){
+        if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers'){
             $columnsDefault = [
             'order'   => true,
             '#'   => true,
@@ -382,6 +424,23 @@ class AdminsController extends Controller
             $position_id = 2;
         }
 
+
+        elseif($segment=='secretariats'){
+            $position_id = 3;
+        }
+
+
+        elseif($segment=='monitors'){
+            $position_id = 4;
+        }
+
+        elseif($segment=='training_commissioners'){
+            $position_id = 5;
+        }
+        elseif($segment=='treasurers'){
+            $position_id = 6;
+        }
+
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
 
@@ -426,7 +485,7 @@ class AdminsController extends Controller
 
             $is_super = "Super Admin";
             if(!$objdata->is_super)  $is_super = "Normal Admin";
-            if($segment=='admins'){
+            if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers'){
 
                 $alldataResult[] = array(
                     "order" => $key+1,

@@ -2,6 +2,9 @@
 
 return [
     'Dashboard' => 'Dashboard',
+    'Main_Dashboard' => 'Main Dashboard',
+    'Scouting_statistics'=>'Scouting statistics',
+    'Indicative_statistics'=>'Indicative statistics',
     'Branches' => 'Branches',
     'Staff' => 'Staff',
     'Admins' => 'Admins',

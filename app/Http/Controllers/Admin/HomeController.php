@@ -50,7 +50,7 @@ class HomeController extends Controller
         $count_admins = Admin::where('position_id',1)->count();
         $count_lawyers = Admin::where('position_id',2)->count();
         $count_leaders = Admin::where('is_super',0)->count();
-        
+
        
        if($objAdmin->is_super == 0){
         $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('year',date('Y'))->count();
@@ -156,5 +156,403 @@ class HomeController extends Controller
         });
 
         return "Email sent successfully!";
+    }
+
+
+    public function ScoutingStatistics()
+    {
+        # check for email
+        $notifications = [];
+
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        // if($objAdmin->is_super == 0){
+        //      return redirect('admin/leaders');
+        // }
+        $problemNotifications = array();
+
+        
+        $userId = \Auth::id();
+        if(request()->segment(1)=='admin'){
+            $title = "الاداره: ".__('messages.Scouting_statistics');
+        }
+
+        $count_admins = Admin::where('position_id',1)->count();
+        $count_lawyers = Admin::where('position_id',2)->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->count();
+        
+       
+       if($objAdmin->is_super == 0){
+
+        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+
+
+        $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_financial_reports = File::where('admin_id',$objAdmin->id)->where('type','financial')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+    
+        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('groups');
+
+
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $requests = Information::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+    
+
+       }else{
+
+        $count_secondary_registrations = File::where('type','secondary_registration')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_administrative_reports = File::where('type','administrative')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_financial_reports = File::where('type','financial')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_board_director_meetings = File::where('type','board_director_meetings')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_permits = Permit::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_qualificationLeaders = QualificationLeader::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $leaders_number = Admin::where('group_classification','kashfih')->sum('leaders_number');
+        $persons_number = Admin::where('group_classification','kashfih')->sum('persons_number');
+        $groups = Admin::where('group_classification','kashfih')->sum('groups');
+
+        $Advertisements = Advertisement::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+
+        $requests = Information::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'kashfih');
+        })->count();
+
+      
+
+       }
+
+
+        return view('auth.admin.scouting_dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_reports' => $count_administrative_reports,'count_financial_reports' => $count_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib,'leaders_number' => $leaders_number,'persons_number' => $persons_number,'groups' => $groups,'Advertisements' => $Advertisements,'requests' => $requests]);
+    }
+
+
+     public function IndicativeStatistics()
+    {
+        # check for email
+        $notifications = [];
+
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        // if($objAdmin->is_super == 0){
+        //      return redirect('admin/leaders');
+        // }
+        $problemNotifications = array();
+
+        
+        $userId = \Auth::id();
+        if(request()->segment(1)=='admin'){
+            $title = "الاداره: ".__('messages.Indicative_statistics');
+        }
+
+        $count_admins = Admin::where('position_id',1)->count();
+        $count_lawyers = Admin::where('position_id',2)->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->count();
+        
+       
+       if($objAdmin->is_super == 0){
+
+
+        
+        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+
+
+        $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_financial_reports = File::where('admin_id',$objAdmin->id)->where('type','financial')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+    
+        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('groups');
+
+
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $requests = Information::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+       }else{
+
+        $count_secondary_registrations = File::where('type','secondary_registration')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_administrative_reports = File::where('type','administrative')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_financial_reports = File::where('type','financial')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_board_director_meetings = File::where('type','board_director_meetings')
+        ->where('year',date('Y'))
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_permits = Permit::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_qualificationLeaders = QualificationLeader::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')
+        ->whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $leaders_number = Admin::where('group_classification','irshad')->sum('leaders_number');
+        $persons_number = Admin::where('group_classification','irshad')->sum('persons_number');
+        $groups = Admin::where('group_classification','irshad')->sum('groups');
+
+        $Advertisements = Advertisement::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+
+        $requests = Information::whereHas('Admin', function($query) {
+            $query->where('group_classification', 'irshad');
+        })->count();
+
+      
+
+       }
+
+
+        return view('auth.admin.indicative_dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_reports' => $count_administrative_reports,'count_financial_reports' => $count_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib,'leaders_number' => $leaders_number,'persons_number' => $persons_number,'groups' => $groups,'Advertisements' => $Advertisements,'requests' => $requests]);
     }
 }
