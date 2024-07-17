@@ -140,7 +140,7 @@
                             
                             <th>الشرح</th>
                         
-                             <th>{{ __('messages.time_arrival') }}</th>
+                        <th>{{ __('messages.time_arrival') }}</th>
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
                         </tr>
                         </thead>
@@ -155,6 +155,7 @@
             <!--begin::Modals-->
             @include('auth.admin.requests.add')
             @include('auth.admin.requests.update')
+            @include('auth.admin.requests.reject_request')
             <!--begin::Modal - Adjust Balance-->
             @include('auth.admin.requests.export')
             <!--end::Modal - New Card-->
@@ -176,6 +177,7 @@
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/list/export.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/reject_request.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/requests/update.js') }}"></script>
 

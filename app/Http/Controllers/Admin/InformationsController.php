@@ -250,28 +250,28 @@ class InformationsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = Information::get();
+           $alldata = Information::whereNull('status')->orWhere('status','approved')->get();
         
             if($active=='All'){
-                $alldata = Information::withTrashed()->get();
+                $alldata = Information::withTrashed()->whereNull('status')->orWhere('status','approved')->get();
             }
             elseif($active=='Active'){
-                $alldata = Information::get();
+                $alldata = Information::whereNull('status')->orWhere('status','approved')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Information::onlyTrashed()->get();
+                $alldata = Information::onlyTrashed()->whereNull('status')->orWhere('status','approved')->get();
             }
         }else{
 
-            $alldata = Information::where('admin_id',$userId)->get();
+            $alldata = Information::where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
             if($active=='All'){
-                $alldata = Information::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = Information::withTrashed()->where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
             }
             elseif($active=='Active'){
-                $alldata = Information::where('admin_id',$userId)->get();
+                $alldata = Information::where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Information::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = Information::onlyTrashed()->where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
             }
 
 
@@ -532,6 +532,20 @@ class InformationsController extends Controller
        
         $objInformation = Information::find($id);
         $objInformation->status = $status;
+        $objInformation->save();
+        return response()->json(['objInformation'=>$objInformation]);
+    }
+
+
+public function RejectedRequest(Request $request)
+    {
+        
+        $request_id = $request->request_id;
+        $reject_notes = $request->reject_notes;
+        $objInformation = Information::find($request_id);
+        $objInformation->status = 'rejected';
+        $objInformation->reject_notes = $reject_notes;
+        
         $objInformation->save();
         return response()->json(['objInformation'=>$objInformation]);
     }

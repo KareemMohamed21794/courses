@@ -120,6 +120,8 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('export_administrative_financial', [AdministrativeFinancialReportsController::class, 'ExportAdministrativeFinancial']);
 
+		Route::post('/rejected/', [AdministrativeFinancialReportsController::class, 'Rejected']);
+
 		
 		# End administrative_financial_report
 
@@ -195,6 +197,8 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_requests', [InformationsController::class,'deleterequests']);
 		Route::get('export_requests', [InformationsController::class, 'ExportRequests']);
 		Route::get('/requests/{status}/{id}/reject_accept', [InformationsController::class, 'reject_accept']);
+
+		Route::post('/rejected_request/', [InformationsController::class, 'RejectedRequest']);
 		# End requests
 
 

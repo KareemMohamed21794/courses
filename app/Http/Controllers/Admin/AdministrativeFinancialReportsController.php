@@ -256,28 +256,28 @@ class AdministrativeFinancialReportsController extends Controller
         if($objAdmin->is_super == 1){
 
            
-           $alldata = File::where('type',$type)->get();
+           $alldata = File::where('type',$type)->whereNull('status')->get();
         
             if($active=='All'){
-                $alldata = File::where('type',$type)->withTrashed()->get();
+                $alldata = File::where('type',$type)->withTrashed()->whereNull('status')->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('type',$type)->get();
+                $alldata = File::where('type',$type)->whereNull('status')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::where('type',$type)->onlyTrashed()->get();
+                $alldata = File::where('type',$type)->onlyTrashed()->whereNull('status')->get();
             }
         }else{
 
-            $alldata = File::where('admin_id',$userId)->where('type',$type)->get();
+            $alldata = File::where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();;
             if($active=='All'){
-                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type',$type)->get();
+                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('admin_id',$userId)->where('type',$type)->get();
+                $alldata = File::where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type',$type)->get();
+                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
             }
 
 
@@ -574,6 +574,20 @@ class AdministrativeFinancialReportsController extends Controller
        
         $objFile = File::find($id);
         $objFile->status = $status;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
+    public function Rejected(Request $request)
+    {
+        
+        $request_id = $request->request_id;
+        $reject_notes = $request->reject_notes;
+        $objFile = File::find($request_id);
+        $objFile->status = 'rejected';
+        $objFile->reject_notes = $reject_notes;
+        
         $objFile->save();
         return response()->json(['objFile'=>$objFile]);
     }

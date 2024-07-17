@@ -176,6 +176,7 @@
             <!--begin::Modals-->
             @include('auth.admin.administrative_financial_reports.add')
             @include('auth.admin.administrative_financial_reports.update')
+            @include('auth.admin.administrative_financial_reports.reject')
             <!--begin::Modal - Adjust Balance-->
             @include('auth.admin.administrative_financial_reports.export')
             <!--end::Modal - New Card-->
@@ -197,6 +198,7 @@
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/administrative_financial_reports/list/export.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/administrative_financial_reports/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/administrative_financial_reports/reject.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/administrative_financial_reports/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/administrative_financial_reports/update.js') }}"></script>
 
