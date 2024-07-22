@@ -172,6 +172,7 @@
             <!--begin::Modals-->
             @include('auth.admin.board_director_meetings.add')
             @include('auth.admin.board_director_meetings.update')
+            @include('auth.admin.board_director_meetings.reject')
             <!--begin::Modal - Adjust Balance-->
             @include('auth.admin.board_director_meetings.export')
             <!--end::Modal - New Card-->
@@ -191,6 +192,7 @@
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_director_meetings/list/export.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_director_meetings/list/list.js') }}"></script>
+     <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_director_meetings/reject.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_director_meetings/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_director_meetings/update.js') }}"></script>
 

@@ -138,6 +138,9 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/board_director_meetings/{status}/{id}/reject_accept', [BoardDirectorMeetingsController::class, 'reject_accept']);
 
 
+		Route::post('/rejected_meetings/', [BoardDirectorMeetingsController::class, 'RejectedMeetings']);
+
+
        //archive
 		Route::get('/report_archive_board_director_meetings', [BoardDirectorMeetingsController::class, 'ReportArchiveBoardDirectorMeetings']);
 		///

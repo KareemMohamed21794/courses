@@ -369,10 +369,20 @@ class AdvertisementsController extends Controller
             $categories = "";
 
 
-            if($objdata->categories=='mukhatibat'){
-                $categories = "مخاطبات";
-            }elseif ($objdata->categories=='tansibat') {
-                $categories = "تنسيبات";
+            if($objdata->categories=='talab_mukhatabat'){
+                $categories = "طلب مخاطبات لجهات محلية";
+            }elseif ($objdata->categories=='⁠anshitat_mahaliya') {
+                $categories = "أنشطة محلية";
+            }elseif ($objdata->categories=='anshita_earabiat_waealamia') {
+                $categories = " ⁠أنشطة عربية وعالمية";
+            }elseif ($objdata->categories=='aldirasat_altaahilia') {
+                $categories = "الدراسات التأهيلية";
+            }elseif ($objdata->categories=='aistifsarat_malia') {
+                $categories = "استفسارات مالية";
+            }elseif ($objdata->categories=='aijtimaeat') {
+                $categories = "اجتماعات ";
+            }elseif ($objdata->categories=='⁠aistifsarat_eama') {
+                $categories = "استفسارات عامة";
             }
 
 

@@ -21,7 +21,11 @@ class CreateAdvertisementsTable extends Migration
             $table->string('file')->nullable();
             $table->string('file_name')->nullable();
             $table->string('description')->nullable();
-            $table->enum('categories', ['mukhatibat', 'tansibat'])->nullable();
+            $table->enum('categories', [
+                'talab_mukhatabat','⁠anshitat_mahaliya',
+                'anshita_earabiat_waealamia','aldirasat_altaahilia',
+                '⁠aistifsarat_malia','aijtimaeat','⁠aistifsarat_eama'
+            ])->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

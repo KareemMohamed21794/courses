@@ -57,8 +57,13 @@
                             <!--begin::Select-->
                             <select  name="categories" id="categories"  data-placeholder="{{ __('messages.categories') }}" class="form-select form-select-solid">
                                 <option value="">اختر</option>
-                                <option value="mukhatibat">مخاطبات</option>
-                                <option value="tansibat">تنسيبات</option>
+                                <option value="talab_mukhatabat">طلب مخاطبات لجهات محلية</option>
+                                <option value="⁠anshitat_mahaliya">أنشطة محلية</option>
+                                <option value="anshita_earabiat_waealamia"> ⁠أنشطة عربية وعالمية</option>
+                                <option value="aldirasat_altaahilia">⁠الدراسات التأهيلية</option>
+                                <option value="⁠aistifsarat_malia">⁠استفسارات مالية</option>
+                                <option value="aijtimaeat">⁠اجتماعات </option>
+                                <option value="⁠aistifsarat_eama">⁠استفسارات عامة</option>
                                 
                             </select>
                             <!--end::Select-->

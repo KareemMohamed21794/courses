@@ -154,7 +154,7 @@ var KTDatatablesServerSide = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="reject_accept('rejected', `+row.id+`)">
+                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
                                         رفض
                                     </a>
                                 </div>

@@ -214,28 +214,28 @@ class BoardDirectorMeetingsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = File::where('type','board_director_meetings')->get();
+           $alldata = File::where('type','board_director_meetings')->whereNull('status')->get();
         
             if($active=='All'){
-                $alldata = File::where('type','board_director_meetings')->withTrashed()->get();
+                $alldata = File::where('type','board_director_meetings')->whereNull('status')->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('type','board_director_meetings')->get();
+                $alldata = File::where('type','board_director_meetings')->whereNull('status')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::where('type','board_director_meetings')->onlyTrashed()->get();
+                $alldata = File::where('type','board_director_meetings')->whereNull('status')->onlyTrashed()->get();
             }
         }else{
 
-            $alldata = File::where('admin_id',$userId)->where('type','board_director_meetings')->get();
+            $alldata = File::where('admin_id',$userId)->whereNull('status')->where('type','board_director_meetings')->get();
             if($active=='All'){
-                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type','board_director_meetings')->get();
+                $alldata = File::withTrashed()->where('admin_id',$userId)->whereNull('status')->where('type','board_director_meetings')->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('admin_id',$userId)->where('type','board_director_meetings')->get();
+                $alldata = File::where('admin_id',$userId)->whereNull('status')->where('type','board_director_meetings')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type','board_director_meetings')->get();
+                $alldata = File::onlyTrashed()->where('admin_id',$userId)->whereNull('status')->where('type','board_director_meetings')->get();
             }
 
 
@@ -498,6 +498,21 @@ class BoardDirectorMeetingsController extends Controller
        
         $objFile = File::find($id);
         $objFile->status = $status;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
+
+    public function RejectedMeetings(Request $request)
+    {
+        
+        $request_id = $request->request_id;
+        $reject_notes = $request->reject_notes;
+        $objFile = File::find($request_id);
+        $objFile->status = 'rejected';
+        $objFile->reject_notes = $reject_notes;
+        
         $objFile->save();
         return response()->json(['objFile'=>$objFile]);
     }
