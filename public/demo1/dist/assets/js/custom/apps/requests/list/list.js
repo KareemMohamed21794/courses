@@ -32,6 +32,8 @@ var KTDatatablesServerSide = function () {
         // { data: 'id' },
         { data: 'file_name' },
         { data: 'file' },
+        { data: 'status' },
+        { data: 'reject_notes' },
         
         { data: 'description' },
         { data: 'created_at' },

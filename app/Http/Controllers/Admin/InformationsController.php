@@ -93,7 +93,7 @@ class InformationsController extends Controller
         ]);
 
         $recipient = 'admin@tawasol.com';
-        $recipient = 'mahmoud.ali.29992@gmail.com';
+        //$recipient = 'mahmoud.ali.29992@gmail.com';
         $subject = 'لديك وارد';
 
         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
@@ -232,7 +232,8 @@ class InformationsController extends Controller
             'id'   => true,
             'file_name'=>true,
             'file'=> true,
-            
+            'status'=> true,
+            'reject_notes'=> true,
             'description'=>true,
             'created_at'   => true,
         ];
@@ -263,24 +264,36 @@ class InformationsController extends Controller
             }
         }else{
 
-            $alldata = Information::where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
+            $alldata = Information::where('admin_id',$userId)->get();
             if($active=='All'){
-                $alldata = Information::withTrashed()->where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
+                $alldata = Information::withTrashed()->where('admin_id',$userId)->get();
             }
             elseif($active=='Active'){
-                $alldata = Information::where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
+                $alldata = Information::where('admin_id',$userId)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Information::onlyTrashed()->where('admin_id',$userId)->whereNull('status')->orWhere('status','approved')->get();
+                $alldata = Information::onlyTrashed()->where('admin_id',$userId)->get();
             }
 
 
 
         }
 
+        
+
         $alldataResult=array();
  
         foreach($alldata as $key=> $objdata){
+
+            $status = '';
+
+            if($objdata->status == 'rejected'){
+              $status = 'مرفوض';  
+            }elseif($objdata->status == 'approved'){
+                $status = 'مقبول';
+            }else{
+                $status = 'قيد الانتظار';
+            }
 
             if($objAdmin->is_super == 1){
           
@@ -298,13 +311,16 @@ class InformationsController extends Controller
 
             }else{
 
+
+
                 $alldataResult[] = array(
                 "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
                 "file_name"=> $objdata->file_name,
                 "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">تحميل الملف<a>',
-                
+                "status"=> $status,
+                "reject_notes"=> $objdata->reject_notes,
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
@@ -529,17 +545,37 @@ class InformationsController extends Controller
 
     public function reject_accept($status,$id)
     {
-       
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         $objInformation = Information::find($id);
         $objInformation->status = $status;
         $objInformation->save();
+
+        $recipient = 'admin@tawasol.com';
+        //$recipient = 'mahmoud.ali.29992@gmail.com';
+        $subject = 'تم قبول الوارد';
+
+        $data = ['content' => 'تم قبول الوارد' ,'group_name' => $objAdmin->group_name]; // Data to pass to the view
+
+        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        // The "from" email address
+
+        Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+            $mail->to($recipient)
+                ->from($fromEmail) // Set the "from" email address
+                ->subject($subject);
+        });
+        
+
+
         return response()->json(['objInformation'=>$objInformation]);
     }
 
 
 public function RejectedRequest(Request $request)
     {
-        
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         $request_id = $request->request_id;
         $reject_notes = $request->reject_notes;
         $objInformation = Information::find($request_id);
@@ -547,6 +583,24 @@ public function RejectedRequest(Request $request)
         $objInformation->reject_notes = $reject_notes;
         
         $objInformation->save();
+
+        $recipient = 'admin@tawasol.com';
+        //$recipient = 'mahmoud.ali.29992@gmail.com';
+        $subject = 'تم رفض الوارد';
+
+        $data = ['content' => $reject_notes,'group_name' => $objAdmin->group_name]; // Data to pass to the view
+
+        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        // The "from" email address
+
+        Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+            $mail->to($recipient)
+                ->from($fromEmail) // Set the "from" email address
+                ->subject($subject);
+        });
+        
+
+
         return response()->json(['objInformation'=>$objInformation]);
     }
     
