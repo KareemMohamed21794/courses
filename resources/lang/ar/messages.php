@@ -586,5 +586,8 @@ return [
     'motakadem'=>'عدد المتقدم/المتقدمات',
     'gawala'=>'عدد الجواله/الدليلات',
     'reject_notes'=>'سبب الرفض' ,
+    'organizing_study'=>'تنظيم دراسة' ,
+    'study_report'=>'تقرير دراسة' ,
+    'achievements_study_requirements'=>'انجازات متطلبات دراسة' ,
  ];
 

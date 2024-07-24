@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Advertisement;
-use App\Models\AdvertisementParent;
+use App\Models\OrganizingStudy;
 use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -15,10 +14,9 @@ use Auth;
 use Lang;
 use DB;
 use Illuminate\Support\Facades\Mail;
-
-class AdvertisementsController extends Controller
+class OrganizingStudiesController extends Controller
 {
-    private const MODEL ='Advertisement';
+    private const MODEL ='OrganizingStudy';
     /**
      * Display a listing of the resource.
      *
@@ -28,22 +26,15 @@ class AdvertisementsController extends Controller
     {
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        if($objAdmin->is_super == 1){
-            $title = __('messages.issued');
-            $add_title = __('messages.issued');
-        }else{
-            $title = __('messages.incoming');
-            $add_title = __('messages.incoming');
-        }
-
-
+        
+        $title = __('messages.organizing_study');
+        $add_title = __('messages.organizing_study');
         
 
         $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.advertisements.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
+        return view('auth.admin.organizing_study.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
 
-        Advertisement::where('admin_id', $objAdmin->id)->update(['read' => 1]);
     }
 
     /**
@@ -74,14 +65,10 @@ class AdvertisementsController extends Controller
         $validator = Validator::make($request->all(),[
            // 'description' => ['required', 'string', 'max:255'],
             'file_name' => ['required', 'string', 'max:255'],
-            'group_type' => ['required'],
             'file' => ['required'],
-            'categories' => ['required'],
+            
         ]);
 
-        $validator->sometimes('admin_id', 'required', function ($input) {
-            return $input->group_type == 'group_name';
-        });
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
@@ -89,100 +76,27 @@ class AdvertisementsController extends Controller
 
 
         $userId = Auth::id();
-
-        $arrGroups = array();
-
-        if($request->group_type == 'kashfih'){
-
-           $arrGroups =  Admin::where('group_classification','kashfih')->whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
-
-        }elseif($request->group_type == 'irshad'){
-
-            $arrGroups =  Admin::where('group_classification','irshad')->whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
-
-        }elseif($request->group_type == 'all'){
-
-            $arrGroups =  Admin::whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
-            
-        }elseif($request->group_type == 'group_name'){
-
-            $arrGroups =  $request->admin_id ? $request->admin_id : array();
-            
-        }
-
-
+    
          $document = '';
 
          if(!empty($request->file('file'))){
             $file = $request->file('file');
-            $destinationPath = "public/images/advertisements";
+            $destinationPath = "public/images/organizing_study";
             $document = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $document);
         }
 
 
-        $Advertisement = array();
-
-        $AdvertisementParent = new AdvertisementParent();
-        $AdvertisementParent->admin_id = NULL;
-        $AdvertisementParent->group_type = $request->group_type;
-        $AdvertisementParent->file = $document;
-        $AdvertisementParent->file_name = $request->file_name;
-        $AdvertisementParent->description = $request->description;
-        $AdvertisementParent->categories = $request->categories;
-        $AdvertisementParent->save();
-
-        
-        foreach ($arrGroups as $key => $objGroup) {
-
-
-            $objAdmin = Admin::find($objGroup);
-
-            $Advertisement = Advertisement::create([
-            'parent_id' =>  $AdvertisementParent->id,
-            'admin_id' =>  $objGroup,
-            'group_type' =>  $request->group_type,
-            'file' =>  $document,
-            'file_name' =>  $request->file_name,
-            'description' =>  $request->description,
-            'categories' => $request->categories,
-            ]);
+     
+        $OrganizingStudy = OrganizingStudy::create([
+        'admin_id' =>  $userId,
+        'file' =>  $document,
+        'file_name' =>  $request->file_name,
+        'description' =>  $request->description,
+        ]);
  
-
-        }
-
-        // foreach ($arrGroups as $key => $objGroup) {
-
-
-        //     $objAdmin = Admin::find($objGroup);
-
-             
-        //     if(!empty($objAdmin->email)){
-        //         $recipient = $objAdmin->email;
-        //         //$recipient = 'mahmoud.ali.29992@gmail.com';
-        //         $subject = "لديك وارد من مدير نظام تواصل";
-
-        //         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
-
-        //         $fromEmail = 'admin@tawasol.privatescouts.org'; 
-        //         // The "from" email address
-
-        //         Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-        //             $mail->to($recipient)
-        //                 ->from($fromEmail) // Set the "from" email address
-        //                 ->subject($subject);
-        //         });
-        //     }
-
-        //     # send email
-
-        //     // sleep(60);
-
-        // }
-        
-
         DB::commit(); // Commit the transaction
-        return response()->json(['Advertisement'=>$Advertisement]);
+        return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
     }
 
     /**
@@ -205,10 +119,10 @@ class AdvertisementsController extends Controller
     public function edit($id)
     {
         //$this->authorize(self::MODEL.'-update');
-        $Advertisement  = Advertisement::find($id);
-        @$Advertisement->Admin;
+        $OrganizingStudy  = OrganizingStudy::find($id);
+        @$OrganizingStudy->Admin;
 
-        return response()->json($Advertisement);
+        return response()->json($OrganizingStudy);
     }
 
     /**
@@ -226,7 +140,7 @@ class AdvertisementsController extends Controller
                //'description' => ['required', 'string', 'max:255'],
                 'file_name' => ['required', 'string', 'max:255'],
                 'file' => ['required'],
-                'categories' => ['required'],
+                
             ]);
    
 
@@ -238,24 +152,24 @@ class AdvertisementsController extends Controller
         $userId = Auth::id();
 
 
-        $objAdvertisement = Advertisement::find($id);
-        $objAdvertisement->description = $request->description;
-        $objAdvertisement->file_name = $request->file_name;
-        $objAdvertisement->categories = $request->categories;
+        $objOrganizingStudy = OrganizingStudy::find($id);
+        $objOrganizingStudy->description = $request->description;
+        $objOrganizingStudy->file_name = $request->file_name;
+       
         if(!empty($request->file('file'))){
-            $oldImage = $objAdvertisement->file;
+            $oldImage = $objOrganizingStudy->file;
             $file = $request->file('file');
-            $destinationPath = "public/images/advertisements";
+            $destinationPath = "public/images/organizing_study";
             $document = rand().time().'.'.$file->getClientOriginalExtension();
             $file->move($destinationPath, $document);
-            $objAdvertisement->file = $document;
-            if($objAdvertisement->save()){
-               @unlink("public/images/advertisements/".$oldImage);
+            $objOrganizingStudy->file = $document;
+            if($objOrganizingStudy->save()){
+               @unlink("public/images/organizing_study/".$oldImage);
             }
         }
 
-        $objAdvertisement->save();
-        return response()->json(['objAdvertisement'=>$objAdvertisement]);
+        $objOrganizingStudy->save();
+        return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
     }
 
     /**
@@ -267,15 +181,15 @@ class AdvertisementsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $Advertisement = Advertisement::where('id',$id)->delete();
-        return response()->json(['Advertisement'=>$Advertisement]);
+        $OrganizingStudy = OrganizingStudy::where('id',$id)->delete();
+        return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
     }
 
-     public function deleteadvertisements(Request $request)
+     public function deleteorganizing_study(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $Advertisement = Advertisement::whereIn('id',$request->ids)->delete();
-        return response()->json(['Advertisement'=>$Advertisement]);
+        $OrganizingStudy = OrganizingStudy::whereIn('id',$request->ids)->delete();
+        return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
     }
 
 
@@ -286,23 +200,9 @@ class AdvertisementsController extends Controller
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
 
-         if($objAdmin->is_super == 1){
+         
+
         $columnsDefault = [
-            '#'   => true,
-            'order'   => true,
-            'id'   => true,
-            'admin_id'   => true,
-            'categories'=>true,
-            'file_name'=>true,
-            'file'=> true,
-            
-            'description'=>true,
-            'created_at'   => true,
-        ];
-
-        }else{
-
-            $columnsDefault = [
             '#'   => true,
             'order'   => true,
             'id'   => true,
@@ -314,7 +214,7 @@ class AdvertisementsController extends Controller
             'created_at'   => true,
         ];
 
-        }
+        
 
 
 
@@ -330,28 +230,28 @@ class AdvertisementsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = AdvertisementParent::get();
+           $alldata = OrganizingStudy::get();
         
             if($active=='All'){
-                $alldata = AdvertisementParent::withTrashed()->get();
+                $alldata = OrganizingStudy::withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = AdvertisementParent::get();
+                $alldata = OrganizingStudy::get();
             }
             elseif($active=='DeActive'){
-                $alldata = AdvertisementParent::onlyTrashed()->get();
+                $alldata = OrganizingStudy::onlyTrashed()->get();
             }
         }else{
 
-            $alldata = Advertisement::where('admin_id',$userId)->get();
+            $alldata = OrganizingStudy::where('admin_id',$userId)->get();
             if($active=='All'){
-                $alldata = Advertisement::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::withTrashed()->where('admin_id',$userId)->get();
             }
             elseif($active=='Active'){
-                $alldata = Advertisement::where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::where('admin_id',$userId)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Advertisement::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::onlyTrashed()->where('admin_id',$userId)->get();
             }
 
 
@@ -362,86 +262,18 @@ class AdvertisementsController extends Controller
  
         foreach($alldata as $key=> $objdata){
 
-            $categories = "";
-
-
-            if($objdata->categories=='talab_mukhatabat'){
-                $categories = "طلب مخاطبات لجهات محلية";
-            }elseif ($objdata->categories=='⁠anshitat_mahaliya') {
-                $categories = "أنشطة محلية";
-            }elseif ($objdata->categories=='anshita_earabiat_waealamia') {
-                $categories = " ⁠أنشطة عربية وعالمية";
-            }elseif ($objdata->categories=='aldirasat_altaahilia') {
-                $categories = "الدراسات التأهيلية";
-            }elseif ($objdata->categories=='aistifsarat_malia') {
-                $categories = "استفسارات مالية";
-            }elseif ($objdata->categories=='aijtimaeat') {
-                $categories = "اجتماعات ";
-            }elseif ($objdata->categories=='⁠aistifsarat_eama') {
-                $categories = "استفسارات عامة";
-            }
-
-        
-            if($objAdmin->is_super == 1){
-            
-            $groups = "";
-            
-
-
-            if($objdata->group_type=='all'){
-                $groups = "الكل";
-            }elseif ($objdata->group_type=='kashfih') {
-                $groups = "كشفية";
-            }
-            elseif ($objdata->group_type=='irshad') {
-                $groups = "ارشادية";
-            }
-            elseif ($objdata->group_type=='group_name') {
-                 
-                foreach ($objdata->Advertisements as $key2=> $Advertisement) {
-                    if(count($objdata->Advertisements)==($key2+1)){
-                        $groups.=@$Advertisement->Admin->group_name;
-                    }else{
-                        $groups.=@$Advertisement->Admin->group_name." - ";
-                        
-                    }
-                    
-                }
-                
-            }
-                
-
-            $alldataResult[] = array(
-                "#" => $objdata->id,
-                "order" => $key+1,
-                "id" => $objdata->id,
-                "admin_id" => @$groups,
-                "categories"=> @$categories,
-                "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
-                
-                "description"=> $objdata->description,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
-            );
-            }else{
-
                $alldataResult[] = array(
                 "order" => $key+1,
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                "categories"=> @$categories,
+                
                "file_name"=> $objdata->file_name,
-                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
+                "file"=> '<a target="_blank" href="' . asset('public/images/organizing_study/' . $objdata->file) . '">تحميل الملف<a>',
                
                 "description"=> $objdata->description,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
-
-            }
-
-
-          
-           
+ 
         }
 
        $alldata =$alldataResult ;
@@ -594,18 +426,18 @@ class AdvertisementsController extends Controller
 
 
 
-    public function ExportAdvertisements(Request $request)
-{
-    $fileName = 'export_advertisements.csv';
+    public function ExportOrganizingStudy(Request $request)
+   {
+    $fileName = 'export_organizing_study.csv';
     
     $userId = \Auth::id();
     $objAdmin = Admin::find($userId);
     
     if ($objAdmin->is_super == 1) {
-        $Advertisements = Advertisement::get();
+        $arrOrganizingStudy = OrganizingStudy::get();
         $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح');
     } else {
-        $Advertisements = Advertisement::where('admin_id', $userId)->get();
+        $arrOrganizingStudy = OrganizingStudy::where('admin_id', $userId)->get();
         $columns = array('الملف', 'اسم الملف', 'الشرح');
     }
 
@@ -619,7 +451,7 @@ class AdvertisementsController extends Controller
     );
 
     // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
-    $callback = function () use ($Advertisements, $columns, $objAdmin) {
+    $callback = function () use ($arrOrganizingStudy, $columns, $objAdmin) {
         $file = fopen('php://output', 'w');
 
         // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
@@ -629,17 +461,17 @@ class AdvertisementsController extends Controller
         fputcsv($file, $columns);
 
         // Write the data rows
-        foreach ($Advertisements as $Advertisement) {
+        foreach ($arrOrganizingStudy as $OrganizingStudy) {
             $row = array();
 
             if ($objAdmin->is_super == 1) {
                 // Show group_name only for super admin
-                $row['admin_id'] = $Advertisement->Admin->group_name;
+                $row['admin_id'] = $objOrganizingStudy->Admin->group_name;
             }
 
-            $row['file'] = asset('public/images/advertisements/' . $Advertisement->file);
-            $row['file_name'] = $Advertisement->file_name;
-            $row['description'] = $Advertisement->description;
+            $row['file'] = asset('public/images/organizing_study/' . $objOrganizingStudy->file);
+            $row['file_name'] = $objOrganizingStudy->file_name;
+            $row['description'] = $objOrganizingStudy->description;
 
             // Write the row data to the CSV file
             if ($objAdmin->is_super == 1) {
@@ -653,6 +485,5 @@ class AdvertisementsController extends Controller
     };
 
     return response()->stream($callback, 200, $headers);
-}
-
+   }
 }

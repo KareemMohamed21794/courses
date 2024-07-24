@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\PermitsController;
 use App\Http\Controllers\Admin\QualificationleadersController; 
 use App\Http\Controllers\Admin\AdvertisementsController;
 use App\Http\Controllers\Admin\InformationsController;
-
+use App\Http\Controllers\Admin\OrganizingStudiesController;
 
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
@@ -181,6 +181,15 @@ Route::middleware('auth:admin')->group(function () {
 	
 		# End qualification_leaders
 
+
+		# Start organizing_study
+		Route::get('/organizing_study/get', [OrganizingStudiesController::class, 'get']);
+		Route::resource('/organizing_study', OrganizingStudiesController::class);
+		Route::DELETE('/delete_organizing_study', [OrganizingStudiesController::class,'deleteorganizing_study']);
+		
+        Route::get('export_organizing_study', [OrganizingStudiesController::class, 'ExportOrganizingStudy']);
+
+		# End organizing_study
 
 
 		# Start advertisements

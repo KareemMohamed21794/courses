@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAdvertisementsTable extends Migration
+class CreateOrganizingStudiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,13 @@ class CreateAdvertisementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('advertisements', function (Blueprint $table) {
+        Schema::create('organizing_studies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('admin_id');
             $table->foreign('admin_id')->references('id')->on('admins');
-            $table->string('group_type')->nullable();
             $table->string('file')->nullable();
             $table->string('file_name')->nullable();
             $table->string('description')->nullable();
-            $table->string('read')->nullable();
-            $table->enum('categories', [
-                'talab_mukhatabat','⁠anshitat_mahaliya',
-                'anshita_earabiat_waealamia','aldirasat_altaahilia',
-                '⁠aistifsarat_malia','aijtimaeat','⁠aistifsarat_eama'
-            ])->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -39,6 +32,6 @@ class CreateAdvertisementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('advertisements');
+        Schema::dropIfExists('organizing_studies');
     }
 }

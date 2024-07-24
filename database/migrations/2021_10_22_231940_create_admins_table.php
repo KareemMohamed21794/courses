@@ -35,6 +35,9 @@ class CreateAdminsTable extends Migration
             $table->string('building_number')->nullable();
             $table->string('workplace')->nullable();
             $table->string('job')->nullable();
+            $table->string('leaders_number')->nullable();
+            $table->string('persons_number')->nullable();
+            $table->string('groups')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
