@@ -589,5 +589,6 @@ return [
     'organizing_study'=>'تنظيم دراسة' ,
     'study_report'=>'تقرير دراسة' ,
     'achievements_study_requirements'=>'انجازات متطلبات دراسة' ,
+    'student_registration'=>'تسجيل دخول الطالب' ,
  ];
 
