@@ -83,7 +83,7 @@ var KTModalBranchesUpdate = function () {
 
                         // Send ajax request
                         var update_id = $("#id").val();
-                        axios.post("/admin/advertisements/"+update_id, new FormData(form))
+                        axios.post("/admin/organizing_study/"+update_id, new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
@@ -255,7 +255,7 @@ function getData(id) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/advertisements/'+id+'/edit';
+    var ajaxurl = '/admin/organizing_study/'+id+'/edit';
 
     $.ajax({
         type: type,
@@ -265,11 +265,8 @@ function getData(id) {
             jQuery('#id').val(data.id);
             jQuery('#description_update').val(data.description);
             jQuery('#file_name_update').val(data.file_name);
-
-            jQuery('#categories_update').val(data.categories);
-            jQuery("#categories_update").select2("val", ""+data.categories+"");
            
-           var image_path =  '../images/advertisements/'
+           var image_path =  '../images/organizing_study/'
             // Get the image element by its id
             var file = document.getElementById("file_update");
           

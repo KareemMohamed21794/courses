@@ -26,6 +26,15 @@ var KTModalAdd = function () {
                     },
 
 
+                    'categories': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
                     'file': {
                         validators: {
                             notEmpty: {

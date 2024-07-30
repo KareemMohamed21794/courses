@@ -1,7 +1,6 @@
 "use strict";
-
 // Class definition
-var KTModalBranchesUpdate = function () {
+var KTModalAddNotes = function () {
     var submitButton;
     var cancelButton;
     var closeButton;
@@ -16,44 +15,16 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'file_name': {
+                     
+
+                    'reject_notes': {
                         validators: {
                             notEmpty: {
-                                message: 'هذا الحقل مطلوب'
+                                message: 'مطلوب'
                             }
                         }
                     },
 
-                    'categories': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-                    // 'description': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'هذا الحقل مطلوب'
-                    //         }
-                    //     }
-                    // },
-
-                    'file': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            },
-                            file: {
-                                maxSize: 8 * 1024 * 1024, // 8 MB
-                                extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
-                            }
-                        }
-                    },
-
-                  
                     
                 },
                 plugins: {
@@ -82,12 +53,11 @@ var KTModalBranchesUpdate = function () {
                         submitButton.disabled = true;
 
                         // Send ajax request
-                        var update_id = $("#id").val();
-                        axios.post("/admin/advertisements/"+update_id, new FormData(form))
+                    axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
-                                text: "تم التعديل بنجاح",
+                                text: "تمت   الانهاء بنجاح",
                                 icon: "success",
                                 buttonsStyling: false,
                                 confirmButtonText: "حسنًا ، حسنًا!",
@@ -151,8 +121,6 @@ var KTModalBranchesUpdate = function () {
                 });
             }
         });
-
-        
 
         cancelButton.addEventListener('click', function (e) {
             form.reset(); // Reset form
@@ -229,12 +197,11 @@ var KTModalBranchesUpdate = function () {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_update'));
-
-            form = document.querySelector('#kt_modal_update_form');
-            submitButton = form.querySelector('#kt_modal_update_submit');
-            cancelButton = form.querySelector('#kt_modal_update_cancel');
-            closeButton = form.querySelector('#kt_modal_update_close');
+            modal = new bootstrap.Modal(document.querySelector('#kt_modal_reject_request'));
+            form = document.querySelector('#kt_modal_reject_request_form');
+            submitButton = form.querySelector('#kt_modal_reject_request_submit');
+            cancelButton = form.querySelector('#kt_modal_reject_request_cancel');
+            closeButton = form.querySelector('#kt_modal_reject_request_close');
 
             handleForm();
         }
@@ -243,59 +210,23 @@ var KTModalBranchesUpdate = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTModalBranchesUpdate.init();
+    KTModalAddNotes.init();
 });
 
-function getData(id) {
-    //======= Start Ajxa ========//
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
+function addOtherPerson() {
+  // Clone the first input element
+  var clonedPerson = $(".other_person_other_lawer:first").clone();
 
-    var type = "GET";
-    var ajaxurl = '/admin/advertisements/'+id+'/edit';
+  clonedPerson.val('');
 
-    $.ajax({
-        type: type,
-        url: ajaxurl,
-        dataType: 'json',
-        success: function (data) {
-            jQuery('#id').val(data.id);
-            jQuery('#description_update').val(data.description);
-            jQuery('#file_name_update').val(data.file_name);
+  // Find all input elements within the clonedPerson and clear their values
+  clonedPerson.find('input').val('');
 
-            jQuery('#categories_update').val(data.categories);
-            jQuery("#categories_update").select2("val", ""+data.categories+"");
-           
-           var image_path =  '../images/advertisements/'
-            // Get the image element by its id
-            var file = document.getElementById("file_update");
-          
-            // Set the 'src' and  'href'  attribute of the image element using the JSON data
-           
-            file.src = image_path+data.file;
-            href_file.href = image_path+data.file;
-           
-
-           
-
-        },
-        error: function (data) {
-            Swal.fire({
-                text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "حسنًا ، حسنًا!",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                }
-            });
-        }
-    });
-    //======= End Ajxa ========//
+  // Append the cloned input to the container
+  $(".other_person_container").append(clonedPerson);
 }
 
 
-
+function reject(id) {
+    $("#request_id").val(id);
+}

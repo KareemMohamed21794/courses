@@ -1,10 +1,10 @@
 "use strict";
 
 // Class definition
-var KTModalBranchesUpdate = function () {
+var KTModalAdd = function () {
     var submitButton;
     var cancelButton;
-    var closeButton;
+	var closeButton;
     var validator;
     var form;
     var modal;
@@ -12,49 +12,28 @@ var KTModalBranchesUpdate = function () {
     // Init form inputs
     var handleForm = function () {
         // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-        validator = FormValidation.formValidation(
+		validator = FormValidation.formValidation(
             form,
             {
                 fields: {
-                   'file_name': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-                    'categories': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-                    // 'description': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'هذا الحقل مطلوب'
-                    //         }
-                    //     }
-                    // },
-
-                    'file': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            },
-                            file: {
-                                maxSize: 8 * 1024 * 1024, // 8 MB
-                                extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
-                            }
-                        }
-                    },
-
-                  
                     
+                    'description_ar': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'description_en': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                 
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -67,14 +46,14 @@ var KTModalBranchesUpdate = function () {
             }
         );
 
-        // Action buttons
-        submitButton.addEventListener('click', function (e) {
-            e.preventDefault();
+		// Action buttons
+		submitButton.addEventListener('click', function (e) {
+			e.preventDefault();
 
-            // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    if (status == 'Valid') {
+			// Validate form before submit
+			if (validator) {
+				validator.validate().then(function (status) {
+					 if (status == 'Valid') {
                         // Show loading indication
                         submitButton.setAttribute('data-kt-indicator', 'on');
 
@@ -82,12 +61,11 @@ var KTModalBranchesUpdate = function () {
                         submitButton.disabled = true;
 
                         // Send ajax request
-                        var update_id = $("#id").val();
-                        axios.post("/admin/advertisements/"+update_id, new FormData(form))
+                    axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
-                                text: "تم التعديل بنجاح",
+                                text: "تمت الاضافه بنجاح",
                                 icon: "success",
                                 buttonsStyling: false,
                                 confirmButtonText: "حسنًا ، حسنًا!",
@@ -137,22 +115,20 @@ var KTModalBranchesUpdate = function () {
                             submitButton.disabled = false;
                         });
                                                 
-                    } else {
-                        Swal.fire({
-                            text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
-                            icon: "error",
-                            buttonsStyling: false,
-                            confirmButtonText: "حسنًا ، حسنًا!",
-                            customClass: {
-                                confirmButton: "btn btn-primary"
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        
+                    }else {
+						Swal.fire({
+							text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
+							icon: "error",
+							buttonsStyling: false,
+							confirmButtonText: "حسنًا ، حسنًا!",
+							customClass: {
+								confirmButton: "btn btn-primary"
+							}
+						});
+					}
+				});
+			}
+		});
 
         cancelButton.addEventListener('click', function (e) {
             form.reset(); // Reset form
@@ -173,8 +149,9 @@ var KTModalBranchesUpdate = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form 
-                    modal.hide(); // Hide modal             
+                    var code = $('#code').val();
+                    form.reset(); // Reset form
+                    modal.hide(); // Hide modal
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "لم يتم إلغاء النموذج الخاص بك !.",
@@ -189,11 +166,11 @@ var KTModalBranchesUpdate = function () {
             });
         });
 
-        closeButton.addEventListener('click', function(e){
+		closeButton.addEventListener('click', function(e){
             form.reset(); // Reset form
             modal.hide(); // Hide modal
             return false;
-            e.preventDefault();
+			e.preventDefault();
 
             Swal.fire({
                 text: "هل أنت متأكد أنك تريد الإلغاء؟",
@@ -208,8 +185,10 @@ var KTModalBranchesUpdate = function () {
                 }
             }).then(function (result) {
                 if (result.value) {
-                    form.reset(); // Reset form 
-                    modal.hide(); // Hide modal             
+                    var code = $('#code').val();
+                    form.reset(); // Reset form
+                    $('#code').val(code);
+                    modal.hide(); // Hide modal
                 } else if (result.dismiss === 'cancel') {
                     Swal.fire({
                         text: "لم يتم إلغاء النموذج الخاص بك !.",
@@ -222,19 +201,19 @@ var KTModalBranchesUpdate = function () {
                     });
                 }
             });
-        })
+		})
     }
 
     return {
         // Public functions
         init: function () {
             // Elements
-            modal = new bootstrap.Modal(document.querySelector('#kt_modal_update'));
+            modal = new bootstrap.Modal(document.querySelector('#kt_modal_add'));
 
-            form = document.querySelector('#kt_modal_update_form');
-            submitButton = form.querySelector('#kt_modal_update_submit');
-            cancelButton = form.querySelector('#kt_modal_update_cancel');
-            closeButton = form.querySelector('#kt_modal_update_close');
+            form = document.querySelector('#kt_modal_add_form');
+            submitButton = form.querySelector('#kt_modal_add_submit');
+            cancelButton = form.querySelector('#kt_modal_add_cancel');
+			closeButton = form.querySelector('#kt_modal_add_close');
 
             handleForm();
         }
@@ -243,59 +222,20 @@ var KTModalBranchesUpdate = function () {
 
 // On document ready
 KTUtil.onDOMContentLoaded(function () {
-    KTModalBranchesUpdate.init();
+	KTModalAdd.init();
 });
 
-function getData(id) {
-    //======= Start Ajxa ========//
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
+$( document ).ready(function() {
+    $("#group_div").hide();
+});
 
-    var type = "GET";
-    var ajaxurl = '/admin/advertisements/'+id+'/edit';
 
-    $.ajax({
-        type: type,
-        url: ajaxurl,
-        dataType: 'json',
-        success: function (data) {
-            jQuery('#id').val(data.id);
-            jQuery('#description_update').val(data.description);
-            jQuery('#file_name_update').val(data.file_name);
+function group_classification(value) {
 
-            jQuery('#categories_update').val(data.categories);
-            jQuery("#categories_update").select2("val", ""+data.categories+"");
-           
-           var image_path =  '../images/advertisements/'
-            // Get the image element by its id
-            var file = document.getElementById("file_update");
-          
-            // Set the 'src' and  'href'  attribute of the image element using the JSON data
-           
-            file.src = image_path+data.file;
-            href_file.href = image_path+data.file;
-           
-
-           
-
-        },
-        error: function (data) {
-            Swal.fire({
-                text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
-                icon: "error",
-                buttonsStyling: false,
-                confirmButtonText: "حسنًا ، حسنًا!",
-                customClass: {
-                    confirmButton: "btn btn-primary"
-                }
-            });
-        }
-    });
-    //======= End Ajxa ========//
+   if(value == 'group_name'){
+    $("#group_div").show();
+   }else{
+    $("#group_div").hide();
+   
+   }
 }
-
-
-

@@ -496,10 +496,18 @@ function getData(id,action) {
                 $('#kt_modal_update_submit').hide();
                 var heading = document.getElementById("myHeading");
 
-                if(data.is_super==1){
+                if(data.is_super==1 && data.position_id==1){
                     heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'المدير';
-                }else{
+                }else if(data.is_super==0 && data.position_id==2){
                     heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'مجموعة كشفية';
+                }else if(data.is_super==0 && data.position_id==3){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'سكرتير';
+                }else if(data.is_super==0 && data.position_id==4){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'مراقب';
+                }else if(data.is_super==0 && data.position_id==5){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'مفوض تدريب';
+                }else if(data.is_super==0 && data.position_id==6){
+                    heading.innerHTML = '<span class="fw-bolder">معلومات</span> ' + 'أمين صندوق';
                 }
 
                 

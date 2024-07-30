@@ -32,6 +32,8 @@ var KTDatatablesServerSide = function () {
         // { data: 'id' },
         { data: 'file_name' },
         { data: 'file' },
+        { data: 'status' },
+        { data: 'reject_notes' },
         
         { data: 'description' },
         { data: 'created_at' },
@@ -150,7 +152,24 @@ var KTDatatablesServerSide = function () {
 
                             AdminContent = `
 
-                               
+                             <!--begin::Menu item-->
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
+                                    موافقه
+                                </a>
+                            </div>
+                            <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject_request"  onclick="reject(`+row.id+`)">
+                                        رفض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
@@ -527,3 +546,65 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
+
+
+function reject_accept(status,id) {
+
+    //======= Start Ajxa ========//
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var type = "GET";
+    var ajaxurl = '/admin/requests/'+status+'/'+id+'/reject_accept';
+    
+    if(status == 'rejected'){
+        var note = 'تم الرفض بنجاح';
+    }else{
+        var note = 'تمت الموافقه  بنجاح';
+    }
+    
+
+    $.ajax({
+        type: type,
+        url: ajaxurl,
+        dataType: 'json',
+        success: function (data) {
+            Swal.fire({
+                text: 'الرجاء الانتظار قليلا',
+                icon: "info",
+                buttonsStyling: false,
+                showConfirmButton: false,
+                timer: 2000
+            }).then(function () {
+                Swal.fire({
+                    text: note,
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "حسنًا ، حسنًا!",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-primary",
+                    }
+                }).then(function () {
+                    // delete row data from server and re-draw datatable
+                    dt.draw();
+                });
+            });
+        },
+        error: function (data) {
+        Swal.fire({
+            text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "حسنًا ، حسنًا!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    }
+    });
+    //======= End Ajxa ========//
+}

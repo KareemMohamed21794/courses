@@ -16,7 +16,7 @@ var KTModalBranchesUpdate = function () {
             form,
             {
                 fields: {
-                   'file_name': {
+                   'description_ar': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -24,7 +24,7 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    'categories': {
+                    'description_en': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -32,26 +32,7 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    // 'description': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'هذا الحقل مطلوب'
-                    //         }
-                    //     }
-                    // },
-
-                    'file': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            },
-                            file: {
-                                maxSize: 8 * 1024 * 1024, // 8 MB
-                                extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
-                            }
-                        }
-                    },
+                    
 
                   
                     
@@ -83,7 +64,7 @@ var KTModalBranchesUpdate = function () {
 
                         // Send ajax request
                         var update_id = $("#id").val();
-                        axios.post("/admin/advertisements/"+update_id, new FormData(form))
+                        axios.post("student_registration/"+update_id, new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
@@ -255,7 +236,7 @@ function getData(id) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/advertisements/'+id+'/edit';
+    var ajaxurl = 'student_registration/'+id+'/edit';
 
     $.ajax({
         type: type,
@@ -263,22 +244,16 @@ function getData(id) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            jQuery('#description_update').val(data.description);
-            jQuery('#file_name_update').val(data.file_name);
+            jQuery('#description_ar_update').val(data.description_ar);
+            jQuery('#description_en_update').val(data.description_en);
+            //jQuery('#active_update').val(data.active);
 
-            jQuery('#categories_update').val(data.categories);
-            jQuery("#categories_update").select2("val", ""+data.categories+"");
+            if(data.active == 1){
+                document.getElementById("active_update").checked = true;
+            }else{
+                document.getElementById("active_update").checked = false;
+            }
            
-           var image_path =  '../images/advertisements/'
-            // Get the image element by its id
-            var file = document.getElementById("file_update");
-          
-            // Set the 'src' and  'href'  attribute of the image element using the JSON data
-           
-            file.src = image_path+data.file;
-            href_file.href = image_path+data.file;
-           
-
            
 
         },
