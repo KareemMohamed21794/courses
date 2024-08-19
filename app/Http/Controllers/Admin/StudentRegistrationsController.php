@@ -21,17 +21,19 @@ class StudentRegistrationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request , $id)
     {
+
         $segment = $request->segment(2);
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-
+        
+        $admindetails = Admin::find($id);
        
         $title = __('messages.student_registration');
         $add_title = __('messages.student_registration');
        
-        return view('auth.student_registration.add',['title' => $title, 'add_title' => $add_title]
+        return view('auth.student_registration.add',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails]
             );
     }
 

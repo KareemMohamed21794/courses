@@ -45,7 +45,7 @@ Route::get('export_qualification_leaders', [QualificationleadersController::clas
 
 # Start Student registration
 Route::get('student_registration/get', [StudentRegistrationsController::class, 'get']);
-Route::resource('student_registration', StudentRegistrationsController::class);
+Route::resource('student_registration/{id}', StudentRegistrationsController::class);
 Route::DELETE('delete_student_registration', [StudentRegistrationsController::class,'DeleteStudentRegistration']);
 # End Student registration
 

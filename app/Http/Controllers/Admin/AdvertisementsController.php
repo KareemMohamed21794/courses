@@ -421,7 +421,7 @@ class AdvertisementsController extends Controller
                 "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
                 
                 "description"=> $objdata->description,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+                "created_at" => Date('Y-m-d H:i:s',strtotime($objdata->created_at)),
             );
             }else{
 
@@ -434,7 +434,7 @@ class AdvertisementsController extends Controller
                 "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
                
                 "description"=> $objdata->description,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+                "created_at" => Date('Y-m-d H:i:s',strtotime($objdata->created_at)),
             );
 
             }

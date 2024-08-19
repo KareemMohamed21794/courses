@@ -153,6 +153,8 @@
                             <th>{{ __('messages.scout_group') }}</th>
                             <th> الملف  </th>
                              <th>السنة</th>
+                             <th>{{ __('messages.status') }}</th>
+                            <th>{{ __('messages.reject_notes') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
                              @if($objAdmin->is_super == 1)
                             <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>

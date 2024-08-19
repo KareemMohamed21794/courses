@@ -67,7 +67,7 @@ class AdministrativeFinancialReportsController extends Controller
     public function store(Request $request)
     {
         //$this->authorize(self::MODEL.'-store');
-         // print_r('here'); die;
+         
         $validator = Validator::make($request->all(),[
             // 'administrative_financial1' => ['required'],
             // 'administrative_financial2' => ['required'],
@@ -78,6 +78,8 @@ class AdministrativeFinancialReportsController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
+        $type = $request->firstSegment;
+
 
         $userId = Auth::id();
 
@@ -85,12 +87,14 @@ class AdministrativeFinancialReportsController extends Controller
            $userId = $request->leader_id;
         }
 
-        $exsistdata = File::where('admin_id',$userId)->where('type','administrative_financial')->where('year',date('Y'))->first();
+        $exsistdata = File::where('admin_id',$userId)->where('type',$type)->where('status','!=','rejected')->where('year',date('Y'))->first();
       
         if($exsistdata){
             return response()->json(["message" => "هذا السجل موجود من قبل"], Response::HTTP_BAD_REQUEST);
 
         }
+
+        
 
         $administrative_financial1 = '';
         $administrative_financial2 = '';
@@ -237,6 +241,8 @@ class AdministrativeFinancialReportsController extends Controller
             'leader'   => true,
             'file'   => true,
             'year'   => true,
+            'status'=> true,
+            'reject_notes'=> true,
             'created_at'   => true,
         ];
 
@@ -254,43 +260,55 @@ class AdministrativeFinancialReportsController extends Controller
         $type = $request->firstSegment;
 
         if($objAdmin->is_super == 1){
-
+        
            
-           $alldata = File::where('type',$type)->whereNull('status')->get();
+           $alldata = File::where('type',$type)->get();
         
             if($active=='All'){
-                $alldata = File::where('type',$type)->withTrashed()->whereNull('status')->get();
+                $alldata = File::where('type',$type)->withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('type',$type)->whereNull('status')->get();
+                $alldata = File::where('type',$type)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::where('type',$type)->onlyTrashed()->whereNull('status')->get();
+                $alldata = File::where('type',$type)->onlyTrashed()->get();
             }
         }else{
 
-            $alldata = File::where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();;
+            $alldata = File::where('admin_id',$userId)->where('type',$type)->get();;
             if($active=='All'){
-                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
+                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type',$type)->get();
             }
             elseif($active=='Active'){
-                $alldata = File::where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
+                $alldata = File::where('admin_id',$userId)->where('type',$type)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type',$type)->whereNull('status')->get();
+                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type',$type)->get();
             }
 
 
 
         }
 
-
+ 
 
         $alldataResult=array();
 
         $fileColumn = ($request->firstSegment == 'administrative') ? 'administrative_financial1' : 'administrative_financial2';
         
         foreach($alldata as $key=> $objdata){
+
+            $status = '';
+
+            if($objdata->status == 'rejected'){
+              $status = 'مرفوض';  
+            }elseif($objdata->status == 'approved'){
+                $status = 'مقبول';
+            }else{
+                $status = 'قيد الانتظار';
+            }
+
+
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "order" => $key+1,
@@ -299,6 +317,8 @@ class AdministrativeFinancialReportsController extends Controller
                 "file" => '
                 <a target="_blank" href="' . asset('public/images/files/' . $objdata->$fileColumn) . '">تحميل الملف<a>',
                 "year" => $objdata->year,
+                "status"=> $status,
+                "reject_notes"=> $objdata->reject_notes,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }
@@ -574,6 +594,7 @@ class AdministrativeFinancialReportsController extends Controller
        
         $objFile = File::find($id);
         $objFile->status = $status;
+        $objFile->reject_notes = null;
         $objFile->save();
         return response()->json(['objFile'=>$objFile]);
     }

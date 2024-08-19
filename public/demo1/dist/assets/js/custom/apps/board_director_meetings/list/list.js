@@ -20,6 +20,8 @@ var KTDatatablesServerSide = function () {
         { data: 'leader' },
         { data: 'board_director_meetings' },
         { data: 'year' },
+         { data: 'status' },
+        { data: 'reject_notes' },
         { data: 'created_at' },
          { data: null },
        ];
@@ -31,6 +33,8 @@ var KTDatatablesServerSide = function () {
         { data: 'leader' },
         { data: 'board_director_meetings' },
         { data: 'year' },
+         { data: 'status' },
+        { data: 'reject_notes' },
         { data: 'created_at' },
             { data: null },
         ];

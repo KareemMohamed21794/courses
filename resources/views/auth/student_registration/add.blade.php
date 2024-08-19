@@ -14,6 +14,12 @@
 <body>
          <form class="scout-form" action="{{ url('student_registration') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+
+        <div class="form-group">
+            <label for="first_name">المجموعه الكشفيه</label>
+            <input type="text" id="first_name" name="first_name" value="{{$admindetails->group_name}}" readonly>
+        </div>
+
         <div class="form-group">
             <label for="first_name">الاسم الأول</label>
             <input type="text" id="first_name" name="first_name" required>

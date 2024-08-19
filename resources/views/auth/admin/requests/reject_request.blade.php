@@ -36,10 +36,10 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.notes') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">سبب الرفض</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <textarea class="form-control form-control-solid" placeholder="{{ __('messages.notes') }}" name="reject_notes"  id="reject_notes"></textarea>
+                            <textarea class="form-control form-control-solid" placeholder="سبب الرفض" name="reject_notes"  id="reject_notes"></textarea>
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

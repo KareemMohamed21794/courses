@@ -219,7 +219,8 @@ class InformationsController extends Controller
             'admin_id'   => true,
             'file_name'=>true,
             'file'=> true,
-            
+            'status'=> true,
+            'reject_notes'=> true,
             'description'=>true,
             'created_at'   => true,
         ];
@@ -305,8 +306,10 @@ class InformationsController extends Controller
                 "file_name"=> $objdata->file_name,
                 "file"=> '<a target="_blank" href="' . asset('public/images/requests/' . $objdata->file) . '">تحميل الملف<a>',
                 
+                "status"=> $status,
+                "reject_notes"=> $objdata->reject_notes,
                 "description"=> $objdata->description,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+                "created_at" => Date('Y-m-d H:i:s',strtotime($objdata->created_at)),
             );
 
             }else{
@@ -322,7 +325,7 @@ class InformationsController extends Controller
                 "status"=> $status,
                 "reject_notes"=> $objdata->reject_notes,
                 "description"=> $objdata->description,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+                "created_at" => Date('Y-m-d H:i:s',strtotime($objdata->created_at)),
             );
 
             }
@@ -549,6 +552,7 @@ class InformationsController extends Controller
         $objAdmin = Admin::find($userId);
         $objInformation = Information::find($id);
         $objInformation->status = $status;
+        $objInformation->reject_notes = null;
         $objInformation->save();
 
         $recipient = 'admin@tawasol.com';

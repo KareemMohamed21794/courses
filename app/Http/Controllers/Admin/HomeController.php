@@ -53,13 +53,13 @@ class HomeController extends Controller
 
        
        if($objAdmin->is_super == 0){
-        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('year',date('Y'))->count();
+        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('year',date('Y'))->count();
+        $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_financial_reports = File::where('admin_id',$objAdmin->id)->where('type','financial')->where('year',date('Y'))->count();
+        $count_financial_reports = File::where('admin_id',$objAdmin->id)->where('type','financial')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')->where('year',date('Y'))->count();
+        $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')->where('status','approved')->where('year',date('Y'))->count();
 
         $count_permits = Permit::where('admin_id',$objAdmin->id)->count();
         $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->count();
@@ -76,13 +76,13 @@ class HomeController extends Controller
         $requests = Information::where('admin_id',$objAdmin->id)->count();
 
        }else{
-         $count_secondary_registrations = File::where('type','secondary_registration')->where('year',date('Y'))->count();
+         $count_secondary_registrations = File::where('type','secondary_registration')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_administrative_reports = File::where('type','administrative')->where('year',date('Y'))->count();
+        $count_administrative_reports = File::where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_financial_reports = File::where('type','financial')->where('year',date('Y'))->count();
+        $count_financial_reports = File::where('type','financial')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_board_director_meetings = File::where('type','board_director_meetings')->where('year',date('Y'))->count();
+        $count_board_director_meetings = File::where('type','board_director_meetings')->where('status','approved')->where('year',date('Y'))->count();
 
         $count_permits = Permit::count();
         $count_qualificationLeaders = QualificationLeader::count();
