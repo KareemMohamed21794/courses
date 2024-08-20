@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\AdministrativeFinancialReportsController;
 use App\Http\Controllers\Admin\BoardDirectorMeetingsController;
 use App\Http\Controllers\Admin\SecondaryRegistrationsController;
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\StudentRegistrationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,11 +42,7 @@ Route::get('send_email', [HomeController::class, 'send_email']);
 Route::get('export_qualification_leaders', [QualificationleadersController::class, 'ExportQualificationLeaders']);
 
 
-# Start Student registration
-Route::get('student_registration/get', [StudentRegistrationsController::class, 'get']);
-Route::resource('student_registration/{id}', StudentRegistrationsController::class);
-Route::DELETE('delete_student_registration', [StudentRegistrationsController::class,'DeleteStudentRegistration']);
-# End Student registration
+
 
 
 

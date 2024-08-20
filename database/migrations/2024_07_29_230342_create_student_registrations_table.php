@@ -29,7 +29,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('education_level')->nullable();
             $table->string('blood_type')->nullable();
             $table->string('hobbies')->nullable();
-            $table->string('health_yes')->nullable();
+            $table->string('health_condition')->nullable();
             $table->string('city')->nullable();
             $table->string('area')->nullable();
             $table->string('street')->nullable();

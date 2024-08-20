@@ -4,37 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\StudentRegistration;
+use App\Models\AchievementStudyRequirement;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
-use Illuminate\Support\Facades\Mail;
-class StudentRegistrationsController extends Controller
+
+class AchievementsStudyRequirementsController extends Controller
 {
-    private const MODEL ='StudentRegistration';
+    private const MODEL ='AchievementStudyRequirement';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request , $id)
+    public function index()
     {
-
-        $segment = $request->segment(2);
+        $title = __('messages.achievements_study_requirement');
+        $add_title = __('messages.achievements_study_requirements');
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
        
-        $admindetails = Admin::find($id);
-       
-        $title = __('messages.show_students');
-        $add_title = __('messages.show_students');
-       
-        return view('auth.student_registration.index',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails , 'id'=>$id,'objAdmin'=>$objAdmin]
-            );
+
+        $leaders = Admin::where('is_super',0)->get();
+
+        return view('auth.admin.achievements_study_requirements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders]);
     }
 
     /**
@@ -42,19 +40,9 @@ class StudentRegistrationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        
-        //$this->authorize(self::MODEL.'-store');
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
-        $segment = $request->segment(2);
-        $admindetails = Admin::find($id);
-
-        $title = __('messages.student_registration');
-        $add_title = __('messages.student_registration');
-     
-        return view('auth.student_registration.add',['title' => $title, 'add_title' => $add_title, 'admindetails'=>$admindetails , 'id'=>$id]);
+        $this->authorize(self::MODEL.'-store');
     }
 
     /**
@@ -66,67 +54,42 @@ class StudentRegistrationsController extends Controller
     public function store(Request $request)
     {
         //$this->authorize(self::MODEL.'-store');
+         
         $validator = Validator::make($request->all(),[
-            'first_name' => ['required', 'string', 'max:255'],
-            'father_name' => ['required', 'string', 'max:255'],
-            'birth_date' => ['required', 'string', 'max:255'],
-            'mobile_number' => ['required', 'string', 'max:255'],
-            'national_id' => ['required', 'string', 'max:255'],
-            'street' => ['required', 'string', 'max:255'],
-            'nearest_teacher' => ['required', 'string', 'max:255'],
-            'building_number' => ['required', 'string', 'max:255'],
-            'guardian_name' => ['required', 'string', 'max:255'],
-            'relative_relation' => ['required', 'string', 'max:255'],
+            'document' => ['required'],
         ]);
 
         if ($validator->fails()) {
-            //return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-            return redirect()->back()->withErrors($validator->errors())->withInput();
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
 
+        $userId = Auth::id();
+
+        if($request->leader_id){
+           $userId = $request->leader_id;
+        }
+
        
-        $StudentRegistration = StudentRegistration::create([
-        'group_id' =>  $request->group_id,
-        'first_name' =>  $request->first_name,
-        'father_name' =>  $request->father_name,
-        'grandfather_name' =>  $request->grandfather_name,
-        'family_name' =>  $request->family_name,
-        'birth_date' =>  $request->birth_date,
-        'birth_place' =>  $request->birth_place,
-        'mobile_number' =>  $request->mobile_number,
-        'home_number' =>  $request->home_number,
-        'national_id' =>  $request->national_id,
-        'nationality' =>  $request->nationality,
-        'parents_status' =>  $request->parents_status,
-        'education_level' =>  $request->education_level,
-        'blood_type' =>  $request->blood_type,
-        'hobbies' =>  $request->hobbies,
-        'health_condition' =>  $request->health_condition,
-        'health_condition_type' =>  implode( ',', $request->health_condition_type ),
-        'city' =>  $request->city,
-        'area' =>  $request->area,
-        'street' =>  $request->street,
-        'nearest_teacher' =>  $request->nearest_teacher,
-        'building_number' =>  $request->building_number,
-        'guardian_name' =>  $request->guardian_name,
-        'division' =>  $request->division,
-        'guardian_phone' =>  $request->guardian_phone,
-        'guardian_phone_2' =>  $request->guardian_phone_2,
-        'guardian_job' =>  $request->guardian_job,
-        'relative_relation' =>  $request->relative_relation,
-        'guardian_place_work' =>  $request->guardian_place_work,
-        'guardian_email' =>  $request->guardian_email,
-        'identifier_name' =>  $request->identifier_name,
-        'identifier_phone' =>  $request->identifier_phone,
-        'notes' =>  $request->notes,
-        'text_note' =>  $request->text_note,
+
+        $document = '';
+
+         if(!empty($request->file('document'))){
+            $file = $request->file('document');
+            $destinationPath = "public/images/achievements_study_requirements";
+            $document = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $document);
+        }
+
+        
+
+        $AchievementStudyRequirement = AchievementStudyRequirement::create([
+            'document' =>  $document,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
+           
         ]);
 
-        // return redirect('student_registration');
-
-   
-        return redirect()->back()->with('message', 'تم الاضافه بنجاح');
+        return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
     /**
@@ -148,19 +111,11 @@ class StudentRegistrationsController extends Controller
      */
     public function edit($id)
     {
-       
         //$this->authorize(self::MODEL.'-update');
-        $StudentRegistration  = StudentRegistration::find($id);
-        
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
-      
-        $title = __('messages.student_registration');
-        $add_title = __('messages.student_registration');
-        
-        return view('auth.student_registration.update',['title' => $title, 'add_title' => $add_title, 'StudentRegistration' => $StudentRegistration, 'id' => $id]);
+        $AchievementStudyRequirement  = AchievementStudyRequirement::find($id);
+        @$AchievementStudyRequirement->Admin;
 
-       // return response()->json($StudentRegistration);
+        return response()->json($AchievementStudyRequirement);
     }
 
     /**
@@ -173,33 +128,6 @@ class StudentRegistrationsController extends Controller
     public function update(Request $request, $id)
     {
         
-        //$this->authorize(self::MODEL.'-update');
-       
-            $validator = Validator::make($request->all(),[
-               
-                'description_ar' => ['required', 'string', 'max:255'],
-                'description_en' => ['required', 'string', 'max:255'],
-                
-            ]);
-   
-
-        if ($validator->fails()) {
-            //return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-            return redirect()->back()->withErrors($validator->errors())->withInput();
-        }
-
-       
-        $objStudentRegistration = StudentRegistration::find($id);
-        $objStudentRegistration->description_ar = $request->description_ar;
-        $objStudentRegistration->description_en = $request->description_en;
-        $objStudentRegistration->active = $request->active ? $request->active : 0;
-        $objStudentRegistration->save();
-        
-       
-
-        return redirect('student_registration');
-   
-        //return response()->json(['objStudentRegistration'=>$objStudentRegistration]);
     }
 
     /**
@@ -211,39 +139,33 @@ class StudentRegistrationsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $StudentRegistration = StudentRegistration::where('id',$id)->delete();
-        return response()->json(['StudentRegistration'=>$StudentRegistration]);
+        $AchievementStudyRequirement = AchievementStudyRequirement::where('id',$id)->delete();
+        return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
-     public function StudentRegistrationsController(Request $request)
+     public function deleteAchievementStudyRequirement(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $StudentRegistration = StudentRegistration::whereIn('id',$request->ids)->delete();
-        return response()->json(['StudentRegistration'=>$StudentRegistration]);
+        $AchievementStudyRequirement = AchievementStudyRequirement::whereIn('id',$request->ids)->delete();
+        return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
 
-    public function get(Request $request , $id)
-    { 
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
+    public function get(Request $request)
+    {
+
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
-       
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
-            'first_name'   => true,
-            'father_name'=>true,
-            'grandfather_name'=> true,
-            'family_name'=> true,
-            'birth_date'=> true,
-            'birth_place'=> true,
+            'leader'   => true,
+            'document'   => true,
+            'status'=> true,
+            'reject_notes'=> true,
             'created_at'   => true,
         ];
-
-
-        $type = $request->type;
 
         if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
             $columnsDefault = [];
@@ -252,57 +174,67 @@ class StudentRegistrationsController extends Controller
             }
         }
 
-       
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         $active = $request->active;
-       
+        if($objAdmin->is_super == 1){
 
-           $alldata = StudentRegistration::where('group_id',$id)->get();
+           $alldata = AchievementStudyRequirement::get();
         
             if($active=='All'){
-                $alldata = StudentRegistration::where('group_id',$id)->withTrashed()->get();
+                $alldata = AchievementStudyRequirement::withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = StudentRegistration::where('group_id',$id)->get();
+                $alldata = AchievementStudyRequirement::get();
             }
             elseif($active=='DeActive'){
-                $alldata = StudentRegistration::where('group_id',$id)->onlyTrashed()->get();
+                $alldata = AchievementStudyRequirement::onlyTrashed()->get();
             }
-        
+        }else{
 
-        $alldataResult=array();
-
-        $page_status = '';
- 
-        foreach($alldata as $key=> $objdata){
-
-            if($objdata->active == 1){
-                $page_status = __('messages.active');
-            }else{
-                $page_status =__('messages.inactive');
+            $alldata = AchievementStudyRequirement::where('admin_id',$userId)->get();
+            if($active=='All'){
+                $alldata = AchievementStudyRequirement::withTrashed()->where('admin_id',$userId)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = AchievementStudyRequirement::where('admin_id',$userId)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = AchievementStudyRequirement::onlyTrashed()->where('admin_id',$userId)->get();
             }
 
-          
-            $alldataResult[] = array(
-                "#" => $objdata->id,
-                
-                "id" => $objdata->id,
-                "first_name" => $objdata->first_name,
-                "father_name"=> $objdata->father_name,
-                "grandfather_name"=> $objdata->grandfather_name,
-                "family_name"=> $objdata->family_name,
-                "birth_date"=> $objdata->birth_date,
-                "birth_place"=> $objdata->birth_place,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
-            );
 
-          
+
         }
 
 
 
-       $alldata =$alldataResult ;
+        $alldataResult=array();
 
-        
+        foreach($alldata as $key=> $objdata){
+            $status = '';
+
+            if($objdata->status == 'rejected'){
+              $status = 'مرفوض';  
+            }elseif($objdata->status == 'approved'){
+                $status = 'مقبول';
+            }else{
+                $status = 'قيد الانتظار';
+            }
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "leader" => @$objdata->Admin->group_name,
+                "document" => '
+                <a target="_blank" href="' . asset('public/images/achievements_study_requirements/' . $objdata->document) . '">تحميل الملف<a>',
+                "status"=> $status,
+                "reject_notes"=> $objdata->reject_notes,
+                "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+            );
+        }
+
+       $alldata =$alldataResult ;
         $data = [];
         // internal use; filter selected columns only from raw data
         foreach ( $alldata as $d ) {
@@ -446,6 +378,119 @@ class StudentRegistrationsController extends Controller
 
         return $data;
     }
+
+
+    public function ReportBoardDirectorMeetings()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_board_director_meetings');
+        
+        return view('auth.admin.board_director_meetings.report_board_director_meetings', [
+            'title' => $title,
+        ]);
+    }
+
+
+    public function ReportArchiveBoardDirectorMeetings()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = 'أرشيف محاضر اجتماعات الهيئة العامة';
+        
+        return view('auth.admin.board_director_meetings.report_archive_board_director_meetings', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ExportAchievementStudyRequirement(Request $request)
+    {
+
+
+    $fileName = 'export_achievements_study_requirements.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = AchievementStudyRequirement::get();
+    
+    }else{
+
+        $Files = AchievementStudyRequirement::where('admin_id',$userId)->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),'الملف');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['document']  =asset('public/images/achievements_study_requirements/' . $File->document);
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['document']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+    }
+
+
+    public function reject_accept($status,$id)
+    {
+       
+        $objFile = AchievementStudyRequirement::find($id);
+        $objFile->status = $status;
+        $objFile->reject_notes = null;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
+
+    public function RejectedAchievementStudy(Request $request)
+    {
+        
+        $request_id = $request->request_id;
+        $reject_notes = $request->reject_notes;
+        $objFile = AchievementStudyRequirement::find($request_id);
+        $objFile->status = 'rejected';
+        $objFile->reject_notes = $reject_notes;
+        
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
 
 
 }

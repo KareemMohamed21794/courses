@@ -6,8 +6,8 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-    
-    let main_url = "student_registration/get";
+    var group_id = $("#group_id").val();
+    let main_url = "student_registration/get/"+group_id;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -35,9 +35,12 @@ var KTDatatablesServerSide = function () {
             columns: [
                 { data: '#' },
                 { data: 'id' },
-                { data: 'description_ar' },
-                { data: 'description_en' },
-                { data: 'active' },
+                { data: 'first_name' },
+                { data: 'father_name' },
+                { data: 'grandfather_name' },
+                { data: 'family_name' },
+                { data: 'birth_date' },
+                { data: 'birth_place' },
                 { data: 'created_at' },
                 { data: null },
             ],
@@ -115,9 +118,9 @@ var KTDatatablesServerSide = function () {
                                 </span>
                             </a>
                             <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" style="visibility:hidden">
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="student_registration/`+row.id+`/edit" class="menu-link px-3" >
                                         `+edit_lang+`
                                     </a>
@@ -125,7 +128,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>

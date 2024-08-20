@@ -78,12 +78,14 @@
                                 <!--end::Content-->
                             </div>
                           
-                            
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            <!--begin::Export-->
-                            <div id="export_buttons" style="margin-left: 10px;"></div>
-                            <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal">
+                            @if($objAdmin->is_super == 1)
+                                <!--begin::Export-->
+                        <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
+                           <a href="{{url('admin/export_achievements_study_requirements')}}" class="menu-link px-3">
+                            <button type="button" class="btn btn-light-primary me-3" >
+                           <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -95,11 +97,26 @@
                             
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
-                            <!--begin::Add-->
-                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button> --}}
-                            {{-- <a href = "{{ url('admin/pages/create')}}" ><button type="button" class="btn btn-primary" >{{ __('messages.Add') }} {{ $add_title }}</button></a> --}}
-                            <!--end::Add-->
+                        </a>
+                        @endif
+
+                        <!--begin::Download Form-->
+                         <a href="{{ url('public/') }}/achievements_study_requirements.doc" class="menu-link px-3">
+                            <button type="button" class="btn btn-light-primary me-3" >
+                         
+                            <span class="svg-icon svg-icon-2">
+                               
+                            </span>
+                            
+                            <!--end::Svg Icon-->{{ __('messages.Download_Form') }}</button>
                            
+                        </a>
+                        <!--end::Download Form-->
+
+                            <!--begin::Add-->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
+                            <!--end::Add-->
+                          
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
@@ -119,22 +136,31 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            @if($objAdmin->is_super == 1)
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
                             </th>
+                            @else
+                            <th class="w-10px pe-2" style="visibility: hidden;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
+                                </div>
+                            </th>
+                            @endif
                             <th>#</th>
-                            
-                            <th>الاسم الأول</th>
-                            <th>اسم الأب</th>
-                            <th>اسم الجد</th>
-                            <th>اسم العائلة</th>
-                            <th>تاريخ الولادة</th>
-                            <th>مكان الولادة</th>
-                        
+                            <th>{{ __('messages.scout_group') }}</th>
+                            <th> الملف  </th>
+                           
+                             <th>{{ __('messages.status') }}</th>
+                            <th>{{ __('messages.reject_notes') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
-                         <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
+                             @if($objAdmin->is_super == 1)
+                            <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
+                            @else
+                            <th class="text-end min-w-100px actions" style="visibility: hidden;">{{ __('messages.Actions') }}</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">
@@ -146,18 +172,18 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-           {{--  @include('auth.student_registration.add')
-            @include('auth.student_registration.update') --}}
+            @include('auth.admin.achievements_study_requirements.add')
+            @include('auth.admin.achievements_study_requirements.update')
+            @include('auth.admin.achievements_study_requirements.reject')
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.student_registration.export')
+            @include('auth.admin.achievements_study_requirements.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
         <!--end::Container-->
     </div>
     <!--end::Post-->
-    <input type="hidden" name="group_id" id="group_id" value="{{$id}}">
-
+   <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
 @endsection
 
 @section('scripts')
@@ -166,12 +192,21 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/list/list.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/add.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/update.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/achievements_study_requirements/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/achievements_study_requirements/list/list.js') }}"></script>
+     <script src="{{ asset('demo1/dist/assets/js/custom/apps/achievements_study_requirements/reject.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/achievements_study_requirements/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/achievements_study_requirements/update.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->
 @endsection
+
+@if($objAdmin->is_super == 0)
+<style type="text/css">
+    .group_name{
+        display: none;
+    }
+</style>
+@endif
 

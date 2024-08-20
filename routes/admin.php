@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\QualificationleadersController;
 use App\Http\Controllers\Admin\AdvertisementsController;
 use App\Http\Controllers\Admin\InformationsController;
 use App\Http\Controllers\Admin\OrganizingStudiesController;
+use App\Http\Controllers\Admin\StudentRegistrationsController;
+use App\Http\Controllers\Admin\AchievementsStudyRequirementsController;
 
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
@@ -31,6 +33,17 @@ Route::middleware('auth:admin')->group(function () {
     		Session()->put('darkmode', $type);
     		return redirect()->back();
 		})->name('admin_darkmode');
+
+		# Start Student registration
+        Route::get('show_students/student_registration/get/{id}', [StudentRegistrationsController::class, 'get']);
+
+        Route::get('student_registration/{id}', [StudentRegistrationsController::class, 'create']);
+
+
+		Route::get('show_students/{id}', [StudentRegistrationsController::class, 'index']);
+        # End Student registration
+
+		
 
 		# Start Admins
 		Route::get('/admins/get', [AdminsController::class, 'get']);
@@ -190,6 +203,26 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('export_organizing_study', [OrganizingStudiesController::class, 'ExportOrganizingStudy']);
 
 		# End organizing_study
+
+
+
+		# Start achievements_study_requirements
+		Route::get('/achievements_study_requirements/get', [AchievementsStudyRequirementsController::class, 'get']);
+		Route::resource('/achievements_study_requirements', AchievementsStudyRequirementsController::class);
+		Route::DELETE('/delete_achievements_study_requirements', [AchievementsStudyRequirementsController::class,'deleteAchievementStudyRequirement']);
+
+
+		Route::get('/achievements_study_requirements/{status}/{id}/reject_accept', [AchievementsStudyRequirementsController::class, 'reject_accept']);
+
+
+		Route::post('/rejected_achievements_study/', [AchievementsStudyRequirementsController::class, 'RejectedAchievementStudy']);
+
+
+		Route::get('export_achievements_study_requirements', [AchievementsStudyRequirementsController::class, 'ExportAchievementStudyRequirement']);
+
+	
+		# End achievements_study_requirements
+
 
 
 		# Start advertisements

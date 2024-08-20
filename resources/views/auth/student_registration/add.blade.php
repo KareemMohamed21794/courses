@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
      <link href="{{ asset('demo1/dist/assets/plugins/custom/styles.css') }}" rel="stylesheet" type="text/css" />
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 @if(session()->has('message'))
     <div class="alert alert-success">
@@ -103,7 +104,7 @@
         </div>
         <div class="form-group">
             <label>هل لديك أي أمراض مزمنة أو ظروف صحية بحاجة إلى رعاية؟</label>
-            <div>
+            <div onchange="HealthCondition()">
                 <input type="radio" id="health_yes" name="health_condition" value="yes" required>
                 <label for="health_yes">نعم</label>
                 <input type="radio" id="health_no" name="health_condition" value="no" required>
@@ -111,20 +112,40 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="city">المدينه</label>
-            <select id="city" name="city" >
+
+        <div class="form-group" id="health_condition_type_div">
+            <label for="health_condition_type">نوع  المرض</label>
+            <select id="health_condition_type" name="health_condition_type[]" multiple>
                 <option value="">اختر..</option>
+                <option value="1">سكر</option>
+                <option value="2">ضغط</option>
+                <option value="3">قلب</option>
                 
             </select>
         </div>
 
         <div class="form-group">
+            <label for="city">المدينه</label>
+            <select id="city" name="city" onchange="SelectCity(this.value)">
+                <option value="">اختر..</option>
+                
+                <option value="1">عمان</option>
+                <option value="2">مصر</option>
+                <option value="3">ليبيا</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="selected_area">
             <label for="area">المنطقه</label>
             <select id="area" name="area" >
                 <option value="">اختر..</option>
                 
             </select>
+        </div>
+
+        <div class="form-group" id="text_area">
+            <label for="area">المنطقه</label>
+            <textarea id="area" name="area" ></textarea>
         </div>
 
         <div class="form-group">
@@ -202,7 +223,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div class="form-group" onchange="notes()">
             <label>هل لديك   ملاحظات  ?</label>
             <div>
                 <input type="radio" id="notes_yes" name="notes" value="yes" required>
@@ -212,8 +233,67 @@
             </div>
         </div>
 
+        <div class="form-group" id="text_note_div">
+            <label for="text_note">الملاحظات</label>
+            <textarea id="text_note" name="text_note" ></textarea>
+        </div>
 
-        <button type="submit">إدخال معلومات المنتسب</button>
+        <input type="hidden" name="group_id" value="{{$id}}">
+        <button type="submit">تسجيل</button>
     </form>
 </body>
 </html>
+
+<script type="text/javascript">
+
+    $( document ).ready(function() {
+        $('#health_condition_type_div').hide();
+        $('#text_area').hide();
+        $('#selected_area').hide();
+        $('#text_note_div').hide();
+       
+        
+    });
+
+
+    function HealthCondition() {
+    var  value = $('input[name="health_condition"]:checked').val();
+
+    if(value == 'yes'){
+        $('#health_condition_type_div').show();
+    }else{
+        $('#health_condition_type_div').hide();
+    }
+    
+    }
+
+
+    function SelectCity(city) {
+     
+       if(!city || city.length === 0){
+        $('#text_area').hide();
+        $('#selected_area').hide();
+       }
+
+       if(city == '1'){
+        $('#selected_area').show();
+        $('#text_area').hide();
+       }
+
+       if(city != '1' && city.length != 0){
+        $('#selected_area').hide();
+        $('#text_area').show();
+       }
+    }
+
+    function notes() {
+    var  value = $('input[name="notes"]:checked').val();
+
+    if(value == 'yes'){
+        $('#text_note_div').show();
+    }else{
+        $('#text_note_div').hide();
+    }
+    
+    }
+</script>
