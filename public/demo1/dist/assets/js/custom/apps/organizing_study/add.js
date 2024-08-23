@@ -19,20 +19,128 @@ var KTModalAdd = function () {
 
                   
 
-                    'file': {
+                    // 'file': {
+                    //     validators: {
+                    //         notEmpty: {
+                    //             message: 'هذا الحقل مطلوب'
+                    //         },
+                    //         file: {
+                    //             maxSize: 8 * 1024 * 1024, // 8 MB
+                    //             extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
+                    //             message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
+                    //         }
+                    //     }
+                    // },
+                    
+                    'support_group_yes': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
-                            },
-                            file: {
-                                maxSize: 8 * 1024 * 1024, // 8 MB
-                                extension: 'pdf,doc,docx,docm,dot,dotx,dotm,xls,xlsx,xlsm,xlsb',
-                                message: 'حجم الملف يجب أن يكون أقل من 8 ميجابايت ويجب أن يكون نوعه pdf او word او excel'
                             }
                         }
                     },
-                    
-                    'file_name': {
+
+
+                    'study_place': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'study_location': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'practical_place': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'practical_location': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'proposed_time_study': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'type_qualification': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'maximum_number_students': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'proposed_study_supervisor': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'qualification_study_supervisor': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'proposed_study_leader': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'qualification_study_leader': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'list_supervisor': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -238,5 +346,56 @@ var KTModalAdd = function () {
 KTUtil.onDOMContentLoaded(function () {
 	KTModalAdd.init();
 });
+
+
+$( document ).ready(function() {
+        $('#suport_group_div').hide();
+        $('#connected_study').hide();
+        $('#separate_study').hide();
+        
+       
+    });
+
+
+    function SuportGroup() {
+
+    var  value = $('input[name="support_group"]:checked').val();
+   
+    if(value == 'yes'){
+        $('#suport_group_div').show(300);
+
+    }else{
+        
+        $("#suport_group_div").hide(300);
+    }
+    
+    }
+
+
+    function TimeStudy(value) {
+
+   
+    if(value == 'connected'){
+        $('#connected_study').show(300);
+        $('#separate_study').hide(300);
+    }else{
+        $('#separate_study').show(300);
+        $("#connected_study").hide(300);
+    }
+    
+    }
+
+    function addOtherPerson() {
+      // Clone the first input element
+      var clonedPerson = $(".other_person_other_lawer:first").clone();
+
+      clonedPerson.val('');
+
+      // Find all input elements within the clonedPerson and clear their values
+      clonedPerson.find('input').val('');
+
+      // Append the cloned input to the container
+      $(".other_person_container").append(clonedPerson);
+    }
 
 

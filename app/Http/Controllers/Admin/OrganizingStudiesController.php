@@ -55,7 +55,7 @@ class OrganizingStudiesController extends Controller
      */
     public function store(Request $request)
     {
-
+       print_r($request->all());die;
         ini_set('max_execution_time', '0');
         ini_set('memory_limit', '20000M');
         set_time_limit(0);
