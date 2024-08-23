@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OrganizingStudy;
+use App\Models\OrganizingStudieSeparate;
+use App\Models\OrganizingStudieFile;
 use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -55,7 +57,7 @@ class OrganizingStudiesController extends Controller
      */
     public function store(Request $request)
     {
-       print_r($request->all());die;
+       
         ini_set('max_execution_time', '0');
         ini_set('memory_limit', '20000M');
         set_time_limit(0);
@@ -63,9 +65,18 @@ class OrganizingStudiesController extends Controller
 
         DB::beginTransaction(); // Start a database transaction
         $validator = Validator::make($request->all(),[
-           // 'description' => ['required', 'string', 'max:255'],
-            'file_name' => ['required', 'string', 'max:255'],
-            'file' => ['required'],
+            'support_group' => ['required'],
+            'study_place' => ['required', 'string', 'max:255'],
+            'practical_place' => ['required', 'string', 'max:255'],
+            'proposed_time_study' => ['required'],
+            'type_qualification' => ['required', 'string', 'max:255'],
+            'maximum_number_students' => ['required'],
+            'proposed_study_supervisor' => ['required', 'string', 'max:255'],
+            'qualification_study_supervisor' => ['required', 'string', 'max:255'],
+            'proposed_study_leader' => ['required', 'string', 'max:255'],
+            'qualification_study_leader' => ['required', 'string', 'max:255'],
+            'list_supervisor' => ['required', 'string', 'max:255'],
+            //'file' => ['required'],
             
         ]);
 
@@ -76,24 +87,50 @@ class OrganizingStudiesController extends Controller
 
 
         $userId = Auth::id();
-    
-         $document = '';
 
-         if(!empty($request->file('file'))){
-            $file = $request->file('file');
-            $destinationPath = "public/images/organizing_study";
-            $document = rand().time().'.'.$file->getClientOriginalExtension();
-            $file->move($destinationPath, $document);
-        }
-
-
-     
         $OrganizingStudy = OrganizingStudy::create([
         'admin_id' =>  $userId,
-        'file' =>  $document,
-        'file_name' =>  $request->file_name,
-        'description' =>  $request->description,
+        'support_group' =>  $request->support_group,
+        'study_place' =>  $request->study_place,
+        'study_location' =>  $request->study_location,
+        'practical_place' =>  $request->practical_place,
+        'practical_location' =>  $request->practical_location,
+        'proposed_time_study' =>  $request->proposed_time_study,
+        'connected_from' =>  $request->connected_from,
+        'connected_to' =>  $request->connected_to,
+        'type_qualification' =>  $request->type_qualification,
+        'maximum_number_students' =>  $request->maximum_number_students,
+        'proposed_study_supervisor' =>  $request->proposed_study_supervisor,
+        'qualification_study_supervisor' =>  $request->qualification_study_supervisor,
+        'vacation_number_supervisor' =>  $request->vacation_number_supervisor,
+        'proposed_study_leader' =>  $request->proposed_study_leader,
+        'qualification_study_leader' =>  $request->qualification_study_leader,
+        'vacation_number_leader' =>  $request->vacation_number_leader,
+        'list_supervisor' =>  $request->list_supervisor,
         ]);
+
+        $separate_date = $request->separate_date;
+        if($request->separate_day){
+            foreach ($request->separate_day as $key => $separate_day) {
+
+                $OrganizingStudieSeparate = new OrganizingStudieSeparate();
+                $OrganizingStudieSeparate->organizing_studies_id = $OrganizingStudy->id;
+                $OrganizingStudieSeparate->day = $separate_day;
+                $OrganizingStudieSeparate->date = $separate_date[$key];
+                $OrganizingStudieSeparate->save();
+            }
+        }
+
+       
+        if($request->documents){
+            foreach ($this->upload('images/organizing_study_files', ['documents']) as $file) {
+        $OrganizingStudieFile = new OrganizingStudieFile();
+        $OrganizingStudieFile->organizing_studies_id = $OrganizingStudy->id;
+        $OrganizingStudieFile->file = $file;
+        $OrganizingStudieFile->save();
+        }
+        }
+        
  
         DB::commit(); // Commit the transaction
         return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
@@ -486,4 +523,22 @@ class OrganizingStudiesController extends Controller
 
     return response()->stream($callback, 200, $headers);
    }
+
+
+   public function upload($folder = 'images/organizing_study_files', $keys = ['file'], $validation = 'mimes:jpeg,png,jpg,gif,bmp,pdf,docx,doc,csv,xlsx,xls,ppt,odt,ods,odp,svg|max:2048|sometimes')
+    {
+        $uploadedFiles = [];
+
+        foreach ($keys as $key) {
+            $files = request()->validate([$key . '.*' => $validation]);
+
+            foreach (request()->file($key) as $index => $file) {
+                if ($file->isValid()) {
+                    $uploadedFiles[] = Storage::disk('public')->putFile($folder, $file, 'public');
+                }
+            }
+        }
+
+        return $uploadedFiles;
+    }
 }

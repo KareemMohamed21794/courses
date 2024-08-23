@@ -155,7 +155,7 @@
                          <!--begin::Input group-->
                         <div  id="connected_study">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.connected_from') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.connected_from') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -165,7 +165,7 @@
 
 
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.connected_to') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.connected_to') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -180,7 +180,7 @@
                         <!--begin::Input group-->
                         <div  id="separate_study">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">ايام منفصله</label>
+                            <label class=" fs-6 fw-bold mb-2">ايام منفصله</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <a href="javascript:void(0)" onclick="addOtherPerson();" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -284,7 +284,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.vacation_number_supervisor') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.vacation_number_supervisor') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -329,7 +329,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.vacation_number_leader') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.vacation_number_leader') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -360,7 +360,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">المرفقات</label>
+                            <label class=" fs-6 fw-bold mb-2">المرفقات</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="file" class="form-control form-control-solid" placeholder="المرفقات" name="documents[]"  id="documents" multiple />
