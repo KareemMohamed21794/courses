@@ -370,6 +370,18 @@
                         <!--end::Input group-->
 
 
+                         <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class=" fs-6 fw-bold mb-2">تقرير الدراسه</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="تقرير الدراسه" name="file"  id="file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
                          
   
 

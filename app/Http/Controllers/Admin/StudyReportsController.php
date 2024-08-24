@@ -16,7 +16,8 @@ use Auth;
 use Lang;
 use DB;
 use Illuminate\Support\Facades\Mail;
-class OrganizingStudiesController extends Controller
+
+class StudyReportsController extends Controller
 {
     private const MODEL ='OrganizingStudy';
     /**
@@ -29,13 +30,13 @@ class OrganizingStudiesController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         
-        $title = __('messages.organizing_study');
-        $add_title = __('messages.organizing_study');
+        $title = __('messages.study_report');
+        $add_title = __('messages.study_report');
         
 
         $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.organizing_study.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
+        return view('auth.admin.study_report.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
 
     }
 
@@ -172,7 +173,15 @@ class OrganizingStudiesController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         //$this->authorize(self::MODEL.'-update');
+
+        ini_set('max_execution_time', '0');
+        ini_set('memory_limit', '20000M');
+        set_time_limit(0);
+
+
+        DB::beginTransaction(); // Start a database transaction
        
             $validator = Validator::make($request->all(),[
             'support_group_update' => ['required'],
@@ -217,19 +226,35 @@ class OrganizingStudiesController extends Controller
         $objOrganizingStudy->vacation_number_leader = $request->vacation_number_leader;
         $objOrganizingStudy->list_supervisor = $request->list_supervisor;
        
-        // if(!empty($request->file('file'))){
-        //     $oldImage = $objOrganizingStudy->file;
-        //     $file = $request->file('file');
-        //     $destinationPath = "public/images/organizing_study";
-        //     $document = rand().time().'.'.$file->getClientOriginalExtension();
-        //     $file->move($destinationPath, $document);
-        //     $objOrganizingStudy->file = $document;
-        //     if($objOrganizingStudy->save()){
-        //        @unlink("public/images/organizing_study/".$oldImage);
-        //     }
-        // }
+        if(!empty($request->file('file'))){
+            $oldImage = $objOrganizingStudy->file;
+            $file = $request->file('file');
+            $destinationPath = "public/images/organizing_study";
+            $document = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $document);
+            $objOrganizingStudy->file = $document;
+            if($objOrganizingStudy->save()){
+               @unlink("public/images/organizing_study/".$oldImage);
+            }
+        }
 
         $objOrganizingStudy->save();
+     
+       // delete all OrganizingStudieFile
+        OrganizingStudieFile::where('organizing_studies_id',$id)->delete();
+        /// add OrganizingStudieFile
+
+
+        if($request->documents){
+            foreach ($this->upload('images/organizing_study_files', ['documents']) as $file) {
+        $OrganizingStudieFile = new OrganizingStudieFile();
+        $OrganizingStudieFile->organizing_studies_id = $id;
+        $OrganizingStudieFile->file = $file;
+        $OrganizingStudieFile->save();
+        }
+        }
+
+        DB::commit(); // Commit the transaction
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
     }
 
@@ -297,28 +322,28 @@ class OrganizingStudiesController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = OrganizingStudy::get();
+           $alldata = OrganizingStudy::where('status','approved')->get();
         
             if($active=='All'){
-                $alldata = OrganizingStudy::withTrashed()->get();
+                $alldata = OrganizingStudy::withTrashed()->where('status','approved')->get();
             }
             elseif($active=='Active'){
-                $alldata = OrganizingStudy::get();
+                $alldata = OrganizingStudy::where('status','approved')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = OrganizingStudy::onlyTrashed()->get();
+                $alldata = OrganizingStudy::onlyTrashed()->where('status','approved')->get();
             }
         }else{
 
-            $alldata = OrganizingStudy::where('admin_id',$userId)->get();
+            $alldata = OrganizingStudy::where('admin_id',$userId)->where('status','approved')->get();
             if($active=='All'){
-                $alldata = OrganizingStudy::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::withTrashed()->where('admin_id',$userId)->where('status','approved')->get();
             }
             elseif($active=='Active'){
-                $alldata = OrganizingStudy::where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::where('admin_id',$userId)->where('status','approved')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = OrganizingStudy::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = OrganizingStudy::onlyTrashed()->where('admin_id',$userId)->where('status','approved')->get();
             }
 
 
@@ -350,8 +375,7 @@ class OrganizingStudiesController extends Controller
                 "order" => $key+1,
                 "#" => $objdata->id,
                 "id" => $objdata->id,
-                
-               "study_place"=> $objdata->study_place,
+                "study_place"=> $objdata->study_place,
                "practical_place"=> $objdata->practical_place,
                "proposed_time_study"=> $proposed_time_study,
                "maximum_number_students"=> $objdata->maximum_number_students,

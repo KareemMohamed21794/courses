@@ -37,6 +37,8 @@ class CreateOrganizingStudiesTable extends Migration
             $table->string('vacation_number_leader')->nullable();
             $table->string('list_supervisor')->nullable();
             $table->string('file')->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('reject_notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

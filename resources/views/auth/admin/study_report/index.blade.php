@@ -102,7 +102,7 @@
 
                         
                             <!--begin::Add-->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
+                            {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button> --}}
                             <!--end::Add-->
                            @endif
                         </div>
@@ -140,7 +140,7 @@
                             <th>{{ __('messages.proposed_study_supervisor') }}</th>
                              <th>{{ __('messages.status') }}</th>
                             <th>{{ __('messages.reject_notes') }}</th>
-                           
+                            
                             <th>{{ __('messages.created_at') }}</th>
                            
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
@@ -158,11 +158,11 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-            @include('auth.admin.organizing_study.add')
-            @include('auth.admin.organizing_study.update')
-            @include('auth.admin.organizing_study.reject')
+            @include('auth.admin.study_report.add')
+            @include('auth.admin.study_report.update')
+            @include('auth.admin.study_report.reject')
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.organizing_study.export')
+            @include('auth.admin.study_report.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
@@ -180,11 +180,11 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/organizing_study/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/organizing_study/list/list.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/organizing_study/reject.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/organizing_study/add.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/organizing_study/update.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/study_report/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/study_report/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/study_report/reject.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/study_report/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/study_report/update.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->

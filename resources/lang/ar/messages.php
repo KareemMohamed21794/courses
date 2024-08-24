@@ -608,6 +608,7 @@ return [
     'list_supervisor'=>'هيئه الاشراف',
     'proposed_time_study'=>'الزمان المقترح للدراسه',
     'connected_from'=>'من',
-    'connected_to'=>'الي'
+    'connected_to'=>'الي',
+    'female_leaders_number'=>'عدد القادات',
  ];
 

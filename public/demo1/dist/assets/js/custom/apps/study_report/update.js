@@ -170,7 +170,7 @@ var KTModalBranchesUpdate = function () {
 
                         // Send ajax request
                         var update_id = $("#id").val();
-                        axios.post("/admin/organizing_study/"+update_id, new FormData(form))
+                        axios.post("/admin/study_report/"+update_id, new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
@@ -390,14 +390,14 @@ function getData(id) {
             jQuery('#list_supervisor_update').val(data.list_supervisor);
 
            
-            // var image_path =  '../images/organizing_study/'
-            // // Get the image element by its id
-            // var file = document.getElementById("file_update");
+            var image_path =  '../images/organizing_study/'
+            // Get the image element by its id
+            var file = document.getElementById("file_update");
           
-            // // Set the 'src' and  'href'  attribute of the image element using the JSON data
+            // Set the 'src' and  'href'  attribute of the image element using the JSON data
            
-            // file.src = image_path+data.file;
-            // href_file.href = image_path+data.file;
+            file.src = image_path+data.file;
+            href_file.href = image_path+data.file;
            
 
            

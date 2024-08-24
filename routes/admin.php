@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\InformationsController;
 use App\Http\Controllers\Admin\OrganizingStudiesController;
 use App\Http\Controllers\Admin\StudentRegistrationsController;
 use App\Http\Controllers\Admin\AchievementsStudyRequirementsController;
+use App\Http\Controllers\Admin\StudyReportsController;
 
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
@@ -202,7 +203,25 @@ Route::middleware('auth:admin')->group(function () {
 		
         Route::get('export_organizing_study', [OrganizingStudiesController::class, 'ExportOrganizingStudy']);
 
+
+
+        Route::get('/organizing_study/{status}/{id}/reject_accept', [OrganizingStudiesController::class, 'reject_accept_organizing']);
+
+        Route::post('/organizing_study_rejected/', [OrganizingStudiesController::class, 'organizing_study_rejected']);
+
 		# End organizing_study
+
+
+
+
+		# Start study_report
+		Route::get('/study_report/get', [StudyReportsController::class, 'get']);
+		Route::resource('/study_report', StudyReportsController::class);
+		Route::DELETE('/delete_study_report', [StudyReportsController::class,'deletestudy_report']);
+		
+        Route::get('export_study_report', [StudyReportsController::class, 'ExportOrganizingStudy']);
+
+		# End study_report
 
 
 

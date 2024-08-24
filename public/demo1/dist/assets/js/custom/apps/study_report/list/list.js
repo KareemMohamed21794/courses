@@ -8,7 +8,7 @@ var KTDatatablesServerSide = function () {
     var filterPayment;
     var is_super = $("#is_super").val();
     var firstSegment = $("#firstSegment").val();
-    let main_url = "/admin/organizing_study/get";
+    let main_url = "/admin/study_report/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -144,30 +144,9 @@ var KTDatatablesServerSide = function () {
                                 </div>
                                 <!--end::Menu item-->
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
-                                        موافقه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                                
 
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
-                                        رفض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                                
  
                             `;
                         }
@@ -286,7 +265,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/organizing_study/'+rowID;
+                        var ajaxurl = '/admin/study_report/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -420,7 +399,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_organizing_study';
+                    var ajaxurl = '/admin/delete_study_report';
 
                     $.ajax({
                         type: type,
@@ -548,7 +527,7 @@ function reject_accept(status,id) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/organizing_study/'+status+'/'+id+'/reject_accept';
+    var ajaxurl = '/admin/study_report/'+status+'/'+id+'/reject_accept';
     
     if(status == 'rejected'){
         var note = 'تم الرفض بنجاح';
