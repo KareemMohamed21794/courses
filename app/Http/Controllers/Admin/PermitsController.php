@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Permit;
+use App\Models\TypeActivity;
 use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -66,9 +67,11 @@ class PermitsController extends Controller
 
         $permit_number = "م ق أ /$registration_number/ $fourDigitCount";
 
+        $arrTypeActivity = TypeActivity::orderBy('id')->get();
+
          
 
-        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject, 'permit_number'=>$permit_number]);
+        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject, 'permit_number'=>$permit_number,'arrTypeActivity'=>$arrTypeActivity]);
     }
 
     /**
@@ -193,7 +196,7 @@ class PermitsController extends Controller
     public function update(Request $request, $id)
     {
         //$this->authorize(self::MODEL.'-update');
-       
+       // print_r($request->all());die;
             $validator = Validator::make($request->all(),[
                'activity_name' => ['required', 'string', 'max:255'],
                 'nature_activity' => ['required'],
@@ -297,28 +300,28 @@ class PermitsController extends Controller
         $active = $request->active;
         if($objAdmin->is_super == 1){
 
-           $alldata = Permit::get();
+           $alldata = Permit::with('TypeActivity')->get();
         
             if($active=='All'){
-                $alldata = Permit::withTrashed()->get();
+                $alldata = Permit::withTrashed()->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
                 $alldata = Permit::get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->get();
+                $alldata = Permit::onlyTrashed()->with('TypeActivity')->get();
             }
         }else{
 
-            $alldata = Permit::where('admin_id',$userId)->get();
+            $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
             if($active=='All'){
-                $alldata = Permit::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = Permit::withTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
-                $alldata = Permit::where('admin_id',$userId)->get();
+                $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
             }
 
 
@@ -328,6 +331,8 @@ class PermitsController extends Controller
         $alldataResult=array();
 
         foreach($alldata as $key=> $objdata){
+
+
             $nature_activity = '';
             if($objdata->nature_activity == "camp"){
                 $nature_activity = 'مخيم';
@@ -416,7 +421,7 @@ class PermitsController extends Controller
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "activity_name"=> $objdata->activity_name,
-                "nature_activity"=> $nature_activity,
+                "nature_activity"=> @$objdata->TypeActivity->name_ar,
                 // "activity_description"=> $objdata->activity_description,
                 "place_activity" =>$objdata->place_activity,
                 "activity_history" =>$objdata->activity_history,

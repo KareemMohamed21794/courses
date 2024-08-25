@@ -11,9 +11,5 @@ class OrganizingStudieSeparate extends Model
     protected $table = 'organizing_studie_separates';
     protected $fillable = ['organizing_studies_id','day','date'];
 
-    
-     public function Admin()
-    {
-        return $this->belongsTo(Admin::class);
-    }
+   
 }

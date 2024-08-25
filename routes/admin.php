@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\OrganizingStudiesController;
 use App\Http\Controllers\Admin\StudentRegistrationsController;
 use App\Http\Controllers\Admin\AchievementsStudyRequirementsController;
 use App\Http\Controllers\Admin\StudyReportsController;
-
+use App\Http\Controllers\Admin\TypeActivitiesController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
@@ -241,6 +241,15 @@ Route::middleware('auth:admin')->group(function () {
 
 	
 		# End achievements_study_requirements
+
+
+
+		# Start type_activities
+		Route::get('/type_activities/get', [TypeActivitiesController::class, 'get']);
+		Route::resource('/type_activities', TypeActivitiesController::class);
+		Route::DELETE('/delete_type_activities', [TypeActivitiesController::class,'deleteTypeActivity']);
+
+		# End type_activities
 
 
 

@@ -610,5 +610,6 @@ return [
     'connected_from'=>'من',
     'connected_to'=>'الي',
     'female_leaders_number'=>'عدد القادات',
+    'type_activity'=>'نوع النشاط'
  ];
 

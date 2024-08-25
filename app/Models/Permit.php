@@ -15,4 +15,9 @@ class Permit extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+     public function TypeActivity()
+    {
+        return $this->belongsTo(TypeActivity::class, 'nature_activity', 'id');
+    }
 }

@@ -18,7 +18,8 @@ class CreatePermitsTable extends Migration
             $table->unsignedBigInteger('admin_id');
             $table->foreign('admin_id')->references('id')->on('admins');
             $table->string('activity_name')->nullable();
-            $table->enum('nature_activity', ['camp', 'trip','marching','overnight','evening','other'])->nullable();
+            //$table->enum('nature_activity', ['camp', 'trip','marching','overnight','evening','other'])->nullable();
+            $table->integer('nature_activity')->nullable();
             $table->text('activity_description')->nullable();
             $table->string('place_activity')->nullable();
             $table->date('activity_history')->nullable();

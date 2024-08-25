@@ -96,12 +96,17 @@
                             <!--begin::Input-->
                            <select onchange="NaturalActivity(this.value)" name="nature_activity" id="nature_activity" data-placeholder="{{ __('messages.nature_activity') }}" class="form-select form-select-solid">
                                 <option value="">{{ __('messages.nature_activity') }}</option>
-                                <option value="camp">مخيم</option>
+
+
+                                @foreach($arrTypeActivity as $TypeActivity)
+                                        <option value="{{$TypeActivity->id}}">{{ $TypeActivity->name_ar }}</option>
+                                    @endforeach
+                                {{-- <option value="camp">مخيم</option>
                                 <option value="trip">رحلة</option>
                                 <option value="marching">مسير </option>
                                 <option value="overnight">مبيت</option>
                                 <option value="evening">امسيه</option>
-                                <option value="other">اخرى</option>
+                                <option value="other">اخرى</option> --}}
                             </select>
                             <!--end::Input-->
                         </div>
@@ -168,7 +173,21 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.alwahda') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                           <select onchange="Alwahda(this.value)" name="alwahda[]" id="alwahda" data-placeholder="{{ __('messages.alwahda') }}" class="form-select form-select-solid" multiple>
+
+                            <select onchange="Alwahda(this.value)" name="alwahda[]" id="alwahda" aria-label="{{ __('messages.Select') }} {{ __('messages.alwahda') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.alwahda') }}"   class="form-select form-select-solid fw-bolder" multiple="">
+                                <option value="">{{ __('messages.Select') }} {{ __('messages.alwahda') }}</option>
+                            
+                                   <option value="ashbal">اشبال /  زهرات</option>
+                                <option value="kashaf">كشاف / مرشدات</option>
+                                <option value="mutaqadimu">متقدم / متقدمات </option>
+                                <option value="jawaluh">جواله / دليلات</option>
+                                <option value="almajmueuh">المجموعه</option>
+                                <option value="awlia_alamwr"> اولياء الامور</option>
+                                <option value="other">اخرى</option>
+                                </select>
+
+
+                         {{--   <select onchange="Alwahda(this.value)" name="alwahda[]" id="alwahda" data-placeholder="{{ __('messages.alwahda') }}" class="form-select form-select-solid" multiple>
                                 <option value="">{{ __('messages.alwahda') }}</option>
                                 <option value="ashbal">اشبال /  زهرات</option>
                                 <option value="kashaf">كشاف / مرشدات</option>
@@ -177,7 +196,7 @@
                                 <option value="almajmueuh">المجموعه</option>
                                 <option value="awlia_alamwr"> اولياء الامور</option>
                                 <option value="other">اخرى</option>
-                            </select>
+                            </select> --}}
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
