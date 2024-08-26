@@ -112,7 +112,7 @@ fill: #009EF7;
                   @if($objAdmin->is_super == 1)
 
 
-                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers' ||Request::segment(2)=='type_activities'? 'show here' : ''}}">
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers' ||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods'||Request::segment(2)=='financial_movements'? 'show here' : ''}}">
 
 
                         <span class="menu-link">
@@ -162,6 +162,28 @@ fill: #009EF7;
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">{{ __('messages.type_activity') }}</span>
+                                </a>
+                            </div>
+
+
+
+                              <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='payment_methods' ? 'active' : '' }}" href="{{ url('/admin/payment_methods') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.payment_methods') }}</span>
+                                </a>
+                            </div>
+
+
+
+                              <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='financial_movements' ? 'active' : '' }}" href="{{ url('/admin/financial_movements') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.financial_movements') }}</span>
                                 </a>
                             </div>
 

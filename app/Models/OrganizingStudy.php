@@ -15,4 +15,10 @@ class OrganizingStudy extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+      public function OrganizingStudieSeparate()
+    {
+       
+        return $this->hasMany(OrganizingStudieSeparate::class, 'organizing_studies_id', 'id');
+    }
 }

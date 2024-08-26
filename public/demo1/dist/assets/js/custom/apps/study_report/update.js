@@ -389,6 +389,23 @@ function getData(id) {
             jQuery('#vacation_number_leader_update').val(data.vacation_number_leader);
             jQuery('#list_supervisor_update').val(data.list_supervisor);
 
+
+            $.each(data.organizing_studie_separate, function(key, value) {
+                // Create the HTML string for each set of inputs
+                var html = `
+                    <div class="append_other_person_container" style="margin-bottom: 20px;">
+                        <div class="input-group other_person_other_lawer">
+                            <input readonly type="text" class="form-control form-control-solid other_persons" placeholder="يوم" name="separate_day[]" value="${value.day || ''}" />
+                            <div style="margin-left: 5px;"></div> <!-- Add this div for spacing -->
+                            <input readonly type="date" class="form-control form-control-solid other_lawers" placeholder="تاريخ" name="separate_date[]" value="${value.date || ''}" />
+                        </div>
+                    </div>
+                `;
+
+                // Append the HTML to the append container
+                $('#append_container').append(html);
+            });
+
            
             var image_path =  '../images/organizing_study/'
             // Get the image element by its id

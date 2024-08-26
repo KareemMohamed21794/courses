@@ -11,6 +11,7 @@ use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 use Auth;
 use Lang;
@@ -159,7 +160,7 @@ class OrganizingStudiesController extends Controller
         //$this->authorize(self::MODEL.'-update');
         $OrganizingStudy  = OrganizingStudy::find($id);
         @$OrganizingStudy->Admin;
-
+        @$OrganizingStudy->OrganizingStudieSeparate;
         return response()->json($OrganizingStudy);
     }
 
@@ -173,6 +174,13 @@ class OrganizingStudiesController extends Controller
     public function update(Request $request, $id)
     {
         //$this->authorize(self::MODEL.'-update');
+
+        ini_set('max_execution_time', '0');
+        ini_set('memory_limit', '20000M');
+        set_time_limit(0);
+
+
+        DB::beginTransaction(); // Start a database transaction
        
             $validator = Validator::make($request->all(),[
             'support_group_update' => ['required'],
@@ -230,6 +238,33 @@ class OrganizingStudiesController extends Controller
         // }
 
         $objOrganizingStudy->save();
+
+        /// delete days 
+       OrganizingStudieSeparate::where('organizing_studies_id',$objOrganizingStudy->id)->delete();
+
+        ///add days 
+
+        $separate_date = $request->separate_date;
+
+        if(count($request->separate_day) > 0 && $request->proposed_time_study =='separate' ){
+            foreach ($request->separate_day as $key => $separate_day) {
+                
+
+                if($separate_day){
+                   
+                    $OrganizingStudieSeparate = new OrganizingStudieSeparate();
+                    $OrganizingStudieSeparate->organizing_studies_id = $objOrganizingStudy->id;
+                    $OrganizingStudieSeparate->day = $separate_day;
+                    $OrganizingStudieSeparate->date = $separate_date[$key];
+                    $OrganizingStudieSeparate->save();
+                }
+
+               
+            }
+        }
+
+        DB::commit(); // Commit the transaction
+
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
     }
 
@@ -616,5 +651,184 @@ class OrganizingStudiesController extends Controller
         
         $objOrganizingStudy->save();
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
+    }
+
+
+    public function OrganizingStudyFiles($organizing_study_id)
+    {
+        
+        $title = __('messages.organizing_study_files');
+        $add_title = __('messages.organizing_study_files');
+        $segment = 'organizing_study_files';
+       
+        
+        return view('auth.admin.organizing_study.files',['title' => $title, 'organizing_study_id' => $organizing_study_id,'add_title'=>$add_title,'segment'=>$segment]);
+    }
+
+
+     public function getOrganizingStudyFiles(Request $request , $organizing_study_id)
+    {
+       
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            '#'   => true,
+            'id'   => true,
+            'file'   => true,
+            'created_at'   => true,
+        ];
+        
+        if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
+            $columnsDefault = [];
+            foreach ( $request->columnsDef as $field ) {
+                $columnsDefault[ $field ] = true;
+            }
+        }
+        
+        $active = $request->active;
+
+        $alldata = OrganizingStudieFile::where('organizing_studies_id',$organizing_study_id)->get();
+
+        if($active=='All'){
+            $alldata = OrganizingStudieFile::withTrashed()->where('organizing_studies_id',$organizing_study_id)->get();
+        }
+        elseif($active=='Active'){
+            $alldata = OrganizingStudieFile::where('organizing_studies_id',$organizing_study_id)->get();
+        }
+        elseif($active=='DeActive'){
+            $alldata = OrganizingStudieFile::onlyTrashed()->where('organizing_studies_id',$organizing_study_id)->get();
+        }
+        
+ 
+        $alldataResult=array();
+
+        foreach($alldata as $objdata){
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "id" => $objdata->id,
+                "file" => '
+                <a target="_blank" href="' . asset('storage/app/public/' . $objdata->file) . '">download<a>',
+                "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+            );
+        }
+ 
+         
+       // dd($alldataResult);
+       $alldata =$alldataResult ;
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ( $alldata as $d ) {
+            $data[] = $this->filterArray( $d, $columnsDefault );
+        }
+        
+        
+        // count data
+        $totalRecords = $totalDisplay = count( $data );
+        
+        // filter by general search keyword
+        if ( isset( $request->search ) ) {
+            $data         =  $this->filterKeyword( $data, $request->search );
+            $totalDisplay = count( $data );
+        }
+        
+        if ( isset( $request->columns ) && is_array( $request->columns ) ) {
+            foreach ( $request->columns as $column ) {
+                if ( isset( $column['search'] ) ) {
+                    $data         =  $this->filterKeyword( $data, $column['search'], $column['data'] );
+                    $totalDisplay = count( $data );
+                }
+            }
+        }
+        
+        // sort
+        if ( isset( $request->order[0]['column'] ) && $request->order[0]['dir'] ) {
+            $column = $request->order[0]['column'];
+            $dir    = $request->order[0]['dir'];
+            usort( $data, function ( $a, $b ) use ( $column, $dir ) {
+                $a = array_slice( $a, $column, 1 );
+                $b = array_slice( $b, $column, 1 );
+                $a = array_pop( $a );
+                $b = array_pop( $b );
+        
+                if ( $dir === 'asc' ) {
+                    return $a > $b ? true : false;
+                }
+        
+                return $a < $b ? true : false;
+            } );
+        }
+        
+        // pagination length
+        if ( isset( $request->length ) ) {
+            $data = array_splice( $data, $_REQUEST['start'], $request->length );
+        }
+        
+        // return array values only without the keys
+        if ( isset( $request->array_values ) && $request->array_values ) {
+            $tmp  = $data;
+            $data = [];
+            foreach ( $tmp as $d ) {
+               
+                $data[] = array_values( $d );
+            }
+        }
+        
+        $secho = 0;
+        if ( isset( $request->sEcho ) ) {
+            $secho = intval( $request->sEcho );
+        }
+        
+        $result = [
+            'recordsTotal'        => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data'               => $data,
+        ];
+        
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+        
+        return  json_encode( $result, JSON_PRETTY_PRINT );
+    }
+
+
+
+      public function SaveOrganizingStudyFiles(Request $request , $organizing_study_id)
+    {
+        $rules = [
+            'file' => ['required'],
+        ];
+
+        $validator = Validator::make($request->all(),$rules);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
+        }
+
+
+       foreach ($this->upload('images/organizing_study_files', ['file']) as $file) {
+        $OrganizingStudieFile = new OrganizingStudieFile();
+        $OrganizingStudieFile->organizing_studies_id = $organizing_study_id;
+        $OrganizingStudieFile->file = $file;
+        $OrganizingStudieFile->save();
+        }
+
+        return response()->json(['OrganizingStudieFile'=>$OrganizingStudieFile]);
+    }
+
+
+
+     public function deleteOrganizingStudyFiles($id)
+    {
+        $OrganizingStudieFile = OrganizingStudieFile::where('id',$id)->delete();
+        return response()->json(['OrganizingStudieFile'=>$OrganizingStudieFile]);
+    }
+
+    public function deleteSelectedOrganizingStudyFiles(Request $request)
+    {
+        
+        $OrganizingStudieFile = OrganizingStudieFile::whereIn('id',$request->ids)->delete();
+        return response()->json(['OrganizingStudieFile'=>$OrganizingStudieFile]);
     }
 }

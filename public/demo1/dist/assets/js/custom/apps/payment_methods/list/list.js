@@ -7,45 +7,24 @@ var KTDatatablesServerSide = function () {
     var dt;
     var filterPayment;
     var is_super = $("#is_super").val();
-    var firstSegment = $("#firstSegment").val();
-    let main_url = "/admin/organizing_study/get";
+    let main_url = "/admin/payment_methods/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
 
+    
     var adminColumns = [
-    { data: '#' },
-    { data: 'order' },
-    // { data: 'id' },
-    { data: 'study_place' },
-    { data: 'practical_place' },
-    { data: 'proposed_time_study' },
-    { data: 'maximum_number_students' },
-    { data: 'proposed_study_supervisor' },
-    { data: 'status' },
-    { data: 'reject_notes' },
-    { data: 'created_at' },
-    { data: null },
-   ];
-
-    var userColumns = [
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
-        { data: 'study_place' },
-        { data: 'practical_place' },
-        { data: 'proposed_time_study' },
-        { data: 'maximum_number_students' },
-        { data: 'proposed_study_supervisor' },
-        { data: 'status' },
-        { data: 'reject_notes' },
-        
+        { data: 'name_ar' },
+       
         { data: 'created_at' },
-        { data: null },
-    ];
+         { data: null },
+       ];
 
-     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
 
+    var chosenColumns = adminColumns;
 
 
     // Private functions
@@ -69,7 +48,7 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: chosenColumns,
+            columns:chosenColumns,
             buttons: [
                 // 'copy',
                 // {
@@ -119,56 +98,41 @@ var KTDatatablesServerSide = function () {
                     targets: 0,
                     orderable: false,
                     render: function (data) {
+                       if (is_super === '1') {
                         return `
                             <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
+                        }else{
+
+                            return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="visibility: hidden;">
+                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
+                            </div>`;
+
+                        }
                     }
                 },
                 {
                     targets: -1,
                     data: null,
                     orderable: false,
-                    className: 'text-end permission',
+                    className: 'text-end',
                     render: function (data, type, row) {
                         var AdminContent = '';
                          // Check if segment is 'Admin'
                         if (is_super === '1') {
                             AdminContent = `
 
-
-                            <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
-                                    <a href="/admin/organizing_study_files/`+row.id+`" class="menu-link px-3" target="_blank">
-                                     الملفات
-                                    </a>
-                                </div>
-
                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
-                                        موافقه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
-                                        رفض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
+                               
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                       <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
@@ -179,8 +143,9 @@ var KTDatatablesServerSide = function () {
  
                             `;
                         }
-
-                        return `
+                        
+                        if (is_super === '1'){
+                              return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
                                 <span class="svg-icon svg-icon-5 m-0">
@@ -201,7 +166,33 @@ var KTDatatablesServerSide = function () {
                             </div>
                             <!--end::Menu-->
                         `;
+
+                        }else{
+                            return `
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end" style="visibility: hidden;">
+                                `+action_lang+`
+                                <span class="svg-icon svg-icon-5 m-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                                        </g>
+                                    </svg>
+                                </span>
+                            </a>
+                            <!--begin::Menu-->
+                            
+                            </div>
+                            <!--end::Menu-->
+                        `;
+                        }
+                      
                     },
+                },
+                {
+                    targets: 2,
+                    className: 'group_name',
+                     
                 },
             ],
             // // Add data-filter attribute
@@ -294,7 +285,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/organizing_study/'+rowID;
+                        var ajaxurl = '/admin/payment_methods/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -428,7 +419,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_organizing_study';
+                    var ajaxurl = '/admin/delete_payment_methods';
 
                     $.ajax({
                         type: type,
@@ -544,7 +535,6 @@ KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
 
-
 function reject_accept(status,id) {
 
     //======= Start Ajxa ========//
@@ -556,7 +546,7 @@ function reject_accept(status,id) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/organizing_study/'+status+'/'+id+'/reject_accept';
+    var ajaxurl = '/admin/payment_methods/'+status+'/'+id+'/reject_accept';
     
     if(status == 'rejected'){
         var note = 'تم الرفض بنجاح';

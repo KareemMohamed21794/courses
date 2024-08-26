@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\StudentRegistrationsController;
 use App\Http\Controllers\Admin\AchievementsStudyRequirementsController;
 use App\Http\Controllers\Admin\StudyReportsController;
 use App\Http\Controllers\Admin\TypeActivitiesController;
+use App\Http\Controllers\Admin\PaymentMethodsController;
+use App\Http\Controllers\Admin\FinancalMovementsController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
@@ -209,6 +211,15 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::post('/organizing_study_rejected/', [OrganizingStudiesController::class, 'organizing_study_rejected']);
 
+
+        Route::get('/organizing_study_files/{id}', [OrganizingStudiesController::class, 'OrganizingStudyFiles']);
+		Route::get('/organizing_study_files/get/{id}', [OrganizingStudiesController::class, 'getOrganizingStudyFiles']);
+		Route::POST('/organizing_study_files/{id}', [OrganizingStudiesController::class, 'SaveOrganizingStudyFiles']);
+
+
+		Route::DELETE('/organizing_study_files/{id}', [OrganizingStudiesController::class, 'deleteOrganizingStudyFiles']);
+		Route::DELETE('/organizing_study_files', [OrganizingStudiesController::class, 'deleteSelectedOrganizingStudyFiles']);
+
 		# End organizing_study
 
 
@@ -250,6 +261,26 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_type_activities', [TypeActivitiesController::class,'deleteTypeActivity']);
 
 		# End type_activities
+
+
+		# Start payment_methods
+		Route::get('/payment_methods/get', [PaymentMethodsController::class, 'get']);
+		Route::resource('/payment_methods', PaymentMethodsController::class);
+		Route::DELETE('/delete_payment_methods', [PaymentMethodsController::class,'deletePaymentMethods']);
+
+		# End payment_methods
+		
+
+
+		# Start financial_movements
+		Route::get('/financial_movements/get', [FinancalMovementsController::class, 'get']);
+		Route::resource('/financial_movements', FinancalMovementsController::class);
+		Route::DELETE('/delete_financial_movements', [FinancalMovementsController::class,'deleteFinancialMovements']);
+
+		# End financial_movements
+
+
+		
 
 
 

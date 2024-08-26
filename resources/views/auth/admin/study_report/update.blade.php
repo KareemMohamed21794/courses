@@ -136,7 +136,7 @@
                             <!--begin::Input group-->
                           <div  >
                             <!--begin::Input-->
-                             <select onchange="TimeStudyUpdate(this.value)" name="proposed_time_study" id="proposed_time_study_update" aria-label="{{ __('messages.Select') }} {{ __('messages.proposed_time_study') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.proposed_time_study') }}"   class="form-select form-select-solid fw-bolder">
+                             <select disabled="" onchange="TimeStudyUpdate(this.value)" name="proposed_time_study" id="proposed_time_study_update" aria-label="{{ __('messages.Select') }} {{ __('messages.proposed_time_study') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.proposed_time_study') }}"   class="form-select form-select-solid fw-bolder">
                                 <option value="">{{ __('messages.Select') }} {{ __('messages.proposed_time_study') }}</option>
                             
                                     
@@ -160,7 +160,7 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                            
-                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.connected_from') }}" name="connected_from"  id="connected_from_update"  />
+                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.connected_from') }}" name="connected_from"  id="connected_from_update" readonly="" />
                            
                             <!--end::Input-->
 
@@ -170,7 +170,7 @@
                             <!--end::Label-->
                             <!--begin::Input-->
                            
-                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.connected_to') }}" name="connected_to"  id="connected_to_update"  />
+                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.connected_to') }}" name="connected_to"  id="connected_to_update" readonly="" />
                            
                             <!--end::Input-->
                         </div>
@@ -184,7 +184,7 @@
                             <label class=" fs-6 fw-bold mb-2">ايام منفصله</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <a href="javascript:void(0)" onclick="addOtherPersonUpdate();" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                            {{-- <a href="javascript:void(0)" onclick="addOtherPersonUpdate();" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                                 <span class="svg-icon svg-icon-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -193,15 +193,9 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                            </a>
-                            <div class="other_person_container" style="margin-bottom: 20px;">
-                                <div class="input-group other_person_other_lawer">
-                                    <input type="text" class="form-control form-control-solid other_persons" placeholder="يوم" name="separate_day[]"  />
-
-                                    <div style="margin-left: 10px;"></div> <!-- Add this div for spacing -->
-
-                                    <input type="date" class="form-control form-control-solid other_lawers" placeholder="تاريخ" name="separate_date[]" />
-                                </div>
+                            </a> --}}
+                            <div class="other_person_container" style="margin-bottom: 20px;" id="append_container">
+                               
                             </div>
 
                             <!--end::Input-->
@@ -356,18 +350,6 @@
                         <!--end::Input group-->
                      
 
-
-
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">المرفقات</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="المرفقات" name="documents[]"  id="documents" multiple />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
 
 
                          <!--begin::Input group-->

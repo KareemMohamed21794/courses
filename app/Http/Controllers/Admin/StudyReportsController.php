@@ -187,7 +187,7 @@ class StudyReportsController extends Controller
             'support_group_update' => ['required'],
             'study_place' => ['required', 'string', 'max:255'],
             'practical_place' => ['required', 'string', 'max:255'],
-            'proposed_time_study' => ['required'],
+            //'proposed_time_study' => ['required'],
             'type_qualification' => ['required', 'string', 'max:255'],
             'maximum_number_students' => ['required'],
             'proposed_study_supervisor' => ['required', 'string', 'max:255'],
@@ -213,9 +213,9 @@ class StudyReportsController extends Controller
         $objOrganizingStudy->study_location = $request->study_location;
         $objOrganizingStudy->practical_place = $request->practical_place;
         $objOrganizingStudy->practical_location = $request->practical_location;
-        $objOrganizingStudy->proposed_time_study = $request->proposed_time_study;
-        $objOrganizingStudy->connected_from = $request->connected_from;
-        $objOrganizingStudy->connected_to = $request->connected_to;
+        // $objOrganizingStudy->proposed_time_study = $request->proposed_time_study;
+        // $objOrganizingStudy->connected_from = $request->connected_from;
+        // $objOrganizingStudy->connected_to = $request->connected_to;
         $objOrganizingStudy->type_qualification = $request->type_qualification;
         $objOrganizingStudy->maximum_number_students = $request->maximum_number_students;
         $objOrganizingStudy->proposed_study_supervisor = $request->proposed_study_supervisor;
@@ -240,19 +240,6 @@ class StudyReportsController extends Controller
 
         $objOrganizingStudy->save();
      
-       // delete all OrganizingStudieFile
-        OrganizingStudieFile::where('organizing_studies_id',$id)->delete();
-        /// add OrganizingStudieFile
-
-
-        if($request->documents){
-            foreach ($this->upload('images/organizing_study_files', ['documents']) as $file) {
-        $OrganizingStudieFile = new OrganizingStudieFile();
-        $OrganizingStudieFile->organizing_studies_id = $id;
-        $OrganizingStudieFile->file = $file;
-        $OrganizingStudieFile->save();
-        }
-        }
 
         DB::commit(); // Commit the transaction
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);

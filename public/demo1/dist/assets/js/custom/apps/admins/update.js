@@ -225,6 +225,7 @@ var KTModalBranchesUpdate = function () {
                             registration_type: jQuery('#registration_type_update').val(),
                             group_classification: jQuery('#group_classification_update').val(),
                             group_name: jQuery('#group_name_update').val(),
+                            secondary_registration_fees: jQuery('#secondary_registration_fees_update').val(),
                             date_establishment: jQuery('#date_establishment_update').val(),
                             registration_number: jQuery('#registration_number_update').val(),
                             website: jQuery('#website_update').val(),
@@ -440,6 +441,7 @@ function getData(id,action) {
             jQuery('#email_update').val(data.email);
             jQuery('#phone_update').val(data.phone);
             jQuery('#group_name_update').val(data.group_name);
+            jQuery('#secondary_registration_fees_update').val(data.secondary_registration_fees);
             jQuery('#date_establishment_update').val(data.date_establishment);
             jQuery('#registration_number_update').val(data.registration_number);
             jQuery('#website_update').val(data.website);

@@ -194,14 +194,8 @@
                                 </span>
                                 <!--end::Svg Icon-->
                             </a>
-                            <div class="other_person_container" style="margin-bottom: 20px;">
-                                <div class="input-group other_person_other_lawer">
-                                    <input type="text" class="form-control form-control-solid other_persons" placeholder="يوم" name="separate_day[]"  />
-
-                                    <div style="margin-left: 10px;"></div> <!-- Add this div for spacing -->
-
-                                    <input type="date" class="form-control form-control-solid other_lawers" placeholder="تاريخ" name="separate_date[]" />
-                                </div>
+                            <div class="other_person_container" style="margin-bottom: 20px;" id="append_container">
+                               
                             </div>
 
                             <!--end::Input-->
@@ -358,16 +352,7 @@
 
 
 
-                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class=" fs-6 fw-bold mb-2">المرفقات</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="المرفقات" name="documents[]"  id="documents" multiple />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                       
 
 
                          

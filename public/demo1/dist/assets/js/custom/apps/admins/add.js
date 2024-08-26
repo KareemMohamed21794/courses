@@ -206,6 +206,7 @@ var KTModalAdd = function () {
                             registration_type: jQuery('#registration_type').val(),
                             group_classification: jQuery('#group_classification').val(),
                             group_name: jQuery('#group_name').val(),
+                            secondary_registration_fees: jQuery('#secondary_registration_fees').val(),
                             date_establishment: jQuery('#date_establishment').val(),
                             registration_number: jQuery('#registration_number').val(),
                             website: jQuery('#website').val(),

@@ -6,45 +6,14 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-    var is_super = $("#is_super").val();
-    var firstSegment = $("#firstSegment").val();
-    let main_url = "/admin/organizing_study/get";
+    var organizing_study_id = $("#organizing_study_id").val();
+    var segment = $("#segment").val();
+    let main_url = "/admin/"+segment+"/get/"+organizing_study_id;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
 
-    var adminColumns = [
-    { data: '#' },
-    { data: 'order' },
-    // { data: 'id' },
-    { data: 'study_place' },
-    { data: 'practical_place' },
-    { data: 'proposed_time_study' },
-    { data: 'maximum_number_students' },
-    { data: 'proposed_study_supervisor' },
-    { data: 'status' },
-    { data: 'reject_notes' },
-    { data: 'created_at' },
-    { data: null },
-   ];
-
-    var userColumns = [
-        { data: '#' },
-        { data: 'order' },
-        // { data: 'id' },
-        { data: 'study_place' },
-        { data: 'practical_place' },
-        { data: 'proposed_time_study' },
-        { data: 'maximum_number_students' },
-        { data: 'proposed_study_supervisor' },
-        { data: 'status' },
-        { data: 'reject_notes' },
-        
-        { data: 'created_at' },
-        { data: null },
-    ];
-
-     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
+    
 
 
 
@@ -69,7 +38,13 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: chosenColumns,
+            columns: [
+                { data: '#' },
+                { data: 'id' },
+                { data: 'file' },
+                { data: 'created_at' },
+                { data: null },
+            ],
             buttons: [
                 // 'copy',
                 // {
@@ -129,57 +104,8 @@ var KTDatatablesServerSide = function () {
                     targets: -1,
                     data: null,
                     orderable: false,
-                    className: 'text-end permission',
+                    className: 'text-end',
                     render: function (data, type, row) {
-                        var AdminContent = '';
-                         // Check if segment is 'Admin'
-                        if (is_super === '1') {
-                            AdminContent = `
-
-
-                            <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
-                                    <a href="/admin/organizing_study_files/`+row.id+`" class="menu-link px-3" target="_blank">
-                                     الملفات
-                                    </a>
-                                </div>
-
-                               <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
-                                        `+edit_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
-                                        موافقه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
-                                        رفض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
- 
-                            `;
-                        }
-
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
@@ -196,8 +122,17 @@ var KTDatatablesServerSide = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                
 
+                              
 
-                               `+AdminContent+`
+                               
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
+                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
                         `;
@@ -294,7 +229,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/organizing_study/'+rowID;
+                        var ajaxurl = '/admin/organizing_study_files/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -338,15 +273,15 @@ var KTDatatablesServerSide = function () {
 
 
                     } else if (result.dismiss === 'cancel') {
-                        // Swal.fire({
-                        //     text: RowName + " لم يتم حذفه. ",
-                        //     icon: "error",
-                        //     buttonsStyling: false,
-                        //     confirmButtonText: "حسنًا ، حسنًا!",
-                        //     customClass: {
-                        //         confirmButton: "btn fw-bold btn-primary",
-                        //     }
-                        // });
+                        Swal.fire({
+                            text: RowName + " لم يتم حذفه. ",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "حسنًا ، حسنًا!",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary",
+                            }
+                        });
                     }
                 });
             })
@@ -428,7 +363,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_organizing_study';
+                    var ajaxurl = '/admin/organizing_study_files';
 
                     $.ajax({
                         type: type,
@@ -478,15 +413,15 @@ var KTDatatablesServerSide = function () {
 
 
                 } else if (result.dismiss === 'cancel') {
-                    // Swal.fire({
-                    //     text: "لم يتم حذف المحدد.",
-                    //     icon: "error",
-                    //     buttonsStyling: false,
-                    //     confirmButtonText: "حسنًا ، حسنًا!",
-                    //     customClass: {
-                    //         confirmButton: "btn fw-bold btn-primary",
-                    //     }
-                    // });
+                    Swal.fire({
+                        text: "لم يتم حذف المحدد.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "حسنًا ، حسنًا!",
+                        customClass: {
+                            confirmButton: "btn fw-bold btn-primary",
+                        }
+                    });
                 }
             });
         });
@@ -543,65 +478,3 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
-
-
-function reject_accept(status,id) {
-
-    //======= Start Ajxa ========//
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    var type = "GET";
-    var ajaxurl = '/admin/organizing_study/'+status+'/'+id+'/reject_accept';
-    
-    if(status == 'rejected'){
-        var note = 'تم الرفض بنجاح';
-    }else{
-        var note = 'تمت الموافقه  بنجاح';
-    }
-    
-
-    $.ajax({
-        type: type,
-        url: ajaxurl,
-        dataType: 'json',
-        success: function (data) {
-            Swal.fire({
-                text: 'الرجاء الانتظار قليلا',
-                icon: "info",
-                buttonsStyling: false,
-                showConfirmButton: false,
-                timer: 2000
-            }).then(function () {
-                Swal.fire({
-                    text: note,
-                    icon: "success",
-                    buttonsStyling: false,
-                    confirmButtonText: "حسنًا ، حسنًا!",
-                    customClass: {
-                        confirmButton: "btn fw-bold btn-primary",
-                    }
-                }).then(function () {
-                    // delete row data from server and re-draw datatable
-                    dt.draw();
-                });
-            });
-        },
-        error: function (data) {
-        Swal.fire({
-            text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
-            icon: "error",
-            buttonsStyling: false,
-            confirmButtonText: "حسنًا ، حسنًا!",
-            customClass: {
-                confirmButton: "btn btn-primary"
-            }
-        });
-    }
-    });
-    //======= End Ajxa ========//
-}

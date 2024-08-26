@@ -587,6 +587,7 @@ return [
     'gawala'=>'عدد الجواله/الدليلات',
     'reject_notes'=>'سبب الرفض' ,
     'organizing_study'=>'طلب تنظيم دراسة' ,
+    'organizing_study_files'=>'مرفقات طلب تنظيم دراسة' ,
     'study_report'=>'تقرير دراسة' ,
     'achievements_study_requirements'=>'انجازات متطلبات دراسة' ,
     'achievements_study_requirement'=>'انجاز متطلبات دراسة',
@@ -610,6 +611,13 @@ return [
     'connected_from'=>'من',
     'connected_to'=>'الي',
     'female_leaders_number'=>'عدد القادات',
-    'type_activity'=>'نوع النشاط'
+    'type_activity'=>'نوع النشاط',
+    'secondary_registration_fees'=>'رسوم التسجيل الثانوي',
+    'payment_methods'=>'طرق الدفع',
+    'payment_method'=>'طريقه الدفع',
+    'financial_movements'=>'الحركات المالية',
+    'financial_movement'=>'الحركة المالية',
+    'receipt_number'=>'رقم الوصل ',
+
  ];
 
