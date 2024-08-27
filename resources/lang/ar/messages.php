@@ -593,6 +593,7 @@ return [
     'achievements_study_requirement'=>'انجاز متطلبات دراسة',
     'student_registration'=>'تسجيل دخول الطالب' ,
     'show_students'=>'عرض الطلاب ' ,
+    'number_students'=>'عدد الطلاب ' ,
     'support_group'=>'مجموعات مسانده',
     'study_place'=>'المكان المقترح لاقامه الدراسه',
     'study_location'=>'رابط  المكان المقترح لاقامه الدراسه',
@@ -618,6 +619,8 @@ return [
     'financial_movements'=>'الحركات المالية',
     'financial_movement'=>'الحركة المالية',
     'receipt_number'=>'رقم الوصل ',
+    'Total_activity_permit_fees'=>'مجموع رسوم تصاريح الانشطه',
+    'total_secondary_registration'=>'مجموع رسوم التسجيل السنوي',
 
  ];
 

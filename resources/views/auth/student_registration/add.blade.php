@@ -13,7 +13,7 @@
     </div>
 @endif
 <body>
-         <form class="scout-form" action="{{ url('student_registration') }}" method="POST" enctype="multipart/form-data">
+         <form class="scout-form" action="{{ url('admin/student_registration') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
         <div class="form-group">

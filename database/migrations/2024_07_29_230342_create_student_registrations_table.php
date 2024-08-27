@@ -15,6 +15,8 @@ class CreateStudentRegistrationsTable extends Migration
     {
         Schema::create('student_registrations', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('admin_id');
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->string('first_name')->nullable();
             $table->string('father_name')->nullable();
             $table->string('grandfather_name')->nullable();
@@ -30,6 +32,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('blood_type')->nullable();
             $table->string('hobbies')->nullable();
             $table->string('health_condition')->nullable();
+            $table->string('health_condition_type')->nullable();
             $table->string('city')->nullable();
             $table->string('area')->nullable();
             $table->string('street')->nullable();
@@ -46,7 +49,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('identifier_name')->nullable();
             $table->string('identifier_phone')->nullable();
             $table->string('notes')->nullable();
-
+            $table->string('text_note')->nullable();
             $table->timestamps();
         });
     }

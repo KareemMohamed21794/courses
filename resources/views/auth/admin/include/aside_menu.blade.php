@@ -112,7 +112,7 @@ fill: #009EF7;
                   @if($objAdmin->is_super == 1)
 
 
-                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers' ||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods'||Request::segment(2)=='financial_movements'? 'show here' : ''}}">
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers' ||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods'||Request::segment(2)=='financial_movements'||Request::segment(2)=='total_permits'||Request::segment(2)=='total_secondary_registration'? 'show here' : ''}}">
 
 
                         <span class="menu-link">
@@ -152,6 +152,24 @@ fill: #009EF7;
                                
                             </span>
                             <span class="menu-title"> {{ __('messages.Admins') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='total_permits' ? 'active' : '' }}" href="{{ url('/admin/total_permits') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.Total_activity_permit_fees') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='total_secondary_registration' ? 'active' : '' }}" href="{{ url('/admin/total_secondary_registration') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.total_secondary_registration') }}</span>
                                 </a>
                             </div>
 

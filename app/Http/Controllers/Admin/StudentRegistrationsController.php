@@ -42,7 +42,7 @@ class StudentRegistrationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request , $id)
     {
         
         //$this->authorize(self::MODEL.'-store');
@@ -87,7 +87,7 @@ class StudentRegistrationsController extends Controller
 
        
         $StudentRegistration = StudentRegistration::create([
-        'group_id' =>  $request->group_id,
+        'admin_id' =>  $request->group_id,
         'first_name' =>  $request->first_name,
         'father_name' =>  $request->father_name,
         'grandfather_name' =>  $request->grandfather_name,
@@ -103,7 +103,7 @@ class StudentRegistrationsController extends Controller
         'blood_type' =>  $request->blood_type,
         'hobbies' =>  $request->hobbies,
         'health_condition' =>  $request->health_condition,
-        'health_condition_type' =>  implode( ',', $request->health_condition_type ),
+        'health_condition_type' =>  $request->health_condition_type ? implode( ',', $request->health_condition_type ) : null,
         'city' =>  $request->city,
         'area' =>  $request->area,
         'street' =>  $request->street,
@@ -215,7 +215,7 @@ class StudentRegistrationsController extends Controller
         return response()->json(['StudentRegistration'=>$StudentRegistration]);
     }
 
-     public function StudentRegistrationsController(Request $request)
+     public function deleteStudentRegistrations(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
         $StudentRegistration = StudentRegistration::whereIn('id',$request->ids)->delete();

@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
+use App\Models\StudentRegistration;
 use Validator;
 use Auth;
 use Lang;
 use PDF;
 use TCPDF;
 use Carbon\Carbon;
+use DB;
 
 class SecondaryRegistrationsController extends Controller
 {
@@ -78,6 +80,7 @@ class SecondaryRegistrationsController extends Controller
         }
 
         $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
+
 
         if($exsistdata){
             return response()->json(["message" => "هذا السجل موجود من قبل"], Response::HTTP_BAD_REQUEST);
@@ -1043,6 +1046,267 @@ public function accept_second_registration(Request $request, $id)
 
 
         return view('auth.admin.secondary_registrations.download_secondary_registration',['title' => $title,'objFile'=>$objFile]);
+    }
+
+
+    public function total_secondary_registration()
+    {
+        $title = __('messages.total_secondary_registration');
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        
+        $alldata = Admin::where('admins.id',2)->join('files', 'files.admin_id', '=', 'admins.id')
+            ->join('student_registrations', 'admins.id', '=', 'student_registrations.admin_id')
+            ->select(
+                'admins.secondary_registration_fees', 
+                'files.year', 
+                'admins.name',
+                DB::raw('COUNT(student_registrations.id) as registration_count')
+            )
+            ->groupBy('admins.secondary_registration_fees', 'files.year', 'admins.name')
+            ->get()
+            ->map(function ($item) {
+                // Calculate registration_price after retrieving data
+                $item->registration_price = $item->secondary_registration_fees * $item->registration_count;
+                return $item;
+            });
+
+          
+
+        
+        return view('auth.admin.secondary_registrations.total_secondary_registration',['title' => $title,'alldata'=>$alldata]);
+    }
+
+
+       public function get_totall_secondary_registration(Request $request)
+    { 
+        
+        //$this->authorize(self::MODEL.'-viewAny');
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            '#'   => true,
+            'order'   => true,
+            'id'   => true,
+            'leader'   => true,
+            'year'=> true,
+            'count'=>true,
+            'price'=>true,
+            'total_price'=>true,
+            'created_at'   => true,
+        ];
+
+        if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
+            $columnsDefault = [];
+            foreach ( $request->columnsDef as $field ) {
+                $columnsDefault[ $field ] = true;
+            }
+        }
+
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $active = $request->active;
+        if($objAdmin->is_super == 1){
+
+           $alldata = Admin::join('files', 'files.admin_id', '=', 'admins.id')
+            ->join('student_registrations', 'admins.id', '=', 'student_registrations.admin_id')
+            ->select(
+                'admins.secondary_registration_fees', 
+                'files.year', 
+                'admins.name',
+                DB::raw('COUNT(student_registrations.id) as registration_count')
+            )
+            ->groupBy('admins.secondary_registration_fees', 'files.year', 'admins.name')
+            ->get()
+            ->map(function ($item) {
+                // Calculate registration_price after retrieving data
+                $item->registration_price = $item->secondary_registration_fees * $item->registration_count;
+                return $item;
+            });
+        
+        }else{
+
+            $alldata = Admin::where('admins.id', $objAdmin->id)->join('files', 'files.admin_id', '=', 'admins.id')
+            ->join('student_registrations', 'admins.id', '=', 'student_registrations.admin_id')
+            ->select(
+                'admins.secondary_registration_fees', 
+                'files.year', 
+                'admins.name',
+                DB::raw('COUNT(student_registrations.id) as registration_count')
+            )
+            ->groupBy('admins.secondary_registration_fees', 'files.year', 'admins.name')
+            ->get()
+            ->map(function ($item) {
+                // Calculate registration_price after retrieving data
+                $item->registration_price = $item->secondary_registration_fees * $item->registration_count;
+                return $item;
+            });
+            
+
+
+
+        }
+
+        $alldataResult=array();
+
+        foreach($alldata as $key=> $objdata){
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "leader" => @$objdata->name,
+                "year" => $objdata->year,
+                "count" => $objdata->registration_count,
+                "price"=> @$objdata->secondary_registration_fees,
+                "total_price"=> @$objdata->registration_price,
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+        }
+
+       $alldata =$alldataResult ;
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ( $alldata as $d ) {
+            $data[] = $this->filterArrayTotal( $d, $columnsDefault );
+        }
+
+        // count data
+        $totalRecords = $totalDisplay = count( $data );
+
+        // filter by general search keyword
+        if ( isset( $request->search ) ) {
+            $data         =  $this->filterKeywordTotal( $data, $request->search );
+            $totalDisplay = count( $data );
+        }
+
+        if ( isset( $request->columns ) && is_array( $request->columns ) ) {
+            foreach ( $request->columns as $column ) {
+                if ( isset( $column['search'] ) ) {
+                    $data         =  $this->filterKeywordTotal( $data, $column['search'], $column['data'] );
+                    $totalDisplay = count( $data );
+                }
+            }
+        }
+
+        // sort
+        if ( isset( $request->order[0]['column'] ) && $request->order[0]['dir'] ) {
+            $column = $request->order[0]['column'];
+            $dir    = $request->order[0]['dir'];
+            usort( $data, function ( $a, $b ) use ( $column, $dir ) {
+                $a = array_slice( $a, $column, 1 );
+                $b = array_slice( $b, $column, 1 );
+                $a = array_pop( $a );
+                $b = array_pop( $b );
+
+                if ( $dir === 'asc' ) {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            } );
+        }
+
+        // pagination length
+        if ( isset( $request->length ) ) {
+            $data = array_splice( $data, $_REQUEST['start'], $request->length );
+        }
+
+        // return array values only without the keys
+        if ( isset( $request->array_values ) && $request->array_values ) {
+            $tmp  = $data;
+            $data = [];
+            foreach ( $tmp as $d ) {
+
+                $data[] = array_values( $d );
+            }
+        }
+
+
+        $secho = 0;
+        if ( isset( $request->sEcho ) ) {
+            $secho = intval( $request->sEcho );
+        }
+
+        $result = [
+            'recordsTotal'        => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data'               => $data,
+        ];
+
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return  json_encode( $result, JSON_PRETTY_PRINT );
+    }
+
+    function filterArrayTotal( $array, $allowed = [] ) {
+        return array_filter(
+            $array,
+            function ( $val, $key ) use ( $allowed ) { // N.b. $val, $key not $key, $val
+                return isset( $allowed[ $key ] ) && ( $allowed[ $key ] === true || $allowed[ $key ] === $val );
+            },
+            ARRAY_FILTER_USE_BOTH
+        );
+    }
+
+    function filterKeywordTotal( $data, $search, $field = '' ) {
+        $filter = '';
+        if ( isset( $search['value'] ) ) {
+            $filter = $search['value'];
+        }
+        if ( ! empty( $filter ) ) {
+            if ( ! empty( $field ) ) {
+                if ( strpos( strtolower( $field ), 'date' ) !== false ) {
+                    // filter by date range
+                    $data = filterByDateRangeTotal( $data, $filter, $field );
+                } else {
+                    // filter by column
+                    $data = array_filter( $data, function ( $a ) use ( $field, $filter ) {
+                        return (boolean) preg_match( "/$filter/i", $a[ $field ] );
+                    } );
+                }
+
+            } else {
+                // general filter
+                $data = array_filter( $data, function ( $a ) use ( $filter ) {
+                    return (boolean) preg_grep( "/$filter/i", (array) $a );
+                } );
+            }
+        }
+
+        return $data;
+    }
+
+    function filterByDateRangeTotal( $data, $filter, $field ) {
+        // filter by range
+        if ( ! empty( $range = array_filter( explode( '|', $filter ) ) ) ) {
+            $filter = $range;
+        }
+
+        if ( is_array( $filter ) ) {
+            foreach ( $filter as &$date ) {
+                // hardcoded date format
+                $date = date_create_from_format( 'm/d/Y', stripcslashes( $date ) );
+            }
+            // filter by date range
+            $data = array_filter( $data, function ( $a ) use ( $field, $filter ) {
+                // hardcoded date format
+                $current = date_create_from_format( 'm/d/Y', $a[ $field ] );
+                $from    = $filter[0];
+                $to      = $filter[1];
+                if ( $from <= $current && $to >= $current ) {
+                    return true;
+                }
+
+                return false;
+            } );
+        }
+
+        return $data;
     }
 
 }

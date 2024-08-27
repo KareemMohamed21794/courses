@@ -77,4 +77,13 @@ class Admin extends Authenticatable
     }
 
 
+    public function File()
+    {
+        return $this->hasMany(File::class);
+    }
+
+
+    
+
+
 }

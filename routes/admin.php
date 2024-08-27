@@ -43,6 +43,10 @@ Route::middleware('auth:admin')->group(function () {
         Route::get('student_registration/{id}', [StudentRegistrationsController::class, 'create']);
 
 
+
+        Route::post('student_registration', [StudentRegistrationsController::class, 'store']);
+
+
 		Route::get('show_students/{id}', [StudentRegistrationsController::class, 'index']);
         # End Student registration
 
@@ -93,6 +97,12 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/reject_second_registration/{id}', [SecondaryRegistrationsController::class, 'reject_second_registration']);
 
         Route::get('/download_secondary_registration/{id}', [SecondaryRegistrationsController::class, 'download_secondary_registration']);
+
+
+
+        Route::get('/total_secondary_registration', [SecondaryRegistrationsController::class, 'total_secondary_registration']);
+
+		Route::get('/total_secondary_registration/get', [SecondaryRegistrationsController::class, 'get_totall_secondary_registration']);
        ///// archive
 
 
@@ -177,6 +187,10 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/reject_permit/{id}', [PermitsController::class, 'reject_permit']);
 		
 		Route::get('/download_approve_form', [PermitsController::class, 'DownloadApproveForm']);
+
+		Route::get('/total_permits', [PermitsController::class, 'total_permits']);
+
+		Route::get('/total_permits/get', [PermitsController::class, 'get_totall_permits']);
 		# End permits
 
 
