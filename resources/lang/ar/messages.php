@@ -611,7 +611,7 @@ return [
     'proposed_time_study'=>'الزمان المقترح للدراسه',
     'connected_from'=>'من',
     'connected_to'=>'الي',
-    'female_leaders_number'=>'عدد القادات',
+    'female_leaders_number'=>'عدد  القائدات',
     'type_activity'=>'نوع النشاط',
     'secondary_registration_fees'=>'رسوم التسجيل الثانوي',
     'payment_methods'=>'طرق الدفع',
@@ -621,6 +621,7 @@ return [
     'receipt_number'=>'رقم الوصل ',
     'Total_activity_permit_fees'=>'مجموع رسوم تصاريح الانشطه',
     'total_secondary_registration'=>'مجموع رسوم التسجيل السنوي',
+    'Users'=>'المستخدمين',
 
  ];
 
