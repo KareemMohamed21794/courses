@@ -976,23 +976,23 @@ public function accept_second_registration(Request $request, $id)
         $objFile->status = "approved";       
         $objFile->save();
 
-        // $objUser = $objFile->Admin;
+        $objUser = $objFile->Admin;
 
-        // if(!empty($objUser->email)){
-        //     $recipient = $objUser->email;
-        //     $subject = 'موافقه نموذج التسجيل';
+        if(!empty($objUser->email)){
+            $recipient = $objUser->email;
+            $subject = 'موافقه نموذج التسجيل';
 
-        //     $data = ['content' => 'This is the email content.']; // Data to pass to the view
+            $data = ['content' => 'This is the email content.']; // Data to pass to the view
 
-        //     $fromEmail = 'admin@tawasol.privatescouts.org'; 
-        //     // The "from" email address
+            $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            // The "from" email address
 
-        //     Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-        //         $mail->to($recipient)
-        //             ->from($fromEmail) // Set the "from" email address
-        //             ->subject($subject);
-        //     });
-        // }
+            Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                $mail->to($recipient)
+                    ->from($fromEmail) // Set the "from" email address
+                    ->subject($subject);
+            });
+        }
         
 
 

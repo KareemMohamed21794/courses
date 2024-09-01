@@ -151,34 +151,34 @@ class AdvertisementsController extends Controller
 
         }
 
-        // foreach ($arrGroups as $key => $objGroup) {
+        foreach ($arrGroups as $key => $objGroup) {
 
 
-        //     $objAdmin = Admin::find($objGroup);
+            $objAdmin = Admin::find($objGroup);
 
              
-        //     if(!empty($objAdmin->email)){
-        //         $recipient = $objAdmin->email;
-        //         //$recipient = 'mahmoud.ali.29992@gmail.com';
-        //         $subject = "لديك وارد من مدير نظام تواصل";
+            if(!empty($objAdmin->email)){
+                $recipient = $objAdmin->email;
+                //$recipient = 'mahmoud.ali.29992@gmail.com';
+                $subject = "لديك وارد من مدير نظام تواصل";
 
-        //         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-        //         $fromEmail = 'admin@tawasol.privatescouts.org'; 
-        //         // The "from" email address
+                $fromEmail = 'admin@tawasol.privatescouts.org'; 
+                // The "from" email address
 
-        //         Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-        //             $mail->to($recipient)
-        //                 ->from($fromEmail) // Set the "from" email address
-        //                 ->subject($subject);
-        //         });
-        //     }
+                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                    $mail->to($recipient)
+                        ->from($fromEmail) // Set the "from" email address
+                        ->subject($subject);
+                });
+            }
 
-        //     # send email
+            # send email
 
-        //     // sleep(60);
+            // sleep(60);
 
-        // }
+        }
         
 
         DB::commit(); // Commit the transaction
