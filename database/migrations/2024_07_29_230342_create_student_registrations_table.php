@@ -21,6 +21,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('father_name')->nullable();
             $table->string('grandfather_name')->nullable();
             $table->string('family_name')->nullable();
+            $table->string('full_name')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('birth_place')->nullable();
             $table->string('mobile_number')->nullable();
@@ -50,6 +51,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('identifier_phone')->nullable();
             $table->string('notes')->nullable();
             $table->string('text_note')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

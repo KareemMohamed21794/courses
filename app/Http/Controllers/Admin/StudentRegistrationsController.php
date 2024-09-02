@@ -84,6 +84,14 @@ class StudentRegistrationsController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
+        $full_name = $request->first_name.' '.$request->father_name.' '.$request->grandfather_name.' '.$request->family_name;
+
+        $exsist_student = StudentRegistration::where('full_name',$full_name)->first();
+
+        if($exsist_student){
+             return redirect()->back()->with('message', 'هذا الطالب  موجود من قبل');
+        }
+
 
        
         $StudentRegistration = StudentRegistration::create([
@@ -92,6 +100,7 @@ class StudentRegistrationsController extends Controller
         'father_name' =>  $request->father_name,
         'grandfather_name' =>  $request->grandfather_name,
         'family_name' =>  $request->family_name,
+        'full_name' =>  $request->first_name.' '.$request->father_name.' '.$request->grandfather_name.' '.$request->family_name,
         'birth_date' =>  $request->birth_date,
         'birth_place' =>  $request->birth_place,
         'mobile_number' =>  $request->mobile_number,
@@ -103,9 +112,9 @@ class StudentRegistrationsController extends Controller
         'blood_type' =>  $request->blood_type,
         'hobbies' =>  $request->hobbies,
         'health_condition' =>  $request->health_condition,
-        'health_condition_type' =>  $request->health_condition_type ? implode( ',', $request->health_condition_type ) : null,
+        'health_condition_type' =>  $request->health_condition_type ,
         'city' =>  $request->city,
-        'area' =>  $request->area,
+        'area' =>  $request->area ? $request->area : $request->amman_region,
         'street' =>  $request->street,
         'nearest_teacher' =>  $request->nearest_teacher,
         'building_number' =>  $request->building_number,
@@ -121,6 +130,7 @@ class StudentRegistrationsController extends Controller
         'identifier_phone' =>  $request->identifier_phone,
         'notes' =>  $request->notes,
         'text_note' =>  $request->text_note,
+        'type' => '',
         ]);
 
         // return redirect('student_registration');
