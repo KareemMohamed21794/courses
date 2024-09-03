@@ -613,7 +613,7 @@ return [
     'connected_to'=>'الي',
     'female_leaders_number'=>'عدد  القائدات',
     'type_activity'=>'نوع النشاط',
-    'secondary_registration_fees'=>'رسوم التسجيل الثانوي',
+    'dead_line'=>'موعد التسليم',
     'payment_methods'=>'طرق الدفع',
     'payment_method'=>'طريقه الدفع',
     'financial_movements'=>'الحركات المالية',
@@ -622,6 +622,8 @@ return [
     'Total_activity_permit_fees'=>'مجموع رسوم تصاريح الانشطه',
     'total_secondary_registration'=>'مجموع رسوم التسجيل السنوي',
     'Users'=>'المستخدمين',
+    'total_required_alrusum'=>'مجموع الرسوم  المطلوبه',
+    'Financial_Details'=>'الماليه',
 
  ];
 

@@ -172,7 +172,7 @@ class AdminsController extends Controller
             'alhayyuh_almuqayaduh_number' => $request->alhayyuh_almuqayaduh_number,
             'group_classification' => $request->group_classification,
             'group_name' => $request->group_name,
-            'secondary_registration_fees' => $request->secondary_registration_fees,
+            'dead_line' => $request->dead_line,
             'date_establishment' => $request->date_establishment,
             'registration_number' => $request->registration_number,
             'website' => $request->website,
@@ -285,7 +285,7 @@ class AdminsController extends Controller
         $objAdmin->alhayyuh_almuqayaduh = $request->alhayyuh_almuqayaduh;
         $objAdmin->group_classification = $request->group_classification;
         $objAdmin->group_name = $request->group_name;
-        $objAdmin->secondary_registration_fees = $request->secondary_registration_fees;
+        $objAdmin->dead_line = $request->dead_line;
         $objAdmin->date_establishment = $request->date_establishment;
         $objAdmin->registration_number = $request->registration_number;
         $objAdmin->website = $request->website;

@@ -88,10 +88,10 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.secondary_registration_fees') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.dead_line') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.secondary_registration_fees') }}" name="secondary_registration_fees"  id="secondary_registration_fees_update" />
+                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.dead_line') }}" name="dead_line"  id="dead_line_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

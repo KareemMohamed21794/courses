@@ -33,7 +33,7 @@ class Admin extends Authenticatable
         'alhayyuh_almuqayaduh_number',
         'group_classification',
         'group_name',
-        'secondary_registration_fees',
+        'dead_line',
         'date_establishment',
         'registration_number',
         'website',

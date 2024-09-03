@@ -421,7 +421,7 @@
         <option value="2">الكشاف/المرشدات</option>
         <option value="3">المتقدم/المتقدمات</option>
         <option value="4">الجواله/الدليلات</option>
-        <option value="5+">القادة/القائدات</option>
+        <option value="5">القادة/القائدات</option>
     </select>
 </div>
 <div class="form-group">

@@ -121,42 +121,99 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                           
-                            
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th>{{ __('messages.year') }}</th>
-                            <th>{{ __('messages.number_students') }}</th>
-                            <th>{{ __('messages.price') }}</th>
-                            <th>{{ __('messages.total_amount') }}</th>
-                            
-                           
+                            <th>{{$objAdmin->group_name}}</th> 
+                        </tr>
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th>{{ __('messages.dead_line') }}</th> 
+                            <th>{{$objAdmin->dead_line}}</th>
+                        </tr>
+
+                        <tr>
+                            <th>الوحدات</th> 
+                            <th>العدد</th> 
+                            <th>الرسوم</th> 
+                            <th>رسوم الافراد</th> 
+                            <th>رسوم  علي الوحده</th> 
+                            <th>المجموع الفرعي </th> 
                         </tr>
                         </thead>
-                        @php
-                        $registration_price = 0;
-                        @endphp
-                        @foreach($alldata as $objdata)
-                        @php
-                        $registration_price+=$objdata->registration_price;
-                        @endphp
+
+                        
                         <tbody class="text-gray-600 fw-bold">
-                            <td>{{$objdata->name}}</td>
-                            <td>{{$objdata->year}}</td>
-                            <td>{{$objdata->registration_count}}</td>
-                            <td>{{$objdata->secondary_registration_fees}}</td>
-                            <td>{{$objdata->registration_price}}</td>
+                            <tr>
+                                <td>القادة/القائدات</td>
+                                <td>{{$count_leaders}}</td>
+                                <td>{{$alrusum}}</td>
+                                <td>{{$count_leaders * $alrusum}}</td>
+                                <td>{{$alrusum_wehda_leaders}}</td>
+                                <td>{{$total_alrusum_wehda_leaders}}</td>
+                            </tr>
+
+
+                            <tr>
+                                <td>الاشبال/الزهرات</td>
+                                <td>{{$count_aliashbalu}}</td>
+                                <td>{{$alrusum}}</td>
+                                <td>{{$count_aliashbalu * $alrusum}}</td>
+                                <td>{{$alrusum_wehda_aliashbalu}}</td>
+                                <td>{{$total_alrusum_wehda_aliashbalu}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>الكشاف/المرشدات</td>
+                                <td>{{$count_alkashaaf}}</td>
+                                <td>{{$alrusum}}</td>
+                                <td>{{$count_alkashaaf * $alrusum}}</td>
+                                <td>{{$alrusum_wehda_alkashaaf}}</td>
+                                <td>{{$total_alrusum_wehda_alkashaaf}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>المتقدم/المتقدمات</td>
+                                <td>{{$count_almutaqadima}}</td>
+                                <td>{{$alrusum}}</td>
+                                <td>{{$count_almutaqadima * $alrusum}}</td>
+                                <td>{{$alrusum_wehda_almutaqadima}}</td>
+                                <td>{{$total_alrusum_wehda_almutaqadima}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>الجواله/الدليلات</td>
+                                <td>{{$count_aljawaluh}}</td>
+                                <td>{{$alrusum}}</td>
+                                <td>{{$count_aljawaluh * $alrusum}}</td>
+                                <td>{{$alrusum_wehda_aljawaluh}}</td>
+                                <td>{{$total_alrusum_wehda_aljawaluh}}</td>
+                            </tr>
+
+                            <tr>
+                                <td>عدد الوحدات</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td>غرامات التاخير</td>
+                                <td>{{$count_late_students}}</td>
+                                <td>{{$total_alrusum_late}}</td>
+                                <td>{{$count_late_students * $total_alrusum_late}}</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            
                             
                         </tbody>
-                        @endforeach
+                       
                         <tfoot>
 
                             <tr style="font-size: 20px">
-                                <td colspan="2">{{ __('messages.total_value') }}</td>
-                                <td></td>
-                                <td></td>
-                               
+                                <td colspan="5">{{ __('messages.total_required_alrusum') }}</td>
+                                <td>{{$final_total_alrusum + ($count_late_students * $total_alrusum_late)}}</td>
                                 
-                                <td >{{$registration_price}}</td>
                             </tr>
                         </tfoot>
                     </table>

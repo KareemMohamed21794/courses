@@ -52,6 +52,7 @@ class CreateStudentRegistrationsTable extends Migration
             $table->string('notes')->nullable();
             $table->string('text_note')->nullable();
             $table->string('type')->nullable();
+            $table->string('year')->nullable();
             $table->timestamps();
         });
     }

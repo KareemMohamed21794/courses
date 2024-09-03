@@ -132,7 +132,7 @@
                             <th>اسم العائلة</th>
                             <th>تاريخ الولادة</th>
                             <th>مكان الولادة</th>
-                        
+                            <th>الحاله</th>
                             <th>{{ __('messages.created_at') }}</th>
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 
                         </tr>

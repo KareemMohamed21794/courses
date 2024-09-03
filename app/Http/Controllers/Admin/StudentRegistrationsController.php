@@ -131,6 +131,7 @@ class StudentRegistrationsController extends Controller
         'notes' =>  $request->notes,
         'text_note' =>  $request->text_note,
         'type' => '',
+        'year' => date('Y'),
         ]);
 
         // return redirect('student_registration');
@@ -242,6 +243,7 @@ class StudentRegistrationsController extends Controller
        
         $columnsDefault = [
             '#'   => true,
+            'order'   => true,
             'id'   => true,
             'first_name'   => true,
             'father_name'=>true,
@@ -249,6 +251,7 @@ class StudentRegistrationsController extends Controller
             'family_name'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
+            'type'   => true,
             'created_at'   => true,
         ];
 
@@ -285,6 +288,11 @@ class StudentRegistrationsController extends Controller
  
         foreach($alldata as $key=> $objdata){
 
+            $type = "معلقه";
+            if($objdata->type=='approved'){
+                $type = "مقبول";
+            }
+
             if($objdata->active == 1){
                 $page_status = __('messages.active');
             }else{
@@ -294,7 +302,7 @@ class StudentRegistrationsController extends Controller
           
             $alldataResult[] = array(
                 "#" => $objdata->id,
-                
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "first_name" => $objdata->first_name,
                 "father_name"=> $objdata->father_name,
@@ -302,6 +310,7 @@ class StudentRegistrationsController extends Controller
                 "family_name"=> $objdata->family_name,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
+                "type"=> $type,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
 
@@ -455,6 +464,44 @@ class StudentRegistrationsController extends Controller
         }
 
         return $data;
+    }
+
+
+
+    public function accept_student_registration(Request $request, $id)
+    {
+         
+
+        $objStudentRegistration = StudentRegistration::find($id);
+        $objStudentRegistration->type = "approved";       
+        $objStudentRegistration->save();
+
+        // $objUser = $objStudentRegistration->Admin;
+
+        // if(!empty($objUser->email)){
+        //     $recipient = $objUser->email;
+        //     $subject = 'موافقه نموذج التسجيل';
+
+        //     $data = ['content' => 'This is the email content.']; // Data to pass to the view
+
+        //     $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        //     // The "from" email address
+
+        //     Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+        //         $mail->to($recipient)
+        //             ->from($fromEmail) // Set the "from" email address
+        //             ->subject($subject);
+        //     });
+        // }
+        
+
+
+        // print_r($objUser); die;
+
+
+
+        return redirect('/admin/show_students/'.$objStudentRegistration->admin_id);
+
     }
 
 

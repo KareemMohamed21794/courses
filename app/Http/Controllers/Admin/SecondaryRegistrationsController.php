@@ -1049,7 +1049,7 @@ public function accept_second_registration(Request $request, $id)
     }
 
 
-    public function total_secondary_registration()
+    public function total_secondary_registration_old()
     {
         $title = __('messages.total_secondary_registration');
         # check if a super_admin
@@ -1076,6 +1076,89 @@ public function accept_second_registration(Request $request, $id)
 
         
         return view('auth.admin.secondary_registrations.total_secondary_registration',['title' => $title,'alldata'=>$alldata]);
+    }
+
+
+
+
+    public function total_secondary_registration()
+    {
+        $title = __('messages.total_secondary_registration');
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        
+       
+
+        $count_aliashbalu = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',1)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_aliashbalu >= 1) {
+         $alrusum_wehda_aliashbalu = ceil($count_aliashbalu / 30) * 10;
+        }else{
+            $alrusum_wehda_aliashbalu = 0;
+        }
+
+
+        $count_alkashaaf = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',2)->where('type','approved')->where('year',date('Y'))->count();
+        
+
+        if ($count_alkashaaf >= 1) {
+         $alrusum_wehda_alkashaaf = ceil($count_alkashaaf / 30) * 10;
+        }else{
+            $alrusum_wehda_alkashaaf = 0;
+        }
+
+
+
+        $count_almutaqadima = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',3)->where('type','approved')->where('year',date('Y'))->count();
+
+        
+        if ($count_almutaqadima >= 1) {
+         $alrusum_wehda_almutaqadima = ceil($count_almutaqadima / 30) * 10;
+        }else{
+            $alrusum_wehda_almutaqadima = 0;
+        }
+
+
+        $count_aljawaluh = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',4)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_aljawaluh >= 1) {
+         $alrusum_wehda_aljawaluh = ceil($count_aljawaluh / 30) * 10;
+        }else{
+            $alrusum_wehda_aljawaluh = 0;
+        }
+
+
+        $count_leaders = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',5)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_leaders >= 1) {
+            $alrusum_wehda_leaders = ceil($count_leaders / 30) * 10;
+        }else{
+            $alrusum_wehda_leaders = 0;
+        }
+       
+        $count_late_students = StudentRegistration::where('admin_id',$objAdmin->id)->where('division',5)->where('type','approved')->where('created_at','>',$objAdmin->dead_line)->where('year',date('Y'))->count();
+
+        
+
+        $alrusum  = 0.50;
+        $alrusum_late  = ($alrusum * 50) / 100;
+        $total_alrusum_late = $alrusum + $alrusum_late;
+
+
+        $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;
+        $total_alrusum_wehda_aliashbalu = ($count_aliashbalu * $alrusum) + $alrusum_wehda_aliashbalu;
+        $total_alrusum_wehda_alkashaaf = ($count_alkashaaf * $alrusum) + $alrusum_wehda_alkashaaf;
+        $total_alrusum_wehda_almutaqadima = ($count_almutaqadima * $alrusum) + $alrusum_wehda_almutaqadima;
+        $total_alrusum_wehda_aljawaluh = ($count_aljawaluh * $alrusum ) + $alrusum_wehda_aljawaluh;
+
+
+        $final_total_alrusum = ($total_alrusum_wehda_leaders + $total_alrusum_wehda_aliashbalu + $total_alrusum_wehda_alkashaaf + $total_alrusum_wehda_almutaqadima + $total_alrusum_wehda_aljawaluh);
+
+        return view('auth.admin.secondary_registrations.total_secondary_registration',['title' => $title,'objAdmin'=>$objAdmin,'count_aliashbalu'=>$count_aliashbalu,'count_alkashaaf'=>$count_alkashaaf,'count_almutaqadima'=>$count_almutaqadima,'count_aljawaluh'=>$count_aljawaluh,'count_leaders'=>$count_leaders,'count_late_students'=>$count_late_students,'alrusum_wehda_aliashbalu'=>$alrusum_wehda_aliashbalu,'alrusum_wehda_alkashaaf'=>$alrusum_wehda_alkashaaf,'alrusum_wehda_almutaqadima'=>$alrusum_wehda_almutaqadima,'alrusum_wehda_aljawaluh'=>$alrusum_wehda_aljawaluh,'alrusum_wehda_leaders'=>$alrusum_wehda_leaders,'alrusum'=>$alrusum,'alrusum_late'=>$alrusum_late,'total_alrusum_late'=>$total_alrusum_late,'total_alrusum_wehda_leaders'=>$total_alrusum_wehda_leaders,'total_alrusum_wehda_aliashbalu'=>$total_alrusum_wehda_aliashbalu,'total_alrusum_wehda_alkashaaf'=>$total_alrusum_wehda_alkashaaf,'total_alrusum_wehda_almutaqadima'=>$total_alrusum_wehda_almutaqadima,'total_alrusum_wehda_aljawaluh'=>$total_alrusum_wehda_aljawaluh,'final_total_alrusum'=>$final_total_alrusum]);
     }
 
 
