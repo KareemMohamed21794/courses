@@ -54,6 +54,10 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('show_students/delete_student_registration', [StudentRegistrationsController::class,'deleteStudentRegistrations']);
 
 		Route::DELETE('show_students/student_registration/{id}', [StudentRegistrationsController::class,'destroy']);
+
+        Route::get('annual_registration_archive', [StudentRegistrationsController::class, 'AnuulRegistrationArchive']);
+		Route::post('annual_registration_archive', [StudentRegistrationsController::class, 'AddAnuulRegistrationArchive']);
+
         # End Student registration
 
 		
@@ -292,12 +296,16 @@ Route::middleware('auth:admin')->group(function () {
 		
 
 
-		# Start financial_movements
-		Route::get('/financial_movements/get', [FinancalMovementsController::class, 'get']);
-		Route::resource('/financial_movements', FinancalMovementsController::class);
-		Route::DELETE('/delete_financial_movements', [FinancalMovementsController::class,'deleteFinancialMovements']);
+		# Start payments_received
+		Route::get('/payments_received/get', [FinancalMovementsController::class, 'get']);
+		Route::resource('/payments_received', FinancalMovementsController::class);
+		Route::DELETE('/delete_payments_received', [FinancalMovementsController::class,'deletePaymentsReceived']);
 
-		# End financial_movements
+
+
+		Route::get('/financial_movements', [FinancalMovementsController::class, 'financial_movements']);
+
+		# End payments_received
 
 
 		

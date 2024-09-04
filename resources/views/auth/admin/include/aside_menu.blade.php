@@ -266,7 +266,17 @@ fill: #009EF7;
                 @endif
 
 
-                 @if($objAdmin->is_super == 0)
+                <div class="menu-item">
+                     <a class="menu-link {{ Request::segment(2)=='annual_registration_archive' ? 'active' : '' }}" href="{{ url('/admin/annual_registration_archive') }}">
+                        <span class="menu-bullet">
+                            <span class="bullet bullet-dot"></span>
+                        </span>
+                        <span class="menu-title">{{ __('messages.annual_registration_archive') }}</span>
+                    </a>
+                </div>
+
+
+                 {{-- @if($objAdmin->is_super == 0) --}}
 
 
                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='total_permits'||Request::segment(2)=='total_secondary_registration'||Request::segment(2)=='financial_movements' ? 'show here' : ''}}">
@@ -312,7 +322,7 @@ fill: #009EF7;
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
-                                    <span class="menu-title">{{ __('messages.financial_movements') }}</span>
+                                    <span class="menu-title">{{ __('messages.group_finances') }}</span>
                                 </a>
                             </div>
 
@@ -328,7 +338,7 @@ fill: #009EF7;
 
                   
 
-                    @endif
+                    {{-- @endif --}}
 
 
                  <div class="menu-item">
@@ -871,7 +881,7 @@ fill: #009EF7;
                  @if($objAdmin->is_super == 1)
 
 
-                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods' ? 'show here' : ''}}">
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods'||Request::segment(2)=='payments_received' ? 'show here' : ''}}">
 
 
                         <span class="menu-link">
@@ -922,6 +932,16 @@ fill: #009EF7;
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">{{ __('messages.payment_methods') }}</span>
+                                </a>
+                            </div>
+
+
+                             <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='payments_received' ? 'active' : '' }}" href="{{ url('/admin/payments_received') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.financial_movements') }}</span>
                                 </a>
                             </div>
 

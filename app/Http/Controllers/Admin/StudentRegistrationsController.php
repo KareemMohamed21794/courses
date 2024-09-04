@@ -86,7 +86,7 @@ class StudentRegistrationsController extends Controller
 
         $full_name = $request->first_name.' '.$request->father_name.' '.$request->grandfather_name.' '.$request->family_name;
 
-        $exsist_student = StudentRegistration::where('full_name',$full_name)->first();
+        $exsist_student = StudentRegistration::where('full_name',$full_name)->where('year',date('Y'))->first();
 
         if($exsist_student){
              return redirect()->back()->with('message', 'هذا الطالب  موجود من قبل');
@@ -502,6 +502,90 @@ class StudentRegistrationsController extends Controller
 
         return redirect('/admin/show_students/'.$objStudentRegistration->admin_id);
 
+    }
+
+
+
+    public function AnuulRegistrationArchive()
+    {
+        
+        //$this->authorize(self::MODEL.'-store');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+
+        $Students = StudentRegistration::where('admin_id',$objAdmin->id)->where('type','approved')->select('full_name','id')->groupBy('full_name','id')->get();
+
+        $title = __('messages.annual_registration_archive');
+        $add_title = __('messages.annual_registration_archive');
+     
+        return view('auth.student_registration.annual_registration_archive',['title' => $title, 'add_title' => $add_title,'Students'=>$Students,'objAdmin'=>$objAdmin]);
+    }
+
+
+
+    public function AddAnuulRegistrationArchive(Request $request)
+    {
+        
+        if($request->student_id && count($request->student_id) > 0){
+
+            foreach ($request->student_id as $key => $student_id) {
+            $objStudentRegistration = StudentRegistration::find($student_id);
+
+            $exsist_student = StudentRegistration::where('full_name',$objStudentRegistration->full_name)->where('year',date('Y'))->first();
+
+            if(!$exsist_student){
+
+                 $StudentRegistration = StudentRegistration::create([
+                'admin_id' =>  $request->admin_id,
+                'first_name' =>  $objStudentRegistration->first_name,
+                'father_name' =>  $objStudentRegistration->father_name,
+                'grandfather_name' =>  $objStudentRegistration->grandfather_name,
+                'family_name' =>  $objStudentRegistration->family_name,
+                'full_name' =>  $objStudentRegistration->full_name,
+                'birth_date' =>  $objStudentRegistration->birth_date,
+                'birth_place' =>  $objStudentRegistration->birth_place,
+                'mobile_number' =>  $objStudentRegistration->mobile_number,
+                'home_number' =>  $objStudentRegistration->home_number,
+                'national_id' =>  $objStudentRegistration->national_id,
+                'nationality' =>  $objStudentRegistration->nationality,
+                'parents_status' =>  $objStudentRegistration->parents_status,
+                'education_level' =>  $objStudentRegistration->education_level,
+                'blood_type' =>  $objStudentRegistration->blood_type,
+                'hobbies' =>  $objStudentRegistration->hobbies,
+                'health_condition' =>  $objStudentRegistration->health_condition,
+                'health_condition_type' =>  $objStudentRegistration->health_condition_type ,
+                'city' =>  $objStudentRegistration->city,
+                'area' =>  $objStudentRegistration->area ,
+                'street' =>  $objStudentRegistration->street,
+                'nearest_teacher' =>  $objStudentRegistration->nearest_teacher,
+                'building_number' =>  $objStudentRegistration->building_number,
+                'guardian_name' =>  $objStudentRegistration->guardian_name,
+                'division' =>  $objStudentRegistration->division,
+                'guardian_phone' =>  $objStudentRegistration->guardian_phone,
+                'guardian_phone_2' =>  $objStudentRegistration->guardian_phone_2,
+                'guardian_job' =>  $objStudentRegistration->guardian_job,
+                'relative_relation' =>  $objStudentRegistration->relative_relation,
+                'guardian_place_work' =>  $objStudentRegistration->guardian_place_work,
+                'guardian_email' =>  $objStudentRegistration->guardian_email,
+                'identifier_name' =>  $objStudentRegistration->identifier_name,
+                'identifier_phone' =>  $objStudentRegistration->identifier_phone,
+                'notes' =>  $objStudentRegistration->notes,
+                'text_note' =>  $objStudentRegistration->text_note,
+                'type' => '',
+                'year' => date('Y'),
+                ]);
+                       
+            }
+        }
+
+        }
+        
+        
+
+         return redirect('admin/annual_registration_archive');
+
+   
     }
 
 

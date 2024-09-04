@@ -8,6 +8,8 @@ use App\Models\PaymentMethod;
 use App\Models\FinancialMovement;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Storage;
+use App\Models\StudentRegistration;
+use App\Models\Permit;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -156,7 +158,7 @@ class FinancalMovementsController extends Controller
         return response()->json(['FinancialMovement'=>$FinancialMovement]);
     }
 
-     public function deleteFinancialMovements(Request $request)
+     public function deletePaymentsReceived(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
         $FinancialMovement = FinancialMovement::whereIn('id',$request->ids)->delete();
@@ -371,4 +373,122 @@ class FinancalMovementsController extends Controller
 
         return $data;
     }  
+
+
+    public function financial_movements()
+    {
+        $title = __('messages.group_finances');
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        
+       $leaders = Admin::where('is_super',0)->get();
+
+        $admin_id = '';
+
+
+        if(!empty($_GET['admin_id']) && $objAdmin->is_super == 1){
+          $admin_id = $_GET['admin_id'];
+        }else{
+            $admin_id = $objAdmin->id;
+        }
+
+      
+       
+        $count_aliashbalu = StudentRegistration::where('admin_id',$admin_id)->where('division',1)->where('type','approved')->where('year',date('Y'))->count();
+        
+
+        if ($count_aliashbalu >= 1) {
+         //$alrusum_wehda_aliashbalu = ceil($count_aliashbalu / 30) * 10;
+         $alrusum_wehda_aliashbalu =  10;
+        }else{
+            $alrusum_wehda_aliashbalu = 0;
+        }
+
+
+        $count_alkashaaf = StudentRegistration::where('admin_id',$admin_id)->where('division',2)->where('type','approved')->where('year',date('Y'))->count();
+        
+
+        if ($count_alkashaaf >= 1) {
+         //$alrusum_wehda_alkashaaf = ceil($count_alkashaaf / 30) * 10;
+         $alrusum_wehda_alkashaaf = 10;
+        }else{
+            $alrusum_wehda_alkashaaf = 0;
+        }
+
+
+
+        $count_almutaqadima = StudentRegistration::where('admin_id',$admin_id)->where('division',3)->where('type','approved')->where('year',date('Y'))->count();
+
+        
+        if ($count_almutaqadima >= 1) {
+         //$alrusum_wehda_almutaqadima = ceil($count_almutaqadima / 30) * 10;
+         $alrusum_wehda_almutaqadima =  10;
+        }else{
+            $alrusum_wehda_almutaqadima = 0;
+        }
+
+
+        $count_aljawaluh = StudentRegistration::where('admin_id',$admin_id)->where('division',4)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_aljawaluh >= 1) {
+         //$alrusum_wehda_aljawaluh = ceil($count_aljawaluh / 30) * 10;
+         $alrusum_wehda_aljawaluh =  10;
+        }else{
+            $alrusum_wehda_aljawaluh = 0;
+        }
+
+
+        $count_leaders = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_leaders >= 1) {
+           // $alrusum_wehda_leaders = ceil($count_leaders / 30) * 10;
+            $alrusum_wehda_leaders =  0;
+        }else{
+            $alrusum_wehda_leaders = 0;
+        }
+       
+        if($objAdmin->dead_line){
+            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('created_at','>=',$objAdmin->dead_line)->where('year',date('Y'))->count();
+        }else{
+             $count_late_students = 0;
+        }
+
+       
+
+        
+     
+        $alrusum  = 0.50;
+        $alrusum_late  = ($alrusum * 50) / 100;
+        $total_alrusum_late = $alrusum + $alrusum_late;
+
+
+        $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;
+        $total_alrusum_wehda_aliashbalu = ($count_aliashbalu * $alrusum) + $alrusum_wehda_aliashbalu;
+        $total_alrusum_wehda_alkashaaf = ($count_alkashaaf * $alrusum) + $alrusum_wehda_alkashaaf;
+        $total_alrusum_wehda_almutaqadima = ($count_almutaqadima * $alrusum) + $alrusum_wehda_almutaqadima;
+        $total_alrusum_wehda_aljawaluh = ($count_aljawaluh * $alrusum ) + $alrusum_wehda_aljawaluh;
+
+
+        $final_total_alrusum = ($total_alrusum_wehda_leaders + $total_alrusum_wehda_aliashbalu + $total_alrusum_wehda_alkashaaf + $total_alrusum_wehda_almutaqadima + $total_alrusum_wehda_aljawaluh) + ($count_late_students * $total_alrusum_late);
+
+
+        $total_permits = Permit::where('admin_id', $admin_id)
+            ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
+            ->sum('type_activity.price');
+
+        $total_credit = $final_total_alrusum + $total_permits;
+
+        $total_debit = FinancialMovement::where('admin_id', $admin_id)->sum('price');
+
+        $remain = $total_debit - $total_credit;
+
+        $objAdmin_group = Admin::find($admin_id);
+
+
+        return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group]);
+    }
+
 }

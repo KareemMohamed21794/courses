@@ -7,7 +7,7 @@ var KTDatatablesServerSide = function () {
     var dt;
     var filterPayment;
     var is_super = $("#is_super").val();
-    let main_url = "/admin/financial_movements/get";
+    let main_url = "/admin/payments_received/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -289,7 +289,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/financial_movements/'+rowID;
+                        var ajaxurl = '/admin/payments_received/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -423,7 +423,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_financial_movements';
+                    var ajaxurl = '/admin/delete_payments_received';
 
                     $.ajax({
                         type: type,
@@ -550,7 +550,7 @@ function reject_accept(status,id) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/financial_movements/'+status+'/'+id+'/reject_accept';
+    var ajaxurl = '/admin/payments_received/'+status+'/'+id+'/reject_accept';
     
     if(status == 'rejected'){
         var note = 'تم الرفض بنجاح';

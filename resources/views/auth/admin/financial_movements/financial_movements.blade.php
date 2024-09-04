@@ -14,7 +14,7 @@
                     <!--begin::Card title-->
                     <div class="card-title">
                         <!--begin::Search-->
-                        @if($objAdmin->is_super == 1)
+                                  @if($objAdmin->is_super == 1)
                                 <br>
 
                             <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/total_secondary_registration') }}"method="get">
@@ -128,98 +128,33 @@
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>{{$objAdmin_group->group_name}}</th> 
                         </tr>
+                      
+
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th>{{ __('messages.dead_line') }}</th> 
-                            <th>{{$objAdmin_group->dead_line}}</th>
+                            <th>له</th>
+                            <th>{{$total_debit}}</th> 
                         </tr>
 
-                        <tr>
-                            <th>الوحدات</th> 
-                            <th>العدد</th> 
-                            <th>الرسوم</th> 
-                            <th>رسوم الافراد</th> 
-                            <th>رسوم  علي الوحده</th> 
-                            <th>المجموع الفرعي </th> 
+
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th>عليه</th>
+                            <th>{{$total_credit}} </th> 
+                        </tr>
+
+
+
+                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th>الباقي</th>
+                            <th>{{$remain}}</th> 
                         </tr>
                         </thead>
 
                         
                         <tbody class="text-gray-600 fw-bold">
-                            <tr>
-                                <td>القادة/القائدات</td>
-                                <td>{{$count_leaders}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_leaders * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_leaders}}</td>
-                                <td>{{$total_alrusum_wehda_leaders}}</td>
-                            </tr>
-
-
-                            <tr>
-                                <td>الاشبال/الزهرات</td>
-                                <td>{{$count_aliashbalu}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_aliashbalu * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_aliashbalu}}</td>
-                                <td>{{$total_alrusum_wehda_aliashbalu}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>الكشاف/المرشدات</td>
-                                <td>{{$count_alkashaaf}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_alkashaaf * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_alkashaaf}}</td>
-                                <td>{{$total_alrusum_wehda_alkashaaf}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>المتقدم/المتقدمات</td>
-                                <td>{{$count_almutaqadima}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_almutaqadima * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_almutaqadima}}</td>
-                                <td>{{$total_alrusum_wehda_almutaqadima}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>الجواله/الدليلات</td>
-                                <td>{{$count_aljawaluh}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_aljawaluh * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_aljawaluh}}</td>
-                                <td>{{$total_alrusum_wehda_aljawaluh}}</td>
-                            </tr>
-
-                           {{--  <tr>
-                                <td>عدد الوحدات</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr> --}}
-
-                            <tr>
-                                <td>غرامات التاخير</td>
-                                <td>{{$count_late_students}}</td>
-                                <td>{{$total_alrusum_late}}</td>
-                                <td>{{$count_late_students * $total_alrusum_late}}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            
-                            
+                      
                         </tbody>
                        
-                        <tfoot>
-
-                            <tr style="font-size: 20px">
-                                <td colspan="5">{{ __('messages.total_required_alrusum') }}</td>
-                                <td>{{$final_total_alrusum + ($count_late_students * $total_alrusum_late)}}</td>
-                                
-                            </tr>
-                        </tfoot>
+                        
                     </table>
                     <!--end::Datatable-->
                 </div>

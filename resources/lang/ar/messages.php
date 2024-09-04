@@ -613,7 +613,7 @@ return [
     'connected_to'=>'الي',
     'female_leaders_number'=>'عدد  القائدات',
     'type_activity'=>'نوع النشاط',
-    'dead_line'=>'موعد التسليم',
+    'dead_line'=>'اخر موعد للتسليم',
     'payment_methods'=>'طرق الدفع',
     'payment_method'=>'طريقه الدفع',
     'financial_movements'=>'الحركات المالية',
@@ -624,6 +624,11 @@ return [
     'Users'=>'المستخدمين',
     'total_required_alrusum'=>'مجموع الرسوم  المطلوبه',
     'Financial_Details'=>'الماليه',
+    'payments_received'=>'الدفعات المستلمه',
+    'payment_received'=>'دفعه  مستلمه',
+    'group_finances'=>'ماليه المجموعه',
+    'annual_registration_archive'=>'ارشيف التسجيل السنوي',
+    'students'=>'الطلاب',
 
  ];
 

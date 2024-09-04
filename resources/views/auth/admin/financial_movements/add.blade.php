@@ -5,7 +5,7 @@
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/financial_movements') }}"method="POST">
+            <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/payments_received') }}"method="POST">
                 @csrf
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_add_header">
