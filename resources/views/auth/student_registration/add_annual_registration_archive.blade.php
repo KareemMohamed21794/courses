@@ -5,8 +5,9 @@
         <!--begin::Modal content-->
         <div class="modal-content">
             <!--begin::Form-->
-            <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/annual_registration_archive') }}"method="POST">
-                @csrf
+            
+                <form class="scout-form" action="{{ url('admin/annual_registration_archive') }}" method="POST" enctype="multipart/form-data">
+        @csrf
                 <!--begin::Modal header-->
                 <div class="modal-header" id="kt_modal_add_header">
                     <!--begin::Modal title-->

@@ -114,7 +114,8 @@
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     
-    
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/list/list.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/student_registration/add_annual_registration_archive.js') }}"></script>
     
  
