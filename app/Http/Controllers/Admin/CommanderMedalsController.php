@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PaymentMethod;
-use App\Models\FinancialMovement;
+use App\Models\CommanderMedal;
 use App\Models\Admin;
 use App\Models\Setup;
 use Illuminate\Support\Facades\Storage;
-use App\Models\StudentRegistration;
-use App\Models\Permit;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -18,9 +15,9 @@ use Validator;
 use Auth;
 use Lang;
 
-class FinancalMovementsController extends Controller
+class CommanderMedalsController extends Controller
 {
-    private const MODEL ='FinancialMovement';
+    private const MODEL ='CommanderMedal';
     /**
      * Display a listing of the resource.
      *
@@ -28,14 +25,23 @@ class FinancalMovementsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.financial_movements');
-        $add_title = __('messages.financial_movement');
+        $title = __('messages.commander_medals');
+        $add_title = __('messages.commander_medals');
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        $arrPaymentMethod = PaymentMethod::orderBy('id')->get();
         $leaders = Admin::where('is_super',0)->get();
+        $Setup = Setup::first();
+        
+        if($Setup && $Setup->commander_medal_date >= date('Y-m-d')){
+            $check_date = true;
+        }else{
+            $check_date = false;
+        }
 
-        return view('auth.admin.financial_movements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'arrPaymentMethod'=>$arrPaymentMethod,'leaders'=>$leaders]);
+
+
+
+        return view('auth.admin.commander_medals.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'check_date'=>$check_date]);
     }
 
     /**
@@ -59,12 +65,8 @@ class FinancalMovementsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          
         $validator = Validator::make($request->all(),[
-            'admin_id' => ['required'],
-            'price' => ['required'],
-            'receipt_number' => ['required'],
-            'date' => ['required'],
-            'payment_method_id' => ['required'],
-            
+            'document' => ['required'],
+            'year' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -72,17 +74,51 @@ class FinancalMovementsController extends Controller
         }
 
 
-        $FinancialMovement = FinancialMovement::create([
-            'admin_id' =>  $request->admin_id,
-            'price' =>  $request->price,
-            'receipt_number' =>  $request->receipt_number,
-            'date' =>  $request->date,
-            'payment_method_id' =>  $request->payment_method_id,
-          
+
+        $Setup = Setup::first();
+        
+        if($Setup && $Setup->commander_medal_date >= date('Y-m-d')){
+            $check_date = true;
+        }else{
+            $check_date = false;
+        }
+
+        if (!$check_date) {
+            // Return an error response if $check_date is true
+            return response()->json([
+                'status' => 'error',
+                'message' => 'تاريخ وسام  القائد منتهي  '
+            ], 400); // Use 400 Bad Request or another appropriate status code
+        }
+
+
+        $userId = Auth::id();
+
+        if($request->leader_id){
+           $userId = $request->leader_id;
+        }
+
+       
+
+        $document = '';
+
+         if(!empty($request->file('document'))){
+            $file = $request->file('document');
+            $destinationPath = "public/images/commander_medals";
+            $document = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $document);
+        }
+
+        
+
+        $CommanderMedal = CommanderMedal::create([
+            'document' =>  $document,
+            'year' =>  $request->year,
+            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
            
         ]);
 
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
     /**
@@ -105,10 +141,10 @@ class FinancalMovementsController extends Controller
     public function edit($id)
     {
         //$this->authorize(self::MODEL.'-update');
-        $FinancialMovement  = FinancialMovement::find($id);
-        @$FinancialMovement->Admin;
-        @$FinancialMovement->PaymentMethod;
-        return response()->json($FinancialMovement);
+        $CommanderMedal  = CommanderMedal::find($id);
+        @$CommanderMedal->Admin;
+
+        return response()->json($CommanderMedal);
     }
 
     /**
@@ -120,30 +156,7 @@ class FinancalMovementsController extends Controller
      */
     public function update(Request $request, $id)
     {
-          $validator = Validator::make($request->all(),[
-            'admin_id' => ['required'],
-            'price' => ['required'],
-            'receipt_number' => ['required'],
-            'date' => ['required'],
-            'payment_method_id' => ['required'],
-            
-            ]);
-   
-
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }
-
-        $objFinancialMovement = FinancialMovement::find($id);
-       
-        $objFinancialMovement->admin_id =  $request->admin_id;
-        $objFinancialMovement->price =  $request->price;
-        $objFinancialMovement->receipt_number =  $request->receipt_number;
-        $objFinancialMovement->date =  $request->date;
-        $objFinancialMovement->payment_method_id =  $request->payment_method_id;
-       
-        $objFinancialMovement->save();
-        return response()->json(['objFinancialMovement'=>$objFinancialMovement]);
+        
     }
 
     /**
@@ -155,15 +168,15 @@ class FinancalMovementsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $FinancialMovement = FinancialMovement::where('id',$id)->delete();
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        $CommanderMedal = CommanderMedal::where('id',$id)->delete();
+        return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
-     public function deletePaymentsReceived(Request $request)
+     public function deleteCommanderMedals(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $FinancialMovement = FinancialMovement::whereIn('id',$request->ids)->delete();
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        $CommanderMedal = CommanderMedal::whereIn('id',$request->ids)->delete();
+        return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
 
@@ -176,12 +189,11 @@ class FinancalMovementsController extends Controller
             '#'   => true,
             'order'   => true,
             'id'   => true,
-            'admin_id'   => true,
-            'price'   => true,
-            'receipt_number'   => true,
-            'date'   => true,
-            'payment_method_id'   => true,
-           
+            'leader'   => true,
+            'document'   => true,
+            'year'   => true,
+            'status'=> true,
+            'reject_notes'=> true,
             'created_at'   => true,
         ];
 
@@ -195,37 +207,60 @@ class FinancalMovementsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
-       
+        if($objAdmin->is_super == 1){
 
-           $alldata = FinancialMovement::get();
+           $alldata = CommanderMedal::get();
         
             if($active=='All'){
-                $alldata = FinancialMovement::withTrashed()->get();
+                $alldata = CommanderMedal::withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = FinancialMovement::get();
+                $alldata = CommanderMedal::get();
             }
             elseif($active=='DeActive'){
-                $alldata = FinancialMovement::onlyTrashed()->get();
+                $alldata = CommanderMedal::onlyTrashed()->get();
             }
-        
+        }else{
+
+            $alldata = CommanderMedal::where('admin_id',$userId)->get();
+            if($active=='All'){
+                $alldata = CommanderMedal::withTrashed()->where('admin_id',$userId)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = CommanderMedal::where('admin_id',$userId)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = CommanderMedal::onlyTrashed()->where('admin_id',$userId)->get();
+            }
+
+
+
+        }
 
 
 
         $alldataResult=array();
 
         foreach($alldata as $key=> $objdata){
-            
+            $status = '';
+
+            if($objdata->status == 'rejected'){
+              $status = 'مرفوض';  
+            }elseif($objdata->status == 'approved'){
+                $status = 'مقبول';
+            }else{
+                $status = 'قيد الانتظار';
+            }
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
-                "admin_id" => @$objdata->Admin->group_name,
-                "price" => $objdata->price,
-                "receipt_number" => $objdata->receipt_number,
-                "date" => $objdata->date,
-                "payment_method_id" => @$objdata->PaymentMethod->name_ar,
-                
+                "leader" => @$objdata->Admin->group_name,
+                "document" => '
+                <a target="_blank" href="' . asset('public/images/commander_medals/' . $objdata->document) . '">تحميل الملف<a>',
+                "year"=> $objdata->year,
+                "status"=> $status,
+                "reject_notes"=> $objdata->reject_notes,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }
@@ -373,126 +408,101 @@ class FinancalMovementsController extends Controller
         }
 
         return $data;
-    }  
-
-
-    public function financial_movements()
-    {
-        $title = __('messages.group_finances');
-        # check if a super_admin
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
-        $Setup = Setup::first();
-        $leaders = Admin::where('is_super',0)->get();
-
-        $admin_id = '';
-
-
-        if(!empty($_GET['admin_id']) && $objAdmin->is_super == 1){
-          $admin_id = $_GET['admin_id'];
-        }else{
-            $admin_id = $objAdmin->id;
-        }
-
-      
-       
-        $count_aliashbalu = StudentRegistration::where('admin_id',$admin_id)->where('division',1)->where('type','approved')->where('year',date('Y'))->count();
-        
-
-        if ($count_aliashbalu >= 1) {
-         //$alrusum_wehda_aliashbalu = ceil($count_aliashbalu / 30) * 10;
-         $alrusum_wehda_aliashbalu =  10;
-        }else{
-            $alrusum_wehda_aliashbalu = 0;
-        }
-
-
-        $count_alkashaaf = StudentRegistration::where('admin_id',$admin_id)->where('division',2)->where('type','approved')->where('year',date('Y'))->count();
-        
-
-        if ($count_alkashaaf >= 1) {
-         //$alrusum_wehda_alkashaaf = ceil($count_alkashaaf / 30) * 10;
-         $alrusum_wehda_alkashaaf = 10;
-        }else{
-            $alrusum_wehda_alkashaaf = 0;
-        }
-
-
-
-        $count_almutaqadima = StudentRegistration::where('admin_id',$admin_id)->where('division',3)->where('type','approved')->where('year',date('Y'))->count();
-
-        
-        if ($count_almutaqadima >= 1) {
-         //$alrusum_wehda_almutaqadima = ceil($count_almutaqadima / 30) * 10;
-         $alrusum_wehda_almutaqadima =  10;
-        }else{
-            $alrusum_wehda_almutaqadima = 0;
-        }
-
-
-        $count_aljawaluh = StudentRegistration::where('admin_id',$admin_id)->where('division',4)->where('type','approved')->where('year',date('Y'))->count();
-
-
-        if ($count_aljawaluh >= 1) {
-         //$alrusum_wehda_aljawaluh = ceil($count_aljawaluh / 30) * 10;
-         $alrusum_wehda_aljawaluh =  10;
-        }else{
-            $alrusum_wehda_aljawaluh = 0;
-        }
-
-
-        $count_leaders = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('year',date('Y'))->count();
-
-
-        if ($count_leaders >= 1) {
-           // $alrusum_wehda_leaders = ceil($count_leaders / 30) * 10;
-            $alrusum_wehda_leaders =  0;
-        }else{
-            $alrusum_wehda_leaders = 0;
-        }
-       
-         if($Setup && $Setup->dead_line){
-            
-            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('type','approved')->where('created_at','>=',$Setup->dead_line)->where('year',date('Y'))->count();
-        }else{
-             $count_late_students = 0;
-           
-        }
-        
-
-       
-
-        
-     
-        $alrusum  = 0.50;
-        $alrusum_late  = ($alrusum * 50) / 100;
-        $total_alrusum_late = $alrusum + $alrusum_late;
-
-
-        $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;
-        $total_alrusum_wehda_aliashbalu = ($count_aliashbalu * $alrusum) + $alrusum_wehda_aliashbalu;
-        $total_alrusum_wehda_alkashaaf = ($count_alkashaaf * $alrusum) + $alrusum_wehda_alkashaaf;
-        $total_alrusum_wehda_almutaqadima = ($count_almutaqadima * $alrusum) + $alrusum_wehda_almutaqadima;
-        $total_alrusum_wehda_aljawaluh = ($count_aljawaluh * $alrusum ) + $alrusum_wehda_aljawaluh;
-
-
-        $final_total_alrusum = ($total_alrusum_wehda_leaders + $total_alrusum_wehda_aliashbalu + $total_alrusum_wehda_alkashaaf + $total_alrusum_wehda_almutaqadima + $total_alrusum_wehda_aljawaluh) + ($count_late_students * $total_alrusum_late);
-
-
-        $total_permits = Permit::where('admin_id', $admin_id)
-            ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
-            ->sum('type_activity.price');
-
-        $total_credit = $final_total_alrusum + $total_permits;
-
-        $total_debit = FinancialMovement::where('admin_id', $admin_id)->sum('price');
-
-        $remain = $total_debit - $total_credit;
-
-        $objAdmin_group = Admin::find($admin_id);
-
-
-        return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group]);
     }
+
+
+   
+
+
+
+    public function ExportCommanderMedal(Request $request)
+    {
+
+
+    $fileName = 'export_achievements_study_requirements.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = CommanderMedal::get();
+    
+    }else{
+
+        $Files = CommanderMedal::where('admin_id',$userId)->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),'الملف');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['document']  =asset('public/images/commander_medals/' . $File->document);
+
+            $row['year']  = $File->year;
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['document'],$row['year']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+    }
+
+
+    public function reject_accept($status,$id)
+    {
+       
+        $objFile = CommanderMedal::find($id);
+        $objFile->status = $status;
+        $objFile->reject_notes = null;
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
+
+    public function RejectedCommanderMedal(Request $request)
+    {
+        
+        $request_id = $request->request_id;
+        $reject_notes = $request->reject_notes;
+        $objFile = CommanderMedal::find($request_id);
+        $objFile->status = 'rejected';
+        $objFile->reject_notes = $reject_notes;
+        
+        $objFile->save();
+        return response()->json(['objFile'=>$objFile]);
+    }
+
+
+
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\File;
 use App\Models\Admin;
+use App\Models\Setup;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -1088,6 +1089,7 @@ public function accept_second_registration(Request $request, $id)
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $leaders = Admin::where('is_super',0)->get();
+        $Setup = Setup::first();
 
         $admin_id = '';
 
@@ -1155,12 +1157,15 @@ public function accept_second_registration(Request $request, $id)
             $alrusum_wehda_leaders = 0;
         }
        
-        if($objAdmin->dead_line){
-            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('created_at','>=',$objAdmin->dead_line)->where('year',date('Y'))->count();
+        if($Setup && $Setup->dead_line){
+            
+            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('type','approved')->where('created_at','>=',$Setup->dead_line)->where('year',date('Y'))->count();
         }else{
              $count_late_students = 0;
+           
         }
-
+        
+       
         
 
         $alrusum  = 0.50;
@@ -1180,7 +1185,7 @@ public function accept_second_registration(Request $request, $id)
 
         $objAdmin_group = Admin::find($admin_id);
 
-        return view('auth.admin.secondary_registrations.total_secondary_registration',['title' => $title,'objAdmin'=>$objAdmin,'count_aliashbalu'=>$count_aliashbalu,'count_alkashaaf'=>$count_alkashaaf,'count_almutaqadima'=>$count_almutaqadima,'count_aljawaluh'=>$count_aljawaluh,'count_leaders'=>$count_leaders,'count_late_students'=>$count_late_students,'alrusum_wehda_aliashbalu'=>$alrusum_wehda_aliashbalu,'alrusum_wehda_alkashaaf'=>$alrusum_wehda_alkashaaf,'alrusum_wehda_almutaqadima'=>$alrusum_wehda_almutaqadima,'alrusum_wehda_aljawaluh'=>$alrusum_wehda_aljawaluh,'alrusum_wehda_leaders'=>$alrusum_wehda_leaders,'alrusum'=>$alrusum,'alrusum_late'=>$alrusum_late,'total_alrusum_late'=>$total_alrusum_late,'total_alrusum_wehda_leaders'=>$total_alrusum_wehda_leaders,'total_alrusum_wehda_aliashbalu'=>$total_alrusum_wehda_aliashbalu,'total_alrusum_wehda_alkashaaf'=>$total_alrusum_wehda_alkashaaf,'total_alrusum_wehda_almutaqadima'=>$total_alrusum_wehda_almutaqadima,'total_alrusum_wehda_aljawaluh'=>$total_alrusum_wehda_aljawaluh,'final_total_alrusum'=>$final_total_alrusum,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group]);
+        return view('auth.admin.secondary_registrations.total_secondary_registration',['title' => $title,'objAdmin'=>$objAdmin,'count_aliashbalu'=>$count_aliashbalu,'count_alkashaaf'=>$count_alkashaaf,'count_almutaqadima'=>$count_almutaqadima,'count_aljawaluh'=>$count_aljawaluh,'count_leaders'=>$count_leaders,'count_late_students'=>$count_late_students,'alrusum_wehda_aliashbalu'=>$alrusum_wehda_aliashbalu,'alrusum_wehda_alkashaaf'=>$alrusum_wehda_alkashaaf,'alrusum_wehda_almutaqadima'=>$alrusum_wehda_almutaqadima,'alrusum_wehda_aljawaluh'=>$alrusum_wehda_aljawaluh,'alrusum_wehda_leaders'=>$alrusum_wehda_leaders,'alrusum'=>$alrusum,'alrusum_late'=>$alrusum_late,'total_alrusum_late'=>$total_alrusum_late,'total_alrusum_wehda_leaders'=>$total_alrusum_wehda_leaders,'total_alrusum_wehda_aliashbalu'=>$total_alrusum_wehda_aliashbalu,'total_alrusum_wehda_alkashaaf'=>$total_alrusum_wehda_alkashaaf,'total_alrusum_wehda_almutaqadima'=>$total_alrusum_wehda_almutaqadima,'total_alrusum_wehda_aljawaluh'=>$total_alrusum_wehda_aljawaluh,'final_total_alrusum'=>$final_total_alrusum,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group,'Setup'=>$Setup]);
     }
 
 

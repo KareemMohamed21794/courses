@@ -629,6 +629,10 @@ return [
     'group_finances'=>'ماليه المجموعه',
     'annual_registration_archive'=>'ارشيف التسجيل السنوي',
     'students'=>'الطلاب',
+    'commander_medals'=>'وسام القائد ',
+    'commander_medals_monzer'=>'وسام القائد منذر الزميلي للتميز',
+    'setup'=>'اعدادات النظام',
+    'commander_medal_date'=>'تاريخ  وسام القائد ',
 
  ];
 

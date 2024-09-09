@@ -86,7 +86,7 @@
                         <!--end::Input group-->
 
                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="visibility:hidden;">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.dead_line') }}</label>
                             <!--end::Label-->

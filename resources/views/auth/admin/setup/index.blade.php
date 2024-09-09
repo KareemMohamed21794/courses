@@ -1,8 +1,6 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
-    
-   
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -14,35 +12,17 @@
                     <!--begin::Card title-->
                     <div class="card-title">
                         <!--begin::Search-->
-                        @if($objAdmin->is_super == 1)
-                                <br>
-
-                            <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/total_secondary_registration') }}"method="get">
-             
-                                 <!--begin::Input group-->
-                                    <div class="d-flex flex-column mb-7 fv-row">
-                                        <!--begin::Label-->
-                                        <label class="fs-6 fw-bold mb-2">
-                                            <span class="required">{{ __('messages.scout_group') }}</span>
-                                        </label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <select name="admin_id" id="admin_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
-                                             <option value="">{{ __('messages.Select') }}</option >
-                                                @foreach($leaders as $leader)
-                                                    <option {{$leader->id == $admin_id ? 'selected' : ''}} value="{{$leader->id}}">{{ $leader->group_name }}</option>
-                                                @endforeach
-                                        </select>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Input group-->
-                                
-
-                                      <button type="submit"  class="btn btn-primary">
-                                    {{ __('messages.Search') }}</button>
-                                <!--end::Button-->
-                                </form>
-                        @endif
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
+                            <span class="svg-icon svg-icon-1 position-absolute ms-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1" transform="rotate(45 17.0365 15.1223)" fill="black" />
+                                    <path d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z" fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                            <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="{{__('messages.Search')}}" />
+                        </div>
                         <!--end::Search-->
                     </div>
                     <!--begin::Card title-->
@@ -100,11 +80,13 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            <!--begin::Export-->
-                            
+                           
+                       
+                           {{-- @if($count == 0)
                             <!--begin::Add-->
-                          
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif --}}
                           
                         </div>
                         <!--end::Toolbar-->
@@ -125,101 +107,30 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th>{{ __('messages.scout_group') }}</th>
-                            <th>{{$objAdmin_group->group_name}}</th> 
-                        </tr>
-                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th>{{ __('messages.dead_line') }}</th> 
-                            <th>{{@$Setup->dead_line}}</th>
-                        </tr>
-
-                        <tr>
-                            <th>الوحدات</th> 
-                            <th>العدد</th> 
-                            <th>الرسوم</th> 
-                            <th>رسوم الافراد</th> 
-                            <th>رسوم  علي الوحده</th> 
-                            <th>المجموع الفرعي </th> 
+                            @if($objAdmin->is_super == 1)
+                            <th class="w-10px pe-2" style="visibility: hidden;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
+                                </div>
+                            </th>
+                            @else
+                            <th class="w-10px pe-2" style="visibility: hidden;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
+                                </div>
+                            </th>
+                            @endif
+                            <th>#</th>
+                            <th>{{ __('messages.dead_line') }}</th>
+                            <th>{{ __('messages.commander_medal_date') }}</th>
+                            <th>{{ __('messages.created_at') }}</th>
+                            
+                            <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
+                           
                         </tr>
                         </thead>
-
-                        
                         <tbody class="text-gray-600 fw-bold">
-                            <tr>
-                                <td>القادة/القائدات</td>
-                                <td>{{$count_leaders}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_leaders * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_leaders}}</td>
-                                <td>{{$total_alrusum_wehda_leaders}}</td>
-                            </tr>
-
-
-                            <tr>
-                                <td>الاشبال/الزهرات</td>
-                                <td>{{$count_aliashbalu}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_aliashbalu * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_aliashbalu}}</td>
-                                <td>{{$total_alrusum_wehda_aliashbalu}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>الكشاف/المرشدات</td>
-                                <td>{{$count_alkashaaf}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_alkashaaf * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_alkashaaf}}</td>
-                                <td>{{$total_alrusum_wehda_alkashaaf}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>المتقدم/المتقدمات</td>
-                                <td>{{$count_almutaqadima}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_almutaqadima * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_almutaqadima}}</td>
-                                <td>{{$total_alrusum_wehda_almutaqadima}}</td>
-                            </tr>
-
-                            <tr>
-                                <td>الجواله/الدليلات</td>
-                                <td>{{$count_aljawaluh}}</td>
-                                <td>{{$alrusum}}</td>
-                                <td>{{$count_aljawaluh * $alrusum}}</td>
-                                <td>{{$alrusum_wehda_aljawaluh}}</td>
-                                <td>{{$total_alrusum_wehda_aljawaluh}}</td>
-                            </tr>
-
-                           {{--  <tr>
-                                <td>عدد الوحدات</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr> --}}
-
-                            <tr>
-                                <td>غرامات التاخير</td>
-                                <td>{{$count_late_students}}</td>
-                                <td>{{$total_alrusum_late}}</td>
-                                <td>{{$count_late_students * $total_alrusum_late}}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            
-                            
                         </tbody>
-                       
-                        <tfoot>
-
-                            <tr style="font-size: 20px">
-                                <td colspan="5">{{ __('messages.total_required_alrusum') }}</td>
-                                <td>{{$final_total_alrusum + ($count_late_students * $total_alrusum_late)}}</td>
-                                
-                            </tr>
-                        </tfoot>
                     </table>
                     <!--end::Datatable-->
                 </div>
@@ -227,19 +138,35 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-        
+            @include('auth.admin.setup.add')
+            @include('auth.admin.setup.update')
+            
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.secondary_registrations.export')
+            @include('auth.admin.setup.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
         <!--end::Container-->
     </div>
     <!--end::Post-->
-   
+   <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
 @endsection
 
+@section('scripts')
 
+    <!--begin::Page Vendors Javascript(used by this page)-->
+    <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+    <!--end::Page Vendors Javascript-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/setup/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/setup/list/list.js') }}"></script>
+     
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/setup/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/setup/update.js') }}"></script>
+
+ 
+    <!--end::Page Custom Javascript-->
+@endsection
 
 @if($objAdmin->is_super == 0)
 <style type="text/css">

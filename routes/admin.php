@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\StudyReportsController;
 use App\Http\Controllers\Admin\TypeActivitiesController;
 use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\FinancalMovementsController;
+use App\Http\Controllers\Admin\CommanderMedalsController;
+use App\Http\Controllers\Admin\SetupController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
@@ -276,6 +278,34 @@ Route::middleware('auth:admin')->group(function () {
 
 	
 		# End achievements_study_requirements
+
+
+
+		# Start commander_medals
+		Route::get('/commander_medals/get', [CommanderMedalsController::class, 'get']);
+		Route::resource('/commander_medals', CommanderMedalsController::class);
+		Route::DELETE('/delete_commander_medals', [CommanderMedalsController::class,'deleteCommanderMedals']);
+
+
+		Route::get('/commander_medals/{status}/{id}/reject_accept', [CommanderMedalsController::class, 'reject_accept']);
+
+
+		Route::post('/rejected_commander_medals/', [CommanderMedalsController::class, 'RejectedCommanderMedal']);
+
+
+		Route::get('export_commander_medals', [CommanderMedalsController::class, 'ExportCommanderMedal']);
+
+	
+		# End commander_medals
+
+
+
+		# Start setup
+		Route::get('/setup/get', [SetupController::class, 'get']);
+		Route::resource('/setup', SetupController::class);
+		Route::DELETE('/delete_setup', [SetupController::class,'deleteSetup']);
+
+		# End setup
 
 
 

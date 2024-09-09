@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PaymentMethod;
-use App\Models\FinancialMovement;
-use App\Models\Admin;
 use App\Models\Setup;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Storage;
-use App\Models\StudentRegistration;
-use App\Models\Permit;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -18,9 +14,10 @@ use Validator;
 use Auth;
 use Lang;
 
-class FinancalMovementsController extends Controller
+
+class SetupController extends Controller
 {
-    private const MODEL ='FinancialMovement';
+    private const MODEL ='Setup';
     /**
      * Display a listing of the resource.
      *
@@ -28,14 +25,15 @@ class FinancalMovementsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.financial_movements');
-        $add_title = __('messages.financial_movement');
+        $title = __('messages.setup');
+        $add_title = __('messages.setup');
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        $arrPaymentMethod = PaymentMethod::orderBy('id')->get();
-        $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.financial_movements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'arrPaymentMethod'=>$arrPaymentMethod,'leaders'=>$leaders]);
+        $count = Setup::count();
+
+
+        return view('auth.admin.setup.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'count'=>$count]);
     }
 
     /**
@@ -59,12 +57,8 @@ class FinancalMovementsController extends Controller
         //$this->authorize(self::MODEL.'-store');
          
         $validator = Validator::make($request->all(),[
-            'admin_id' => ['required'],
-            'price' => ['required'],
-            'receipt_number' => ['required'],
-            'date' => ['required'],
-            'payment_method_id' => ['required'],
-            
+            'dead_line' => ['required'],
+            'commander_medal_date' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -72,17 +66,13 @@ class FinancalMovementsController extends Controller
         }
 
 
-        $FinancialMovement = FinancialMovement::create([
-            'admin_id' =>  $request->admin_id,
-            'price' =>  $request->price,
-            'receipt_number' =>  $request->receipt_number,
-            'date' =>  $request->date,
-            'payment_method_id' =>  $request->payment_method_id,
-          
+        $Setup = Setup::create([
+            'dead_line' =>  $request->dead_line,
+            'commander_medal_date' =>  $request->commander_medal_date ,
            
         ]);
 
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        return response()->json(['Setup'=>$Setup]);
     }
 
     /**
@@ -105,10 +95,9 @@ class FinancalMovementsController extends Controller
     public function edit($id)
     {
         //$this->authorize(self::MODEL.'-update');
-        $FinancialMovement  = FinancialMovement::find($id);
-        @$FinancialMovement->Admin;
-        @$FinancialMovement->PaymentMethod;
-        return response()->json($FinancialMovement);
+        $Setup  = Setup::find($id);
+
+        return response()->json($Setup);
     }
 
     /**
@@ -121,29 +110,22 @@ class FinancalMovementsController extends Controller
     public function update(Request $request, $id)
     {
           $validator = Validator::make($request->all(),[
-            'admin_id' => ['required'],
-            'price' => ['required'],
-            'receipt_number' => ['required'],
-            'date' => ['required'],
-            'payment_method_id' => ['required'],
-            
-            ]);
+            'dead_line' => ['required'],
+            'commander_medal_date' => ['required'],
+        ]);
    
 
         if ($validator->fails()) {
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
-        $objFinancialMovement = FinancialMovement::find($id);
+        $objSetup = Setup::find($id);
        
-        $objFinancialMovement->admin_id =  $request->admin_id;
-        $objFinancialMovement->price =  $request->price;
-        $objFinancialMovement->receipt_number =  $request->receipt_number;
-        $objFinancialMovement->date =  $request->date;
-        $objFinancialMovement->payment_method_id =  $request->payment_method_id;
-       
-        $objFinancialMovement->save();
-        return response()->json(['objFinancialMovement'=>$objFinancialMovement]);
+        $objSetup->dead_line =  $request->dead_line;
+        $objSetup->commander_medal_date =  $request->commander_medal_date;
+        
+        $objSetup->save();
+        return response()->json(['objSetup'=>$objSetup]);
     }
 
     /**
@@ -155,15 +137,15 @@ class FinancalMovementsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $FinancialMovement = FinancialMovement::where('id',$id)->delete();
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        $Setup = Setup::where('id',$id)->delete();
+        return response()->json(['Setup'=>$Setup]);
     }
 
-     public function deletePaymentsReceived(Request $request)
+     public function deleteSetup(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $FinancialMovement = FinancialMovement::whereIn('id',$request->ids)->delete();
-        return response()->json(['FinancialMovement'=>$FinancialMovement]);
+        $Setup = Setup::whereIn('id',$request->ids)->delete();
+        return response()->json(['Setup'=>$Setup]);
     }
 
 
@@ -176,12 +158,8 @@ class FinancalMovementsController extends Controller
             '#'   => true,
             'order'   => true,
             'id'   => true,
-            'admin_id'   => true,
-            'price'   => true,
-            'receipt_number'   => true,
-            'date'   => true,
-            'payment_method_id'   => true,
-           
+            'dead_line'   => true,
+            'commander_medal_date'   => true,
             'created_at'   => true,
         ];
 
@@ -197,16 +175,16 @@ class FinancalMovementsController extends Controller
         $active = $request->active;
        
 
-           $alldata = FinancialMovement::get();
+           $alldata = Setup::get();
         
             if($active=='All'){
-                $alldata = FinancialMovement::withTrashed()->get();
+                $alldata = Setup::withTrashed()->get();
             }
             elseif($active=='Active'){
-                $alldata = FinancialMovement::get();
+                $alldata = Setup::get();
             }
             elseif($active=='DeActive'){
-                $alldata = FinancialMovement::onlyTrashed()->get();
+                $alldata = Setup::onlyTrashed()->get();
             }
         
 
@@ -220,12 +198,8 @@ class FinancalMovementsController extends Controller
                 "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
-                "admin_id" => @$objdata->Admin->group_name,
-                "price" => $objdata->price,
-                "receipt_number" => $objdata->receipt_number,
-                "date" => $objdata->date,
-                "payment_method_id" => @$objdata->PaymentMethod->name_ar,
-                
+                "dead_line" => $objdata->dead_line,
+                "commander_medal_date"=> $objdata->commander_medal_date,
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }
@@ -373,126 +347,9 @@ class FinancalMovementsController extends Controller
         }
 
         return $data;
-    }  
-
-
-    public function financial_movements()
-    {
-        $title = __('messages.group_finances');
-        # check if a super_admin
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
-        $Setup = Setup::first();
-        $leaders = Admin::where('is_super',0)->get();
-
-        $admin_id = '';
-
-
-        if(!empty($_GET['admin_id']) && $objAdmin->is_super == 1){
-          $admin_id = $_GET['admin_id'];
-        }else{
-            $admin_id = $objAdmin->id;
-        }
-
-      
-       
-        $count_aliashbalu = StudentRegistration::where('admin_id',$admin_id)->where('division',1)->where('type','approved')->where('year',date('Y'))->count();
-        
-
-        if ($count_aliashbalu >= 1) {
-         //$alrusum_wehda_aliashbalu = ceil($count_aliashbalu / 30) * 10;
-         $alrusum_wehda_aliashbalu =  10;
-        }else{
-            $alrusum_wehda_aliashbalu = 0;
-        }
-
-
-        $count_alkashaaf = StudentRegistration::where('admin_id',$admin_id)->where('division',2)->where('type','approved')->where('year',date('Y'))->count();
-        
-
-        if ($count_alkashaaf >= 1) {
-         //$alrusum_wehda_alkashaaf = ceil($count_alkashaaf / 30) * 10;
-         $alrusum_wehda_alkashaaf = 10;
-        }else{
-            $alrusum_wehda_alkashaaf = 0;
-        }
-
-
-
-        $count_almutaqadima = StudentRegistration::where('admin_id',$admin_id)->where('division',3)->where('type','approved')->where('year',date('Y'))->count();
-
-        
-        if ($count_almutaqadima >= 1) {
-         //$alrusum_wehda_almutaqadima = ceil($count_almutaqadima / 30) * 10;
-         $alrusum_wehda_almutaqadima =  10;
-        }else{
-            $alrusum_wehda_almutaqadima = 0;
-        }
-
-
-        $count_aljawaluh = StudentRegistration::where('admin_id',$admin_id)->where('division',4)->where('type','approved')->where('year',date('Y'))->count();
-
-
-        if ($count_aljawaluh >= 1) {
-         //$alrusum_wehda_aljawaluh = ceil($count_aljawaluh / 30) * 10;
-         $alrusum_wehda_aljawaluh =  10;
-        }else{
-            $alrusum_wehda_aljawaluh = 0;
-        }
-
-
-        $count_leaders = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('year',date('Y'))->count();
-
-
-        if ($count_leaders >= 1) {
-           // $alrusum_wehda_leaders = ceil($count_leaders / 30) * 10;
-            $alrusum_wehda_leaders =  0;
-        }else{
-            $alrusum_wehda_leaders = 0;
-        }
-       
-         if($Setup && $Setup->dead_line){
-            
-            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('type','approved')->where('created_at','>=',$Setup->dead_line)->where('year',date('Y'))->count();
-        }else{
-             $count_late_students = 0;
-           
-        }
-        
-
-       
-
-        
-     
-        $alrusum  = 0.50;
-        $alrusum_late  = ($alrusum * 50) / 100;
-        $total_alrusum_late = $alrusum + $alrusum_late;
-
-
-        $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;
-        $total_alrusum_wehda_aliashbalu = ($count_aliashbalu * $alrusum) + $alrusum_wehda_aliashbalu;
-        $total_alrusum_wehda_alkashaaf = ($count_alkashaaf * $alrusum) + $alrusum_wehda_alkashaaf;
-        $total_alrusum_wehda_almutaqadima = ($count_almutaqadima * $alrusum) + $alrusum_wehda_almutaqadima;
-        $total_alrusum_wehda_aljawaluh = ($count_aljawaluh * $alrusum ) + $alrusum_wehda_aljawaluh;
-
-
-        $final_total_alrusum = ($total_alrusum_wehda_leaders + $total_alrusum_wehda_aliashbalu + $total_alrusum_wehda_alkashaaf + $total_alrusum_wehda_almutaqadima + $total_alrusum_wehda_aljawaluh) + ($count_late_students * $total_alrusum_late);
-
-
-        $total_permits = Permit::where('admin_id', $admin_id)
-            ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
-            ->sum('type_activity.price');
-
-        $total_credit = $final_total_alrusum + $total_permits;
-
-        $total_debit = FinancialMovement::where('admin_id', $admin_id)->sum('price');
-
-        $remain = $total_debit - $total_credit;
-
-        $objAdmin_group = Admin::find($admin_id);
-
-
-        return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group]);
     }
 
+
+   
 }
+
