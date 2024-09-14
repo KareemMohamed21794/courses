@@ -40,6 +40,17 @@ class CommanderMedalsController extends Controller
 
 
 
+        if($objAdmin->is_super == 0){
+        CommanderMedal::where('admin_id', $objAdmin->id)
+        ->update(['read' => 1]);
+        
+        }else{
+        CommanderMedal::update(['read' => 1]);
+         
+        }
+
+
+
 
         return view('auth.admin.commander_medals.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'check_date'=>$check_date]);
     }

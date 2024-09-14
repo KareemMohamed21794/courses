@@ -39,6 +39,7 @@ class CreateOrganizingStudiesTable extends Migration
             $table->string('file')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('reject_notes')->nullable();
+            $table->integer('read')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

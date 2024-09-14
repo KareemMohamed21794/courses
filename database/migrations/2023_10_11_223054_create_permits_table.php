@@ -33,6 +33,7 @@ class CreatePermitsTable extends Migration
             $table->text('leaders_names')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('permit_number')->nullable();
+            $table->integer('read')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -68,7 +68,21 @@ class PermitsController extends Controller
         $permit_number = "م ق أ /$registration_number/ $fourDigitCount";
 
         $arrTypeActivity = TypeActivity::orderBy('id')->get();
+        
 
+        ///// update read 
+
+
+        if($objAdmin->is_super == 0){
+        Permit::where('admin_id', $objAdmin->id)
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        Permit::withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+         
+        }
          
 
         return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject, 'permit_number'=>$permit_number,'arrTypeActivity'=>$arrTypeActivity]);

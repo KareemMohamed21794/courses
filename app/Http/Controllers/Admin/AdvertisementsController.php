@@ -37,13 +37,26 @@ class AdvertisementsController extends Controller
         }
 
 
-        
-
         $leaders = Admin::where('is_super',0)->get();
+
+
+         ///// update read 
+
+
+        if($objAdmin->is_super == 0){
+        Advertisement::where('admin_id', $objAdmin->id)
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        AdvertisementParent::withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+         
+        }
 
         return view('auth.admin.advertisements.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
 
-        Advertisement::where('admin_id', $objAdmin->id)->update(['read' => 1]);
+        //Advertisement::where('admin_id', $objAdmin->id)->update(['read' => 1]);
     }
 
     /**
@@ -167,11 +180,11 @@ class AdvertisementsController extends Controller
                 $fromEmail = 'admin@tawasol.privatescouts.org'; 
                 // The "from" email address
 
-                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                    $mail->to($recipient)
-                        ->from($fromEmail) // Set the "from" email address
-                        ->subject($subject);
-                });
+                // Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                //     $mail->to($recipient)
+                //         ->from($fromEmail) // Set the "from" email address
+                //         ->subject($subject);
+                // });
             }
 
             # send email

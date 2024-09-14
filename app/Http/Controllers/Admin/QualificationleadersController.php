@@ -29,6 +29,18 @@ class QualificationleadersController extends Controller
         $title = __('messages.qualification_leaders');
         $add_title = __('messages.qualification_leader');
         $leaders = Admin::where('is_super',0)->get();
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super == 0){
+        QualificationLeader::where('admin_id', $objAdmin->id)
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        QualificationLeader::withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+         
+        }
 
         return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }

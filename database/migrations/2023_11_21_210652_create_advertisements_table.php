@@ -17,11 +17,12 @@ class CreateAdvertisementsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_id');
             $table->foreign('admin_id')->references('id')->on('admins');
+            $table->integer('parent_id')->nullable();
             $table->string('group_type')->nullable();
             $table->string('file')->nullable();
             $table->string('file_name')->nullable();
             $table->string('description')->nullable();
-            $table->string('read')->nullable();
+            $table->integer('read')->default(0);
             $table->enum('categories', [
                 'talab_mukhatabat','⁠anshitat_mahaliya',
                 'anshita_earabiat_waealamia','aldirasat_altaahilia',

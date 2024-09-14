@@ -45,6 +45,20 @@ class AdministrativeFinancialReportsController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
+
+        if($objAdmin->is_super == 0){
+        File::where('admin_id', $objAdmin->id)
+        ->where('type',$firstSegment)
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        File::withTrashed() // Include both active and soft-deleted records
+        ->where('type',$firstSegment)
+        ->update(['read' => 1]);
+         
+        }
+
         return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders,'firstSegment'=>$firstSegment]);
     }
 

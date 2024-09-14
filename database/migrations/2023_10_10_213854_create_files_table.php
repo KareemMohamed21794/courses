@@ -25,6 +25,7 @@ class CreateFilesTable extends Migration
             $table->enum('type', ['secondary_registration', 'administrative','financial','board_director_meetings'])->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('reject_notes')->nullable();
+            $table->integer('read')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

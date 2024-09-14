@@ -39,6 +39,7 @@ class CreateQualificationLeadersTable extends Migration
             $table->string('organizer_qt')->nullable();
             $table->date('rent_date_qt')->nullable();
             $table->string('rent_number_qt')->nullable();
+            $table->integer('read')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

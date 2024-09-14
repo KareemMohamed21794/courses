@@ -32,6 +32,20 @@ class BoardDirectorMeetingsController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
+
+        if($objAdmin->is_super == 0){
+        File::where('admin_id', $objAdmin->id)
+        ->where('type','board_director_meetings')
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        File::withTrashed() // Include both active and soft-deleted records
+        ->where('type','board_director_meetings')
+        ->update(['read' => 1]);
+         
+        }
+
         return view('auth.admin.board_director_meetings.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders]);
     }
 

@@ -20,6 +20,7 @@ class CreateAchievementsStudyRequirementsTable extends Migration
             $table->string('document')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->string('reject_notes')->nullable();
+            $table->integer('read')->default(0);
             $table->timestamps();
         });
     }

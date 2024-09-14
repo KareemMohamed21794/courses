@@ -36,6 +36,16 @@ class OrganizingStudiesController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
+        if($objAdmin->is_super == 0){
+        OrganizingStudy::where('admin_id', $objAdmin->id)
+        ->update(['read' => 1]);
+        
+        }else{
+        OrganizingStudy::whereNotNull('id')->update(['read' => 1]);
+         
+        }
+
+
         return view('auth.admin.organizing_study.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
 
     }

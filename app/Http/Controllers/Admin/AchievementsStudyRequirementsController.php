@@ -32,6 +32,15 @@ class AchievementsStudyRequirementsController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
+        if($objAdmin->is_super == 0){
+        AchievementStudyRequirement::where('admin_id', $objAdmin->id)
+        ->update(['read' => 1]);
+        
+        }else{
+        AchievementStudyRequirement::whereNotNull('id')->update(['read' => 1]);
+         
+        }
+
         return view('auth.admin.achievements_study_requirements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders]);
     }
 
