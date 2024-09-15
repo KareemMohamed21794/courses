@@ -399,7 +399,7 @@ fill: #009EF7;
                             </span>
                           
                             <span class="menu-title"> {{ __('messages.incoming') }}</span>
-                            <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            <span class="circle-badge">{{$information_counter}}</span>
                             @else
                             <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -421,7 +421,7 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                             <span class="menu-title"> {{ __('messages.issued') }}</span>
-                            <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            <span class="circle-badge">{{$information_counter}}</span>
                             <!-- <span class="menu-title"> {{ __('messages.requests') }}</span> -->
                             @endif
                         

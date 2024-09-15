@@ -101,7 +101,7 @@
                         @endif
 
                         <!--begin::Download Form-->
-                         <a href="{{ url('public/') }}/board_director_meetings.doc" class="menu-link px-3">
+                         <a href="{{ url('public/') }}/{{@$objSetup->board_director_meeting_file}}" class="menu-link px-3" download="نموذج  اجتماعات الهيئه العامه">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">

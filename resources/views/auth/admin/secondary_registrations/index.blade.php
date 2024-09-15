@@ -101,7 +101,7 @@
 
                         @endif
                         <!--begin::Download Form-->
-                         <a href="{{ url('public/') }}/secondary_registrations.xlsx" class="menu-link px-3">
+                         <a href="{{ url('public') }}/{{@$objSetup->secondary_registration_file}}" class="menu-link px-3" download="نموذج التسجيل السنوي">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">

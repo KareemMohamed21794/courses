@@ -56,6 +56,78 @@
                         </div>
                         <!--end::Input group-->
 
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج التسجيل السنوي</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج التسجيل السنوي" name="secondary_registration_file"  id="secondary_registration_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج الاداري السنوي</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج الاداري السنوي" name="administrative_file"  id="administrative_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج المالي السنوي</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج المالي السنوي" name="financial_file"  id="financial_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج  اجتماعات الهيئه العامه</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج  اجتماعات الهيئه العامه" name="board_director_meeting_file"  id="board_director_meeting_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج وسام القائد منذر</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج وسام القائد منذر" name="commander_medal_file"  id="commander_medal_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+                          <!--begin::Input group-->
+                        <div class="fv-row mb-7">
+                            <!--begin::Label-->
+                            <label class="required fs-6 fw-bold mb-2">نموذج انجازات متطلبات دراسه</label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <input type="file" class="form-control form-control-solid" placeholder="نموذج انجازات متطلبات دراسه" name="achievement_study_requirement_file"  id="achievement_study_requirement_file"  />
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
                     </div>
                     <!--end::Scroll-->
                 </div>

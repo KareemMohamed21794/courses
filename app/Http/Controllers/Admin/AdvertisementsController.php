@@ -143,6 +143,7 @@ class AdvertisementsController extends Controller
         $AdvertisementParent->file_name = $request->file_name;
         $AdvertisementParent->description = $request->description;
         $AdvertisementParent->categories = $request->categories;
+
         $AdvertisementParent->save();
 
         
@@ -163,6 +164,7 @@ class AdvertisementsController extends Controller
  
 
         }
+        
 
         foreach ($arrGroups as $key => $objGroup) {
 

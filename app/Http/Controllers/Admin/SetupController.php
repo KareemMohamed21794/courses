@@ -65,10 +65,71 @@ class SetupController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
+        $secondary_registration_file = '';
+        $administrative_file = '';
+        $financial_file = '';
+        $board_director_meeting_file = '';
+        $commander_medal_file = '';
+        $achievement_study_requirement_file = '';
+
+
+        if(!empty($request->file('secondary_registration_file'))){
+            $file = $request->file('secondary_registration_file');
+            $destinationPath = "public/images/setup";
+            $secondary_registration_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $secondary_registration_file);
+        }
+
+
+        if(!empty($request->file('administrative_file'))){
+            $file = $request->file('administrative_file');
+            $destinationPath = "public/images/setup";
+            $administrative_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $administrative_file);
+        }
+
+
+        if(!empty($request->file('financial_file'))){
+            $file = $request->file('financial_file');
+            $destinationPath = "public/images/setup";
+            $financial_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $financial_file);
+        }
+
+
+        if(!empty($request->file('board_director_meeting_file'))){
+            $file = $request->file('board_director_meeting_file');
+            $destinationPath = "public/images/setup";
+            $board_director_meeting_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $board_director_meeting_file);
+        }
+
+
+
+        if(!empty($request->file('commander_medal_file'))){
+            $file = $request->file('commander_medal_file');
+            $destinationPath = "public/images/setup";
+            $commander_medal_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $commander_medal_file);
+        }
+
+        if(!empty($request->file('achievement_study_requirement_file'))){
+            $file = $request->file('achievement_study_requirement_file');
+            $destinationPath = "public/images/setup";
+            $achievement_study_requirement_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $achievement_study_requirement_file);
+        }
+
 
         $Setup = Setup::create([
             'dead_line' =>  $request->dead_line,
             'commander_medal_date' =>  $request->commander_medal_date ,
+            'secondary_registration_file' =>  $destinationPath.'/'.$secondary_registration_file ,
+            'administrative_file' =>  $destinationPath.'/'.$administrative_file ,
+            'financial_file' =>  $destinationPath.'/'.$financial_file,
+            'board_director_meeting_file' =>  $destinationPath.'/'.$board_director_meeting_file ,
+            'commander_medal_file' =>  $destinationPath.'/'.$commander_medal_file ,
+            'achievement_study_requirement_file' =>  $destinationPath.'/'.$achievement_study_requirement_file ,
            
         ]);
 
@@ -119,10 +180,95 @@ class SetupController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
+
+        $secondary_registration_file = '';
+        $administrative_file = '';
+        $financial_file = '';
+        $board_director_meeting_file = '';
+        $commander_medal_file = '';
+        $achievement_study_requirement_file = '';
+
         $objSetup = Setup::find($id);
        
         $objSetup->dead_line =  $request->dead_line;
         $objSetup->commander_medal_date =  $request->commander_medal_date;
+
+        if(!empty($request->file('secondary_registration_file'))){
+            $oldImage = $objSetup->secondary_registration_file;
+            $file = $request->file('secondary_registration_file');
+            $destinationPath = "public/images/setup";
+            $secondary_registration_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $secondary_registration_file);
+            $objSetup->secondary_registration_file = $destinationPath.'/'.$secondary_registration_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
+
+
+        if(!empty($request->file('administrative_file'))){
+            $oldImage = $objSetup->administrative_file;
+            $file = $request->file('administrative_file');
+            $destinationPath = "public/images/setup";
+            $administrative_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $administrative_file);
+            $objSetup->administrative_file = $destinationPath.'/'.$administrative_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
+
+
+        if(!empty($request->file('financial_file'))){
+            $oldImage = $objSetup->financial_file;
+            $file = $request->file('financial_file');
+            $destinationPath = "public/images/setup";
+            $financial_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $financial_file);
+            $objSetup->financial_file = $destinationPath.'/'.$financial_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
+
+
+        if(!empty($request->file('board_director_meeting_file'))){
+            $oldImage = $objSetup->board_director_meeting_file;
+            $file = $request->file('board_director_meeting_file');
+            $destinationPath = "public/images/setup";
+            $board_director_meeting_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $board_director_meeting_file);
+            $objSetup->board_director_meeting_file = $destinationPath.'/'.$board_director_meeting_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
+
+
+        if(!empty($request->file('commander_medal_file'))){
+            $oldImage = $objSetup->commander_medal_file;
+            $file = $request->file('commander_medal_file');
+            $destinationPath = "public/images/setup";
+            $commander_medal_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $commander_medal_file);
+            $objSetup->commander_medal_file = $destinationPath.'/'.$commander_medal_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
+
+
+        if(!empty($request->file('achievement_study_requirement_file'))){
+            $oldImage = $objSetup->achievement_study_requirement_file;
+            $file = $request->file('achievement_study_requirement_file');
+            $destinationPath = "public/images/setup";
+            $achievement_study_requirement_file = rand().time().'.'.$file->getClientOriginalExtension();
+            $file->move($destinationPath, $achievement_study_requirement_file);
+            $objSetup->achievement_study_requirement_file = $destinationPath.'/'.$achievement_study_requirement_file;
+            if($objSetup->save()){
+               @unlink("public/images/setup/".$oldImage);
+            }
+        }
         
         $objSetup->save();
         return response()->json(['objSetup'=>$objSetup]);

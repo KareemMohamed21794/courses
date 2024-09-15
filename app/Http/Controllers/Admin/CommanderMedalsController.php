@@ -45,7 +45,7 @@ class CommanderMedalsController extends Controller
         ->update(['read' => 1]);
         
         }else{
-        CommanderMedal::update(['read' => 1]);
+        CommanderMedal::whereNotNull('id')->update(['read' => 1]);
          
         }
 

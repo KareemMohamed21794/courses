@@ -17,6 +17,12 @@ class CreateSetupTable extends Migration
             $table->id();
             $table->date('dead_line')->nullable();
             $table->date('commander_medal_date')->nullable();
+            $table->string('secondary_registration_file')->nullable();
+            $table->string('administrative_file')->nullable();
+            $table->string('financial_file')->nullable();
+            $table->string('board_director_meeting_file')->nullable();
+            $table->string('commander_medal_file')->nullable();
+            $table->string('achievement_study_requirement_file')->nullable();
             $table->timestamps();
         });
     }

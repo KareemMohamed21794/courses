@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use App\Models\Advertisement;
 use App\Models\AdvertisementParent;
+use App\Models\Information;
 use App\Models\QualificationLeader;
 use App\Models\Permit;
 use App\Models\File;
+use App\Models\Setup;
 use App\Models\CommanderMedal;
 use App\Models\AchievementStudyRequirement;
 use App\Models\OrganizingStudy;
@@ -55,6 +57,8 @@ class AppServiceProvider extends ServiceProvider
             $Advertisements = Advertisement::where('read',0)
             ->where('admin_id',@$objAdmin->id)
             ->get();
+
+            $objSetup = Setup::first();
             
             
             foreach ($Advertisements as $Advertisement) {
@@ -83,6 +87,9 @@ class AppServiceProvider extends ServiceProvider
 
             $organizing_study_counter = OrganizingStudy::where('admin_id',@$objAdmin->id)->where('read',0)->count();
 
+
+            $information_counter = Information::where('admin_id',@$objAdmin->id)->where('read',0)->count();
+
             }else{
             
              $permit_counter = Permit::where('read',0)->count();
@@ -98,6 +105,7 @@ class AppServiceProvider extends ServiceProvider
              $achivement_study_counter = AchievementStudyRequirement::where('read',0)->count();
 
              $organizing_study_counter = OrganizingStudy::where('read',0)->count();
+             $information_counter = Information::where('read',0)->count();
             }
              
 
@@ -115,6 +123,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('qualification_leader_counter', $qualification_leader_counter);
             $view->with('achivement_study_counter', $achivement_study_counter);
             $view->with('organizing_study_counter', $organizing_study_counter);
+            $view->with('information_counter', $information_counter);
+            $view->with('objSetup', $objSetup);
         });
     }
 }

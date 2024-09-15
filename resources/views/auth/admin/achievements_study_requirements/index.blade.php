@@ -101,7 +101,7 @@
                         @endif
 
                         <!--begin::Download Form-->
-                         <a href="{{ url('public/') }}/achievements_study_requirements.doc" class="menu-link px-3">
+                         <a href="{{ url('public/') }}/{{@$objSetup->achievement_study_requirement_file}}" class="menu-link px-3" download="نموذج انجازات متطلبات دراسه">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">

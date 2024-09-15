@@ -37,6 +37,20 @@ class InformationsController extends Controller
 
         $leaders = Admin::where('is_super',0)->get();
 
+         ///// update read 
+
+
+        if($objAdmin->is_super == 0){
+        Information::where('admin_id', $objAdmin->id)
+        ->withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+        
+        }else{
+        Information::withTrashed() // Include both active and soft-deleted records
+        ->update(['read' => 1]);
+         
+        }
+
         return view('auth.admin.requests.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
     }
 

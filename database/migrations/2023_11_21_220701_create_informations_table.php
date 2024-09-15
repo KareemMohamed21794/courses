@@ -22,6 +22,7 @@ class CreateInformationsTable extends Migration
             $table->string('description')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
             $table->string('reject_notes')->nullable();
+            $table->integer('read')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

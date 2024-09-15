@@ -102,9 +102,9 @@
 
                          <!--begin::Download Form-->
                         @if($firstSegment=='administrative')
-                        <a href="{{ url('public/') }}/administrative.doc" class="menu-link px-3">
+                        <a href="{{ url('public/') }}/{{@$objSetup->administrative_file}}" class="menu-link px-3" download="نموذج الاداري السنوي">
                         @else
-                        <a href="{{ url('public/') }}/financial.xlsx" class="menu-link px-3">
+                        <a href="{{ url('public/') }}/{{@$objSetup->financial_file}}" class="menu-link px-3" download="نموذج المالي السنوي">
                         @endif    
                             <button type="button" class="btn btn-light-primary me-3" >
                          
