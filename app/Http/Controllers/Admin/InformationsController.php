@@ -106,6 +106,8 @@ class InformationsController extends Controller
         'description' =>  $request->description,
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'send_request', 'create', ' informations', $Information->id);
+
         $recipient = 'admin@tawasol.com';
         //$recipient = 'mahmoud.ali.29992@gmail.com';
         $subject = 'لديك وارد';

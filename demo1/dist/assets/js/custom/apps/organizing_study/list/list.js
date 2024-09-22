@@ -17,12 +17,13 @@ var KTDatatablesServerSide = function () {
     { data: '#' },
     { data: 'order' },
     // { data: 'id' },
-    // { data: 'admin_id' },
-    // { data: 'categories' },
-    { data: 'file_name' },
-    { data: 'file' },
-    
-    { data: 'description' },
+    { data: 'study_place' },
+    { data: 'practical_place' },
+    { data: 'proposed_time_study' },
+    { data: 'maximum_number_students' },
+    { data: 'proposed_study_supervisor' },
+    { data: 'status' },
+    { data: 'reject_notes' },
     { data: 'created_at' },
     { data: null },
    ];
@@ -31,11 +32,14 @@ var KTDatatablesServerSide = function () {
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
-        // { data: 'categories' },
-          { data: 'file_name' },
-        { data: 'file' },
-      
-        { data: 'description' },
+        { data: 'study_place' },
+        { data: 'practical_place' },
+        { data: 'proposed_time_study' },
+        { data: 'maximum_number_students' },
+        { data: 'proposed_study_supervisor' },
+        { data: 'status' },
+        { data: 'reject_notes' },
+        
         { data: 'created_at' },
         { data: null },
     ];
@@ -132,10 +136,35 @@ var KTDatatablesServerSide = function () {
                         if (is_super === '1') {
                             AdminContent = `
 
+
+                            <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
+                                    <a href="/admin/organizing_study_files/`+row.id+`" class="menu-link px-3" target="_blank">
+                                     الملفات
+                                    </a>
+                                </div>
+
                                <!--begin::Menu item-->
                                 <div class="menu-item px-3" >
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
+                                        موافقه
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
+                                        رفض
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -514,3 +543,65 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
+
+
+function reject_accept(status,id) {
+
+    //======= Start Ajxa ========//
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var type = "GET";
+    var ajaxurl = '/admin/organizing_study/'+status+'/'+id+'/reject_accept';
+    
+    if(status == 'rejected'){
+        var note = 'تم الرفض بنجاح';
+    }else{
+        var note = 'تمت الموافقه  بنجاح';
+    }
+    
+
+    $.ajax({
+        type: type,
+        url: ajaxurl,
+        dataType: 'json',
+        success: function (data) {
+            Swal.fire({
+                text: 'الرجاء الانتظار قليلا',
+                icon: "info",
+                buttonsStyling: false,
+                showConfirmButton: false,
+                timer: 2000
+            }).then(function () {
+                Swal.fire({
+                    text: note,
+                    icon: "success",
+                    buttonsStyling: false,
+                    confirmButtonText: "حسنًا ، حسنًا!",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-primary",
+                    }
+                }).then(function () {
+                    // delete row data from server and re-draw datatable
+                    dt.draw();
+                });
+            });
+        },
+        error: function (data) {
+        Swal.fire({
+            text: "معذرة ، يبدو أنه تم اكتشاف بعض الأخطاء ، يرجى المحاولة مرة أخرى.",
+            icon: "error",
+            buttonsStyling: false,
+            confirmButtonText: "حسنًا ، حسنًا!",
+            customClass: {
+                confirmButton: "btn btn-primary"
+            }
+        });
+    }
+    });
+    //======= End Ajxa ========//
+}

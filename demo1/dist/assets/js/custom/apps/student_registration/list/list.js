@@ -6,8 +6,8 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-    
-    let main_url = "student_registration/get";
+    var group_id = $("#group_id").val();
+    let main_url = "student_registration/get/"+group_id;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -34,10 +34,15 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
                 { data: '#' },
-                { data: 'id' },
-                { data: 'description_ar' },
-                { data: 'description_en' },
-                { data: 'active' },
+                { data: 'order' },
+                //{ data: 'id' },
+                { data: 'first_name' },
+                { data: 'father_name' },
+                { data: 'grandfather_name' },
+                { data: 'family_name' },
+                { data: 'birth_date' },
+                { data: 'birth_place' },
+                { data: 'type'},
                 { data: 'created_at' },
                 { data: null },
             ],
@@ -115,22 +120,25 @@ var KTDatatablesServerSide = function () {
                                 </span>
                             </a>
                             <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" >
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="student_registration/`+row.id+`/edit" class="menu-link px-3" >
-                                        `+edit_lang+`
+                                <div class="menu-item px-3" >
+                                    <a href="/admin/accept_student_registration/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
+                                        مقبول
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
 
+
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" >
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
+                                        مرفوض
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
+
+                               
                             </div>
                             <!--end::Menu-->
                         `;

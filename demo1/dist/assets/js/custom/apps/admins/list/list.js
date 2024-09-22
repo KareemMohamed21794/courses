@@ -134,6 +134,50 @@ var KTDatatablesServerSide = function () {
                             `;
                         }
 
+
+                        if (segment === 'leaders') {
+                            AdminContent = `
+                                
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                       عرض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
+                                       تسجيل الطالب
+                                    </a>
+
+                                </div>
+                                <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
+                                       عرض الطلاب
+                                    </a>
+
+                                </div>
+                                <!--end::Menu item-->
+
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+ 
+                            `;
+                        }
+
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
@@ -509,3 +553,17 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
+
+function handleClick(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    getData(id, 2); // Execute the function
+    window.location.href = 'student_registration/'+id; // Navigate to the new URL
+}
+
+
+
+function ShowStudents(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    getData(id, 2); // Execute the function
+    window.location.href = 'show_students/'+id; // Navigate to the new URL
+}

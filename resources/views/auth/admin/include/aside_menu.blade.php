@@ -365,7 +365,9 @@ fill: #009EF7;
                             </span>
                            
                             <span class="menu-title"> {{ __('messages.issued') }}</span>
-                            <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            @if($advirtesment_counter)
+                                <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            @endif    
                             @else
 
                              <span class="menu-icon">
