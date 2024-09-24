@@ -119,7 +119,7 @@
 
 
          <div class="form-group">
-           <p style="text-align: center;font-weight:bold;font-size:18px;font-family: 'Cairo'">التسجيل في مجموعه  {{$admindetails->group_name}}</p>
+           <p style="text-align: center;font-weight:bold;font-size:18px;font-family: 'Cairo'">التسجيل في   {{$admindetails->group_name}}</p>
         </div>
 
         <div class="form-group">
@@ -497,6 +497,7 @@
     </form>
 </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
 

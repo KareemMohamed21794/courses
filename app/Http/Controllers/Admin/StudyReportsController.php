@@ -239,6 +239,9 @@ class StudyReportsController extends Controller
         }
 
         $objOrganizingStudy->save();
+
+
+        $this->logAction(auth()->id(), 'user', 'update_organizing_study', 'update', 'organizing_studies', $objOrganizingStudy->id);
      
 
         DB::commit(); // Commit the transaction
@@ -257,6 +260,7 @@ class StudyReportsController extends Controller
         OrganizingStudieSeparate::where('organizing_studies_id',$id)->delete();
         OrganizingStudieFile::where('organizing_studies_id',$id)->delete();
         $OrganizingStudy = OrganizingStudy::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_organizing_study', 'delete', 'organizing_studies', $id);
         return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
     }
 
@@ -266,6 +270,9 @@ class StudyReportsController extends Controller
         OrganizingStudieSeparate::whereIn('organizing_studies_id',$request->ids)->delete();
         OrganizingStudieFile::whereIn('organizing_studies_id',$request->ids)->delete();
         $OrganizingStudy = OrganizingStudy::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_organizing_study', 'delete', 'organizing_studies', $id);
+        }
         return response()->json(['OrganizingStudy'=>$OrganizingStudy]);
     }
 
@@ -612,6 +619,7 @@ class StudyReportsController extends Controller
         $objOrganizingStudy->status = $status;
         $objOrganizingStudy->reject_notes = null;
         $objOrganizingStudy->save();
+        $this->logAction(auth()->id(), 'user', 'accept_organizing_study', 'accepted', 'organizing_studies', $objOrganizingStudy->id);
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
     }
 
@@ -626,6 +634,7 @@ class StudyReportsController extends Controller
         $objOrganizingStudy->reject_notes = $reject_notes;
         
         $objOrganizingStudy->save();
+        $this->logAction(auth()->id(), 'user', 'reject_organizing_study', 'rejected', 'organizing_studies', $objOrganizingStudy->id);
         return response()->json(['objOrganizingStudy'=>$objOrganizingStudy]);
     }
 }

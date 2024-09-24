@@ -98,6 +98,8 @@ class AchievementsStudyRequirementsController extends Controller
            
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_achievements_study_requirement', 'create', 'achievements_study_requirements', $AchievementStudyRequirement->id);
+
         return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
@@ -149,6 +151,8 @@ class AchievementsStudyRequirementsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $AchievementStudyRequirement = AchievementStudyRequirement::where('id',$id)->delete();
+
+        $this->logAction(auth()->id(), 'user', 'delete_achievements_study_requirement', 'delete', 'achievements_study_requirements', $id);
         return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
@@ -156,6 +160,11 @@ class AchievementsStudyRequirementsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $AchievementStudyRequirement = AchievementStudyRequirement::whereIn('id',$request->ids)->delete();
+
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_achievements_study_requirement', 'delete', 'achievements_study_requirements', $id);
+        }
+
         return response()->json(['AchievementStudyRequirement'=>$AchievementStudyRequirement]);
     }
 
@@ -481,6 +490,8 @@ class AchievementsStudyRequirementsController extends Controller
         $objFile->status = $status;
         $objFile->reject_notes = null;
         $objFile->save();
+
+        $this->logAction(auth()->id(), 'user', 'accept_achievements_study_requirement', 'accepted', 'achievements_study_requirements', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -496,6 +507,8 @@ class AchievementsStudyRequirementsController extends Controller
         $objFile->reject_notes = $reject_notes;
         
         $objFile->save();
+
+        $this->logAction(auth()->id(), 'user', 'reject_achievements_study_requirement', 'rejected', 'achievements_study_requirements', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 

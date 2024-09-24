@@ -104,6 +104,9 @@ class QualificationleadersController extends Controller
             
         ]);
 
+
+        $this->logAction(auth()->id(), 'user', 'add_qualification_leader', 'create', 'qualification_leaders', $QualificationLeader->id);
+
         return response()->json(['QualificationLeader'=>$QualificationLeader]);
     }
 
@@ -182,6 +185,8 @@ class QualificationleadersController extends Controller
         
        
         $objQualificationLeader->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_qualification_leader', 'update', 'qualification_leaders', $objQualificationLeader->id);
         return response()->json(['objQualificationLeader'=>$objQualificationLeader]);
     }
 
@@ -195,6 +200,7 @@ class QualificationleadersController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $QualificationLeader = QualificationLeader::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_qualification_leader', 'delete', 'qualification_leaders', $id);
         return response()->json(['QualificationLeader'=>$QualificationLeader]);
     }
 
@@ -202,6 +208,9 @@ class QualificationleadersController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $QualificationLeader = QualificationLeader::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_qualification_leader', 'delete', 'qualification_leaders', $id);
+        }
         return response()->json(['QualificationLeader'=>$QualificationLeader]);
     }
 

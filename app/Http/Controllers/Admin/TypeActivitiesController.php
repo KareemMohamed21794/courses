@@ -68,6 +68,8 @@ class TypeActivitiesController extends Controller
            
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_type_activity', 'create', 'type_activity', $QualificationLeader->id);
+
         return response()->json(['TypeActivity'=>$TypeActivity]);
     }
 
@@ -121,6 +123,9 @@ class TypeActivitiesController extends Controller
         $objTypeActivity->price =  $request->price;
         
         $objTypeActivity->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_type_activity', 'update', 'type_activity', $objTypeActivity->id);
+
         return response()->json(['objTypeActivity'=>$objTypeActivity]);
     }
 
@@ -134,6 +139,7 @@ class TypeActivitiesController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $TypeActivity = TypeActivity::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_type_activity', 'delete', 'type_activity', $id);
         return response()->json(['TypeActivity'=>$TypeActivity]);
     }
 
@@ -141,6 +147,9 @@ class TypeActivitiesController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $TypeActivity = TypeActivity::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_type_activity', 'delete', 'type_activity', $id);
+        }
         return response()->json(['TypeActivity'=>$TypeActivity]);
     }
 

@@ -129,6 +129,8 @@ class CommanderMedalsController extends Controller
            
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_commander_medal', 'create', 'commander_medals', $CommanderMedal->id);
+
         return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
@@ -180,6 +182,7 @@ class CommanderMedalsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $CommanderMedal = CommanderMedal::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_commander_medal', 'delete', 'commander_medals', $id);
         return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
@@ -187,6 +190,9 @@ class CommanderMedalsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $CommanderMedal = CommanderMedal::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_commander_medal', 'delete', 'commander_medals', $id);
+        }
         return response()->json(['CommanderMedal'=>$CommanderMedal]);
     }
 
@@ -491,11 +497,12 @@ class CommanderMedalsController extends Controller
     public function reject_accept($status,$id)
     {
        
-        $objFile = CommanderMedal::find($id);
-        $objFile->status = $status;
-        $objFile->reject_notes = null;
-        $objFile->save();
-        return response()->json(['objFile'=>$objFile]);
+        $objCommanderMedal = CommanderMedal::find($id);
+        $objCommanderMedal->status = $status;
+        $objCommanderMedal->reject_notes = null;
+        $objCommanderMedal->save();
+        $this->logAction(auth()->id(), 'user', 'accept_commander_medal', 'accepted', 'commander_medals', $objCommanderMedal->id);
+        return response()->json(['objCommanderMedal'=>$objCommanderMedal]);
     }
 
 
@@ -505,12 +512,13 @@ class CommanderMedalsController extends Controller
         
         $request_id = $request->request_id;
         $reject_notes = $request->reject_notes;
-        $objFile = CommanderMedal::find($request_id);
-        $objFile->status = 'rejected';
-        $objFile->reject_notes = $reject_notes;
+        $objCommanderMedal = CommanderMedal::find($request_id);
+        $objCommanderMedal->status = 'rejected';
+        $objCommanderMedal->reject_notes = $reject_notes;
         
-        $objFile->save();
-        return response()->json(['objFile'=>$objFile]);
+        $objCommanderMedal->save();
+        $this->logAction(auth()->id(), 'user', 'reject_commander_medal', 'rejected', 'commander_medals', $objCommanderMedal->id);
+        return response()->json(['objCommanderMedal'=>$objCommanderMedal]);
     }
 
 

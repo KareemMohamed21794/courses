@@ -133,6 +133,9 @@ class SetupController extends Controller
            
         ]);
 
+
+        $this->logAction(auth()->id(), 'user', 'add_setup', 'create', 'setup', $Setup->id);
+
         return response()->json(['Setup'=>$Setup]);
     }
 
@@ -271,6 +274,8 @@ class SetupController extends Controller
         }
         
         $objSetup->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_setup', 'update', 'setup', $objSetup->id);
         return response()->json(['objSetup'=>$objSetup]);
     }
 

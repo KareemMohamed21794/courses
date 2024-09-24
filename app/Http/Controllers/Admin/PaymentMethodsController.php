@@ -68,6 +68,8 @@ class PaymentMethodsController extends Controller
            
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_payment_method', 'create', 'payment_methods', $PaymentMethod->id);
+
         return response()->json(['PaymentMethod'=>$PaymentMethod]);
     }
 
@@ -120,6 +122,10 @@ class PaymentMethodsController extends Controller
         $objPaymentMethod->name_ar =  $request->name_ar;
        
         $objPaymentMethod->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_payment_method', 'update', 'payment_methods', $objPaymentMethod->id);
+
+
         return response()->json(['objPaymentMethod'=>$objPaymentMethod]);
     }
 
@@ -133,6 +139,7 @@ class PaymentMethodsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $PaymentMethod = PaymentMethod::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_payment_method', 'delete', 'payment_methods', $id);
         return response()->json(['PaymentMethod'=>$PaymentMethod]);
     }
 
@@ -140,6 +147,9 @@ class PaymentMethodsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $PaymentMethod = PaymentMethod::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_payment_method', 'delete', 'payment_methods', $id);
+        }
         return response()->json(['PaymentMethod'=>$PaymentMethod]);
     }
 

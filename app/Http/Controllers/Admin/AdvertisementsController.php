@@ -166,6 +166,10 @@ class AdvertisementsController extends Controller
  
 
         }
+
+
+
+        $this->logAction(auth()->id(), 'user', 'send_Advertisement', 'create', 'advertisements', $Advertisement->id);
         
 
         foreach ($arrGroups as $key => $objGroup) {
@@ -274,6 +278,8 @@ class AdvertisementsController extends Controller
         }
 
         $objAdvertisement->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_Advertisement', 'update', 'advertisements', $objAdvertisement->id);
         return response()->json(['objAdvertisement'=>$objAdvertisement]);
     }
 
@@ -287,13 +293,18 @@ class AdvertisementsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $Advertisement = Advertisement::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_Advertisement', 'delete', 'advertisements', $id);
         return response()->json(['Advertisement'=>$Advertisement]);
     }
 
      public function deleteadvertisements(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_Advertisement', 'delete', 'advertisements', $id);
+        }
         $Advertisement = Advertisement::whereIn('id',$request->ids)->delete();
+
         return response()->json(['Advertisement'=>$Advertisement]);
     }
 

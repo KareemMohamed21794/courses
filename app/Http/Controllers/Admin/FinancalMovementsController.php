@@ -82,6 +82,8 @@ class FinancalMovementsController extends Controller
            
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_financial_movement', 'create', 'financial_movements', $FinancialMovement->id);
+
         return response()->json(['FinancialMovement'=>$FinancialMovement]);
     }
 
@@ -143,6 +145,9 @@ class FinancalMovementsController extends Controller
         $objFinancialMovement->payment_method_id =  $request->payment_method_id;
        
         $objFinancialMovement->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_financial_movement', 'update', 'financial_movements', $objFinancialMovement->id);
+
         return response()->json(['objFinancialMovement'=>$objFinancialMovement]);
     }
 
@@ -156,6 +161,7 @@ class FinancalMovementsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $FinancialMovement = FinancialMovement::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_financial_movement', 'delete', 'financial_movements', $id);
         return response()->json(['FinancialMovement'=>$FinancialMovement]);
     }
 
@@ -163,6 +169,10 @@ class FinancalMovementsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $FinancialMovement = FinancialMovement::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_financial_movement', 'delete', 'financial_movements', $id);
+        }
+
         return response()->json(['FinancialMovement'=>$FinancialMovement]);
     }
 

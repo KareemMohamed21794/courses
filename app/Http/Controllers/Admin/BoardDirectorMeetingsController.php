@@ -108,6 +108,8 @@ class BoardDirectorMeetingsController extends Controller
             'year' =>  $request->year,
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_board_director_meetings', 'create', 'files', $File->id);
+
         return response()->json(['File'=>$File]);
     }
 
@@ -177,6 +179,9 @@ class BoardDirectorMeetingsController extends Controller
             }
         }
         $objFile->save();
+
+
+        $this->logAction(auth()->id(), 'user', 'update_board_director_meetings', 'update', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -189,13 +194,19 @@ class BoardDirectorMeetingsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
+        $objFile = File::where('id',$id)->first();
         $File = File::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_board_director_meetings', 'delete', 'files', $id);
         return response()->json(['File'=>$File]);
     }
 
      public function deleteBoardDirectorMeetings(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
+        foreach ($request->ids as $key => $id) {
+            $objFile = File::where('id',$id)->first();
+            $this->logAction(auth()->id(), 'user', 'delete_board_director_meetings', 'delete', 'files', $id);
+        }
         $File = File::whereIn('id',$request->ids)->delete();
         return response()->json(['File'=>$File]);
     }
@@ -527,6 +538,7 @@ class BoardDirectorMeetingsController extends Controller
         $objFile->status = $status;
         $objFile->reject_notes = null;
         $objFile->save();
+        $this->logAction(auth()->id(), 'user', 'accept_board_director_meetings', 'accepted', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -542,6 +554,7 @@ class BoardDirectorMeetingsController extends Controller
         $objFile->reject_notes = $reject_notes;
         
         $objFile->save();
+        $this->logAction(auth()->id(), 'user', 'reject_board_director_meetings', 'rejected', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 

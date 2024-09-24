@@ -108,7 +108,7 @@ class InformationsController extends Controller
         'description' =>  $request->description,
         ]);
 
-        $this->logAction(auth()->id(), 'user', 'send_request', 'create', ' informations', $Information->id);
+        $this->logAction(auth()->id(), 'user', 'send_request', 'create', 'informations', $Information->id);
 
         $recipient = 'admin@tawasol.com';
         //$recipient = 'mahmoud.ali.29992@gmail.com';
@@ -199,6 +199,8 @@ class InformationsController extends Controller
         }
 
         $objInformation->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_request', 'update', 'informations', $id);
         return response()->json(['objInformation'=>$objInformation]);
     }
 
@@ -212,6 +214,7 @@ class InformationsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $Information = Information::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_request', 'delete', 'informations', $id);
         return response()->json(['Information'=>$Information]);
     }
 
@@ -219,6 +222,9 @@ class InformationsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $Information = Information::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_request', 'delete', 'informations', $id);
+        }
         return response()->json(['Information'=>$Information]);
     }
 
@@ -573,6 +579,9 @@ class InformationsController extends Controller
         $objInformation->reject_notes = null;
         $objInformation->save();
 
+
+        $this->logAction(auth()->id(), 'user', 'accept_request', 'accepted', 'informations', $id);
+
         $recipient = 'admin@tawasol.com';
         //$recipient = 'mahmoud.ali.29992@gmail.com';
         $subject = 'تم قبول الوارد';
@@ -605,6 +614,8 @@ public function RejectedRequest(Request $request)
         $objInformation->reject_notes = $reject_notes;
         
         $objInformation->save();
+
+        $this->logAction(auth()->id(), 'user', 'reject_request', 'rejected', 'informations', $request_id);
 
         $recipient = 'admin@tawasol.com';
         //$recipient = 'mahmoud.ali.29992@gmail.com';

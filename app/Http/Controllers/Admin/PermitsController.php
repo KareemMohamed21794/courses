@@ -156,6 +156,9 @@ class PermitsController extends Controller
         ]);
 
 
+        $this->logAction(auth()->id(), 'user', 'add_permit', 'create', 'permits', $Permit->id);
+
+
         $recipient = 'admin@tawasol.com';
         //$recipient = 'mahmoud.ali.29992@gmail.com';
         $subject = 'طلب تصريح';
@@ -252,6 +255,9 @@ class PermitsController extends Controller
         $objPermit->leaders_names =  $request->leaders_names;
        
         $objPermit->save();
+
+
+        $this->logAction(auth()->id(), 'user', 'update_permit', 'update', 'permits', $objPermit->id);
         return response()->json(['objPermit'=>$objPermit]);
     }
 
@@ -265,6 +271,7 @@ class PermitsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $Permit = Permit::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_permit', 'delete', 'permits', $id);
         return response()->json(['Permit'=>$Permit]);
     }
 
@@ -272,6 +279,10 @@ class PermitsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $Permit = Permit::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_permit', 'delete', 'permits', $id);
+        }
+
         return response()->json(['Permit'=>$Permit]);
     }
 
@@ -604,6 +615,8 @@ class PermitsController extends Controller
         $objPermit->status = "approved";       
         $objPermit->save();
 
+        $this->logAction(auth()->id(), 'user', 'accept_permit', 'accepted', 'permits', $objPermit->id);
+
 
         if(!empty($objPermit->admin->email)){
 
@@ -685,6 +698,7 @@ class PermitsController extends Controller
         $objPermit = Permit::find($id);
         $objPermit->status = "rejected";       
         $objPermit->save();
+        $this->logAction(auth()->id(), 'user', 'reject_permit', 'rejected', 'permits', $objPermit->id);
 
         if(!empty($objPermit->admin->email)){
             $recipient = $objPermit->admin->email;

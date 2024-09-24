@@ -134,6 +134,8 @@ class StudentRegistrationsController extends Controller
         'year' => date('Y'),
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_student', 'create', ' student_registrations', $StudentRegistration->id);
+
         // return redirect('student_registration');
 
    
@@ -223,6 +225,7 @@ class StudentRegistrationsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $StudentRegistration = StudentRegistration::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_student', 'delete', ' student_registrations', $id);
         return response()->json(['StudentRegistration'=>$StudentRegistration]);
     }
 
@@ -230,6 +233,9 @@ class StudentRegistrationsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $StudentRegistration = StudentRegistration::whereIn('id',$request->ids)->delete();
+        foreach ($request->ids as $key => $id) {
+            $this->logAction(auth()->id(), 'user', 'delete_student', 'delete', ' student_registrations', $id);
+        }
         return response()->json(['StudentRegistration'=>$StudentRegistration]);
     }
 
@@ -476,6 +482,8 @@ class StudentRegistrationsController extends Controller
         $objStudentRegistration->type = "approved";       
         $objStudentRegistration->save();
 
+        $this->logAction(auth()->id(), 'user', 'accept_student', 'accepted', ' student_registrations', $objStudentRegistration->id);
+
         // $objUser = $objStudentRegistration->Admin;
 
         // if(!empty($objUser->email)){
@@ -536,7 +544,7 @@ class StudentRegistrationsController extends Controller
 
             if(!$exsist_student){
 
-                 $StudentRegistration = StudentRegistration::create([
+                $StudentRegistration = StudentRegistration::create([
                 'admin_id' =>  $request->admin_id,
                 'first_name' =>  $objStudentRegistration->first_name,
                 'father_name' =>  $objStudentRegistration->father_name,
@@ -575,6 +583,8 @@ class StudentRegistrationsController extends Controller
                 'type' => '',
                 'year' => date('Y'),
                 ]);
+
+                $this->logAction(auth()->id(), 'user', 'add_AnuulRegistrationArchive', 'create', ' student_registrations', $StudentRegistration->id);
                        
             }
         }

@@ -191,6 +191,29 @@ class AdminsController extends Controller
             'gawala' => $request->gawala,
         ]);
 
+
+        if($request->position_id == 1){
+            $add_title = 'Add_Admin';
+        }
+        elseif($request->position_id == 2){
+            $add_title ="Add_scout_group";
+        }
+        elseif($request->position_id == 3){
+            $add_title = 'Add_secretariat';
+        }
+        elseif($request->position_id == 4){
+            $add_title = 'Add_monitor';
+        }
+        elseif($request->position_id == 5){
+            $add_title = 'Add_training_commissioner';
+        }
+        elseif($request->position_id == 6){
+            $add_title = 'Add_treasurer';
+        }
+
+        
+        $this->logAction(auth()->id(), 'user', $add_title , 'create', 'admins', $admin->id);
+
         return response()->json(['admin'=>$admin]);
     }
 
@@ -311,6 +334,30 @@ class AdminsController extends Controller
         }
 
         $objAdmin->save();
+
+
+        if($objAdmin->position_id == 1){
+            $update_title = 'Update_Admin';
+        }
+        elseif($objAdmin->position_id == 2){
+            $update_title ="Update_scout_group";
+        }
+        elseif($objAdmin->position_id == 3){
+            $update_title = 'Update_secretariat';
+        }
+        elseif($objAdmin->position_id == 4){
+            $update_title = 'Update_monitor';
+        }
+        elseif($objAdmin->position_id == 5){
+            $update_title = 'Update_training_commissioner';
+        }
+        elseif($objAdmin->position_id == 6){
+            $update_title = 'Update_treasurer';
+        }
+
+        
+        $this->logAction(auth()->id(), 'user', $update_title , 'update', 'admins', $objAdmin->id);
+
         return response()->json(['objAdmin'=>$objAdmin]);
 
     }
@@ -359,13 +406,57 @@ class AdminsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
+        $objAdmin = Admin::where('id',$id)->first();
+        if($objAdmin->position_id == 1){
+            $delete_title = 'Delete_Admin';
+        }
+        elseif($objAdmin->position_id == 2){
+            $delete_title ="Delete_scout_group";
+        }
+        elseif($objAdmin->position_id == 3){
+            $delete_title = 'Delete_secretariat';
+        }
+        elseif($objAdmin->position_id == 4){
+            $delete_title = 'Delete_monitor';
+        }
+        elseif($objAdmin->position_id == 5){
+            $delete_title = 'Delete_training_commissioner';
+        }
+        elseif($objAdmin->position_id == 6){
+            $delete_title = 'Delete_treasurer';
+        }
+
         $Admin = Admin::where('id',$id)->delete();
+
+        $this->logAction(auth()->id(), 'user', $delete_title , 'delete', 'admins', $objAdmin->id);
         return response()->json(['Admin'=>$Admin]);
     }
 
     public function deleteAdmins(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
+        foreach ($request->ids as $key => $id) {
+            $objAdmin = Admin::where('id',$id)->first();
+            if($objAdmin->position_id == 1){
+            $delete_title = 'Delete_Admin';
+            }
+            elseif($objAdmin->position_id == 2){
+                $delete_title ="Delete_scout_group";
+            }
+            elseif($objAdmin->position_id == 3){
+                $delete_title = 'Delete_secretariat';
+            }
+            elseif($objAdmin->position_id == 4){
+                $delete_title = 'Delete_monitor';
+            }
+            elseif($objAdmin->position_id == 5){
+                $delete_title = 'Delete_training_commissioner';
+            }
+            elseif($objAdmin->position_id == 6){
+                $delete_title = 'Delete_treasurer';
+            }
+            $this->logAction(auth()->id(), 'user', $delete_title , 'delete', 'admins', $objAdmin->id);
+        }
         $Admin = Admin::whereIn('id',$request->ids)->delete();
         return response()->json(['Admin'=>$Admin]);
     }

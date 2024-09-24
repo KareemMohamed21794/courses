@@ -121,6 +121,8 @@ class SecondaryRegistrationsController extends Controller
             'year' =>  $request->year,
         ]);
 
+        $this->logAction(auth()->id(), 'user', 'add_secondary_registration', 'create', ' files', $File->id);
+
         return response()->json(['File'=>$File]);
     }
 
@@ -190,6 +192,8 @@ class SecondaryRegistrationsController extends Controller
             }
         }
         $objFile->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_secondary_registration', 'update', ' files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -202,14 +206,21 @@ class SecondaryRegistrationsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
+        $objFile = File::where('id',$id)->first();
         $File = File::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_'.$objFile->type, 'delete', ' files', $id);
         return response()->json(['File'=>$File]);
     }
 
      public function deleteSecondaryRegistrations(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
+        foreach ($request->ids as $key => $id) {
+            $objFile = File::where('id',$id)->first();
+            $this->logAction(auth()->id(), 'user', 'delete_'.$objFile->type, 'delete', ' files', $id);
+        }
         $File = File::whereIn('id',$request->ids)->delete();
+       
         return response()->json(['File'=>$File]);
     }
 
@@ -993,6 +1004,8 @@ public function accept_second_registration(Request $request, $id)
         $objFile->status = "approved";       
         $objFile->save();
 
+        $this->logAction(auth()->id(), 'user', 'accept_'.$objFile->type, 'accepted', ' files', $objFile->id);
+
         $objUser = $objFile->Admin;
 
         if(!empty($objUser->email)){
@@ -1028,6 +1041,7 @@ public function accept_second_registration(Request $request, $id)
         $objFile = File::find($id);
         $objFile->status = "rejected";       
         $objFile->save();
+        $this->logAction(auth()->id(), 'user', 'reject_'.$objFile->type, 'rejected', ' files', $objFile->id);
         return redirect('/admin/secondary_registrations');
 
     }

@@ -136,6 +136,8 @@ class AdministrativeFinancialReportsController extends Controller
             'year' =>  $request->year,
         ]);
 
+      $this->logAction(auth()->id(), 'user', 'add_'.$request->firstSegment, 'create', 'files', $File->id);
+
         return response()->json(['File'=>$File]);
     }
 
@@ -219,6 +221,8 @@ class AdministrativeFinancialReportsController extends Controller
             }
         }
         $objFile->save();
+
+        $this->logAction(auth()->id(), 'user', 'update_'.$objFile->type, 'update', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -231,13 +235,19 @@ class AdministrativeFinancialReportsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
+        $objFile = File::where('id',$id)->first();
         $File = File::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_'.$objFile->type, 'delete', 'files', $id);
         return response()->json(['File'=>$File]);
     }
 
      public function deleteAdministrativeFinancialReport(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
+        foreach ($request->ids as $key => $id) {
+            $objFile = File::where('id',$id)->first();
+            $this->logAction(auth()->id(), 'user', 'delete_'.$objFile->type, 'delete', 'files', $id);
+        }
         $File = File::whereIn('id',$request->ids)->delete();
         return response()->json(['File'=>$File]);
     }
@@ -610,6 +620,7 @@ class AdministrativeFinancialReportsController extends Controller
         $objFile->status = $status;
         $objFile->reject_notes = null;
         $objFile->save();
+        $this->logAction(auth()->id(), 'user', 'accept_'.$objFile->type, 'accepted', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
 
@@ -624,6 +635,7 @@ class AdministrativeFinancialReportsController extends Controller
         $objFile->reject_notes = $reject_notes;
         
         $objFile->save();
+        $this->logAction(auth()->id(), 'user', 'reject_'.$objFile->type, 'rejected', 'files', $objFile->id);
         return response()->json(['objFile'=>$objFile]);
     }
     
