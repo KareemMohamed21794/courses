@@ -124,6 +124,8 @@ class AdvertisementsController extends Controller
         }
 
 
+
+
          $document = '';
 
          if(!empty($request->file('file'))){
@@ -174,19 +176,21 @@ class AdvertisementsController extends Controller
              
             if(!empty($objAdmin->email)){
                 $recipient = $objAdmin->email;
+
+                 
                 //$recipient = 'mahmoud.ali.29992@gmail.com';
                 $subject = "لديك وارد من مدير نظام تواصل";
 
                 $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-                $fromEmail = 'admin@tawasol.privatescouts.org'; 
+                $fromEmail = 'noreply@privatescouts.org'; 
                 // The "from" email address
 
-                // Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                //     $mail->to($recipient)
-                //         ->from($fromEmail) // Set the "from" email address
-                //         ->subject($subject);
-                // });
+                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                    $mail->to($recipient)
+                        ->from($fromEmail) // Set the "from" email address
+                        ->subject($subject);
+                });
             }
 
             # send email

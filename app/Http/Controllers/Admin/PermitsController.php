@@ -162,7 +162,7 @@ class PermitsController extends Controller
 
         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        $fromEmail = 'noreply@privatescouts.org'; 
         // The "from" email address
 
         Mail::send('emails.permits_request', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -663,7 +663,7 @@ class PermitsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            $fromEmail = 'noreply@privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -693,7 +693,7 @@ class PermitsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'admin@tawasol.privatescouts.org'; 
+            $fromEmail = 'noreply@privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_reject', $data, function ($mail) use ($recipient, $subject, $fromEmail) {

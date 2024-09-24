@@ -50200,3 +50200,17 @@ body {
   text-align: center !important;
 }
 
+.circle-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; /* Adjust size as needed */
+    height: 24px; /* Adjust size as needed */
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px; /* Adjust text size as needed */
+    font-weight: bold;
+    line-height: 1;
+}
+
