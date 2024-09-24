@@ -599,13 +599,64 @@ class PermitsController extends Controller
     public function accept_permit(Request $request, $id)
     {
          
-
+    
         $objPermit = Permit::find($id);
         $objPermit->status = "approved";       
         $objPermit->save();
 
 
         if(!empty($objPermit->admin->email)){
+
+            # send email 
+            //$recipient = $problem->staff->email;
+            // $recipient = "mahmoud.ali.29992@gmail.com";
+            // $subject = "الرد على طلب: $objPermit->number_order ";
+
+            // $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
+
+            // // Generate the HTML body from the Blade view
+            // $htmlBody = view('emails.permits_accept', $data)->render();
+
+            // $payload = json_encode([
+            //     "from" => ["address" => 'info@lawjo.net', "name" => "test"],
+            //     "to" => [["email_address" => ["address" => $recipient, "name" => $objPermit->admin->group_name]]],
+            //     "subject" => $subject,
+            //     "htmlbody" => $htmlBody,
+            // ]);
+
+            // $curl = curl_init();
+            // curl_setopt_array($curl, [
+            //     CURLOPT_URL => "https://api.zeptomail.com/v1.1/email",
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_ENCODING => "",
+            //     CURLOPT_MAXREDIRS => 10,
+            //     CURLOPT_TIMEOUT => 30,
+            //     CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1_2,
+            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            //     CURLOPT_CUSTOMREQUEST => "POST",
+            //     CURLOPT_POSTFIELDS => $payload,
+            //     CURLOPT_HTTPHEADER => [
+            //         "accept: application/json",
+            //         "authorization: Zoho-enczapikey wSsVR60grBbzXf98nGf7dewxzw8EAlPzRE19i1So4iL9G63C9Mc4xUadBAKiHvFLEmJgRTQV9bt/nUxR12Bfh9wrzwkGACiF9mqRe1U4J3x17qnvhDzMXmxcmxuKKokIxwVqmGVgG8wg+g==",
+            //         "cache-control: no-cache",
+            //         "content-type: application/json",
+            //     ],
+            // ]);
+
+            // $response = curl_exec($curl);
+            // $err = curl_error($curl);
+
+            // curl_close($curl);
+
+            // if ($err) {
+            //     echo "cURL Error #:" . $err;
+            // } else {
+            //     echo $response;
+            // }
+
+
+
+
             $recipient = $objPermit->admin->email;
             //$recipient = 'mahmoud.ali.29992@gmail.com';
             $subject = "الرد على طلب: $objPermit->number_order ";

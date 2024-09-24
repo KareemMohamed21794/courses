@@ -365,7 +365,10 @@ fill: #009EF7;
                             </span>
                            
                             <span class="menu-title"> {{ __('messages.issued') }}</span>
-                            <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            @if ($advirtesment_counter > 0)
+                                <span class="circle-badge">{{ $advirtesment_counter }}</span>
+                            @endif
+
                             @else
 
                              <span class="menu-icon">
@@ -376,7 +379,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                             <span class="menu-title"> {{ __('messages.incoming') }}</span>
-                            <span class="circle-badge">{{$advirtesment_counter}}</span>
+                            @if ($advirtesment_counter > 0)
+                                <span class="circle-badge">{{ $advirtesment_counter }}</span>
+                            @endif
+
                             <!-- <span class="menu-title"> {{ __('messages.advertisements') }}</span> -->
                             @endif
                         
@@ -399,7 +405,10 @@ fill: #009EF7;
                             </span>
                           
                             <span class="menu-title"> {{ __('messages.incoming') }}</span>
-                            <span class="circle-badge">{{$information_counter}}</span>
+                             @if ($information_counter > 0)
+                                <span class="circle-badge">{{ $information_counter }}</span>
+                            @endif
+                       
                             @else
                             <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
@@ -421,7 +430,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                             <span class="menu-title"> {{ __('messages.issued') }}</span>
-                            <span class="circle-badge">{{$information_counter}}</span>
+                            @if ($information_counter > 0)
+                                <span class="circle-badge">{{ $information_counter }}</span>
+                            @endif
+                       
                             <!-- <span class="menu-title"> {{ __('messages.requests') }}</span> -->
                             @endif
                         
@@ -444,7 +456,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                         <span class="menu-title">{{ __('messages.secondary_registrations') }}</span>
-                        <span class="circle-badge">{{$secondary_registration_counter}}</span>
+                        
+                        @if ($secondary_registration_counter > 0)
+                                <span class="circle-badge">{{ $secondary_registration_counter }}</span>
+                            @endif
                     </a>
                 </div>
 
@@ -535,7 +550,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                         <span class="menu-title">{{ __('messages.administrative') }}</span>
-                        <span class="circle-badge">{{$administrative_counter}}</span>
+                       
+                        @if ($administrative_counter > 0)
+                                <span class="circle-badge">{{ $administrative_counter }}</span>
+                            @endif
                     </a>
                 </div>
 
@@ -549,7 +567,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                         <span class="menu-title">{{ __('messages.financial') }}</span>
-                        <span class="circle-badge">{{$financial_counter}}</span>
+                      
+                        @if ($financial_counter > 0)
+                            <span class="circle-badge">{{ $financial_counter }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -613,7 +634,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                         <span class="menu-title">{{ __('messages.board_director_meetings') }}</span>
-                        <span class="circle-badge">{{$board_director_meetings_counter}}</span>
+                        
+                        @if ($board_director_meetings_counter > 0)
+                            <span class="circle-badge">{{ $board_director_meetings_counter }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -632,7 +656,10 @@ fill: #009EF7;
                             <!--end::Svg Icon-->
                         </span>
                         <span class="menu-title">{{ __('messages.permits') }}</span>
-                        <span class="circle-badge">{{$permit_counter}}</span>
+                     
+                        @if ($permit_counter > 0)
+                            <span class="circle-badge">{{ $permit_counter }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -647,7 +674,10 @@ fill: #009EF7;
                                 <!--end::Svg Icon-->
                             </span>
                         <span class="menu-title">{{ __('messages.commander_medals_monzer') }}</span>
-                        <span class="circle-badge">{{$commander_medal_counter}}</span>
+                       
+                         @if ($commander_medal_counter > 0)
+                            <span class="circle-badge">{{ $commander_medal_counter }}</span>
+                        @endif
                     </a>
                 </div>
 
@@ -712,7 +742,10 @@ fill: #009EF7;
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">{{ __('messages.qualification_leaders') }}</span>
-                            <span class="circle-badge">{{$qualification_leader_counter}}</span>
+                           
+                             @if ($qualification_leader_counter > 0)
+                            <span class="circle-badge">{{ $qualification_leader_counter }}</span>
+                        @endif
                         </a>
                     </div>
 
@@ -723,7 +756,10 @@ fill: #009EF7;
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">{{ __('messages.organizing_study') }}</span>
-                            <span class="circle-badge">{{$organizing_study_counter}}</span>
+                           
+                             @if ($organizing_study_counter > 0)
+                            <span class="circle-badge">{{ $organizing_study_counter }}</span>
+                        @endif
                         </a>
                     </div>
 
@@ -747,7 +783,10 @@ fill: #009EF7;
                                 <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">{{ __('messages.achievements_study_requirements') }}</span>
-                            <span class="circle-badge">{{$achivement_study_counter}}</span>
+                            
+                             @if ($achivement_study_counter > 0)
+                            <span class="circle-badge">{{ $achivement_study_counter }}</span>
+                        @endif
                         </a>
                     </div>
 
