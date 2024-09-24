@@ -84,6 +84,8 @@ class InformationsController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
+        
+
 
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
@@ -114,7 +116,7 @@ class InformationsController extends Controller
 
         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        $fromEmail = 'noreply@privatescouts.org'; 
         // The "from" email address
 
         Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -577,7 +579,7 @@ class InformationsController extends Controller
 
         $data = ['content' => 'تم قبول الوارد' ,'group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        $fromEmail = 'noreply@privatescouts.org'; 
         // The "from" email address
 
         Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -610,7 +612,7 @@ public function RejectedRequest(Request $request)
 
         $data = ['content' => $reject_notes,'group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-        $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        $fromEmail = 'noreply@privatescouts.org'; 
         // The "from" email address
 
         Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
