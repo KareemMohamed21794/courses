@@ -88,6 +88,9 @@ class AppServiceProvider extends ServiceProvider
             $organizing_study_counter = OrganizingStudy::where('admin_id',@$objAdmin->id)->where('read',0)->count();
 
 
+            $total_leader_counter = ($qualification_leader_counter + $achivement_study_counter + $organizing_study_counter);
+
+
             $information_counter = Information::where('admin_id',@$objAdmin->id)->where('read',0)->count();
 
             }else{
@@ -105,6 +108,10 @@ class AppServiceProvider extends ServiceProvider
              $achivement_study_counter = AchievementStudyRequirement::where('read',0)->count();
 
              $organizing_study_counter = OrganizingStudy::where('read',0)->count();
+
+             $total_leader_counter = ($qualification_leader_counter + $achivement_study_counter + $organizing_study_counter);
+
+
              $information_counter = Information::where('read',0)->count();
             }
              
@@ -123,6 +130,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('qualification_leader_counter', $qualification_leader_counter);
             $view->with('achivement_study_counter', $achivement_study_counter);
             $view->with('organizing_study_counter', $organizing_study_counter);
+            $view->with('total_leader_counter', $total_leader_counter);
             $view->with('information_counter', $information_counter);
             $view->with('objSetup', $objSetup);
         });

@@ -554,16 +554,17 @@ KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
 
+
+
 function handleClick(event, id) {
     event.preventDefault(); // Prevent default navigation
     getData(id, 2); // Execute the function
-    window.location.href = 'student_registration/'+id; // Navigate to the new URL
+    window.open('student_registration/' + id, '_blank'); // Open in a new tab
 }
-
 
 
 function ShowStudents(event, id) {
     event.preventDefault(); // Prevent default navigation
     getData(id, 2); // Execute the function
-    window.location.href = 'show_students/'+id; // Navigate to the new URL
+    window.open('show_students/' + id, '_blank'); // Open in a new tab
 }
