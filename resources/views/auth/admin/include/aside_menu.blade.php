@@ -753,7 +753,7 @@ fill: #009EF7;
                         </span>
                         <div class="menu-sub menu-sub-accordion">
 
-                            @if($objAdmin->position_id == 6)
+                            @if($objAdmin->position_id == 6 || $objAdmin->is_super == 1)
                           
                             <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='payments_received' ? 'active' : '' }}" href="{{ url('/admin/payments_received') }}">
