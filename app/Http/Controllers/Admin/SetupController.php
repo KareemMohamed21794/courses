@@ -311,6 +311,12 @@ class SetupController extends Controller
             'id'   => true,
             'dead_line'   => true,
             'commander_medal_date'   => true,
+            'secondary_registration_file'=> true,
+            'administrative_file'=> true,
+            'financial_file'=> true,
+            'board_director_meeting_file'=> true,
+            'commander_medal_file'=> true,
+            'achievement_study_requirement_file'=> true,
             'created_at'   => true,
         ];
 
@@ -351,6 +357,19 @@ class SetupController extends Controller
                 "id" => $objdata->id,
                 "dead_line" => $objdata->dead_line,
                 "commander_medal_date"=> $objdata->commander_medal_date,
+                "secondary_registration_file" => '
+                <a target="_blank" href="' . asset($objdata->secondary_registration_file) . '">تحميل  نموذج التسجيل السنوي<a>',
+                "administrative_file" => '
+                <a target="_blank" href="' . asset($objdata->administrative_file) . '">تحميل نموذج الاداري السنوي<a>',
+                "financial_file" => '
+                <a target="_blank" href="' . asset($objdata->financial_file) . '">تحميل نموذج المالي السنوي<a>',
+                "board_director_meeting_file" => '
+                <a target="_blank" href="' . asset($objdata->board_director_meeting_file) . '">تحميل نموذج  اجتماعات الهيئه العامه<a>',
+                "commander_medal_file" => '
+                <a target="_blank" href="' . asset($objdata->commander_medal_file) . '">تحميل نموذج وسام القائد منذر<a>',
+
+                "achievement_study_requirement_file" => '
+                <a target="_blank" href="' . asset($objdata->achievement_study_requirement_file) . '">تحميل نموذج انجازات متطلبات دراسه<a>',
                 "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }

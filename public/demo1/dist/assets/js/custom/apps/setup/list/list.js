@@ -19,6 +19,12 @@ var KTDatatablesServerSide = function () {
         // { data: 'id' },
         { data: 'dead_line' },
         { data: 'commander_medal_date' },
+        { data: 'secondary_registration_file' },
+        { data: 'administrative_file' },
+        { data: 'financial_file' },
+        { data: 'board_director_meeting_file' },
+        { data: 'commander_medal_file' },
+        { data: 'achievement_study_requirement_file' },
         { data: 'created_at' },
          { data: null },
        ];
