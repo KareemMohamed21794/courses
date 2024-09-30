@@ -12,7 +12,6 @@ var KTDatatablesServerSide = function () {
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
 
-  
 
     var adminColumns = [
     { data: '#' },
@@ -39,6 +38,38 @@ var KTDatatablesServerSide = function () {
     ];
 
     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
+
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    
+    
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    
+
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
     // Private functions
     var initDatatable = function () {
 
@@ -107,7 +138,7 @@ var KTDatatablesServerSide = function () {
                         var AdminContent = '';
 
                         // Check if segment is 'Admin'
-                        if (is_super === '1') {
+                        if (can_delete === '1') {
                             
                           return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
@@ -163,7 +194,7 @@ var KTDatatablesServerSide = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                
                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="/admin/accept_second_registration/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
                                         مقبول
                                     </a>

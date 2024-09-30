@@ -46,7 +46,37 @@ var KTDatatablesServerSide = function () {
 
      var chosenColumns = is_super === '0' ? userColumns : adminColumns;
 
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    
+    
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    
 
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
 
     // Private functions
     var initDatatable = function () {
@@ -120,7 +150,7 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     render: function (data) {
                         return `
-                            <div class="form-check form-check-sm form-check-custom form-check-solid">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="display:`+display_delete+`">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
                     }
@@ -131,13 +161,14 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end permission',
                     render: function (data, type, row) {
+
                         var AdminContent = '';
                          // Check if segment is 'Admin'
-                        if (is_super === '1') {
+                        // if (is_super === '1') {
                             AdminContent = `
-
+                            
                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3" style="display:`+display_edit+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>
@@ -149,7 +180,7 @@ var KTDatatablesServerSide = function () {
                                 
  
                             `;
-                        }
+                        // }
 
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">

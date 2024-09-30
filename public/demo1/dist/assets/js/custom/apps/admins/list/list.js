@@ -9,6 +9,7 @@ var KTDatatablesServerSide = function () {
 
     var segment = $("#segment").val();
     var is_super = $("#is_super").val();
+    var position_id_check = $("#position_id_check").val();
     var type_segment = $("#type_segment").val();
     let main_url = "/admin/"+segment+"/get";
     var action_lang = $("#action_lang").val();
@@ -19,6 +20,40 @@ var KTDatatablesServerSide = function () {
     var delete_confirmation = $("#delete_confirmation").val();
     var yes_delete = $("#yes_delete").val();
     var no_delete = $("#no_delete").val();
+
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    
+    
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    
+
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
+
+
     
     var adminColumns = [
     { data: '#' },
@@ -112,11 +147,12 @@ var KTDatatablesServerSide = function () {
                         var AdminContent = '';
 
                         // Check if segment is 'lawyer'
-                        if (is_super === '1') {
+                        if (is_super === '1' || position_id_check == 4) {
+                            
                             AdminContent = `
                                 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_print+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                        عرض
                                     </a>
@@ -124,7 +160,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_delete+`">
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>
@@ -139,7 +175,7 @@ var KTDatatablesServerSide = function () {
                             AdminContent = `
                                 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_print+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                        عرض
                                     </a>
@@ -193,7 +229,7 @@ var KTDatatablesServerSide = function () {
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_edit+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>

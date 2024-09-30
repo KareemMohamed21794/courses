@@ -1,6 +1,7 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
+@if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -660,4 +661,5 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
+    @endif
 @endsection

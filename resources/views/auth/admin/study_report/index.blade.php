@@ -1,6 +1,10 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
+    <input type="hidden" name="can_add" id="can_add" value="{{ $can_add }}">
+    <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
+    <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
+    <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -107,6 +111,7 @@
                            @endif
                         </div>
                         <!--end::Toolbar-->
+                        
                         <!--begin::Group actions-->
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
                             <div class="fw-bolder me-5">
@@ -114,6 +119,7 @@
                             <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">{{ __('messages.Delete Selected') }}</button>
                         </div>
                         <!--end::Group actions-->
+                        
                     </div>
                     <!--end::Card toolbar-->
                 </div>
@@ -190,7 +196,7 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
-@if($objAdmin->is_super == 0)
+@if($can_update == 0)
 <style type="text/css">
     .permission{
         display: none;

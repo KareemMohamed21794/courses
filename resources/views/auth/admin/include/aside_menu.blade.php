@@ -47,7 +47,7 @@ fill: #009EF7;
                 </div> --}}
 
                 
-                @if($objAdmin->is_super == 1)
+                @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5)
                 {{-- START Dashboard --}}
                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
                   Request::segment(2)=='' ||Request::segment(2)=='dashboard'||Request::segment(2)=='scouting_statistics'||Request::segment(2)=='indicative_statistics'? 'show here' : ''}}">
@@ -70,8 +70,8 @@ fill: #009EF7;
                             <span class="menu-arrow"></span>
                         </span>
                         <div class="menu-sub menu-sub-accordion">
-
-                              <div class="menu-item">
+                            @if($objAdmin->position_id == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
+                            <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='' || Request::segment(2)=='dashboard' ? 'active' : '' }}" href="{{ url('/admin') }}">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
@@ -79,7 +79,8 @@ fill: #009EF7;
                                     <span class="menu-title">{{ __('messages.Main_Dashboard') }}</span>
                                 </a>
                             </div>
-
+                            @endif
+                            @if($objAdmin->position_id == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5)
                             <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='scouting_statistics' ? 'active' : '' }}" href="{{ url('/admin/scouting_statistics') }}">
                                     <span class="menu-bullet">
@@ -88,8 +89,9 @@ fill: #009EF7;
                                     <span class="menu-title">{{ __('messages.Scouting_statistics') }}</span>
                                 </a>
                             </div>
+                            @endif
 
-
+                           @if($objAdmin->position_id == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5)
                             <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='indicative_statistics' ? 'active' : '' }}" href="{{ url('/admin/indicative_statistics') }}">
                                     <span class="menu-bullet">
@@ -98,6 +100,7 @@ fill: #009EF7;
                                     <span class="menu-title">{{ __('messages.Indicative_statistics') }}</span>
                                 </a>
                             </div>
+                            @endif
 
                         </div>
                     </div>
@@ -111,7 +114,7 @@ fill: #009EF7;
 
                  {{-- START Users --}}
       
-                  @if($objAdmin->is_super == 1)
+                  @if($objAdmin->is_super == 1 || $objAdmin->position_id == 4)
 
 
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='admins'||Request::segment(2)=='secretariats'||Request::segment(2)=='monitors'||Request::segment(2)=='training_commissioners' ||Request::segment(2)=='treasurers' ? 'show here' : ''}}">
@@ -233,7 +236,7 @@ fill: #009EF7;
                     </div> --}}
                     @endif
                    {{-- end Users --}}
-
+                    @if($objAdmin->is_super == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
                     <div class="menu-item">
                         <a class="menu-link {{ Request::segment(2)=='leaders'  ? 'active' : '' }}" href="{{ url('/admin/leaders') }}">
                             <span class="menu-icon">
@@ -262,6 +265,7 @@ fill: #009EF7;
                             @endif
                         </a>
                     </div>
+                    @endif
 
                 @endif
 
@@ -271,10 +275,10 @@ fill: #009EF7;
 
                 
 
-
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
                  <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='advertisements' ? 'active' : '' }}" href="{{ url('admin/advertisements') }}">
-                         @if($objAdmin->is_super == 1)
+                         @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4)
                           <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
 
@@ -321,13 +325,15 @@ fill: #009EF7;
                     </a>
                 </div>
 
+                @endif
 
 
 
 
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
                  <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='requests' ? 'active' : '' }}" href="{{ url('admin/requests') }}">
-                          @if($objAdmin->is_super == 1)
+                          @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4)
                           <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                 <span class="svg-icon svg-icon-2">
@@ -371,11 +377,12 @@ fill: #009EF7;
                         
                     </a>
                 </div>
+                @endif
 
 
                 
 
-
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
                  <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='secondary_registrations' ? 'active' : '' }}" href="{{ url('admin/secondary_registrations') }}">
                           <span class="menu-icon">
@@ -394,6 +401,7 @@ fill: #009EF7;
                             @endif
                     </a>
                 </div>
+
 
 
 
@@ -489,6 +497,10 @@ fill: #009EF7;
                     </a>
                 </div>
 
+                @endif
+
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2|| $objAdmin->position_id == 6)
+
                 <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='financial' ? 'active' : '' }}" href="{{ url('admin/financial') }}">
                           <span class="menu-icon">
@@ -505,10 +517,10 @@ fill: #009EF7;
                         @endif
                     </a>
                 </div>
+                @endif
 
 
-
-
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
 
                   <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='board_director_meetings' ? 'active' : '' }}" href="{{ url('admin/board_director_meetings') }}">
@@ -612,9 +624,10 @@ fill: #009EF7;
                         @endif
                     </a>
                 </div>
+            @endif
 
 
-
+    @if($objAdmin->position_id != 6)
      {{-- Leaders --}}
 
       <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
@@ -731,7 +744,7 @@ fill: #009EF7;
 
      {{-- Leaders --}}
 
-
+    @endif
 
 
       {{-- @if($objAdmin->is_super == 0) --}}

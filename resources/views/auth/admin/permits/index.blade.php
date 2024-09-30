@@ -104,18 +104,22 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                             @endif
+                            @if($can_add == 1 )
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif
                           
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
+                         @if($can_delete == 1 )
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
                             <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-docs-table-select="selected_count"></span>{{ __('messages.Selected') }}</div>
                             <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">{{ __('messages.Delete Selected') }}</button>
                         </div>
+                        @endif
                         <!--end::Group actions-->
                     </div>
                     <!--end::Card toolbar-->
