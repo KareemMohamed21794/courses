@@ -39,7 +39,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'order' },
                 // { data: 'id' },
                 { data: 'leader' },
-                { data: 'activity_name' },
+                //{ data: 'activity_name' },
                 { data: 'nature_activity' },
                 { data: 'permit_number' },
                 { data: 'price' },
