@@ -258,7 +258,7 @@ fill: #009EF7;
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                            @if($objAdmin->is_super == 1)
+                            @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4)
                             <span class="menu-title"> {{ __('messages.scout_groups') }}</span>
                             @else
                             <span class="menu-title"> {{ __('messages.group_info') }}</span>
@@ -748,8 +748,8 @@ fill: #009EF7;
 
 
       {{-- @if($objAdmin->is_super == 0) --}}
-
-
+     
+            @if($objAdmin->position_id != 5)
                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='total_permits'||Request::segment(2)=='total_secondary_registration'||Request::segment(2)=='financial_movements'||Request::segment(2)=='payments_received' ? 'show here' : ''}}">
 
 
@@ -766,7 +766,7 @@ fill: #009EF7;
                         </span>
                         <div class="menu-sub menu-sub-accordion">
 
-                            @if($objAdmin->position_id == 6 || $objAdmin->is_super == 1)
+                            @if($objAdmin->position_id != 5)
                           
                             <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='payments_received' ? 'active' : '' }}" href="{{ url('/admin/payments_received') }}">
@@ -779,7 +779,7 @@ fill: #009EF7;
 
                            @endif
                         
-
+                          @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6 )
                            <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='total_permits' ? 'active' : '' }}" href="{{ url('/admin/total_permits') }}">
                                     <span class="menu-bullet">
@@ -797,9 +797,10 @@ fill: #009EF7;
                                     <span class="menu-title">{{ __('messages.total_secondary_registration') }}</span>
                                 </a>
                             </div>
+                            @endif
 
 
-
+                            @if($objAdmin->position_id != 5)
                               <div class="menu-item">
                                  <a class="menu-link {{ Request::segment(2)=='financial_movements' ? 'active' : '' }}" href="{{ url('/admin/financial_movements') }}">
                                     <span class="menu-bullet">
@@ -808,6 +809,7 @@ fill: #009EF7;
                                     <span class="menu-title">{{ __('messages.group_finances') }}</span>
                                 </a>
                             </div>
+                            @endif
 
 
 
@@ -817,17 +819,17 @@ fill: #009EF7;
 
                         </div>
                     </div>
-
-
-                  
-
+           
+            
+            @endif     
+            
                     {{-- @endif --}}
 
-
+      
 
               
 
-                @if($objAdmin->is_super == 1)
+                @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
                   Request::segment(2)=='report_secondary_registrations' ||Request::segment(2)=='report_administrative'||Request::segment(2)=='report_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders'  ? 'show here' : '' }}">
 
@@ -987,7 +989,7 @@ fill: #009EF7;
 
 
                {{-- START SETTINGS --}}
-                 @if($objAdmin->is_super == 1)
+                 @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
 
 
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='setup'||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods' ? 'show here' : ''}}">

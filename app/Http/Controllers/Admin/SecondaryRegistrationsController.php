@@ -1153,7 +1153,7 @@ public function accept_second_registration(Request $request, $id)
         $admin_id = '';
 
 
-        if(!empty($_GET['admin_id']) && $objAdmin->is_super == 1){
+        if(!empty($_GET['admin_id']) ){
           $admin_id = $_GET['admin_id'];
         }else{
             $admin_id = $objAdmin->id;
@@ -1275,7 +1275,7 @@ public function accept_second_registration(Request $request, $id)
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
-        if($objAdmin->is_super == 1){
+        if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
 
            $alldata = Admin::join('files', 'files.admin_id', '=', 'admins.id')
             ->join('student_registrations', 'admins.id', '=', 'student_registrations.admin_id')

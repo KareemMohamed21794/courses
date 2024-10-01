@@ -50,7 +50,7 @@ class AdminsController extends Controller
         }
         elseif($segment=='leaders'){
 
-            $title =  $objAdmin->is_super == 1 ? __('messages.scout_groups') : __('messages.group_info');
+            $title =  $objAdmin->is_super == 2 ? __('messages.group_info') : __('messages.scout_groups')  ;
             $add_title ="مجموعة كشفية";;
             $department_id = 2;
             $position_id = 2;

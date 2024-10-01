@@ -33,12 +33,16 @@ var KTDatatablesServerSide = function () {
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
-        { data: 'leader' },
-        { data: 'document' },
-        { data: 'status' },
-        { data: 'reject_notes' },
+        { data: 'dead_line' },
+        { data: 'commander_medal_date' },
+        { data: 'secondary_registration_file' },
+        { data: 'administrative_file' },
+        { data: 'financial_file' },
+        { data: 'board_director_meeting_file' },
+        { data: 'commander_medal_file' },
+        { data: 'achievement_study_requirement_file' },
         { data: 'created_at' },
-            { data: null },
+         { data: null },
         ];
 
     var chosenColumns = is_super === '0' ? userColumns : adminColumns;

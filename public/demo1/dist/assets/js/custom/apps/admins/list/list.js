@@ -147,7 +147,7 @@ var KTDatatablesServerSide = function () {
                         var AdminContent = '';
 
                         // Check if segment is 'lawyer'
-                        if (is_super === '1' || position_id_check == 4) {
+                        if (can_delete === '1' || position_id_check == 4) {
                             
                             AdminContent = `
                                 
@@ -171,7 +171,7 @@ var KTDatatablesServerSide = function () {
                         }
 
 
-                        if (segment === 'leaders') {
+                        if (segment === 'leaders' && can_delete == '1') {
                             AdminContent = `
                                 
                                 <!--begin::Menu item-->

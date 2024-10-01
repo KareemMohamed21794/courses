@@ -113,13 +113,13 @@
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
-                         @if($can_delete == 1 )
+                        
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
                             <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-docs-table-select="selected_count"></span>{{ __('messages.Selected') }}</div>
                             <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">{{ __('messages.Delete Selected') }}</button>
                         </div>
-                        @endif
+                        
                         <!--end::Group actions-->
                     </div>
                     <!--end::Card toolbar-->
@@ -131,11 +131,22 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            @if($can_delete == 1)
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
                             </th>
+
+                            @else
+
+                            <th class="w-10px pe-2" style="visibility: hidden;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
+                                </div>
+                            </th>
+                           
+                            @endif
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.activity_name') }}</th>
@@ -173,7 +184,7 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
-   
+   <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
 @endsection
 
 @section('scripts')
@@ -191,9 +202,9 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
-@if($objAdmin->is_super == 0)
+@if($can_delete == 0 )
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>

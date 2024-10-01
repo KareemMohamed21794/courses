@@ -176,7 +176,7 @@
 
 @if($objAdmin->is_super == 0)
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>

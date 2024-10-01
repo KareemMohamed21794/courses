@@ -82,10 +82,11 @@
                             <!--end::Filter-->
                            
                        
-
+                           @if($objAdmin->is_super == 1)
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif
                           
                         </div>
                         <!--end::Toolbar-->
@@ -169,7 +170,7 @@
 
 @if($objAdmin->is_super == 0)
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>

@@ -758,7 +758,7 @@ class PermitsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         
-        if($objAdmin->is_super == 1){
+        if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
             $sum = Permit::join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
             ->sum('type_activity.price');
        }else{
@@ -802,7 +802,7 @@ class PermitsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
-        if($objAdmin->is_super == 1){
+        if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
 
            $alldata = Permit::with('TypeActivity')->get();
         

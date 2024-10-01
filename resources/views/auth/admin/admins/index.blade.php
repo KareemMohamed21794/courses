@@ -105,6 +105,7 @@
                             <!--end::Add-->
                             
                         </div>
+                        @endif
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
@@ -114,7 +115,7 @@
                         </div>
 
 
-                        @elseif($segment=='leaders' && $objAdmin->position_id == 3)
+                        @if($segment=='leaders' && $objAdmin->position_id == 3)
 
                         <!--end::Menu 1-->
                             <!--end::Filter-->
