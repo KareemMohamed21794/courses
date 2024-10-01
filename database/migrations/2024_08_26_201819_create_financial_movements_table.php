@@ -17,6 +17,7 @@ class CreateFinancialMovementsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('admin_id');
             $table->foreign('admin_id')->references('id')->on('admins');
+            $table->unsignedBigInteger('user_id');
             $table->double('price')->nullable();
             $table->integer('receipt_number')->nullable();
             $table->date('date')->nullable();

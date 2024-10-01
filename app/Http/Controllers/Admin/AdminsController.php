@@ -50,7 +50,7 @@ class AdminsController extends Controller
         }
         elseif($segment=='leaders'){
 
-            $title =  $objAdmin->is_super == 1 ? __('messages.scout_groups') : __('messages.group_info');
+            $title =  $objAdmin->is_super == 2 ? __('messages.group_info') : __('messages.scout_groups')  ;
             $add_title ="مجموعة كشفية";;
             $department_id = 2;
             $position_id = 2;
@@ -115,10 +115,22 @@ class AdminsController extends Controller
             "معان"
         ];
 
+        $can_add = 0;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+
+        if($objAdmin->is_super ){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+        }
+
 
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
     }
 
     /**
@@ -540,7 +552,7 @@ class AdminsController extends Controller
 
         $active = $request->active;
 
-        if($objAdmin->is_super == 1){
+        if($objAdmin->is_super == 1 || $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
             $alldata = Admin::where('position_id',$position_id)->get();
 
             if($active=='All'){

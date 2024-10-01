@@ -59,7 +59,41 @@ class AdministrativeFinancialReportsController extends Controller
          
         }
 
-        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders,'firstSegment'=>$firstSegment]);
+        $can_add = 0;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+        if($objAdmin->position_id == 1  || $objAdmin->position_id == 3){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id == 4 ){
+            $can_add = 0;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id ==2){
+            $can_add = 1;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 0;
+        }
+
+        if($objAdmin->position_id == 4 && $firstSegment=='financial'){
+            $can_add = 0;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+        return view('auth.admin.administrative_financial_reports.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'exsistdata'=>$exsistdata,'leaders'=>$leaders,'firstSegment'=>$firstSegment,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
     }
 
     /**
@@ -283,7 +317,7 @@ class AdministrativeFinancialReportsController extends Controller
 
         $type = $request->firstSegment;
 
-        if($objAdmin->is_super == 1){
+        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3|| $objAdmin->position_id == 6){
         
            
            $alldata = File::where('type',$type)->get();

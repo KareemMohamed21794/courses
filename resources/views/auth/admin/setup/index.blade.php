@@ -123,6 +123,12 @@
                             <th>#</th>
                             <th>{{ __('messages.dead_line') }}</th>
                             <th>{{ __('messages.commander_medal_date') }}</th>
+                            <th>نموذج التسجيل السنوي</th>
+                            <th>نموذج الاداري السنوي</th>
+                            <th>نموذج المالي السنوي</th>
+                            <th>نموذج  اجتماعات الهيئه العامه</th>
+                            <th>نموذج وسام القائد منذر</th>
+                            <th>نموذج انجازات متطلبات دراسه</th>
                             <th>{{ __('messages.created_at') }}</th>
                             
                             <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
@@ -170,7 +176,7 @@
 
 @if($objAdmin->is_super == 0)
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class FinancialMovement extends Model
 {
     use HasFactory;
-    protected $fillable = ['admin_id','price','receipt_number','date','payment_method_id'];
+    protected $fillable = ['admin_id','user_id','price','receipt_number','date','payment_method_id'];
     
      public function Admin()
     {

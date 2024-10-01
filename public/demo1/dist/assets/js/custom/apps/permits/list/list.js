@@ -6,7 +6,7 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-
+    var is_super = $("#is_super").val();
     let main_url = "/admin/permits/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
@@ -45,6 +45,8 @@ var KTDatatablesServerSide = function () {
     if(can_update==1){
         var display_edit = "";
     }
+
+
 
     if(can_delete==1){
         var display_delete = "";
@@ -124,10 +126,17 @@ var KTDatatablesServerSide = function () {
                     targets: 0,
                     orderable: false,
                     render: function (data) {
+                        if (can_delete === '1') {
                         return `
                             <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
+                        }else{
+                            return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="visibility: hidden;">
+                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
+                            </div>`;
+                        }
                     }
                 },
                 {
@@ -137,7 +146,12 @@ var KTDatatablesServerSide = function () {
                     className: 'text-end',
                     render: function (data, type, row) {
                         // console.log(row.permit_status);
-                        if(row.permit_status!='معلقه') var display_edit = "none";
+                        if (can_delete === '1'){
+                            if(row.permit_status!='معلقه') var display_edit = "none";
+                        }else{
+                            if(row.permit_status=='معلقه') var display_edit = "none";
+                        }
+                        
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`

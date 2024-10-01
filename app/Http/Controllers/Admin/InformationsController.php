@@ -51,7 +51,36 @@ class InformationsController extends Controller
          
         }
 
-        return view('auth.admin.requests.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders]);
+
+        $can_add = 0;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+
+        if($objAdmin->position_id == 1  || $objAdmin->position_id == 3){
+            $can_add = 0;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id == 4){
+            $can_add = 0;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id ==2){
+            $can_add = 1;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 0;
+        }
+
+        return view('auth.admin.requests.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'objAdmin'=>$objAdmin]);
     }
 
     /**
@@ -274,7 +303,7 @@ class InformationsController extends Controller
 
        
         $active = $request->active;
-        if($objAdmin->is_super == 1){
+        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
            $alldata = Information::whereNull('status')->orWhere('status','approved')->get();
         

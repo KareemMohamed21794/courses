@@ -35,7 +35,38 @@ class FinancalMovementsController extends Controller
         $arrPaymentMethod = PaymentMethod::orderBy('id')->get();
         $leaders = Admin::where('is_super',0)->get();
 
-        return view('auth.admin.financial_movements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'arrPaymentMethod'=>$arrPaymentMethod,'leaders'=>$leaders]);
+        $can_add = 0;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+
+        if($objAdmin->position_id == 1 || $objAdmin->position_id ==6){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id == 4 || $objAdmin->position_id == 2 ){
+            $can_add = 0;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+
+        if( $objAdmin->position_id == 3){
+            $can_add = 1;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+
+      
+
+        return view('auth.admin.financial_movements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'arrPaymentMethod'=>$arrPaymentMethod,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
     }
 
     /**
@@ -72,12 +103,16 @@ class FinancalMovementsController extends Controller
         }
 
 
+        $userId = Auth::id();
+
+
         $FinancialMovement = FinancialMovement::create([
             'admin_id' =>  $request->admin_id,
             'price' =>  $request->price,
             'receipt_number' =>  $request->receipt_number,
             'date' =>  $request->date,
             'payment_method_id' =>  $request->payment_method_id,
+            'user_id' =>  $userId,
           
            
         ]);
@@ -205,7 +240,8 @@ class FinancalMovementsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
-       
+
+        if($objAdmin->is_super == 1 || $objAdmin->position_id == 4 || $objAdmin->position_id == 3){
 
            $alldata = FinancialMovement::get();
         
@@ -218,6 +254,31 @@ class FinancalMovementsController extends Controller
             elseif($active=='DeActive'){
                 $alldata = FinancialMovement::onlyTrashed()->get();
             }
+        }else if($objAdmin->position_id == 6){
+       
+            $alldata = FinancialMovement::where('user_id',$userId)->get();
+            if($active=='All'){
+                $alldata = FinancialMovement::withTrashed()->where('user_id',$userId)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = FinancialMovement::where('user_id',$userId)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = FinancialMovement::onlyTrashed()->where('user_id',$userId)->get();
+            }
+        }else{
+       
+            $alldata = FinancialMovement::where('admin_id',$userId)->get();
+            if($active=='All'){
+                $alldata = FinancialMovement::withTrashed()->where('admin_id',$userId)->get();
+            }
+            elseif($active=='Active'){
+                $alldata = FinancialMovement::where('admin_id',$userId)->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = FinancialMovement::onlyTrashed()->where('admin_id',$userId)->get();
+            }
+        }
         
 
 
@@ -398,7 +459,7 @@ class FinancalMovementsController extends Controller
         $admin_id = '';
 
 
-        if(!empty($_GET['admin_id']) && $objAdmin->is_super == 1){
+        if(!empty($_GET['admin_id'])){
           $admin_id = $_GET['admin_id'];
         }else{
             $admin_id = $objAdmin->id;

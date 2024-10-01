@@ -14,7 +14,7 @@
                     <!--begin::Card title-->
                     <div class="card-title">
                         <!--begin::Search-->
-                        @if($objAdmin->is_super == 1)
+                        {{-- @if($objAdmin->is_super == 1) --}}
                                 <br>
 
                             <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/total_secondary_registration') }}"method="get">
@@ -42,7 +42,7 @@
                                     {{ __('messages.Search') }}</button>
                                 <!--end::Button-->
                                 </form>
-                        @endif
+                        {{-- @endif --}}
                         <!--end::Search-->
                     </div>
                     <!--begin::Card title-->

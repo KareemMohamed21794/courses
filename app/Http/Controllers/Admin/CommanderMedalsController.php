@@ -50,9 +50,46 @@ class CommanderMedalsController extends Controller
         }
 
 
+        $can_add = 0;
+        $can_update = 0;
+        $can_delete = 0;
+        $can_print = 0;
+
+        if($objAdmin->position_id == 1 ){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
+        }
 
 
-        return view('auth.admin.commander_medals.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'check_date'=>$check_date]);
+        if($objAdmin->position_id == 3){
+            $can_add = 1;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 0;
+        }
+
+
+        if($objAdmin->position_id == 4){
+            $can_add = 0;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 1;
+        }
+
+
+        if($objAdmin->position_id ==2){
+            $can_add = 1;
+            $can_update = 0;
+            $can_delete = 0;
+            $can_print = 0;
+        }
+
+
+
+
+        return view('auth.admin.commander_medals.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'check_date'=>$check_date,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
     }
 
     /**
@@ -224,7 +261,7 @@ class CommanderMedalsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
-        if($objAdmin->is_super == 1){
+        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
            $alldata = CommanderMedal::get();
         

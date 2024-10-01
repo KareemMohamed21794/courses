@@ -1,6 +1,10 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
+    <input type="hidden" name="can_add" id="can_add" value="{{ $can_add }}">
+    <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
+    <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
+    <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -100,6 +104,7 @@
                         </a>
 
                         @endif
+                        @if($can_add == 1 )
                         <!--begin::Download Form-->
                          <a href="{{ url('public') }}/{{@$objSetup->secondary_registration_file}}" class="menu-link px-3" download="نموذج التسجيل السنوي">
                             <button type="button" class="btn btn-light-primary me-3" >
@@ -117,15 +122,18 @@
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif
                           
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
+                         
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
                             <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-docs-table-select="selected_count"></span>{{ __('messages.Selected') }}</div>
                             <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">{{ __('messages.Delete Selected') }}</button>
                         </div>
+                        
                         <!--end::Group actions-->
                     </div>
                     <!--end::Card toolbar-->
@@ -204,9 +212,9 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
-@if($objAdmin->is_super == 0)
+@if($objAdmin->is_super == 0 )
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>

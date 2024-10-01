@@ -1,6 +1,10 @@
 @extends('auth.admin.include.master')
 @section('title', $title)
 @section('content')
+    <input type="hidden" name="can_add" id="can_add" value="{{ $can_add }}">
+    <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
+    <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
+    <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -82,10 +86,11 @@
                             <!--end::Filter-->
                            
                        
-
+                            @if($can_add == 1 )
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif
                           
                         </div>
                         <!--end::Toolbar-->
@@ -106,7 +111,7 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            @if($objAdmin->is_super == 1)
+                            @if($can_delete == 1 )
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
@@ -170,11 +175,11 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
-@if($objAdmin->is_super == 0)
+{{-- @if($objAdmin->is_super == 0)
 <style type="text/css">
     .group_name{
         display: none;
     }
 </style>
-@endif
+@endif --}}
 
