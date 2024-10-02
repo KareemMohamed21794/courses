@@ -77,7 +77,7 @@ class InformationsController extends Controller
             $can_add = 1;
             $can_update = 0;
             $can_delete = 0;
-            $can_print = 0;
+            $can_print = 1;
         }
 
         return view('auth.admin.requests.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'objAdmin'=>$objAdmin]);

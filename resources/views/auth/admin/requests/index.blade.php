@@ -148,7 +148,7 @@
                             <th>{{ __('messages.status') }}</th>
                             <th>{{ __('messages.reject_notes') }}</th>
                            {{--  @endif --}}
-                            <th>الشرح</th>
+                            {{-- <th>الشرح</th> --}}
                         
                         <th>{{ __('messages.time_arrival') }}</th>
                          <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th> 

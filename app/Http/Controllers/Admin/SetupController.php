@@ -31,9 +31,10 @@ class SetupController extends Controller
         $objAdmin = Admin::find($userId);
 
         $count = Setup::count();
+        
+        $Setup = Setup::first();
 
-
-        return view('auth.admin.setup.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'count'=>$count]);
+        return view('auth.admin.setup.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'count'=>$count,'Setup'=>$Setup]);
     }
 
     /**
@@ -276,7 +277,9 @@ class SetupController extends Controller
         $objSetup->save();
 
         $this->logAction(auth()->id(), 'user', 'update_setup', 'update', 'setup', $objSetup->id);
-        return response()->json(['objSetup'=>$objSetup]);
+
+        return redirect('/admin/setup');
+        // return response()->json(['objSetup'=>$objSetup]);
     }
 
     /**

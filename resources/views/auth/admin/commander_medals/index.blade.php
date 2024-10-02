@@ -161,7 +161,7 @@
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
                             <th> الملف  </th>
-                             <th>{{ __('messages.year') }}</th>
+                             <th>السنة</th>
                              <th>{{ __('messages.status') }}</th>
                            
                             <th>{{ __('messages.reject_notes') }}</th>
