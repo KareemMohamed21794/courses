@@ -47,7 +47,7 @@
                                 <!--end::Label-->
                                 <!--begin::Col-->
                                 <div class="col-lg-8 fv-row">
-                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt_account_profile_details" id="year" name="year" required>
+                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="اختر  السنة " data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt_account_profile_details" id="year" name="year" required>
                                         <option value="">اختر  السنة  </option>
                                         <?php
                                             for($i = date("Y")-3; $i < date("Y")+100; $i++){

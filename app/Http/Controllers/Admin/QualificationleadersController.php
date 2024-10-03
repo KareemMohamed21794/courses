@@ -534,6 +534,7 @@ class QualificationleadersController extends Controller
         ini_set('memory_limit', '-1');
         $columnsDefault = [
             'id'   => true,
+            'group_name'   => true,
             'leader_name'   => true,
             'current_qualification'   => true,
         
@@ -586,6 +587,7 @@ class QualificationleadersController extends Controller
 
             $alldataResult[] = array(
                 "id" => $objdata->id,
+                "group_name" => @$objdata->Admin->group_name,
                 "leader_name" => @$objdata->leader_name,
                 "current_qualification" => @$current_qualification,
                
