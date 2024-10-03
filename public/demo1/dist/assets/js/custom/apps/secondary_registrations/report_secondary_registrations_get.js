@@ -45,7 +45,7 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
         
-                { data: 'id' },
+                { data: 'order' },
                 { data: 'name' },
                 { data: 'phone' },
                 // { data: 'address' },

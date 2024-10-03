@@ -542,6 +542,7 @@ class SecondaryRegistrationsController extends Controller
 
         ini_set('memory_limit', '-1');
         $columnsDefault = [
+            'order'   => true,
             'id'   => true,
             'name'   => true,
             'phone'   => true,
@@ -595,10 +596,11 @@ class SecondaryRegistrationsController extends Controller
 
         $alldataResult = array();
 
-        foreach ($alldata as $objdata) {
+        foreach ($alldata as $key=> $objdata) {
 
 
             $alldataResult[] = array(
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "name" => @$objdata->group_name,
                 "phone" => @$objdata->phone,
@@ -809,6 +811,7 @@ public function ReportArchiveSecondaryRegistrations()
 
         ini_set('memory_limit', '-1');
         $columnsDefault = [
+            'order'   => true,
             'id'   => true,
             'leader'   => true,
             'file'   => true,
@@ -848,7 +851,7 @@ public function ReportArchiveSecondaryRegistrations()
 
         $alldataResult = array();
 
-        foreach ($alldata as $objdata) {
+        foreach ($alldata as $key=> $objdata) {
 
 
             if($request->type == 'secondary_registration_archive'){
@@ -872,6 +875,7 @@ public function ReportArchiveSecondaryRegistrations()
 
 
             $alldataResult[] = array(
+                "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
                 "file" => $file,
