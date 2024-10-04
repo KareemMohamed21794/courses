@@ -533,7 +533,9 @@ class QualificationleadersController extends Controller
 
         ini_set('memory_limit', '-1');
         $columnsDefault = [
+            'order'   => true,
             'id'   => true,
+            'group_name'   => true,
             'leader_name'   => true,
             'current_qualification'   => true,
         
@@ -567,7 +569,7 @@ class QualificationleadersController extends Controller
 
         $alldataResult = array();
 
-        foreach ($alldata as $objdata) {
+        foreach ($alldata as $key=> $objdata) {
            if($objdata->current_qualification == 'musaeid_qayid_wahdah'){
             $current_qualification = 'مساعد قائد وحده   ';
            }else if($objdata->current_qualification == 'qayid_wahda'){
@@ -585,7 +587,9 @@ class QualificationleadersController extends Controller
 
 
             $alldataResult[] = array(
+                "order" => $key+1,
                 "id" => $objdata->id,
+                "group_name" => @$objdata->Admin->group_name,
                 "leader_name" => @$objdata->leader_name,
                 "current_qualification" => @$current_qualification,
                

@@ -45,7 +45,8 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
         
-                { data: 'id' },
+                { data: 'order' },
+                { data: 'group_name' },
                 { data: 'leader_name' },
                 { data: 'current_qualification' },
                 // { data: 'print' },

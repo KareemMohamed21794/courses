@@ -246,7 +246,8 @@ KTUtil.onDOMContentLoaded(function () {
     KTModalBranchesUpdate.init();
 });
 
-function getData(id) {
+function getData(id,action) {
+
     //======= Start Ajxa ========//
     $.ajaxSetup({
         headers: {
@@ -265,18 +266,37 @@ function getData(id) {
             jQuery('#id').val(data.id);
             jQuery('#description_update').val(data.description);
             jQuery('#file_name_update').val(data.file_name);
-
             jQuery('#categories_update').val(data.categories);
-            jQuery("#categories_update").select2("val", ""+data.categories+"");
            
-           var image_path =  '../images/advertisements/'
-            // Get the image element by its id
-            var file = document.getElementById("file_update");
+           // var image_path =  '../images/advertisements/'
+           //  // Get the image element by its id
+           //  var file = document.getElementById("file_update");
           
-            // Set the 'src' and  'href'  attribute of the image element using the JSON data
+           //  // Set the 'src' and  'href'  attribute of the image element using the JSON data
            
-            file.src = image_path+data.file;
-            href_file.href = image_path+data.file;
+           //  file.src = image_path+data.file;
+           //  href_file.href = image_path+data.file;
+
+
+            if (action == 2) {
+               
+            // Disable all input and select elements
+                // alert(data.is_super);
+                // alert(action)
+                $('input, select,textarea').prop('disabled', true);
+                $('#kt_modal_update_submit').hide();
+                var heading = document.getElementById("myHeading");
+                heading.innerHTML = '<span class="fw-bolder">عرض </span> ';
+                
+
+                
+            } else {
+                // Enable all input and select elements
+                $('input, select').prop('disabled', false);
+                $('#kt_modal_update_submit').show();
+                var heading = document.getElementById("myHeading");
+                heading.innerHTML = '<span class="fw-bolder">تحديث</span> ' ;
+            }
            
 
            

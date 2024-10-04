@@ -80,7 +80,7 @@ class AdvertisementsController extends Controller
             $can_add = 0;
             $can_update = 0;
             $can_delete = 0;
-            $can_print = 0;
+            $can_print = 1;
         }
 
       

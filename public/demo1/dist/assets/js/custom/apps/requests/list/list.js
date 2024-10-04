@@ -24,7 +24,7 @@ var KTDatatablesServerSide = function () {
     { data: 'status' },
     { data: 'reject_notes' },
 
-    { data: 'description' },
+    // { data: 'description' },
     { data: 'created_at' },
     { data: null },
    ];
@@ -38,7 +38,7 @@ var KTDatatablesServerSide = function () {
         { data: 'status' },
         { data: 'reject_notes' },
         
-        { data: 'description' },
+        // { data: 'description' },
         { data: 'created_at' },
         { data: null },
     ];
@@ -165,9 +165,17 @@ var KTDatatablesServerSide = function () {
                         if (position_id === '2') {
                             AdminContent = `
 
+                            <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:`+display_print+`">
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                       عرض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
                                <!--begin::Menu item-->
                                 <div class="menu-item px-3" style="display:none">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>
                                 </div>
@@ -186,6 +194,14 @@ var KTDatatablesServerSide = function () {
 
 
                             AdminContent = `
+
+                            <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                       عرض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
                              <!--begin::Menu item-->
                             <div class="menu-item px-3">

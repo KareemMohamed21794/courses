@@ -81,6 +81,7 @@
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                              
                             <th>#</th>
+                            <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.leader_name') }}</th>
                          
                             <th>{{ __('messages.current_qualification') }}</th>
