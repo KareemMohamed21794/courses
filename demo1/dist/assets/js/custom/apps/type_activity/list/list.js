@@ -27,12 +27,10 @@ var KTDatatablesServerSide = function () {
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
-        { data: 'leader' },
-        { data: 'document' },
-        { data: 'status' },
-        { data: 'reject_notes' },
+        { data: 'name_ar' },
+        { data: 'price' },
         { data: 'created_at' },
-            { data: null },
+         { data: null },
         ];
 
     var chosenColumns = is_super === '0' ? userColumns : adminColumns;

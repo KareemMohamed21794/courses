@@ -7,6 +7,7 @@ var KTDatatablesServerSide = function () {
     var dt;
     var filterPayment;
     var is_super = $("#is_super").val();
+    var position_id = $("#position_id").val();
     var firstSegment = $("#firstSegment").val();
     let main_url = "/admin/requests/get";
     var action_lang = $("#action_lang").val();
@@ -43,6 +44,38 @@ var KTDatatablesServerSide = function () {
     ];
 
      var chosenColumns = is_super === '0' ? userColumns : adminColumns;
+
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    
+    
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    
+
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
 
     // Private functions
     var initDatatable = function () {
@@ -129,7 +162,7 @@ var KTDatatablesServerSide = function () {
                     render: function (data, type, row) {
                         var AdminContent = '';
                          // Check if segment is 'Admin'
-                        if (is_super === '0') {
+                        if (position_id === '2') {
                             AdminContent = `
 
                                <!--begin::Menu item-->
@@ -141,7 +174,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_delete+`">
                                       <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>
@@ -149,7 +182,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
  
                             `;
-                        }else{
+                        }else if(position_id === '1' || position_id === '3'){
 
 
                             AdminContent = `
@@ -174,7 +207,7 @@ var KTDatatablesServerSide = function () {
                 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_delete+`">
                                       <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>
