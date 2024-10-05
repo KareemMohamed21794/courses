@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\TypeActivity;
 use App\Models\Admin;
+use App\Models\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -68,7 +69,7 @@ class TypeActivitiesController extends Controller
            
         ]);
 
-        $this->logAction(auth()->id(), 'user', 'add_type_activity', 'create', 'type_activity', $QualificationLeader->id);
+        $this->logAction(auth()->id(), 'user', 'add_type_activity', 'create', 'type_activity', $TypeActivity->id);
 
         return response()->json(['TypeActivity'=>$TypeActivity]);
     }
@@ -353,6 +354,11 @@ class TypeActivitiesController extends Controller
 
         return $data;
     }
+
+
+
+
+
 
 
    

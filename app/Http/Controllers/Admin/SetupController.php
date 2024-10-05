@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Setup;
 use App\Models\Admin;
+use App\Models\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -495,6 +496,241 @@ class SetupController extends Controller
     }
 
     function filterByDateRange( $data, $filter, $field ) {
+        // filter by range
+        if ( ! empty( $range = array_filter( explode( '|', $filter ) ) ) ) {
+            $filter = $range;
+        }
+
+        if ( is_array( $filter ) ) {
+            foreach ( $filter as &$date ) {
+                // hardcoded date format
+                $date = date_create_from_format( 'm/d/Y', stripcslashes( $date ) );
+            }
+            // filter by date range
+            $data = array_filter( $data, function ( $a ) use ( $field, $filter ) {
+                // hardcoded date format
+                $current = date_create_from_format( 'm/d/Y', $a[ $field ] );
+                $from    = $filter[0];
+                $to      = $filter[1];
+                if ( $from <= $current && $to >= $current ) {
+                    return true;
+                }
+
+                return false;
+            } );
+        }
+
+        return $data;
+    }
+
+
+
+    public function history_movements()
+    {
+        
+        $title = __('messages.history_movements');
+        $add_title = __('messages.history_movements');
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        
+        $Log = Log::first();
+
+        return view('auth.admin.setup.history_movements',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'Log'=>$Log]);
+    }
+
+
+       public function get_history_movements(Request $request)
+    { 
+        
+        //$this->authorize(self::MODEL.'-viewAny');
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            '#'   => true,
+            'order'   => true,
+            'id'   => true,
+            'user_id'   => true,
+            'action'=> true,
+            'action_type'=>true,
+            'table_name'=>true,
+            'table_id'=>true,
+            'created_at'   => true,
+        ];
+
+        if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
+            $columnsDefault = [];
+            foreach ( $request->columnsDef as $field ) {
+                $columnsDefault[ $field ] = true;
+            }
+        }
+
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $active = $request->active;
+        if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 ){
+
+           $alldata = Log::with('Admin')->get();
+        
+            if($active=='All'){
+                $alldata = Log::withTrashed()->with('Admin')->get();
+            }
+            elseif($active=='Active'){
+                $alldata = Log::get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = Log::onlyTrashed()->with('Admin')->get();
+            }
+        }else{
+
+            $alldata = Log::where('user_id',$userId)->with('Admin')->get();
+            if($active=='All'){
+                $alldata = Log::withTrashed()->where('user_id',$userId)->with('Admin')->get();
+            }
+            elseif($active=='Active'){
+                $alldata = Log::where('user_id',$userId)->with('Admin')->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = Log::onlyTrashed()->where('user_id',$userId)->with('Admin')->get();
+            }
+
+
+
+        }
+
+        $alldataResult=array();
+
+        foreach($alldata as $key=> $objdata){
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "user_id" => @$objdata->Admin->name,
+                "action"=> $objdata->action,
+                "action_type"=> @$objdata->action_type,
+                "table_name"=>$objdata->table_name,
+                "table_id"=> @$objdata->table_id,
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+        }
+
+       $alldata =$alldataResult ;
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ( $alldata as $d ) {
+            $data[] = $this->filterArrayMovements( $d, $columnsDefault );
+        }
+
+        // count data
+        $totalRecords = $totalDisplay = count( $data );
+
+        // filter by general search keyword
+        if ( isset( $request->search ) ) {
+            $data         =  $this->filterKeywordMovements( $data, $request->search );
+            $totalDisplay = count( $data );
+        }
+
+        if ( isset( $request->columns ) && is_array( $request->columns ) ) {
+            foreach ( $request->columns as $column ) {
+                if ( isset( $column['search'] ) ) {
+                    $data         =  $this->filterKeywordMovements( $data, $column['search'], $column['data'] );
+                    $totalDisplay = count( $data );
+                }
+            }
+        }
+
+        // sort
+        if ( isset( $request->order[0]['column'] ) && $request->order[0]['dir'] ) {
+            $column = $request->order[0]['column'];
+            $dir    = $request->order[0]['dir'];
+            usort( $data, function ( $a, $b ) use ( $column, $dir ) {
+                $a = array_slice( $a, $column, 1 );
+                $b = array_slice( $b, $column, 1 );
+                $a = array_pop( $a );
+                $b = array_pop( $b );
+
+                if ( $dir === 'asc' ) {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            } );
+        }
+
+        // pagination length
+        if ( isset( $request->length ) ) {
+            $data = array_splice( $data, $_REQUEST['start'], $request->length );
+        }
+
+        // return array values only without the keys
+        if ( isset( $request->array_values ) && $request->array_values ) {
+            $tmp  = $data;
+            $data = [];
+            foreach ( $tmp as $d ) {
+
+                $data[] = array_values( $d );
+            }
+        }
+
+
+        $secho = 0;
+        if ( isset( $request->sEcho ) ) {
+            $secho = intval( $request->sEcho );
+        }
+
+        $result = [
+            'recordsTotal'        => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data'               => $data,
+        ];
+
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return  json_encode( $result, JSON_PRETTY_PRINT );
+    }
+
+    function filterArrayMovements( $array, $allowed = [] ) {
+        return array_filter(
+            $array,
+            function ( $val, $key ) use ( $allowed ) { // N.b. $val, $key not $key, $val
+                return isset( $allowed[ $key ] ) && ( $allowed[ $key ] === true || $allowed[ $key ] === $val );
+            },
+            ARRAY_FILTER_USE_BOTH
+        );
+    }
+
+    function filterKeywordMovements( $data, $search, $field = '' ) {
+        $filter = '';
+        if ( isset( $search['value'] ) ) {
+            $filter = $search['value'];
+        }
+        if ( ! empty( $filter ) ) {
+            if ( ! empty( $field ) ) {
+                if ( strpos( strtolower( $field ), 'date' ) !== false ) {
+                    // filter by date range
+                    $data = filterByDateRangeMovements( $data, $filter, $field );
+                } else {
+                    // filter by column
+                    $data = array_filter( $data, function ( $a ) use ( $field, $filter ) {
+                        return (boolean) preg_match( "/$filter/i", $a[ $field ] );
+                    } );
+                }
+
+            } else {
+                // general filter
+                $data = array_filter( $data, function ( $a ) use ( $filter ) {
+                    return (boolean) preg_grep( "/$filter/i", (array) $a );
+                } );
+            }
+        }
+
+        return $data;
+    }
+
+    function filterByDateRangeMovements( $data, $filter, $field ) {
         // filter by range
         if ( ! empty( $range = array_filter( explode( '|', $filter ) ) ) ) {
             $filter = $range;
