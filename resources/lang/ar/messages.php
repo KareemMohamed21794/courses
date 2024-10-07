@@ -633,6 +633,7 @@ return [
     'commander_medals_monzer'=>'وسام القائد منذر الزميلي للتميز',
     'setup'=>'اعدادات النظام',
     'commander_medal_date'=>'تاريخ  وسام القائد ',
+    'history_movements'=>'سجل الحركات',
 
  ];
 

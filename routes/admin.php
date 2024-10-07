@@ -305,6 +305,9 @@ Route::middleware('auth:admin')->group(function () {
 		Route::resource('/setup', SetupController::class);
 		Route::DELETE('/delete_setup', [SetupController::class,'deleteSetup']);
 
+        // history_movements
+		Route::get('/history_movements', [SetupController::class, 'history_movements']);
+		Route::get('/history_movements/get', [SetupController::class, 'get_history_movements']);
 		# End setup
 
 

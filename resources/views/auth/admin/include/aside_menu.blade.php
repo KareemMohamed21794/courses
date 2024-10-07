@@ -992,7 +992,7 @@ fill: #009EF7;
                  @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
 
 
-                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='setup'||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods' ? 'show here' : ''}}">
+                  <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='setup'||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods' ||Request::segment(2)=='history_movements' ? 'show here' : ''}}">
 
 
                         <span class="menu-link">
@@ -1051,6 +1051,17 @@ fill: #009EF7;
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">{{ __('messages.payment_methods') }}</span>
+                                </a>
+                            </div>
+
+
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='history_movements' ? 'active' : '' }}" href="{{ url('/admin/history_movements') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.history_movements') }}</span>
                                 </a>
                             </div>
 
