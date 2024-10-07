@@ -45,10 +45,10 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
         
-                { data: 'id' },
+                { data: 'order' },
                 { data: 'name' },
                 { data: 'phone' },
-                { data: 'address' },
+                // { data: 'address' },
                 { data: 'email' },
                 // { data: 'print' },
                 // { data: null },
