@@ -52,7 +52,7 @@ class HomeController extends Controller
         $count_leaders = Admin::where('is_super',0)->count();
 
        
-       if($objAdmin->is_super == 0){
+       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
         $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('status','approved')->where('year',date('Y'))->count();
 
         $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
@@ -187,7 +187,7 @@ class HomeController extends Controller
         $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->count();
         
        
-       if($objAdmin->is_super == 0){
+       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
 
         $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')
         ->where('year',date('Y'))
@@ -392,7 +392,7 @@ class HomeController extends Controller
         $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->count();
         
        
-       if($objAdmin->is_super == 0){
+       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
 
 
         

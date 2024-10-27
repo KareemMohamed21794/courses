@@ -355,11 +355,4 @@ class TypeActivitiesController extends Controller
         return $data;
     }
 
-
-
-
-
-
-
-   
 }
