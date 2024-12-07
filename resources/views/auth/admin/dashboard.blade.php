@@ -13,8 +13,8 @@
                     @if(Auth::guard('admin')->check())
                     @if(Auth::user()->is_super)
                     <div class="col">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('/admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('/admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
                                 <div class="card-body">
                                     <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
@@ -133,8 +133,13 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
 
-                    <div class="col">
+                   <div class="col">
                         <!--begin::Statistics Widget 5-->
                         <a href="{{ url('admin/permits') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
@@ -163,9 +168,8 @@
                                 <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
                                 <svg width="24" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                                 viewBox="0 0 57.001 57.001" xml:space="preserve">
-                                <g>
-                                    <g>
-                                    </g>
+                               
+                                    
                                     <g>
                                         <path d="M39,13.001c3.309,0,6-2.691,6-6s-2.691-6-6-6s-6,2.691-6,6S35.691,13.001,39,13.001z M39,3.001c2.206,0,4,1.794,4,4
                                             s-1.794,4-4,4c-0.117,0-0.226-0.025-0.34-0.034C39.476,10.234,40,9.182,40,8.001h-2c0,0.986-0.719,1.803-1.66,1.966
@@ -192,7 +196,7 @@
                                         <rect x="20" y="5.001" width="2" height="2"/>
                                         <rect x="16" y="5.001" width="2" height="2"/>
                                     </g>
-                                </g>
+                                
                                 </svg>
                                 </span>
                                 <!--end::Svg Icon-->
@@ -203,15 +207,9 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
-              
-
-                </div>
-                <!--end::Row-->
 
 
-
-                    <div class="row g-5 g-xl-8">
-                      <div class="col-xl-3">
+                     <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/secondary_registrations') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -230,12 +228,13 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                     </div>
-
-
-
-
-
-                          <div class="col-xl-3">
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
+                     
+                    <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/financial') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -253,7 +252,7 @@
                             <!--end::Statistics Widget 5-->
                     </div>
 
-                          <div class="col-xl-3">
+                    <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/administrative') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -346,7 +345,7 @@
                             <!--end::Statistics Widget 5-->
                     </div>
 
-                    <div class="col-xl-3">
+                    <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/board_director_meetings') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -409,132 +408,119 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                     </div>
-
-
-                    </div>
-                    <!--end::Row-->
-
-
-                    <div class="row g-5 g-xl-8">
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
                          
 
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 16L20 21M20 16L15 21M11 14C7.13401 14 4 17.134 4 21H11M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_ghayr_muahal }}</div>
-                                    <div class="fw-bold text-gray-400"> غير مؤهل</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M20 18L14 18M11 21H4C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_musaeid_qayid_wahdah }}</div>
-                                    <div class="fw-bold text-gray-400">مساعد قائد وحدة شارة خشبية </div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M14.9999 15.2547C13.8661 14.4638 12.4872 14 10.9999 14C7.40399 14 4.44136 16.7114 4.04498 20.2013C4.01693 20.4483 4.0029 20.5718 4.05221 20.6911C4.09256 20.7886 4.1799 20.8864 4.2723 20.9375C4.38522 21 4.52346 21 4.79992 21H9.94465M13.9999 19.2857L15.7999 21L19.9999 17M14.9999 7C14.9999 9.20914 13.2091 11 10.9999 11C8.79078 11 6.99992 9.20914 6.99992 7C6.99992 4.79086 8.79078 3 10.9999 3C13.2091 3 14.9999 4.79086 14.9999 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_qayid_wahda }}</div>
-                                    <div class="fw-bold text-gray-400"> قائد وحدة شارة خشبية   </div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.5 21H4C4 17.4735 6.60771 14.5561 10 14.0709M16.4976 16.2119C15.7978 15.4328 14.6309 15.2232 13.7541 15.9367C12.8774 16.6501 12.7539 17.843 13.4425 18.6868C13.8312 19.1632 14.7548 19.9983 15.4854 20.6353C15.8319 20.9374 16.0051 21.0885 16.2147 21.1503C16.3934 21.203 16.6018 21.203 16.7805 21.1503C16.9901 21.0885 17.1633 20.9374 17.5098 20.6353C18.2404 19.9983 19.164 19.1632 19.5527 18.6868C20.2413 17.843 20.1329 16.6426 19.2411 15.9367C18.3492 15.2307 17.1974 15.4328 16.4976 16.2119ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_musaeid_qayid_tadrib }}</div>
-                                    <div class="fw-bold text-gray-400"> مساعد قائد تدريب</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M11 21H4C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_qayid_tadrib }}</div>
-                                    <div class="fw-bold text-gray-400"> قائد تدريب</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 16L20 21M20 16L15 21M11 14C7.13401 14 4 17.134 4 21H11M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_ghayr_muahal }}</div>
+                                <div class="fw-bold text-gray-400"> غير مؤهل</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
                     </div>
-                    <!--end::Row-->
 
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 18L14 18M11 21H4C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_musaeid_qayid_wahdah }}</div>
+                                <div class="fw-bold text-gray-400">مساعد قائد وحدة شارة خشبية </div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
 
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14.9999 15.2547C13.8661 14.4638 12.4872 14 10.9999 14C7.40399 14 4.44136 16.7114 4.04498 20.2013C4.01693 20.4483 4.0029 20.5718 4.05221 20.6911C4.09256 20.7886 4.1799 20.8864 4.2723 20.9375C4.38522 21 4.52346 21 4.79992 21H9.94465M13.9999 19.2857L15.7999 21L19.9999 17M14.9999 7C14.9999 9.20914 13.2091 11 10.9999 11C8.79078 11 6.99992 9.20914 6.99992 7C6.99992 4.79086 8.79078 3 10.9999 3C13.2091 3 14.9999 4.79086 14.9999 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_qayid_wahda }}</div>
+                                <div class="fw-bold text-gray-400"> قائد وحدة شارة خشبية   </div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
 
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.5 21H4C4 17.4735 6.60771 14.5561 10 14.0709M16.4976 16.2119C15.7978 15.4328 14.6309 15.2232 13.7541 15.9367C12.8774 16.6501 12.7539 17.843 13.4425 18.6868C13.8312 19.1632 14.7548 19.9983 15.4854 20.6353C15.8319 20.9374 16.0051 21.0885 16.2147 21.1503C16.3934 21.203 16.6018 21.203 16.7805 21.1503C16.9901 21.0885 17.1633 20.9374 17.5098 20.6353C18.2404 19.9983 19.164 19.1632 19.5527 18.6868C20.2413 17.843 20.1329 16.6426 19.2411 15.9367C18.3492 15.2307 17.1974 15.4328 16.4976 16.2119ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_musaeid_qayid_tadrib }}</div>
+                                <div class="fw-bold text-gray-400"> مساعد قائد تدريب</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
 
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 21H4C4 17.4735 6.60771 14.5561 10 14.0709M19.8726 15.2038C19.8044 15.2079 19.7357 15.21 19.6667 15.21C18.6422 15.21 17.7077 14.7524 17 14C16.2923 14.7524 15.3578 15.2099 14.3333 15.2099C14.2643 15.2099 14.1956 15.2078 14.1274 15.2037C14.0442 15.5853 14 15.9855 14 16.3979C14 18.6121 15.2748 20.4725 17 21C18.7252 20.4725 20 18.6121 20 16.3979C20 15.9855 19.9558 15.5853 19.8726 15.2038ZM15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_qualificationLeaders_qayid_tadrib }}</div>
+                                <div class="fw-bold text-gray-400"> قائد تدريب</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
 
-
-
-
-
-
-
-
-                      <div class="row g-5 g-xl-8">
-                         
-
-                        <div class="col-xl">
+                    <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -551,112 +537,103 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                         </div>
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
+                         
 
-
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                    <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.8 21C15.8 21.3866 16.1134 21.7 16.5 21.7C16.8866 21.7 17.2 21.3866 17.2 21H15.8ZM4.8 21C4.8 21.3866 5.1134 21.7 5.5 21.7C5.8866 21.7 6.2 21.3866 6.2 21H4.8ZM6.2 18C6.2 17.6134 5.8866 17.3 5.5 17.3C5.1134 17.3 4.8 17.6134 4.8 18H6.2ZM12.3 21C12.3 21.3866 12.6134 21.7 13 21.7C13.3866 21.7 13.7 21.3866 13.7 21H12.3ZM13.7 18C13.7 17.6134 13.3866 17.3 13 17.3C12.6134 17.3 12.3 17.6134 12.3 18H13.7ZM11.7429 11.3125L11.3499 10.7333L11.3499 10.7333L11.7429 11.3125ZM16.2429 11.3125L15.8499 10.7333L15.8499 10.7333L16.2429 11.3125ZM3.2 21V19.5H1.8V21H3.2ZM8 14.7H11V13.3H8V14.7ZM15.8 19.5V21H17.2V19.5H15.8ZM11 14.7C13.651 14.7 15.8 16.849 15.8 19.5H17.2C17.2 16.0758 14.4242 13.3 11 13.3V14.7ZM3.2 19.5C3.2 16.849 5.34903 14.7 8 14.7V13.3C4.57583 13.3 1.8 16.0758 1.8 19.5H3.2ZM11 14.7H15.5V13.3H11V14.7ZM20.3 19.5V21H21.7V19.5H20.3ZM15.5 14.7C18.151 14.7 20.3 16.849 20.3 19.5H21.7C21.7 16.0758 18.9242 13.3 15.5 13.3V14.7ZM6.2 21V18H4.8V21H6.2ZM13.7 21V18H12.3V21H13.7ZM9.5 11.3C7.67746 11.3 6.2 9.82255 6.2 8.00001H4.8C4.8 10.5958 6.90426 12.7 9.5 12.7V11.3ZM6.2 8.00001C6.2 6.17746 7.67746 4.7 9.5 4.7V3.3C6.90426 3.3 4.8 5.40427 4.8 8.00001H6.2ZM9.5 4.7C11.3225 4.7 12.8 6.17746 12.8 8.00001H14.2C14.2 5.40427 12.0957 3.3 9.5 3.3V4.7ZM12.8 8.00001C12.8 9.13616 12.2264 10.1386 11.3499 10.7333L12.1358 11.8918C13.3801 11.0477 14.2 9.61973 14.2 8.00001H12.8ZM11.3499 10.7333C10.8225 11.091 10.1867 11.3 9.5 11.3V12.7C10.4757 12.7 11.3839 12.4019 12.1358 11.8918L11.3499 10.7333ZM14 4.7C15.8225 4.7 17.3 6.17746 17.3 8.00001H18.7C18.7 5.40427 16.5957 3.3 14 3.3V4.7ZM17.3 8.00001C17.3 9.13616 16.7264 10.1386 15.8499 10.7333L16.6358 11.8918C17.8801 11.0477 18.7 9.61973 18.7 8.00001H17.3ZM15.8499 10.7333C15.3225 11.091 14.6867 11.3 14 11.3V12.7C14.9757 12.7 15.8839 12.4019 16.6358 11.8918L15.8499 10.7333ZM11.9378 5.42349C12.5029 4.97049 13.2189 4.7 14 4.7V3.3C12.8892 3.3 11.8667 3.68622 11.0622 4.33114L11.9378 5.42349ZM14 11.3C13.3133 11.3 12.6775 11.091 12.1501 10.7333L11.3642 11.8918C12.1161 12.4019 13.0243 12.7 14 12.7V11.3Z"/></svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $female_leaders_number }}</div>
-                                    <div class="fw-bold text-gray-400">{{ __('messages.female_leaders_number') }}</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-
-                                       <svg width="24px" height="24px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M16 21.416c-5.035 0.022-9.243 3.537-10.326 8.247l-0.014 0.072c-0.018 0.080-0.029 0.172-0.029 0.266 0 0.69 0.56 1.25 1.25 1.25 0.596 0 1.095-0.418 1.22-0.976l0.002-0.008c0.825-3.658 4.047-6.35 7.897-6.35s7.073 2.692 7.887 6.297l0.010 0.054c0.127 0.566 0.625 0.982 1.221 0.982 0.69 0 1.25-0.559 1.25-1.25 0-0.095-0.011-0.187-0.031-0.276l0.002 0.008c-1.098-4.78-5.305-8.295-10.337-8.316h-0.002zM9.164 11.102c0 0 0 0 0 0 2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM9.164 3.25c0 0 0 0 0 0 1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM22.926 11.102c2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM22.926 3.25c1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM31.311 19.734c-0.864-4.111-4.46-7.154-8.767-7.154-0.395 0-0.784 0.026-1.165 0.075l0.045-0.005c-0.93-2.116-3.007-3.568-5.424-3.568-2.414 0-4.49 1.448-5.407 3.524l-0.015 0.038c-0.266-0.034-0.58-0.057-0.898-0.063l-0.009-0c-4.33 0.019-7.948 3.041-8.881 7.090l-0.012 0.062c-0.018 0.080-0.029 0.173-0.029 0.268 0 0.691 0.56 1.251 1.251 1.251 0.596 0 1.094-0.417 1.22-0.975l0.002-0.008c0.684-2.981 3.309-5.174 6.448-5.186h0.001c0.144 0 0.282 0.020 0.423 0.029 0.056 3.218 2.679 5.805 5.905 5.805 3.224 0 5.845-2.584 5.905-5.794l0-0.006c0.171-0.013 0.339-0.035 0.514-0.035 3.14 0.012 5.765 2.204 6.442 5.14l0.009 0.045c0.126 0.567 0.625 0.984 1.221 0.984 0.69 0 1.249-0.559 1.249-1.249 0-0.094-0.010-0.186-0.030-0.274l0.002 0.008zM16 18.416c-0 0-0 0-0.001 0-1.887 0-3.417-1.53-3.417-3.417s1.53-3.417 3.417-3.417c1.887 0 3.417 1.53 3.417 3.417 0 0 0 0 0 0.001v-0c-0.003 1.886-1.53 3.413-3.416 3.416h-0z"></path>
-                                        </svg>
-
-                                    
-                                  
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $persons_number }}</div>
-                                    <div class="fw-bold text-gray-400">{{ __('messages.persons_number') }}</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-                        <div class="col-xl">
-                            <!--begin::Statistics Widget 5-->
-                            <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
-                                <!--begin::Body-->
-                                <div class="card-body">
-                                    <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
-                                    <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
-                                      <svg xmlns="http://www.w3.org/2000/svg"  width="24px" height="24px"
-                                         viewBox="0 0 100 100" xml:space="preserve">
-
-                                    <g>
-                                        <g>
-                                            <path d="M57,44h-6h-6c-3.3,0-6,2.7-6,6v9c0,1.1,0.5,2.1,1.2,2.8c0.7,0.7,1.7,1.2,2.8,1.2v9c0,3.3,2.7,6,6,6h2h2
-                                                c3.3,0,6-2.7,6-6v-9c1.1,0,2.1-0.4,2.8-1.2c0.7-0.7,1.2-1.7,1.2-2.8v-9C63,46.7,60.3,44,57,44z"/>
-                                        </g>
-                                        <g>
-                                            <circle cx="51" cy="33" r="7"/>
-                                        </g>
-                                        <g>
-                                            <path d="M36.6,66.7c-0.2-0.2-0.5-0.4-0.7-0.6c-1.9-2-3-4.5-3-7.1v-9c0-3.2,1.3-6.2,3.4-8.3c0.6-0.6,0.1-1.7-0.7-1.7
-                                                c-1.7,0-3.6,0-3.6,0h-6c-3.3,0-6,2.7-6,6v9c0,1.1,0.5,2.1,1.2,2.8c0.7,0.7,1.7,1.2,2.8,1.2v9c0,3.3,2.7,6,6,6h2h2
-                                                c0.9,0,1.7-0.2,2.4-0.5c0.4-0.2,0.6-0.5,0.6-0.9c0-1.2,0-4,0-5.1C37,67.2,36.9,66.9,36.6,66.7z"/>
-                                        </g>
-                                        <g>
-                                            <circle cx="32" cy="29" r="7"/>
-                                        </g>
-                                        <g>
-                                            <path d="M76,40h-6c0,0-1.9,0-3.6,0c-0.9,0-1.3,1-0.7,1.7c2.1,2.2,3.4,5.1,3.4,8.3v9c0,2.6-1,5.1-3,7.1
-                                                c-0.2,0.2-0.4,0.4-0.7,0.6c-0.2,0.2-0.4,0.5-0.4,0.8c0,1.1,0,3.8,0,5.1c0,0.4,0.2,0.8,0.6,0.9c0.7,0.3,1.5,0.5,2.4,0.5h2h2
-                                                c3.3,0,6-2.7,6-6v-9c1.1,0,2.1-0.4,2.8-1.2c0.7-0.7,1.2-1.7,1.2-2.8v-9C82,42.7,79.3,40,76,40z"/>
-                                        </g>
-                                        <g>
-                                            <circle cx="70" cy="29" r="7"/>
-                                        </g>
-                                    </g>
-                                    </svg>
-                                    </span>
-                                    <!--end::Svg Icon-->
-                                    <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $groups }}</div>
-                                    <div class="fw-bold text-gray-400">{{ __('messages.groups') }}</div>
-                                </div>
-                                <!--end::Body-->
-                            </a>
-                            <!--end::Statistics Widget 5-->
-                        </div>
-
-
-
-                     
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.8 21C15.8 21.3866 16.1134 21.7 16.5 21.7C16.8866 21.7 17.2 21.3866 17.2 21H15.8ZM4.8 21C4.8 21.3866 5.1134 21.7 5.5 21.7C5.8866 21.7 6.2 21.3866 6.2 21H4.8ZM6.2 18C6.2 17.6134 5.8866 17.3 5.5 17.3C5.1134 17.3 4.8 17.6134 4.8 18H6.2ZM12.3 21C12.3 21.3866 12.6134 21.7 13 21.7C13.3866 21.7 13.7 21.3866 13.7 21H12.3ZM13.7 18C13.7 17.6134 13.3866 17.3 13 17.3C12.6134 17.3 12.3 17.6134 12.3 18H13.7ZM11.7429 11.3125L11.3499 10.7333L11.3499 10.7333L11.7429 11.3125ZM16.2429 11.3125L15.8499 10.7333L15.8499 10.7333L16.2429 11.3125ZM3.2 21V19.5H1.8V21H3.2ZM8 14.7H11V13.3H8V14.7ZM15.8 19.5V21H17.2V19.5H15.8ZM11 14.7C13.651 14.7 15.8 16.849 15.8 19.5H17.2C17.2 16.0758 14.4242 13.3 11 13.3V14.7ZM3.2 19.5C3.2 16.849 5.34903 14.7 8 14.7V13.3C4.57583 13.3 1.8 16.0758 1.8 19.5H3.2ZM11 14.7H15.5V13.3H11V14.7ZM20.3 19.5V21H21.7V19.5H20.3ZM15.5 14.7C18.151 14.7 20.3 16.849 20.3 19.5H21.7C21.7 16.0758 18.9242 13.3 15.5 13.3V14.7ZM6.2 21V18H4.8V21H6.2ZM13.7 21V18H12.3V21H13.7ZM9.5 11.3C7.67746 11.3 6.2 9.82255 6.2 8.00001H4.8C4.8 10.5958 6.90426 12.7 9.5 12.7V11.3ZM6.2 8.00001C6.2 6.17746 7.67746 4.7 9.5 4.7V3.3C6.90426 3.3 4.8 5.40427 4.8 8.00001H6.2ZM9.5 4.7C11.3225 4.7 12.8 6.17746 12.8 8.00001H14.2C14.2 5.40427 12.0957 3.3 9.5 3.3V4.7ZM12.8 8.00001C12.8 9.13616 12.2264 10.1386 11.3499 10.7333L12.1358 11.8918C13.3801 11.0477 14.2 9.61973 14.2 8.00001H12.8ZM11.3499 10.7333C10.8225 11.091 10.1867 11.3 9.5 11.3V12.7C10.4757 12.7 11.3839 12.4019 12.1358 11.8918L11.3499 10.7333ZM14 4.7C15.8225 4.7 17.3 6.17746 17.3 8.00001H18.7C18.7 5.40427 16.5957 3.3 14 3.3V4.7ZM17.3 8.00001C17.3 9.13616 16.7264 10.1386 15.8499 10.7333L16.6358 11.8918C17.8801 11.0477 18.7 9.61973 18.7 8.00001H17.3ZM15.8499 10.7333C15.3225 11.091 14.6867 11.3 14 11.3V12.7C14.9757 12.7 15.8839 12.4019 16.6358 11.8918L15.8499 10.7333ZM11.9378 5.42349C12.5029 4.97049 13.2189 4.7 14 4.7V3.3C12.8892 3.3 11.8667 3.68622 11.0622 4.33114L11.9378 5.42349ZM14 11.3C13.3133 11.3 12.6775 11.091 12.1501 10.7333L11.3642 11.8918C12.1161 12.4019 13.0243 12.7 14 12.7V11.3Z"/></svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $female_leaders_number }}</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.female_leaders_number') }}</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
                     </div>
-                    <!--end::Row-->
 
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
 
+                                   <svg width="24px" height="24px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 21.416c-5.035 0.022-9.243 3.537-10.326 8.247l-0.014 0.072c-0.018 0.080-0.029 0.172-0.029 0.266 0 0.69 0.56 1.25 1.25 1.25 0.596 0 1.095-0.418 1.22-0.976l0.002-0.008c0.825-3.658 4.047-6.35 7.897-6.35s7.073 2.692 7.887 6.297l0.010 0.054c0.127 0.566 0.625 0.982 1.221 0.982 0.69 0 1.25-0.559 1.25-1.25 0-0.095-0.011-0.187-0.031-0.276l0.002 0.008c-1.098-4.78-5.305-8.295-10.337-8.316h-0.002zM9.164 11.102c0 0 0 0 0 0 2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM9.164 3.25c0 0 0 0 0 0 1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM22.926 11.102c2.858 0 5.176-2.317 5.176-5.176s-2.317-5.176-5.176-5.176c-2.858 0-5.176 2.317-5.176 5.176v0c0.004 2.857 2.319 5.172 5.175 5.176h0zM22.926 3.25c1.478 0 2.676 1.198 2.676 2.676s-1.198 2.676-2.676 2.676c-1.478 0-2.676-1.198-2.676-2.676v0c0.002-1.477 1.199-2.674 2.676-2.676h0zM31.311 19.734c-0.864-4.111-4.46-7.154-8.767-7.154-0.395 0-0.784 0.026-1.165 0.075l0.045-0.005c-0.93-2.116-3.007-3.568-5.424-3.568-2.414 0-4.49 1.448-5.407 3.524l-0.015 0.038c-0.266-0.034-0.58-0.057-0.898-0.063l-0.009-0c-4.33 0.019-7.948 3.041-8.881 7.090l-0.012 0.062c-0.018 0.080-0.029 0.173-0.029 0.268 0 0.691 0.56 1.251 1.251 1.251 0.596 0 1.094-0.417 1.22-0.975l0.002-0.008c0.684-2.981 3.309-5.174 6.448-5.186h0.001c0.144 0 0.282 0.020 0.423 0.029 0.056 3.218 2.679 5.805 5.905 5.805 3.224 0 5.845-2.584 5.905-5.794l0-0.006c0.171-0.013 0.339-0.035 0.514-0.035 3.14 0.012 5.765 2.204 6.442 5.14l0.009 0.045c0.126 0.567 0.625 0.984 1.221 0.984 0.69 0 1.249-0.559 1.249-1.249 0-0.094-0.010-0.186-0.030-0.274l0.002 0.008zM16 18.416c-0 0-0 0-0.001 0-1.887 0-3.417-1.53-3.417-3.417s1.53-3.417 3.417-3.417c1.887 0 3.417 1.53 3.417 3.417 0 0 0 0 0 0.001v-0c-0.003 1.886-1.53 3.413-3.416 3.416h-0z"></path>
+                                    </svg>
 
+                                
+                              
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $persons_number }}</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.persons_number') }}</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
 
-                  
-              
+                    <div class="col">
+                        <!--begin::Statistics Widget 5-->
+                        <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen032.svg-->
+                                <span class="svg-icon svg-icon-primary svg-icon-3x ms-n1">
+                                  <svg xmlns="http://www.w3.org/2000/svg"  width="24px" height="24px"
+                                     viewBox="0 0 100 100" xml:space="preserve">
 
+                                <g>
+                                    <g>
+                                        <path d="M57,44h-6h-6c-3.3,0-6,2.7-6,6v9c0,1.1,0.5,2.1,1.2,2.8c0.7,0.7,1.7,1.2,2.8,1.2v9c0,3.3,2.7,6,6,6h2h2
+                                            c3.3,0,6-2.7,6-6v-9c1.1,0,2.1-0.4,2.8-1.2c0.7-0.7,1.2-1.7,1.2-2.8v-9C63,46.7,60.3,44,57,44z"/>
+                                    </g>
+                                    <g>
+                                        <circle cx="51" cy="33" r="7"/>
+                                    </g>
+                                    <g>
+                                        <path d="M36.6,66.7c-0.2-0.2-0.5-0.4-0.7-0.6c-1.9-2-3-4.5-3-7.1v-9c0-3.2,1.3-6.2,3.4-8.3c0.6-0.6,0.1-1.7-0.7-1.7
+                                            c-1.7,0-3.6,0-3.6,0h-6c-3.3,0-6,2.7-6,6v9c0,1.1,0.5,2.1,1.2,2.8c0.7,0.7,1.7,1.2,2.8,1.2v9c0,3.3,2.7,6,6,6h2h2
+                                            c0.9,0,1.7-0.2,2.4-0.5c0.4-0.2,0.6-0.5,0.6-0.9c0-1.2,0-4,0-5.1C37,67.2,36.9,66.9,36.6,66.7z"/>
+                                    </g>
+                                    <g>
+                                        <circle cx="32" cy="29" r="7"/>
+                                    </g>
+                                    <g>
+                                        <path d="M76,40h-6c0,0-1.9,0-3.6,0c-0.9,0-1.3,1-0.7,1.7c2.1,2.2,3.4,5.1,3.4,8.3v9c0,2.6-1,5.1-3,7.1
+                                            c-0.2,0.2-0.4,0.4-0.7,0.6c-0.2,0.2-0.4,0.5-0.4,0.8c0,1.1,0,3.8,0,5.1c0,0.4,0.2,0.8,0.6,0.9c0.7,0.3,1.5,0.5,2.4,0.5h2h2
+                                            c3.3,0,6-2.7,6-6v-9c1.1,0,2.1-0.4,2.8-1.2c0.7-0.7,1.2-1.7,1.2-2.8v-9C82,42.7,79.3,40,76,40z"/>
+                                    </g>
+                                    <g>
+                                        <circle cx="70" cy="29" r="7"/>
+                                    </g>
+                                </g>
+                                </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $groups }}</div>
+                                <div class="fw-bold text-gray-400">{{ __('messages.groups') }}</div>
+                            </div>
+                            <!--end::Body-->
+                        </a>
+                        <!--end::Statistics Widget 5-->
+                    </div>
+                </div>
+                <!--end::Row-->
 
-             
-             
         </div>
         <!--end::Container-->
     </div>
