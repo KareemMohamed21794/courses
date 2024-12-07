@@ -19,7 +19,7 @@
         <!--begin::Mobile logo-->
         <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
             <a href="{{ url('/admin') }}" class="d-lg-none">
-                <img alt="Logo" src="{{ asset('demo1/dist/assets/media/logos/logo-2.svg') }}" class="h-30px" />
+                <img alt="Logo" src="{{ asset('public/images/logo.png') }}" class="h-30px" />
             </a>
         </div>
         <!--end::Mobile logo-->

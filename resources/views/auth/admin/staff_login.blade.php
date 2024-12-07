@@ -28,7 +28,7 @@
                         <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
                             <!--begin::Logo-->
                             <a href="" class="py-9 mb-5">
-                                <img alt="Logo" src="{{ asset('demo1/dist/assets/media/logos/logo-2.svg') }}" class="h-90px" />
+                                <img alt="Logo" src="{{ asset('public/images/logo.png'); }}" class="h-90px" />
                             </a>
                             <!--end::Logo-->
                             <!--begin::Title-->
