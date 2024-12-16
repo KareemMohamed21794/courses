@@ -613,7 +613,7 @@ return [
     'connected_to'=>'الي',
     'female_leaders_number'=>'عدد  القائدات',
     'type_activity'=>'نوع النشاط',
-    'dead_line'=>'اخر موعد للتسليم',
+    'dead_line'=>'الموعد النهائي للتسجيل',
     'payment_methods'=>'طرق الدفع',
     'payment_method'=>'طريقه الدفع',
     'financial_movements'=>'الحركات المالية',
@@ -632,7 +632,7 @@ return [
     'commander_medals'=>'وسام القائد ',
     'commander_medals_monzer'=>'وسام القائد منذر الزميلي للتميز',
     'setup'=>'اعدادات النظام',
-    'commander_medal_date'=>'تاريخ  وسام القائد ',
+    'commander_medal_date'=>'الموعد النهائي لتسليم وسام القائد',
     'history_movements'=>'سجل الحركات',
 
  ];

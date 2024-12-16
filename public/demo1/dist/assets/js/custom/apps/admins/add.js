@@ -250,7 +250,7 @@ var KTModalAdd = function () {
 										text: sucessful_add,
 										icon: "success",
 										buttonsStyling: false,
-										// confirmButtonText: "حسنًا ، حسنًا!",
+										 confirmButtonText: "حسنًا ، حسنًا!",
 										customClass: {
 											confirmButton: "btn btn-primary"
 										}

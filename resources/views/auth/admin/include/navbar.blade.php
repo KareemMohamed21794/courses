@@ -7,7 +7,8 @@
             <div class="menu-item me-lg-1">
                  
                     <span style="color: #009EF7;" class="menu-title">{{ __('messages.welcome') }} 
-                        @if(Auth::user()->is_super)
+                        @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6)
+
                         {{ $objAdmin->name }}
                         @else
                         {{ $objAdmin->group_name }}

@@ -714,7 +714,7 @@
                         <div class="d-flex flex-column">
                             <div class="fw-bolder d-flex align-items-center fs-5">{{ __('messages.welcome') }} 
 
-                                @if(Auth::user()->is_super)
+                                @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6)
                                 {{ $objAdmin->name }}
                                 @else
                                 {{ $objAdmin->group_name }}
