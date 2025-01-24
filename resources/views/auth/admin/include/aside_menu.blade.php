@@ -382,7 +382,7 @@ fill: #009EF7;
 
                 
 
-                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 2)
+                @if($objAdmin->position_id == 1|| $objAdmin->position_id == 3 || $objAdmin->position_id == 4 )
                  <div class="menu-item">
                     <a class="menu-link {{ Request::segment(2)=='secondary_registrations' ? 'active' : '' }}" href="{{ url('admin/secondary_registrations') }}">
                           <span class="menu-icon">
@@ -831,7 +831,7 @@ fill: #009EF7;
 
                 @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
-                  Request::segment(2)=='report_secondary_registrations' ||Request::segment(2)=='report_administrative'||Request::segment(2)=='report_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders'  ? 'show here' : '' }}">
+                  Request::segment(2)=='report_secondary_registrations' ||Request::segment(2)=='report_administrative'||Request::segment(2)=='report_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders' || Request::segment(2)=='report_commander_medals'|| Request::segment(2)=='report_student_registration'|| Request::segment(2)=='report_commander_medals'|| Request::segment(2)=='report_financial_movements'  ? 'show here' : '' }}">
 
 
                         <span class="menu-link">
@@ -902,6 +902,36 @@ fill: #009EF7;
                                 </a>
                             </div>
 
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_student_registration' ? 'active' : '' }}" href="{{ url('admin/report_student_registration') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_secondary_registrations') }}</span>
+                                </a>
+                            </div>
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_financial_movements' ? 'active' : '' }}" href="{{ url('admin/report_financial_movements') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_financial_movements') }}</span>
+                                </a>
+                            </div>
+
+
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_commander_medals' ? 'active' : '' }}" href="{{ url('admin/report_commander_medals') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.report_commander_medals_monzer') }}</span>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
 
@@ -910,7 +940,8 @@ fill: #009EF7;
 
                      <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
                   Request::segment(2)=='report_archive_secondary_registrations' ||
-                  Request::segment(2)=='report_archive_administrative' || Request::segment(2)=='report_archive_financial'  || Request::segment(2)=='report_archive_board_director_meetings'  || Request::segment(2)=='annual_registration_archive'  ? 'show here' : '' }}">
+                  Request::segment(2)=='report_archive_administrative' || Request::segment(2)=='report_archive_financial'  || Request::segment(2)=='report_archive_board_director_meetings'  || Request::segment(2)=='annual_registration_archive' ||
+                  Request::segment(2)=='report_archive_commander_medals'  ? 'show here' : '' }}">
 
 
                         <span class="menu-link">
@@ -981,6 +1012,15 @@ fill: #009EF7;
                                 </a>
                             </div>
                             @endif
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_archive_commander_medals' ? 'active' : '' }}" href="{{ url('admin/report_archive_commander_medals') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.archive_commander_medals_monzer') }}</span>
+                                </a>
+                            </div>
 
                         </div>
                     </div>

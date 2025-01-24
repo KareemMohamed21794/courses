@@ -150,27 +150,16 @@
 </div>
         <div class="two-column">
                         <div class="form-group">
-                <label for="birth_place">مكان الولادة</label>
+                <label for="birth_place">مكان الولادة <span class="required-mark">*</span></label>
                 <input type="text" id="birth_place" name="birth_place">
             </div>
             <div class="form-group">
-                <label for="birth_date">تاريخ الولادة</label>
+                <label for="birth_date">تاريخ الولادة <span class="required-mark">*</span></label>
                 <input type="date" id="birth_date" name="birth_date">
             </div>
         </div>
 
-        <div class="two-column">
-            <div class="form-group">
-                <label for="mobile_number">رقم الهاتف</label>
-                <input type="text" id="mobile_number" name="mobile_number">
-            </div>
-            <div class="form-group">
-                <label for="home_number">رقم المنزل</label>
-                <input type="text" id="home_number" name="home_number">
-            </div>
-        </div>
-
-        <div class="two-column">
+                <div class="two-column">
 <div class="form-group">
     <label for="nationality">الجنسيه <span class="required-mark">*</span></label>
     <select id="nationality" name="nationality" required>
@@ -240,8 +229,21 @@
 
         <div class="two-column">
             <div class="form-group">
-<label for="education_level">المؤهل العلمي<span class="required-mark">*</span></label>
-<select id="education_level" name="education_level" required>
+                <label for="mobile_number">رقم الهاتف  <span class="required-mark">*</span></label>
+                <input type="text" id="mobile_number" name="mobile_number">
+            </div>
+            <div class="form-group">
+                <label for="home_number">رقم المنزل</label>
+                <input type="text" id="home_number" name="home_number">
+            </div>
+        </div>
+
+
+
+        <div class="two-column">
+            <div class="form-group">
+<label for="education_level">المؤهل العلمي  </label>
+<select id="education_level" name="education_level" >
     <option value="">اختر..</option>
     <option value="primary_school">ابتدائي</option>
     <option value="middle_school">إعدادي</option>
@@ -253,8 +255,8 @@
 </select>
 </div>
 <div class="form-group">
-    <label for="parents_status">الحالة بين الأبوين<span class="required-mark">*</span></label>
-    <select id="parents_status" name="parents_status" required>
+    <label for="parents_status">الحالة بين الأبوين</label>
+    <select id="parents_status" name="parents_status" >
         <option value="">اختر..</option>
         <option value="married">متزوج</option>
         <option value="divorced">مطلق</option>
@@ -265,8 +267,8 @@
 </div>
 
 <div class="form-group">
-    <label for="blood_type">نوع الدم<span class="required-mark">*</span></label>
-    <select id="blood_type" name="blood_type" required>
+    <label for="blood_type">نوع الدم</label>
+    <select id="blood_type" name="blood_type" >
         <option value="">اختر..</option>
         <option value="A+">A+</option>
         <option value="A-">A-</option>
@@ -280,8 +282,8 @@
 </div>
 
 <div class="form-group">
-    <label for="hobbies">الهوايات<span class="required-mark">*</span></label>
-    <textarea id="hobbies" name="hobbies" required></textarea>
+    <label for="hobbies">الهوايات</label>
+    <textarea id="hobbies" name="hobbies" ></textarea>
 </div>
 <div class="form-group">
     <label>هل لديك أي أمراض مزمنة أو ظروف صحية بحاجة إلى رعاية؟</label>
@@ -300,8 +302,8 @@
 
         <div class="two-column">
 <div class="form-group">
-    <label for="city">المدينه<span class="required-mark">*</span></label>
-    <select id="city" name="city" onchange="SelectCity(this.value)" required>
+    <label for="city">المدينه</label>
+    <select id="city" name="city" onchange="SelectCity(this.value)" >
         <option value="">اختر..</option>
         <option value="1">عمان</option>
         <option value="2">إربد</option>
@@ -319,7 +321,7 @@
 </div>
 
 <div class="form-group" id="selected_area">
-    <label for="amman_region">المنطقه<span class="required-mark">*</span></label>
+    <label for="amman_region">المنطقه</label>
     <select id="amman_region" name="amman_region" class="form-control">
                                                     <option value="">اختر..</option>
                                                      <option value="أبو نصير">
@@ -392,30 +394,30 @@
 </div>
 
 <div class="form-group" id="text_area">
-    <label for="area">المنطقه<span class="required-mark">*</span></label>
-    <input type="text" id="area" name="area" required></input>
+    <label for="area">المنطقه</label>
+    <input type="text" id="area" name="area" ></input>
 </div>
 </div>
 
 <div class="form-group">
-    <label for="street">اسم الشارع<span class="required-mark">*</span></label>
-    <input type="text" id="street" name="street" required>
+    <label for="street">اسم الشارع</label>
+    <input type="text" id="street" name="street" >
 </div>
         <div class="two-column">
 
 <div class="form-group">
-    <label for="nearest_teacher">اقرب معلم<span class="required-mark">*</span></label>
-    <input type="text" id="nearest_teacher" name="nearest_teacher" required>
+    <label for="nearest_teacher">اقرب معلم</label>
+    <input type="text" id="nearest_teacher" name="nearest_teacher" >
 </div>
 
 <div class="form-group">
-    <label for="building_number">رقم البناء<span class="required-mark">*</span></label>
-    <input type="text" id="building_number" name="building_number" required>
+    <label for="building_number">رقم البناء</label>
+    <input type="text" id="building_number" name="building_number" >
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقه <span class="required-mark">*</span></label>
-    <select id="division" name="division" required>
+    <label for="division">الفرقه </label>
+    <select id="division" name="division" >
         <option value="">اختر..</option>
         <option value="1">الاشبال/الزهرات</option>
         <option value="2">الكشاف/المرشدات</option>
@@ -425,14 +427,14 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="guardian_name">اسم ولي الامر<span class="required-mark">*</span></label>
-    <input type="text" id="guardian_name" name="guardian_name" required>
+    <label for="guardian_name">اسم ولي الامر</label>
+    <input type="text" id="guardian_name" name="guardian_name" >
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_phone">رقم  ولي  الامر 1<span class="required-mark">*</span></label>
-    <input type="text" id="guardian_phone" name="guardian_phone" required>
+    <label for="guardian_phone">رقم  ولي  الامر 1</label>
+    <input type="text" id="guardian_phone" name="guardian_phone" >
 </div>
 
 <div class="form-group">
@@ -443,25 +445,25 @@
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_job">مهنه ولي الامر<span class="required-mark">*</span></label>
-    <input type="text" id="guardian_job" name="guardian_job" required>
+    <label for="guardian_job">مهنه ولي الامر</label>
+    <input type="text" id="guardian_job" name="guardian_job" >
 </div>
 
 <div class="form-group">
-    <label for="relative_relation">صله القرابه<span class="required-mark">*</span></label>
-    <input type="text" id="relative_relation" name="relative_relation" required>
+    <label for="relative_relation">صله القرابه</label>
+    <input type="text" id="relative_relation" name="relative_relation" >
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_place_work">مكان عمل ولي الامر<span class="required-mark">*</span></label>
-    <input type="text" id="guardian_place_work" name="guardian_place_work" required>
+    <label for="guardian_place_work">مكان عمل ولي الامر</label>
+    <input type="text" id="guardian_place_work" name="guardian_place_work" >
 </div>
 
 <div class="form-group">
-    <label for="guardian_email">البريد الإلكتروني لولي الامر<span class="required-mark">*</span></label>
-    <input type="email" id="guardian_email" name="guardian_email" required>
+    <label for="guardian_email">البريد الإلكتروني لولي الامر</label>
+    <input type="email" id="guardian_email" name="guardian_email" >
 </div>
 </div>
 
@@ -478,11 +480,11 @@
 </div>
 
 <div class="form-group" onchange="notes()">
-    <label>هل لديك ملاحظات؟<span class="required-mark">*</span></label>
+    <label>هل لديك ملاحظات؟</label>
     <div>
-        <input type="radio" id="notes_yes" name="notes" value="yes" required>
+        <input type="radio" id="notes_yes" name="notes" value="yes" >
         <label for="notes_yes">نعم</label>
-        <input type="radio" id="notes_no" name="notes" value="no" required>
+        <input type="radio" id="notes_no" name="notes" value="no" >
         <label for="notes_no">لا</label>
     </div>
 </div>
@@ -528,8 +530,8 @@
        if(!city || city.length === 0){
         $('#text_area').hide();
         $('#selected_area').hide();
-        document.getElementById('amman_region').removeAttribute('required');
-        document.getElementById('area').removeAttribute('required');
+        //document.getElementById('amman_region').removeAttribute('required');
+        //document.getElementById('area').removeAttribute('required');
         $('#amman_region').val(null);
         $('#area').val(null);
        }
@@ -537,8 +539,8 @@
        if(city == '1'){
         $('#selected_area').show();
         $('#text_area').hide();
-        document.getElementById('amman_region').setAttribute('required', true);
-        document.getElementById('area').removeAttribute('required');
+        //document.getElementById('amman_region').setAttribute('required', true);
+        //document.getElementById('area').removeAttribute('required');
         $('#area').val(null);
         
        }
@@ -546,8 +548,8 @@
        if(city != '1' && city.length != 0){
         $('#selected_area').hide();
         $('#text_area').show();
-        document.getElementById('area').setAttribute('required', true);
-        document.getElementById('amman_region').removeAttribute('required');
+        //document.getElementById('area').setAttribute('required', true);
+        ///document.getElementById('amman_region').removeAttribute('required');
         $('#amman_region').val(null);
         
        }

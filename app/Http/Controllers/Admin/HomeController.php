@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-
+use App\Models\StudentRegistration;
 use App\Models\Admin;
 use App\Models\File;
 use App\Models\Permit;
@@ -53,7 +53,7 @@ class HomeController extends Controller
 
        
        if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
-        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')->where('status','approved')->where('year',date('Y'))->count();
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('year',date('Y'))->count();
 
         $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
@@ -76,7 +76,7 @@ class HomeController extends Controller
         $requests = Information::where('admin_id',$objAdmin->id)->count();
 
        }else{
-         $count_secondary_registrations = File::where('type','secondary_registration')->where('status','approved')->where('year',date('Y'))->count();
+         $count_secondary_registrations = StudentRegistration::where('year',date('Y'))->count();
 
         $count_administrative_reports = File::where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
@@ -187,9 +187,9 @@ class HomeController extends Controller
         $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->count();
         
        
-       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
+       if($objAdmin->position_id == 2){
 
-        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)
         ->where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
@@ -275,8 +275,7 @@ class HomeController extends Controller
 
        }else{
 
-        $count_secondary_registrations = File::where('type','secondary_registration')
-        ->where('year',date('Y'))
+        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
@@ -392,11 +391,11 @@ class HomeController extends Controller
         $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->count();
         
        
-       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
+       if($objAdmin->position_id == 2){
 
 
         
-        $count_secondary_registrations = File::where('admin_id',$objAdmin->id)->where('type','secondary_registration')
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)
         ->where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
@@ -480,8 +479,7 @@ class HomeController extends Controller
 
        }else{
 
-        $count_secondary_registrations = File::where('type','secondary_registration')
-        ->where('year',date('Y'))
+        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();

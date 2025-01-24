@@ -563,7 +563,267 @@ class FinancalMovementsController extends Controller
         $objAdmin_group = Admin::find($admin_id);
 
 
-        return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group]);
+        return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group,'final_total_alrusum'=>$final_total_alrusum,'total_permits'=>$total_permits]);
     }
+
+
+    public function ReportFinancialMovements()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_financial_movements');
+        $leaders = Admin::where('is_super','!=',1)->get();
+        return view('auth.admin.financial_movements.report_financial_movements', [
+            'title' => $title,
+            'leaders' => $leaders,
+        ]);
+    }
+
+
+
+    public function ReportFinancialMovementsGet()
+    {
+        $leader_id = @$_GET['leader_id'];
+        $Setup = Setup::first();
+        $objAdmin_data = Admin::find($leader_id);
+        $obj_admin_name = $objAdmin_data ? $objAdmin_data->group_name : 'الكل';
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_financial_movements'). ' - ' .$obj_admin_name;
+
+        $admin_id = $objAdmin_data->id;
+
+        $count_aliashbalu = StudentRegistration::where('admin_id',$admin_id)->where('division',1)->where('type','approved')->where('year',date('Y'))->count();
+        
+
+        if ($count_aliashbalu >= 1) {
+         //$alrusum_wehda_aliashbalu = ceil($count_aliashbalu / 30) * 10;
+         $alrusum_wehda_aliashbalu =  10;
+        }else{
+            $alrusum_wehda_aliashbalu = 0;
+        }
+
+
+        $count_alkashaaf = StudentRegistration::where('admin_id',$admin_id)->where('division',2)->where('type','approved')->where('year',date('Y'))->count();
+        
+
+        if ($count_alkashaaf >= 1) {
+         //$alrusum_wehda_alkashaaf = ceil($count_alkashaaf / 30) * 10;
+         $alrusum_wehda_alkashaaf = 10;
+        }else{
+            $alrusum_wehda_alkashaaf = 0;
+        }
+
+
+
+        $count_almutaqadima = StudentRegistration::where('admin_id',$admin_id)->where('division',3)->where('type','approved')->where('year',date('Y'))->count();
+
+        
+        if ($count_almutaqadima >= 1) {
+         //$alrusum_wehda_almutaqadima = ceil($count_almutaqadima / 30) * 10;
+         $alrusum_wehda_almutaqadima =  10;
+        }else{
+            $alrusum_wehda_almutaqadima = 0;
+        }
+
+
+        $count_aljawaluh = StudentRegistration::where('admin_id',$admin_id)->where('division',4)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_aljawaluh >= 1) {
+         //$alrusum_wehda_aljawaluh = ceil($count_aljawaluh / 30) * 10;
+         $alrusum_wehda_aljawaluh =  10;
+        }else{
+            $alrusum_wehda_aljawaluh = 0;
+        }
+
+
+        $count_leaders = StudentRegistration::where('admin_id',$admin_id)->where('division',5)->where('type','approved')->where('year',date('Y'))->count();
+
+
+        if ($count_leaders >= 1) {
+           // $alrusum_wehda_leaders = ceil($count_leaders / 30) * 10;
+            $alrusum_wehda_leaders =  0;
+        }else{
+            $alrusum_wehda_leaders = 0;
+        }
+       
+         if($Setup && $Setup->dead_line){
+            
+            $count_late_students = StudentRegistration::where('admin_id',$admin_id)->where('type','approved')->where('created_at','>=',$Setup->dead_line)->where('year',date('Y'))->count();
+        }else{
+             $count_late_students = 0;
+           
+        }
+        
+
+       
+
+        
+     
+        $alrusum  = 0.50;
+        $alrusum_late  = ($alrusum * 50) / 100;
+        $total_alrusum_late = $alrusum + $alrusum_late;
+
+
+        $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;
+        $total_alrusum_wehda_aliashbalu = ($count_aliashbalu * $alrusum) + $alrusum_wehda_aliashbalu;
+        $total_alrusum_wehda_alkashaaf = ($count_alkashaaf * $alrusum) + $alrusum_wehda_alkashaaf;
+        $total_alrusum_wehda_almutaqadima = ($count_almutaqadima * $alrusum) + $alrusum_wehda_almutaqadima;
+        $total_alrusum_wehda_aljawaluh = ($count_aljawaluh * $alrusum ) + $alrusum_wehda_aljawaluh;
+
+
+        $final_total_alrusum = ($total_alrusum_wehda_leaders + $total_alrusum_wehda_aliashbalu + $total_alrusum_wehda_alkashaaf + $total_alrusum_wehda_almutaqadima + $total_alrusum_wehda_aljawaluh) + ($count_late_students * $total_alrusum_late);
+
+
+        $total_permits = Permit::where('admin_id', $admin_id)
+            ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
+            ->sum('type_activity.price');
+
+        $total_credit = $final_total_alrusum + $total_permits;
+
+        $total_debit = FinancialMovement::where('admin_id', $admin_id)->sum('price');
+
+        $remain = $total_debit - $total_credit;
+
+        $objAdmin_group = Admin::find($admin_id);
+
+        return view('auth.admin.financial_movements.report_financial_movements_get', ['title' => $title,'leader_id' => $leader_id,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group,'final_total_alrusum'=>$final_total_alrusum,'total_permits'=>$total_permits]);
+    }
+
+
+
+    public function ReportFinancialMovementsGetlist(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            'order'   => true,
+            'admin_id'   => true,
+            'price'   => true,
+            'receipt_number'   => true,
+            'date'   => true,
+            'payment_method_id'   => true,
+           
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+        $alldata = FinancialMovement::all();
+       
+        $title = __('messages.report_secondary_registrations');
+        
+        if($request->leader_id){
+            $alldata = $alldata->where('admin_id',$request->leader_id);
+        } 
+
+      
+        $alldataResult = array();
+
+        foreach ($alldata as $key=> $objdata) {
+           
+           $alldataResult[] = array(
+               
+                "order" => $key+1,
+                "admin_id" => @$objdata->Admin->group_name,
+                "price" => $objdata->price,
+                "receipt_number" => $objdata->receipt_number,
+                "date" => $objdata->date,
+                "payment_method_id" => @$objdata->PaymentMethod->name_ar,
+                
+               
+            );
+            
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
 
 }

@@ -27,15 +27,21 @@
         <img src="https://tawasol.privatescouts.org/public/login_page_design/assets/Asset-3.png" />
       </div>
     </div>
+
     <div class="login-right-side">
       <div class="login-right-side-top-items">
         <div class="right-side-logo">
           <img src="https://tawasol.privatescouts.org/public/login_page_design/assets/logo.png">
         </div>
+
         <div class="login-form">
           <form class=""  id="kt_sign_in_form" method="POST" action="{{ route('admin_login') }}"> 
             @csrf
             <div class="login-form-input">
+          
+
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
               <label>اسم المستخدم باللغة الانجليزية فقط</label>
               <input id="username" type="username" name="username" required="required" autofocus="autofocus">
             </div>

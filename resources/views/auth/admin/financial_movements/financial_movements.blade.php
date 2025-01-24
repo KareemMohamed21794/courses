@@ -131,21 +131,36 @@
                       
 
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th>له</th>
-                            <th>{{$total_debit}}</th> 
+                            <th style="color:green;">دفعات</th>
+                            <th style="color:green;">{{$total_debit}}</th> 
                         </tr>
 
 
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th>عليه</th>
-                            <th>{{$total_credit}} </th> 
+                            <th style="color:red;">رسوم تصاريح  الأنشطة </th>
+                            <th style="color:red;">{{$total_permits}} </th> 
+                        </tr>
+
+
+                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            <th style="color:red;">رسوم التسجيل السنوي</th>
+                            <th style="color:red;">{{$final_total_alrusum}} </th> 
                         </tr>
 
 
 
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                            
+                            @if($remain > 0 )
+                            <th style="color:green;">الباقي</th>
+                            <th style="color:green;">{{$remain}}</th> 
+                            @elseif($remain < 0)
+                            <th style="color:red;">الباقي</th>
+                            <th style="color:red;">{{$remain}}</th> 
+                            @else
                             <th>الباقي</th>
                             <th>{{$remain}}</th> 
+                            @endif
                         </tr>
                         </thead>
 

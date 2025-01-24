@@ -25,7 +25,7 @@ Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashbo
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
 
-
+Route::get('/student_registration/{id}', [StudentRegistrationsController::class, 'create']);
 Route::middleware('auth:admin')->group(function () {
 	Route::prefix('/admin')->group(function () {
 
@@ -42,10 +42,7 @@ Route::middleware('auth:admin')->group(function () {
 		# Start Student registration
         Route::get('show_students/student_registration/get/{id}', [StudentRegistrationsController::class, 'get']);
 
-        Route::get('student_registration/{id}', [StudentRegistrationsController::class, 'create']);
-
-
-
+        
         Route::post('student_registration', [StudentRegistrationsController::class, 'store']);
 
 
@@ -59,6 +56,17 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('annual_registration_archive', [StudentRegistrationsController::class, 'AnuulRegistrationArchive']);
 		Route::post('annual_registration_archive', [StudentRegistrationsController::class, 'AddAnuulRegistrationArchive']);
+
+
+
+		Route::get('/report_student_registration', [StudentRegistrationsController::class, 'ReportStudentRegistration']);
+
+		Route::get('/report_student_registration_get', [StudentRegistrationsController::class, 'ReportStudentRegistrationGet']);
+
+		Route::get('/report_student_registration_get_list', [StudentRegistrationsController::class, 'ReportQualificationLeadersGetlist']);
+
+
+
 
         # End Student registration
 
@@ -295,6 +303,19 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('export_commander_medals', [CommanderMedalsController::class, 'ExportCommanderMedal']);
 
+		Route::get('/report_commander_medals', [CommanderMedalsController::class, 'ReportCommanderMedals']);
+
+		Route::get('/report_commander_medals_get', [CommanderMedalsController::class, 'ReportCommanderMedalsGet']);
+
+		Route::get('/report_commander_medals_get_list', [CommanderMedalsController::class, 'report_commander_medals_get_list']);
+
+
+		Route::get('/report_archive_commander_medals', [CommanderMedalsController::class, 'ReportArchiveCommanderMedals']);
+
+		Route::get('/report_archive_commander_medals_get', [CommanderMedalsController::class, 'ReportArchiveCommanderMedalsGet']);
+
+		Route::get('/report_archive_commander_medals_get_list', [CommanderMedalsController::class, 'report_archive_commander_medals_get_list']);
+
 	
 		# End commander_medals
 
@@ -337,6 +358,12 @@ Route::middleware('auth:admin')->group(function () {
 
 
 		Route::get('/financial_movements', [FinancalMovementsController::class, 'financial_movements']);
+
+		Route::get('/report_financial_movements', [FinancalMovementsController::class, 'ReportFinancialMovements']);
+
+		Route::get('/report_financial_movements_get', [FinancalMovementsController::class, 'ReportFinancialMovementsGet']);
+
+		Route::get('/report_financial_movements_get_list', [FinancalMovementsController::class, 'ReportFinancialMovementsGetlist']);
 
 		# End payments_received
 
