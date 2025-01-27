@@ -644,6 +644,7 @@ return [
     'birth_date'=>'تاريخ الولادة',
     'birth_place'=>'مكان الولادة',
     'report_financial_movements'=>"تقرير   الحركات المالية",
+    'register_url'=>'رابط التسجيل',
 
  ];
 

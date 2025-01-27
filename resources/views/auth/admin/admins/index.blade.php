@@ -245,6 +245,17 @@
                             <div class="table-responsive border-bottom mb-9 seperate">
                                 <table class="table mb-3">
                                     <thead>
+
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.register_url') }}</th>
+                                            <th class="pb-2">
+                                              <a href="{{ url('/student_registration') }}/{{$objAdmin->id}}" target="_blank">{{ url('/student_registration') }}/{{$objAdmin->id}}</a>
+                                            </th>
+
+
+                                        </tr>
+
+
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.username') }}</th>
                                             <th class="pb-2">{{ $objAdmin->username }}</th>
