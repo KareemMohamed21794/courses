@@ -2,7 +2,7 @@
 
 return [
     'Dashboard' => 'لوحة التحكم',
-    'Main_Dashboard' => 'لوحة التحكم  الرئيسية',
+    'Main_Dashboard' => 'إحصائيات القطاع الأهلي',
     'Scouting_statistics'=>'الإحصائيات الكشفية',
     'Indicative_statistics'=>'الإحصائيات  الإرشادية',
     'Branches' => 'الفروع',
@@ -531,7 +531,7 @@ return [
     'activity_leader'=>'قائد النشاط',
     'number_leader'=>'عدد القادة المشاركين',
     'qualification_leader'=>'قائد',
-    'qualification_leaders'=>'تأهيل القادة',
+    'qualification_leaders'=>'قاعدة بيانات القادة',
     'report_qualification_leaders'=>'تقرير  القادة',
     'leader_name'=>'اسم القائد',
     'current_qualification'=>'المؤهل الحالي',
@@ -589,8 +589,8 @@ return [
     'organizing_study'=>'طلب تنظيم دراسة' ,
     'organizing_study_files'=>'مرفقات طلب تنظيم دراسة' ,
     'study_report'=>'تقرير دراسة' ,
-    'achievements_study_requirements'=>'انجازات متطلبات دراسة' ,
-    'achievements_study_requirement'=>'انجاز متطلبات دراسة',
+    'achievements_study_requirements'=>'تسليم تقرير إنجاز المتطلبات الفردية' ,
+    'achievements_study_requirement'=>'تسليم تقرير إنجاز المتطلبات الفردية',
     'student_registration'=>'تسجيل دخول الطالب' ,
     'show_students'=>'عرض الطلاب ' ,
     'number_students'=>'عدد الطلاب ' ,

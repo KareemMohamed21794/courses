@@ -195,7 +195,7 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
- @if($objAdmin->position_id == 4)
+ @if($can_delete == 0)
 <style type="text/css">
     .permission{
         display: none;

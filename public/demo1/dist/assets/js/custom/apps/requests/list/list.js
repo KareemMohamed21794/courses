@@ -158,7 +158,7 @@ var KTDatatablesServerSide = function () {
                     targets: -1,
                     data: null,
                     orderable: false,
-                    className: 'text-end',
+                    className: 'text-end permission',
                     render: function (data, type, row) {
                         var AdminContent = '';
                          // Check if segment is 'Admin'
