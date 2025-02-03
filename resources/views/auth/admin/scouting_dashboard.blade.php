@@ -210,7 +210,7 @@
 
 
                     <div class="row g-5 g-xl-8">
-                      <div class="col-xl-3">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/secondary_registrations') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -228,13 +228,9 @@
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
-                    </div>
+                        </div>
 
-
-
-
-
-                          <div class="col-xl-3">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/financial') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -250,9 +246,9 @@
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
-                    </div>
+                        </div>
 
-                          <div class="col-xl-3">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/administrative') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -343,9 +339,9 @@
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
-                    </div>
+                        </div>
 
-                    <div class="col-xl-3">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/board_director_meetings') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -407,17 +403,9 @@
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
-                    </div>
+                        </div>
 
-
-                    </div>
-                    <!--end::Row-->
-
-
-                    <div class="row g-5 g-xl-8">
-                         
-
-                        <div class="col-xl">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -437,7 +425,14 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl">
+
+                    </div>
+                    <!--end::Row-->
+
+
+                    <div class="row g-5 g-xl-8">
+                         
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -457,7 +452,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -477,7 +472,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -497,7 +492,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -516,24 +511,8 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                         </div>
-                    </div>
-                    <!--end::Row-->
 
-
-
-
-
-
-
-
-
-
-
-
-                      <div class="row g-5 g-xl-8">
-                         
-
-                        <div class="col-xl">
+                         <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -550,8 +529,15 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                         </div>
+                    </div>
+                    <!--end::Row-->
 
-                        <div class="col-xl">
+
+
+                    <div class="row g-5 g-xl-8">
+                         
+
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -575,7 +561,7 @@
                             <!--end::Statistics Widget 5-->
                         </div>
 
-                        <div class="col-xl">
+                        <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -625,14 +611,6 @@
                     </div>
                     <!--end::Row-->
 
-
-
-
-                  
-              
-
-
-             
              
         </div>
         <!--end::Container-->

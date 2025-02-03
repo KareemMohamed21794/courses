@@ -2,7 +2,12 @@
 @section('title', $title)
 @section('content')
     
-   
+    <!-- Filter option -->
+    <input type="hidden" name="year" id="year" value="{{ $year }}">
+
+
+
+    <!-- End Filter -->
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -32,58 +37,8 @@
                     <div class="card-toolbar">
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
-                            <!--begin::Filter-->
-                            <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z" fill="black" />
-                                </svg>
-                            </span>
-                            <!--end::Svg Icon-->{{ __('messages.Filter') }}</button>
-                            <!--begin::Menu 1-->
-                            <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
-                                <!--begin::Header-->
-                                <div class="px-7 py-5">
-                                    <div class="fs-4 text-dark fw-bolder">{{ __('messages.Filter Options') }}</div>
-                                </div>
-                                <!--end::Header-->
-                                <!--begin::Separator-->
-                                <div class="separator border-gray-200"></div>
-                                <!--end::Separator-->
-                                <!--begin::Content-->
-                                <div class="px-7 py-5">
-                                    <!--begin::Input group-->
-                                    <div class="mb-10">
-                                        <!--begin::Label-->
-                                        <label class="form-label fs-5 fw-bold mb-3">{{ __('messages.Active') }}:</label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
-                                        <select class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-branch-table-filter="active" data-dropdown-parent="#kt-toolbar-filter" id="active">
-                                            <option value="All">{{ __('messages.ALL') }}</option>
-                                            <option value="Active">{{ __('messages.Active') }}</option>
-                                            <option value="DeActive">{{ __('messages.DeActive') }}</option>
-                                        </select>
-                                        <!--end::Input-->
-                                    </div>
-                                    <!--end::Input group-->
-
-
-
-                                    <!--begin::Actions-->
-                                    <div class="d-flex justify-content-end">
-                                        <button type="reset" class="btn btn-light btn-active-light-primary me-2" data-kt-menu-dismiss="true" data-kt-docs-table-filter="reset">{{ __('messages.Reset') }}</button>
-                                        <button type="submit" class="btn btn-primary" data-kt-menu-dismiss="true" data-kt-docs-table-filter="filter">{{ __('messages.Apply') }}</button>
-                                    </div>
-                                    <!--end::Actions-->
-                                </div>
-                                <!--end::Content-->
-                            </div>
-                          
-                            <!--end::Menu 1-->
-                            <!--end::Filter-->
+                            
                             <!--begin::Export-->
-                            @if($objAdmin->is_super == 1)
                             <div id="export_buttons" style="margin-left: 10px;"></div>
                             <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -94,14 +49,16 @@
                                     <path d="M18.75 8.25H17.75C17.1977 8.25 16.75 8.69772 16.75 9.25C16.75 9.80228 17.1977 10.25 17.75 10.25C18.3023 10.25 18.75 10.6977 18.75 11.25V18.25C18.75 18.8023 18.3023 19.25 17.75 19.25H5.75C5.19772 19.25 4.75 18.8023 4.75 18.25V11.25C4.75 10.6977 5.19771 10.25 5.75 10.25C6.30229 10.25 6.75 9.80228 6.75 9.25C6.75 8.69772 6.30229 8.25 5.75 8.25H4.75C3.64543 8.25 2.75 9.14543 2.75 10.25V19.25C2.75 20.3546 3.64543 21.25 4.75 21.25H18.75C19.8546 21.25 20.75 20.3546 20.75 19.25V10.25C20.75 9.14543 19.8546 8.25 18.75 8.25Z" fill="#C4C4C4" />
                                 </svg>
                             </span>
-                            
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
-                            @endif
-                            <!--begin::Add-->
-                          
-                            <!--end::Add-->
-                          
+
+                            
+                            <a href="{{ url('admin/report_archive_advertisements') }}" class="menu-link px-3">
+                            
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">العوده</button>
+                            </button>
+                            </a>
+                             
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
@@ -121,48 +78,36 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th style="visibility: hidden;" class="w-10px pe-2">
-                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
-                                </div>
-                            </th>
+                             
                             <th>#</th>
-                            <th>{{ __('messages.scout_group') }}</th>
                            
+                            <th>{{ __('messages.scout_group') }}</th>
                             
-                          
-                            <th>{{ __('messages.price') }}</th>
-                            {{-- <th>{{ __('messages.created_at') }}</th> --}}
-                            <th style="visibility: hidden;" class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
+                            {{-- <th>{{ __('messages.categories') }}</th> --}}
+                            <th>اسم الملف</th>
+                            <th>الملف</th>
+                            
+                            {{-- <th>الشرح</th> --}}
+                            <th>{{ __('messages.time_send') }}</th>
+                            
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">
                         </tbody>
-                        <tfoot>
-                            <tr style="font-size: 20px">
-                                <td colspan="3">{{ __('messages.total_value') }}</td>
-                                
-                                
-                                <td >{{$sum}}</td>
-                            </tr>
-                        </tfoot>
                     </table>
                     <!--end::Datatable-->
                 </div>
                 <!--end::Card body-->
             </div>
             <!--end::Card-->
-            <!--begin::Modals-->
-        
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.permits.export')
+          
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
         <!--end::Container-->
     </div>
     <!--end::Post-->
-   
 @endsection
 
 @section('scripts')
@@ -171,19 +116,8 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/list/total_permits_list.js') }}"></script>
-   
 
- 
+     <script src="{{ asset('demo1/dist/assets/js/custom/apps/advertisements/report_archive_advertisements_get.js') }}"></script>
     <!--end::Page Custom Javascript-->
 @endsection
-
-{{-- @if($objAdmin->is_super == 0)
-<style type="text/css">
-    .group_name{
-        display: none;
-    }
-</style>
-@endif --}}
 

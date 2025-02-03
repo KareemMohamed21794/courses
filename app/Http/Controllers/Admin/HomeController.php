@@ -39,6 +39,9 @@ class HomeController extends Controller
         // }
         $problemNotifications = array();
 
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
+
         
         $userId = \Auth::id();
         if(request()->segment(1)=='admin'){
@@ -47,13 +50,13 @@ class HomeController extends Controller
             $title = "الموكل :".__('messages.Dashboard');
         }
 
-        $count_admins = Admin::where('position_id',1)->count();
-        $count_lawyers = Admin::where('position_id',2)->count();
-        $count_leaders = Admin::where('is_super',0)->count();
+        $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
 
        
        if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
-        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('year',date('Y'))->count();
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('type','approved')->where('year',date('Y'))->count();
 
         $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
@@ -61,22 +64,22 @@ class HomeController extends Controller
 
         $count_board_director_meetings = File::where('admin_id',$objAdmin->id)->where('type','board_director_meetings')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_permits = Permit::where('admin_id',$objAdmin->id)->count();
-        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->count();
-        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')->count();
-        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')->count();
-        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')->count();
-        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')->count();
-        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')->count();
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
 
-        $leaders_number = Admin::where('id',$objAdmin->id)->sum('leaders_number');
-        $persons_number = Admin::where('id',$objAdmin->id)->sum('persons_number');
-        $groups = Admin::where('id',$objAdmin->id)->sum('groups');
-        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->count();
-        $requests = Information::where('admin_id',$objAdmin->id)->count();
+        $leaders_number = Admin::where('id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $requests = Information::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
 
        }else{
-         $count_secondary_registrations = StudentRegistration::where('year',date('Y'))->count();
+         $count_secondary_registrations = StudentRegistration::where('year',date('Y'))->where('type','approved')->count();
 
         $count_administrative_reports = File::where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
 
@@ -84,25 +87,25 @@ class HomeController extends Controller
 
         $count_board_director_meetings = File::where('type','board_director_meetings')->where('status','approved')->where('year',date('Y'))->count();
 
-        $count_permits = Permit::count();
-        $count_qualificationLeaders = QualificationLeader::count();
-        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')->count();
-        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')->count();
-        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')->count();
-        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')->count();
-        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')->count();
+        $count_permits = Permit::whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders = QualificationLeader::whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
 
-        $leaders_number = Admin::sum('leaders_number');
-        $persons_number = Admin::sum('persons_number');
-        $groups = Admin::sum('groups');
-        $Advertisements = Advertisement::count();
-        $requests = Information::count();
+        $leaders_number = Admin::whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
+        $Advertisements = Advertisement::whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $requests = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->count();
 
        }
 
-        $leaders_number = Admin::where('group_classification','kashfih')->sum('leaders_number');
+        $leaders_number = Admin::where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
 
-       $female_leaders_number = Admin::where('group_classification','irshad')->sum('leaders_number');
+       $female_leaders_number = Admin::where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
 
 
         return view('auth.admin.dashboard',['title' => $title,'count_admins' => $count_admins,'count_lawyers' => $count_lawyers,'count_leaders' => $count_leaders,'count_secondary_registrations' => $count_secondary_registrations,'count_administrative_reports' => $count_administrative_reports,'count_financial_reports' => $count_financial_reports,'count_board_director_meetings' => $count_board_director_meetings,'count_permits' => $count_permits,'count_qualificationLeaders' => $count_qualificationLeaders,'count_qualificationLeaders_ghayr_muahal' => $count_qualificationLeaders_ghayr_muahal,'count_qualificationLeaders_musaeid_qayid_wahdah' => $count_qualificationLeaders_musaeid_qayid_wahdah,'count_qualificationLeaders_qayid_wahda' => $count_qualificationLeaders_qayid_wahda,'count_qualificationLeaders_musaeid_qayid_tadrib' => $count_qualificationLeaders_musaeid_qayid_tadrib,'count_qualificationLeaders_qayid_tadrib' => $count_qualificationLeaders_qayid_tadrib,'leaders_number' => $leaders_number,'persons_number' => $persons_number,'groups' => $groups,'Advertisements' => $Advertisements,'requests' => $requests,'female_leaders_number'=>$female_leaders_number,'objAdmin'=>$objAdmin]);
@@ -175,6 +178,8 @@ class HomeController extends Controller
         //      return redirect('admin/leaders');
         // }
         $problemNotifications = array();
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
 
         
         $userId = \Auth::id();
@@ -182,14 +187,14 @@ class HomeController extends Controller
             $title = "الاداره: ".__('messages.Scouting_statistics');
         }
 
-        $count_admins = Admin::where('position_id',1)->count();
-        $count_lawyers = Admin::where('position_id',2)->count();
-        $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->count();
+        $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
         
        
        if($objAdmin->position_id == 2){
 
-        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('type','approved')
         ->where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
@@ -218,21 +223,23 @@ class HomeController extends Controller
         })->count();
 
 
-        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
-        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
         $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
@@ -240,34 +247,37 @@ class HomeController extends Controller
 
 
         $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
     
-        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('leaders_number');
-        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('persons_number');
-        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->sum('groups');
+        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
 
 
-        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
-        $requests = Information::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $requests = Information::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
@@ -275,7 +285,7 @@ class HomeController extends Controller
 
        }else{
 
-        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))
+        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))->where('type','approved')
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
@@ -300,21 +310,23 @@ class HomeController extends Controller
         })->count();
 
 
-        $count_permits = Permit::whereHas('Admin', function($query) {
+        $count_permits = Permit::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
-        $count_qualificationLeaders = QualificationLeader::whereHas('Admin', function($query) {
+        $count_qualificationLeaders = QualificationLeader::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
         $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
@@ -322,33 +334,36 @@ class HomeController extends Controller
 
 
         $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
         $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
-        $leaders_number = Admin::where('group_classification','kashfih')->sum('leaders_number');
-        $persons_number = Admin::where('group_classification','kashfih')->sum('persons_number');
-        $groups = Admin::where('group_classification','kashfih')->sum('groups');
+        $leaders_number = Admin::where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
 
-        $Advertisements = Advertisement::whereHas('Admin', function($query) {
+        $Advertisements = Advertisement::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
 
-        $requests = Information::whereHas('Admin', function($query) {
+        $requests = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'kashfih');
         })->count();
 
@@ -379,6 +394,8 @@ class HomeController extends Controller
         //      return redirect('admin/leaders');
         // }
         $problemNotifications = array();
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
 
         
         $userId = \Auth::id();
@@ -386,16 +403,16 @@ class HomeController extends Controller
             $title = "الاداره: ".__('messages.Indicative_statistics');
         }
 
-        $count_admins = Admin::where('position_id',1)->count();
-        $count_lawyers = Admin::where('position_id',2)->count();
-        $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->count();
+        $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
         
        
        if($objAdmin->position_id == 2){
 
 
         
-        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)
+        $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('type','approved')
         ->where('year',date('Y'))
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
@@ -424,21 +441,23 @@ class HomeController extends Controller
         })->count();
 
 
-        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $count_permits = Permit::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
-        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $count_qualificationLeaders = QualificationLeader::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','ghayr_muahal')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
         $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_wahdah')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
@@ -446,40 +465,43 @@ class HomeController extends Controller
 
 
         $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_wahda')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','musaeid_qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('admin_id',$objAdmin->id)->where('current_qualification','qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
     
-        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('leaders_number');
-        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('persons_number');
-        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->sum('groups');
+        $leaders_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::where('id',$objAdmin->id)->where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
 
 
-        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $Advertisements = Advertisement::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
-        $requests = Information::where('admin_id',$objAdmin->id)->whereHas('Admin', function($query) {
+        $requests = Information::where('admin_id',$objAdmin->id)->whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
        }else{
 
-        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))
+        $count_secondary_registrations = StudentRegistration::where('year',date('Y'))->where('type','approved')
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
@@ -504,21 +526,23 @@ class HomeController extends Controller
         })->count();
 
 
-        $count_permits = Permit::whereHas('Admin', function($query) {
+        $count_permits = Permit::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
-        $count_qualificationLeaders = QualificationLeader::whereHas('Admin', function($query) {
+        $count_qualificationLeaders = QualificationLeader::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_ghayr_muahal = QualificationLeader::where('current_qualification','ghayr_muahal')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
         $count_qualificationLeaders_musaeid_qayid_wahdah = QualificationLeader::where('current_qualification','musaeid_qayid_wahdah')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
@@ -526,33 +550,36 @@ class HomeController extends Controller
 
 
         $count_qualificationLeaders_qayid_wahda = QualificationLeader::where('current_qualification','qayid_wahda')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_musaeid_qayid_tadrib = QualificationLeader::where('current_qualification','musaeid_qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
         $count_qualificationLeaders_qayid_tadrib = QualificationLeader::where('current_qualification','qayid_tadrib')
+        ->whereBetween('created_at',[$first_day_year,$last_day_year])
         ->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
-        $leaders_number = Admin::where('group_classification','irshad')->sum('leaders_number');
-        $persons_number = Admin::where('group_classification','irshad')->sum('persons_number');
-        $groups = Admin::where('group_classification','irshad')->sum('groups');
+        $leaders_number = Admin::where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('leaders_number');
+        $persons_number = Admin::where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('persons_number');
+        $groups = Admin::where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->sum('groups');
 
-        $Advertisements = Advertisement::whereHas('Admin', function($query) {
+        $Advertisements = Advertisement::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 
 
-        $requests = Information::whereHas('Admin', function($query) {
+        $requests = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->whereHas('Admin', function($query) {
             $query->where('group_classification', 'irshad');
         })->count();
 

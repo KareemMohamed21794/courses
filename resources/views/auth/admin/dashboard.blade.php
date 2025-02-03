@@ -133,13 +133,8 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
-                </div>
-                <!--end::Row-->
-                <br>
-                <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
 
-                   <div class="col">
+                    <div class="col">
                         <!--begin::Statistics Widget 5-->
                         <a href="{{ url('admin/permits') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
@@ -207,6 +202,13 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
+                </div>
+                <!--end::Row-->
+                <br>
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
+
+                    
 
 
                      <div class="col">
@@ -228,13 +230,8 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                     </div>
-                </div>
-                <!--end::Row-->
-                <br>
-                <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
-                     
-                    <div class="col">
+
+                     <div class="col">
                             <!--begin::Statistics Widget 5-->
                             <a href="{{ url('admin/financial') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                                 <!--begin::Body-->
@@ -408,14 +405,8 @@
                             </a>
                             <!--end::Statistics Widget 5-->
                     </div>
-                </div>
-                <!--end::Row-->
-                <br>
-                <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
-                         
 
-                    <div class="col">
+                       <div class="col">
                         <!--begin::Statistics Widget 5-->
                         <a href="{{ url('admin/qualification_leaders') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
@@ -434,6 +425,15 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
+                </div>
+                <!--end::Row-->
+                <br>
+            
+                <!--begin::Row-->
+                <div class="row g-5 g-xl-8">
+                         
+
+                 
 
                     <div class="col">
                         <!--begin::Statistics Widget 5-->
@@ -474,11 +474,6 @@
                         </a>
                         <!--end::Statistics Widget 5-->
                     </div>
-                </div>
-                <!--end::Row-->
-                <br>
-                <!--begin::Row-->
-                <div class="row g-5 g-xl-8">
 
                     <div class="col">
                         <!--begin::Statistics Widget 5-->
@@ -536,10 +531,11 @@
                                 <!--end::Body-->
                             </a>
                             <!--end::Statistics Widget 5-->
-                        </div>
+                    </div>
                 </div>
                 <!--end::Row-->
                 <br>
+                
                 <!--begin::Row-->
                 <div class="row g-5 g-xl-8">
                          

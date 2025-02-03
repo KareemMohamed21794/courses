@@ -86,7 +86,7 @@
                         <!--end::Input group-->
 
                          <!--begin::Input group-->
-                        <div class="fv-row mb-7" style="visibility:hidden;">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.dead_line') }}</label>
                             <!--end::Label-->
@@ -378,7 +378,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.ashbal') }}</label>
                             <!--end::Label-->
@@ -389,7 +389,7 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.kashafa') }}</label>
                             <!--end::Label-->
@@ -400,7 +400,7 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.motakadem') }}</label>
                             <!--end::Label-->
@@ -411,7 +411,7 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.gawala') }}</label>
                             <!--end::Label-->

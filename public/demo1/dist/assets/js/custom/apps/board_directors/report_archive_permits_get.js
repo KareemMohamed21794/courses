@@ -6,11 +6,20 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
+    
+    var year = $("#year").val();
+    
+    const currentURL = window.location.href;
+    const finalsplitcurrentURL = currentURL.replace(/^(.*:\/\/)/, '');
+    const firstSegment = finalsplitcurrentURL.split('/')[1];
+  
+    var main_url = "/admin/report_archive_permits_get_list?year="+year;
+    
 
-    let main_url = "/admin/total_permits/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
+
 
 
     // Private functions
@@ -18,14 +27,14 @@ var KTDatatablesServerSide = function () {
 
         dt = $("#kt_datatable_table").DataTable({
 
-            displayLength: 50,
+            displayLength: 200,
             lengthMenu: [[10, 25, 50, 100, 500, 1000, 5000, -1], [10, 25, 50, 100, 500, 1000, 5000, "All"]],
             dom: 'Brltip',
             searchDelay: 500,
             processing: true,
             serverSide: true,
             order: [[1, 'desc']],
-            stateSave: true,
+            stateSave: false,
             select: {
                 style: 'os',
                 selector: 'td:first-child',
@@ -35,16 +44,60 @@ var KTDatatablesServerSide = function () {
                 url: main_url,
             },
             columns: [
-                { data: '#' },
+               // { data: '#' },
                 { data: 'order' },
+              
                 // { data: 'id' },
                 { data: 'leader' },
-              
-                { data: 'price' },
-                // { data: 'created_at' },
-                { data: null },
+                { data: 'activity_name' },
+                { data: 'nature_activity' },
+                // { data: 'activity_description' },
+                { data: 'place_activity' },
+                { data: 'activity_history' },
+                { data: 'number_days' },
+                { data: 'alwahda' },
+                // { data: 'alwahda_description' },
+                { data: 'activity_leader' },
+                { data: 'number_leader' },
+                { data: 'permit_status' },
+                { data: 'permit_number' },
+                { data: 'created_at' },
+                // { data: null },
             ],
-            buttons: [
+             buttons: [
+                // 'copy',
+                // {
+                //     extend: 'pdf',
+                //     text: 'PDF',
+                //     charset: 'UTF-8',
+                //     bom: true,
+                //     exportOptions: {
+                //         columns: ':not(:last-child,:first-child)',
+                //     }
+                // },                {
+                //     extend: 'print',
+                //     text: 'Print',
+                //     autoPrint: true,
+                //     exportOptions: {
+                //         columns: ':not(:last-child,:first-child)',
+                //     },
+                //     customize: function (win) {
+                //         $(win.document.body).find('table').addClass('display').css('font-size', '10px');
+                //         $(win.document.body).find('tr:nth-child(odd) td').each(function(index){
+                //             $(this).css('background-color','#D0D0D0');
+                //         });
+                //         $(win.document.body).find('h1').css('text-align','center');
+                //     }
+                // },
+                // {
+                //     extend: 'csv',
+                //     text: 'CSV',
+                //     charset: 'UTF-8',
+                //     bom: true,
+                //     exportOptions: {
+                //         columns: ':not(:last-child,:first-child)',
+                //     }
+                // },
                 {
                     extend: 'excel',
                     title: '',
@@ -59,59 +112,42 @@ var KTDatatablesServerSide = function () {
                     charset: 'UTF-8',
                     bom: true,
                     exportOptions: {
-                        columns: ':not(:last-child,:first-child)',
+                        columns: ':not(:first-child)',
                     }
                 }
             ],
             columnDefs: [
-                {
-                    targets: 0,
-                    orderable: false,
-                    render: function (data) {
-                        return `
-                            <div style="visibility: hidden;" class="form-check form-check-sm form-check-custom form-check-solid">
-                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
-                            </div>`;
-                    }
-                },
-                {
-                    targets: -1,
-                    data: null,
-                    orderable: false,
-                    className: 'text-end',
-                    render: function (data, type, row) {
-                        // console.log(row.permit_status);
-                       
-                        return `
-                            <a style="visibility: hidden;" href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                `+action_lang+`
-                                <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
-                                        </g>
-                                    </svg>
-                                </span>
-                            </a>
-                            <!--begin::Menu-->
-                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                
+                // {
+                //     targets: -1,
+                //     data: null,
+                //     orderable: false,
+                //     className: 'text-end',
+                //     render: function (data, type, row) {
+                //         return `
+                //             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                //                 `+action_lang+`
+                //                 <span class="svg-icon svg-icon-5 m-0">
+                //                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                //                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                //                             <polygon points="0 0 24 0 24 24 0 24"></polygon>
+                //                             <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
+                //                         </g>
+                //                     </svg>
+                //                 </span>
+                //             </a>
+                //             <!--begin::Menu-->
+                //             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                                
+                            
                                
-                              
-
-                              
-
-                            </div>
-                            <!--end::Menu-->
-                        `;
-                    },
-                },
-                {
-                    targets: 2,
-                    className: 'group_name',
-                     
-                },
+                //             </div>
+                //             <!--end::Menu-->
+                //         `;
+                //     },
+                // },
             ],
+            
             // // Add data-filter attribute
             // createdRow: function (row, data, dataIndex) {
             //     $(row).find('td:eq(4)').attr('data-filter', data.CreditCardType);
@@ -135,7 +171,9 @@ var KTDatatablesServerSide = function () {
     var handleSearchDatatable = function () {
         const filterSearch = document.querySelector('[data-kt-docs-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
-            dt.search(e.target.value).draw();
+            if (e.key === 'Enter') {
+                dt.search(e.target.value).draw();
+            }
         });
     }
 
@@ -175,16 +213,16 @@ var KTDatatablesServerSide = function () {
                 const parent = e.target.closest('tr');
 
                 // Get  name
-                const RowName = parent.querySelectorAll('td')[2].innerText;
+                const RowName = parent.querySelectorAll('td')[3].innerText;
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: "هل أنت متأكد أنك تريد حذف   " + RowName + "?",
+                    text: "Are you sure you want to delete " + RowName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: "نعم ، احذف!",
-                    cancelButtonText: "لا ، إلغاء",
+                    confirmButtonText: "Yes, delete!",
+                    cancelButtonText: "No, cancel",
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
@@ -202,7 +240,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/permits/'+rowID;
+                        var ajaxurl = '/admin/products/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -210,17 +248,17 @@ var KTDatatablesServerSide = function () {
                             dataType: 'json',
                             success: function (data) {
                                 Swal.fire({
-                                    text: "حذف  " + RowName,
+                                    text: "Deleting " + RowName,
                                     icon: "info",
                                     buttonsStyling: false,
                                     showConfirmButton: false,
                                     timer: 2000
                                 }).then(function () {
                                     Swal.fire({
-                                        text: "لقد حذفت   " + RowName + "!.",
+                                        text: "You have deleted " + RowName + "!.",
                                         icon: "success",
                                         buttonsStyling: false,
-                                        confirmButtonText: "حسنًا ، حسنًا!",
+                                        confirmButtonText: "Ok, got it!",
                                         customClass: {
                                             confirmButton: "btn fw-bold btn-primary",
                                         }
@@ -232,10 +270,10 @@ var KTDatatablesServerSide = function () {
                             },
                             error: function (data) {
                                  Swal.fire({
-                                    text: RowName + " لم يتم حذفه. ",
+                                    text: RowName + " was not deleted.",
                                     icon: "error",
                                     buttonsStyling: false,
-                                    confirmButtonText: "حسنًا ، حسنًا!",
+                                    confirmButtonText: "Ok, got it!",
                                     customClass: {
                                         confirmButton: "btn fw-bold btn-primary",
                                     }
@@ -247,10 +285,10 @@ var KTDatatablesServerSide = function () {
 
                     } else if (result.dismiss === 'cancel') {
                         // Swal.fire({
-                        //     text: RowName + " لم يتم حذفه. ",
+                        //     text: RowName + " was not deleted.",
                         //     icon: "error",
                         //     buttonsStyling: false,
-                        //     confirmButtonText: "حسنًا ، حسنًا!",
+                        //     confirmButtonText: "Ok, got it!",
                         //     customClass: {
                         //         confirmButton: "btn fw-bold btn-primary",
                         //     }
@@ -300,13 +338,13 @@ var KTDatatablesServerSide = function () {
         deleteSelected.addEventListener('click', function () {
             // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
             Swal.fire({
-                text: "هل أنت متأكد أنك تريد حذف المحدد؟",
+                text: "Are you sure you want to delete selected ?",
                 icon: "warning",
                 showCancelButton: true,
                 buttonsStyling: false,
                 showLoaderOnConfirm: true,
-                confirmButtonText: "نعم ، احذف!",
-                cancelButtonText: "لا ، إلغاء",
+                confirmButtonText: "Yes, delete!",
+                cancelButtonText: "No, cancel",
                 customClass: {
                     confirmButton: "btn fw-bold btn-danger",
                     cancelButton: "btn fw-bold btn-active-light-primary"
@@ -336,7 +374,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_permits';
+                    var ajaxurl = '/admin/delete_products';
 
                     $.ajax({
                         type: type,
@@ -345,17 +383,17 @@ var KTDatatablesServerSide = function () {
                         dataType: 'json',
                         success: function (data) {
                             Swal.fire({
-                                text: "حذف المحدد",
+                                text: "Deleting selected",
                                 icon: "info",
                                 buttonsStyling: false,
                                 showConfirmButton: false,
                                 timer: 2000
                             }).then(function () {
                                 Swal.fire({
-                                    text: "لقد قمت بحذف كل ما تم تحديده !.",
+                                    text: "You have deleted all selected!.",
                                     icon: "success",
                                     buttonsStyling: false,
-                                    confirmButtonText: "حسنًا ، حسنًا!",
+                                    confirmButtonText: "Ok, got it!",
                                     customClass: {
                                         confirmButton: "btn fw-bold btn-primary",
                                     }
@@ -371,10 +409,10 @@ var KTDatatablesServerSide = function () {
                         },
                         error: function (data) {
                             Swal.fire({
-                                text: "لم يتم حذف المحدد.",
+                                text: "Selected was not deleted.",
                                 icon: "error",
                                 buttonsStyling: false,
-                                confirmButtonText: "حسنًا ، حسنًا!",
+                                confirmButtonText: "Ok, got it!",
                                 customClass: {
                                     confirmButton: "btn fw-bold btn-primary",
                                 }
@@ -387,10 +425,10 @@ var KTDatatablesServerSide = function () {
 
                 } else if (result.dismiss === 'cancel') {
                     // Swal.fire({
-                    //     text: "لم يتم حذف المحدد.",
+                    //     text: "Selected was not deleted.",
                     //     icon: "error",
                     //     buttonsStyling: false,
-                    //     confirmButtonText: "حسنًا ، حسنًا!",
+                    //     confirmButtonText: "Ok, got it!",
                     //     customClass: {
                     //         confirmButton: "btn fw-bold btn-primary",
                     //     }

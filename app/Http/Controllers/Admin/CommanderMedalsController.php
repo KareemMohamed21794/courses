@@ -261,30 +261,31 @@ class CommanderMedalsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+        $year = date("Y");
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = CommanderMedal::get();
+           $alldata = CommanderMedal::where('year',$year)->get();
         
             if($active=='All'){
-                $alldata = CommanderMedal::withTrashed()->get();
+                $alldata = CommanderMedal::withTrashed()->where('year',$year)->get();
             }
             elseif($active=='Active'){
-                $alldata = CommanderMedal::get();
+                $alldata = CommanderMedal::where('year',$year)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = CommanderMedal::onlyTrashed()->get();
+                $alldata = CommanderMedal::onlyTrashed()->where('year',$year)->get();
             }
         }else{
 
-            $alldata = CommanderMedal::where('admin_id',$userId)->get();
+            $alldata = CommanderMedal::where('admin_id',$userId)->where('year',$year)->get();
             if($active=='All'){
-                $alldata = CommanderMedal::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::withTrashed()->where('admin_id',$userId)->where('year',$year)->get();
             }
             elseif($active=='Active'){
-                $alldata = CommanderMedal::where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::where('admin_id',$userId)->where('year',$year)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = CommanderMedal::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::onlyTrashed()->where('admin_id',$userId)->where('year',$year)->get();
             }
 
 

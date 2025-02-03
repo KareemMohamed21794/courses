@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\FinancalMovementsController;
 use App\Http\Controllers\Admin\CommanderMedalsController;
 use App\Http\Controllers\Admin\SetupController;
+use App\Http\Controllers\Admin\BoardDirectorsController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
@@ -211,7 +212,27 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/total_permits', [PermitsController::class, 'total_permits']);
 
 		Route::get('/total_permits/get', [PermitsController::class, 'get_totall_permits']);
+
+		Route::get('/report_archive_permits', [PermitsController::class, 'ReportArchivepermits']);
+
+		Route::get('/report_archive_permits_get', [PermitsController::class, 'ReportArchivepermitsGet']);
+
+		Route::get('/report_archive_permits_get_list', [PermitsController::class, 'report_archive_permits_get_list']);
+
+
+		Route::get('/report_permits', [PermitsController::class, 'ReportPermits']);
+
+		Route::get('/report_permits_get', [PermitsController::class, 'ReportPermitsGet']);
+
+		Route::get('/report_permits_get_list', [PermitsController::class, 'ReportPermitsGetlist']);
 		# End permits
+
+
+		# Start board_directors
+		Route::get('/board_directors/get', [BoardDirectorsController::class, 'get']);
+		Route::resource('/board_directors', BoardDirectorsController::class);
+		Route::DELETE('/delete_board_directors', [BoardDirectorsController::class,'deleteBoardDirectors']);
+		# End board_directors
 
 
 
@@ -378,7 +399,13 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_advertisements', [AdvertisementsController::class,'deleteadvertisements']);
 		Route::get('export_advertisements', [AdvertisementsController::class, 'ExportAdvertisements']);
         
+        Route::get('/report_archive_advertisements', [AdvertisementsController::class, 'ReportArchiveAdvertisements']);
 
+		Route::get('/report_archive_advertisements_get', [AdvertisementsController::class, 'ReportArchiveAdvertisementsGet']);
+
+		Route::get('/report_archive_advertisements_get_list', [AdvertisementsController::class, 'report_archive_advertisements_get_list']);
+
+		Route::get('export_archive_advertisements', [AdvertisementsController::class, 'ExportArchiveAdvertisements']);
 		# End advertisements
 
 
@@ -391,6 +418,12 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/requests/{status}/{id}/reject_accept', [InformationsController::class, 'reject_accept']);
 
 		Route::post('/rejected_request/', [InformationsController::class, 'RejectedRequest']);
+
+		Route::get('/report_archive_requests', [InformationsController::class, 'ReportArchiveRequests']);
+
+		Route::get('/report_archive_requests_get', [InformationsController::class, 'ReportArchiveRequestsGet']);
+
+		Route::get('/report_archive_requests_get_list', [InformationsController::class, 'report_archive_Requests_get_list']);
 		# End requests
 
 

@@ -2,7 +2,13 @@
 @section('title', $title)
 @section('content')
     
-   
+    <input type="hidden" name="can_add" id="can_add" value="{{ $can_add }}">
+    <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
+    <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
+    <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
+    <input type="hidden" name="can_accept" id="can_accept" value="{{ $can_accept }}">
+    <input type="hidden" name="can_reject" id="can_reject" value="{{ $can_reject }}">
+
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -98,18 +104,22 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                             @endif
+                            @if($can_add == 1 && empty($added))
                             <!--begin::Add-->
-                          
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ $add_title }}</button>
                             <!--end::Add-->
+                            @endif
                           
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
+                        
                         <div class="d-flex justify-content-end align-items-center d-none" data-kt-docs-table-toolbar="selected">
                             <div class="fw-bolder me-5">
                             <span class="me-2" data-kt-docs-table-select="selected_count"></span>{{ __('messages.Selected') }}</div>
                             <button type="button" class="btn btn-danger" data-kt-docs-table-select="delete_selected">{{ __('messages.Delete Selected') }}</button>
                         </div>
+                        
                         <!--end::Group actions-->
                     </div>
                     <!--end::Card toolbar-->
@@ -121,31 +131,39 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th style="visibility: hidden;" class="w-10px pe-2">
+                            @if($can_delete == 1)
+                            <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
                             </th>
+
+                            @else
+
+                            <th class="w-10px pe-2" style="visibility: hidden;">
+                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
+                                </div>
+                            </th>
+                           
+                            @endif
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                           
-                            
-                          
-                            <th>{{ __('messages.price') }}</th>
-                            {{-- <th>{{ __('messages.created_at') }}</th> --}}
-                            <th style="visibility: hidden;" class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
+                            <th>{{ __('messages.first_name') }}</th>
+                            <th>{{ __('messages.father_name') }}</th>
+                            <th>{{ __('messages.family_name') }}</th>
+                            <th>{{ __('messages.Profession') }}</th>
+                            <th>{{ __('messages.mission') }}</th>
+                            <th>{{ __('messages.birth_date') }}</th>
+                            <th>{{ __('messages.birth_place') }}</th>
+                            <th>{{ __('messages.phone') }}</th>
+                        
+                            <th>{{ __('messages.created_at') }}</th>
+                            <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody class="text-gray-600 fw-bold">
                         </tbody>
-                        <tfoot>
-                            <tr style="font-size: 20px">
-                                <td colspan="3">{{ __('messages.total_value') }}</td>
-                                
-                                
-                                <td >{{$sum}}</td>
-                            </tr>
-                        </tfoot>
                     </table>
                     <!--end::Datatable-->
                 </div>
@@ -153,16 +171,17 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-        
+            @include('auth.admin.board_directors.add')
+            @include('auth.admin.board_directors.update')
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.permits.export')
+            @include('auth.admin.board_directors.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
         <!--end::Container-->
     </div>
     <!--end::Post-->
-   
+  
 @endsection
 
 @section('scripts')
@@ -171,19 +190,20 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/list/total_permits_list.js') }}"></script>
-   
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/update.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->
 @endsection
 
-{{-- @if($objAdmin->is_super == 0)
+@if($can_delete == 0 )
 <style type="text/css">
-    .group_name{
+    .permission{
         display: none;
     }
 </style>
-@endif --}}
+@endif
 

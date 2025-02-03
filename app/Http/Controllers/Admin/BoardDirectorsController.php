@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Permit;
-use App\Models\TypeActivity;
+use App\Models\BoardDirector;
 use App\Models\Admin;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -17,9 +16,9 @@ use TCPDF;
 use DB;
 use Illuminate\Support\Facades\Mail;
 
-class PermitsController extends Controller
+class BoardDirectorsController extends Controller
 {
-    private const MODEL ='Permit';
+    private const MODEL ='BoardDirector';
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +26,11 @@ class PermitsController extends Controller
      */
     public function index()
     {
-        $title = __('messages.permits');
-        $add_title = __('messages.permit');
+        $title = __('messages.board_director');
+        $add_title = __('messages.board_director');
+
+        $ids = BoardDirector::select('admin_id')->groupBy('admin_id')->pluck('admin_id')->toArray();
+
 
         $leaders = Admin::where('is_super',0)->get();
 
@@ -41,6 +43,7 @@ class PermitsController extends Controller
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
+        $added = "";
 
         if($objAdmin->position_id == 1  || $objAdmin->position_id == 3){
             $can_add = 1;
@@ -64,44 +67,30 @@ class PermitsController extends Controller
 
         if($objAdmin->position_id ==2){
             $can_add = 1;
-            $can_update = 0;
-            $can_delete = 0;
+            $can_update = 1;
+            $can_delete = 1;
             $can_print = 0;
             $can_accept = 0;
             $can_reject = 0;
+
+            $added = BoardDirector::where('admin_id',$objAdmin->id)->first();
         }
 
-      
-
-        $registration_number = $objAdmin->registration_number;
-        
-        $Permit_count = Permit::withTrashed()->count();
-        //print_r($Permit_count) ; die;
-        $Permit_count = $Permit_count+1000;
-
-        $fourDigitCount = str_pad($Permit_count, 4, '0', STR_PAD_LEFT);
-
-        $permit_number = "م ق أ /$registration_number/ $fourDigitCount";
-
-        $arrTypeActivity = TypeActivity::orderBy('id')->get();
-        
-
-        ///// update read 
 
 
         if($objAdmin->is_super == 0){
-        Permit::where('admin_id', $objAdmin->id)
+        BoardDirector::where('admin_id', $objAdmin->id)
         ->withTrashed() // Include both active and soft-deleted records
         ->update(['read' => 1]);
         
         }else{
-        Permit::withTrashed() // Include both active and soft-deleted records
+        BoardDirector::withTrashed() // Include both active and soft-deleted records
         ->update(['read' => 1]);
          
         }
          
 
-        return view('auth.admin.permits.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject, 'permit_number'=>$permit_number,'arrTypeActivity'=>$arrTypeActivity]);
+        return view('auth.admin.board_directors.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject,'added'=>$added]);
     }
 
     /**
@@ -126,23 +115,18 @@ class PermitsController extends Controller
         $objAdmin = Admin::find($userId);
          
         
-
-         
-
         //$this->authorize(self::MODEL.'-store');
          // print_r('here'); die;
         $validator = Validator::make($request->all(),[
-            'activity_name' => ['required', 'string', 'max:255'],
-            'nature_activity' => ['required'],
-            'place_activity' => ['required', 'string', 'max:255'],
-            'activity_history' => ['required'],
-            'number_days' => ['required'],
-            'alwahda' => ['required'],
-            'activity_leader' => ['required', 'string', 'max:255'],
-            'number_leader' => ['required'],
-            'leaders_names' => ['required'],
-            'number_participants' => ['required'],
-            'number_order' => ['required'],
+            'leader_id' => ['required'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'father_name' => ['required', 'string', 'max:255'],
+            'family_name' => ['required', 'string', 'max:255'],
+            'job' => ['required', 'string', 'max:255'],
+            'mission' => ['required', 'string', 'max:255'],
+            'birth_place' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required'],
+            'mobile_number' => ['required', 'string', 'max:255'],
         ]);
 
         if ($validator->fails()) {
@@ -150,47 +134,33 @@ class PermitsController extends Controller
         }
 
 
-        
+        // Check if the admin already exists
+        $exsist_admin =  BoardDirector::where('admin_id', $request->leader_id)->first();
 
-        $Permit = Permit::create([
-            'permit_number' =>  $request->permit_number,
-            'activity_name' =>  $request->activity_name,
-            'nature_activity' =>  $request->nature_activity,
-            'activity_description' =>  $request->activity_description,
-            'place_activity' =>  $request->place_activity,
-            'activity_history' =>  $request->activity_history,
-            'number_days' =>  $request->number_days,
-            'alwahda' => implode(',', $request->alwahda),
-            'alwahda_description' =>  $request->alwahda_description,
-            'activity_leader' =>  $request->activity_leader,
-            'number_leader' =>  $request->number_leader,
-            'number_participants' =>  $request->number_participants,
-            'number_order' =>  $request->number_order,
-            'leaders_names' =>  $request->leaders_names,
+        if ($exsist_admin) {
+            return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
+        }
+
+
+        $BoardDirector = BoardDirector::create([
+            'first_name' =>  $request->first_name,
+            'father_name' =>  $request->father_name,
+            'family_name' =>  $request->family_name,
+            'job' =>  $request->job,
+            'mission' =>  $request->mission,
+            'birth_place' =>  $request->birth_place,
+            'birth_date' =>  $request->birth_date,
+            'mobile_number' =>  $request->mobile_number,
             'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
             
         ]);
 
 
-        $this->logAction(auth()->id(), 'user', 'add_permit', 'create', 'permits', $Permit->id);
+        $this->logAction(auth()->id(), 'user', 'add_BoardDirector', 'create', 'board_directors', $BoardDirector->id);
 
 
-        $recipient = 'admin@tawasol.com';
-        //$recipient = 'mahmoud.ali.29992@gmail.com';
-        $subject = 'طلب تصريح';
-
-        $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
-
-        $fromEmail = 'noreply@privatescouts.org'; 
-        // The "from" email address
-
-        Mail::send('emails.permits_request', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-            $mail->to($recipient)
-                ->from($fromEmail) // Set the "from" email address
-                ->subject($subject);
-        });
-
-        return response()->json(['Permit'=>$Permit]);
+       
+        return response()->json(['BoardDirector'=>$BoardDirector]);
     }
 
     /**
@@ -213,10 +183,10 @@ class PermitsController extends Controller
     public function edit($id)
     {
         //$this->authorize(self::MODEL.'-update');
-        $Permit  = Permit::find($id);
-        @$Permit->Admin;
+        $BoardDirector  = BoardDirector::find($id);
+        @$BoardDirector->Admin;
 
-        return response()->json($Permit);
+        return response()->json($BoardDirector);
     }
 
     /**
@@ -231,17 +201,14 @@ class PermitsController extends Controller
         //$this->authorize(self::MODEL.'-update');
        // print_r($request->all());die;
             $validator = Validator::make($request->all(),[
-               'activity_name' => ['required', 'string', 'max:255'],
-                'nature_activity' => ['required'],
-                'place_activity' => ['required', 'string', 'max:255'],
-                'activity_history' => ['required'],
-                'number_days' => ['required'],
-                'alwahda' => ['required'],
-                'activity_leader' => ['required', 'string', 'max:255'],
-                'number_leader' => ['required'],
-                'leaders_names' => ['required'],
-                'number_participants' => ['required'],
-                'number_order' => ['required'],
+               'first_name' => ['required', 'string', 'max:255'],
+                'father_name' => ['required', 'string', 'max:255'],
+                'family_name' => ['required', 'string', 'max:255'],
+                'job' => ['required', 'string', 'max:255'],
+                'mission' => ['required', 'string', 'max:255'],
+                'birth_place' => ['required', 'string', 'max:255'],
+                'birth_date' => ['required'],
+                'mobile_number' => ['required', 'string', 'max:255'],
             ]);
    
 
@@ -249,32 +216,31 @@ class PermitsController extends Controller
             return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
         }
 
-        $secondary_registration = '';
-        $userId = Auth::id();
 
- 
+        // Check if the admin already exists
+        $exsist_admin =  BoardDirector::where('admin_id', $request->leader_id)->where('id','!=',$id)->first();
+        if ($exsist_admin) {
+            return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
+        }
 
-        $objPermit = Permit::find($id);
-        $objPermit->admin_id = $request->leader_id ? $request->leader_id : $userId;
-        $objPermit->activity_name =  $request->activity_name;
-        $objPermit->nature_activity =  $request->nature_activity;
-        $objPermit->activity_description =  $request->activity_description;
-        $objPermit->place_activity =  $request->place_activity;
-        $objPermit->activity_history =  $request->activity_history;
-        $objPermit->number_days =  $request->number_days;
-        $objPermit->alwahda =  implode(',', $request->alwahda);
-        $objPermit->alwahda_description =  $request->alwahda_description;
-        $objPermit->activity_leader =  $request->activity_leader;
-        $objPermit->number_leader =  $request->number_leader;
-        $objPermit->number_participants =  $request->number_participants;
-        $objPermit->number_order =  $request->number_order;
-        $objPermit->leaders_names =  $request->leaders_names;
        
-        $objPermit->save();
+        $userId = Auth::id();
+        $objBoardDirector = BoardDirector::find($id);
+        $objBoardDirector->admin_id = $request->leader_id ? $request->leader_id : $userId;
+        $objBoardDirector->first_name =  $request->first_name;
+        $objBoardDirector->father_name =  $request->father_name;
+        $objBoardDirector->family_name =  $request->family_name;
+        $objBoardDirector->job =  $request->job;
+        $objBoardDirector->mission =  $request->mission;
+        $objBoardDirector->birth_place =  $request->birth_place;
+        $objBoardDirector->birth_date =  $request->birth_date;
+        $objBoardDirector->mobile_number =  $request->mobile_number;
+       
+        $objBoardDirector->save();
 
 
-        $this->logAction(auth()->id(), 'user', 'update_permit', 'update', 'permits', $objPermit->id);
-        return response()->json(['objPermit'=>$objPermit]);
+        $this->logAction(auth()->id(), 'user', 'update_BoardDirector', 'update', 'board_directors', $objBoardDirector->id);
+        return response()->json(['objBoardDirector'=>$objBoardDirector]);
     }
 
     /**
@@ -286,20 +252,20 @@ class PermitsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $Permit = Permit::where('id',$id)->delete();
-        $this->logAction(auth()->id(), 'user', 'delete_permit', 'delete', 'permits', $id);
-        return response()->json(['Permit'=>$Permit]);
+        $BoardDirector = BoardDirector::where('id',$id)->delete();
+        $this->logAction(auth()->id(), 'user', 'delete_BoardDirector', 'delete', 'board_directors', $id);
+        return response()->json(['BoardDirector'=>$BoardDirector]);
     }
 
-     public function deletepermits(Request $request)
+     public function deleteBoardDirectors(Request $request)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $Permit = Permit::whereIn('id',$request->ids)->delete();
+        $BoardDirector = BoardDirector::whereIn('id',$request->ids)->delete();
         foreach ($request->ids as $key => $id) {
-            $this->logAction(auth()->id(), 'user', 'delete_permit', 'delete', 'permits', $id);
+            $this->logAction(auth()->id(), 'user', 'delete_BoardDirector', 'delete', 'board_directors', $id);
         }
 
-        return response()->json(['Permit'=>$Permit]);
+        return response()->json(['BoardDirector'=>$BoardDirector]);
     }
 
 
@@ -313,19 +279,14 @@ class PermitsController extends Controller
             'order'   => true,
             'id'   => true,
             'leader'   => true,
-            'activity_name'=> true,
-            'nature_activity'=>true,
-            // 'activity_description'=>true,
-            'place_activity' =>true,
-            'activity_history' =>true,
-            'number_days'=>true,
-            'alwahda'=>true,
-            // 'alwahda_description'=>true,
-            'activity_leader'=>true,
-            'number_leader'=>true,
-            'permit_status'=>true,
-            'permit_number'=>true,
-            
+            'first_name'=> true,
+            'father_name'=>true,
+            'family_name' =>true,
+            'job' =>true,
+            'mission'=>true,
+            'birth_place'=>true,
+            'birth_date'=>true,
+            'mobile_number'=>true,
             'created_at'   => true,
         ];
 
@@ -346,28 +307,28 @@ class PermitsController extends Controller
 
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+           $alldata = BoardDirector::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
         
             if($active=='All'){
-                $alldata = Permit::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = BoardDirector::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = Permit::get();
+                $alldata = BoardDirector::get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = BoardDirector::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
         }else{
 
-            $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+            $alldata = BoardDirector::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             if($active=='All'){
-                $alldata = Permit::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = BoardDirector::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = BoardDirector::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = BoardDirector::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
 
 
@@ -378,107 +339,19 @@ class PermitsController extends Controller
 
         foreach($alldata as $key=> $objdata){
 
-
-            $nature_activity = '';
-            if($objdata->nature_activity == "camp"){
-                $nature_activity = 'مخيم';
-            }elseif ($objdata->nature_activity == "trip") {
-                $nature_activity = 'رحلة';
-            }elseif ($objdata->nature_activity == "marching") {
-                $nature_activity = 'مسير';
-            }elseif ($objdata->nature_activity == "overnight") {
-                $nature_activity = 'مبيت';
-            }elseif ($objdata->nature_activity == "evening") {
-                $nature_activity = 'امسيه';
-            }elseif ($objdata->nature_activity == "other") {
-                $nature_activity = 'اخرى';
-            }
-
-
-
-            $alwahda = '';
-            if (is_array($objdata->alwahda)) {
-                // If alwahda is an array, map each value to its corresponding Arabic value
-                $alwahda = array_map(function ($value) {
-                    switch ($value) {
-                        case 'ashbal':
-                            return 'اشبال / زهرات';
-                        case 'kashaf':
-                            return 'كشاف / مرشدات';
-                        case 'mutaqadimu':
-                            return 'متقدم / متقدمات';
-                        case 'jawaluh':
-                            return 'جواله / دليلات';
-                        case 'almajmueuh':
-                            return 'المجموعه';
-                        case 'awlia_alamwr':
-                            return 'اولياء الامور';
-                        case 'other':
-                            return 'اخرى';
-                        default:
-                            return $value; // Handle any unexpected values
-                    }
-                }, $objdata->alwahda);
-                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
-            } else {
-                // If alwahda is a single comma-separated string, split it and map each value
-                $alwahdaValues = explode(',', $objdata->alwahda);
-                $alwahda = implode(', ', array_map(function ($value) {
-                    switch ($value) {
-                        case 'ashbal':
-                            return 'اشبال / زهرات';
-                        case 'kashaf':
-                            return 'كشاف / مرشدات';
-                        case 'mutaqadimu':
-                            return 'متقدم / متقدمات';
-                        case 'jawaluh':
-                            return 'جواله / دليلات';
-                        case 'almajmueuh':
-                            return 'المجموعه';
-                        case 'awlia_alamwr':
-                            return 'اولياء الامور';
-                        case 'other':
-                            return 'اخرى';
-                        default:
-                            return $value; // Handle any unexpected values
-                    }
-                }, $alwahdaValues));
-            }
-
-
-            if($objdata->status=='pending'){
-                $status = "معلقه";
-            }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
-
-                if($objAdmin->is_super == 0){
- 
-                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
-                }
-
-            }
-            elseif ($objdata->status=='rejected') {
-                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
-            }
-
             $alldataResult[] = array(
                 "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
                 "leader" => @$objdata->Admin->group_name,
-                "activity_name"=> $objdata->activity_name,
-                "nature_activity"=> @$objdata->TypeActivity->name_ar,
-                // "activity_description"=> $objdata->activity_description,
-                "place_activity" =>$objdata->place_activity,
-                "activity_history" =>$objdata->activity_history,
-                "number_days" =>$objdata->number_days,
-                "alwahda" => $alwahda,
-                // "alwahda_description"=>$objdata->alwahda_description,
-                "activity_leader"=>$objdata->activity_leader,
-                "number_leader"=>$objdata->number_leader,
-                "permit_status"=>$status,
-                "permit_number"=>$objdata->permit_number,
-                
+                "first_name"=> $objdata->first_name,
+                "father_name" =>$objdata->father_name,
+                "family_name" =>$objdata->family_name,
+                "job" =>$objdata->job,
+                "mission"=>$objdata->mission,
+                "birth_place"=>$objdata->birth_place,
+                "birth_date"=>Date('Y-m-d',strtotime($objdata->birth_date)),
+                "mobile_number"=>$objdata->mobile_number,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
         }

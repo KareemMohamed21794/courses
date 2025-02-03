@@ -643,8 +643,15 @@ return [
     'family_name'=>'اسم العائلة',
     'birth_date'=>'تاريخ الولادة',
     'birth_place'=>'مكان الولادة',
+    'mission'=>'المهمة',
     'report_financial_movements'=>"تقرير   الحركات المالية",
     'register_url'=>'رابط التسجيل',
+    'archive_advertisements'=>'أرشيف   الصادر',
+    'archive_requests'=>'أرشيف   الوارد',
+    'archive_permits'=>'أرشيف   التصاريح',
+    'report_permits'=>'تقرير   التصاريح',
+    'board_director'=>'مجلس إدارة المجموعة ',
+    'Profession'=>"المهنة",
 
  ];
 
