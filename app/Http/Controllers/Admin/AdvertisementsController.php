@@ -218,7 +218,7 @@ class AdvertisementsController extends Controller
 
                 $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
 
-                $fromEmail = 'admin@privatescouts.org'; 
+                $fromEmail = 'noreply@privatescouts.org'; 
                 // The "from" email address
 
                 Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
