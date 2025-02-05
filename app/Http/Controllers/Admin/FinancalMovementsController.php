@@ -577,6 +577,23 @@ class FinancalMovementsController extends Controller
     }
 
 
+
+
+
+      public function financial_claims()
+    {
+        $title = __('messages.group_finances');
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+        $objAdmin->claim_number = empty($objAdmin->claim_number) ? '001' : str_pad($objAdmin->claim_number + 1, 3, '0', STR_PAD_LEFT);
+        $objAdmin->save();
+     
+        return view('auth.admin.financial_movements.financial_claims',['title' => $title,'objAdmin'=>$objAdmin]);
+    }
+
+
     public function ReportFinancialMovements()
     {
         $userId = \Auth::id();

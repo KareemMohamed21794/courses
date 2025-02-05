@@ -6,35 +6,34 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-
-    var segment = $("#segment").val();
-    var is_super = $("#is_super").val();
-    var position_id_check = $("#position_id_check").val();
-    var type_segment = $("#type_segment").val();
-    let main_url = "/admin/"+segment+"/get";
+    var group_id = $("#group_id").val();
+    // var is_super = $("#is_super").val();
+   
+    let main_url = "/admin/get_group_leaders/"+group_id;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
+
     
-
-    var delete_confirmation = $("#delete_confirmation").val();
-    var yes_delete = $("#yes_delete").val();
-    var no_delete = $("#no_delete").val();
-
     var can_add = $("#can_add").val();
     var can_update = $("#can_update").val();
     var can_delete = $("#can_delete").val();
     var can_print = $("#can_print").val();
-    
-    
+    var can_accept = $("#can_accept").val();
+    var can_reject = $("#can_reject").val();
+
     var display_print = "none";
     var display_file = "none";
     var display_case = "none";
     var display_procedure = "none";
     var display_edit = "none";
     var display_delete = "none";
+    var display_accept = "none";
+    var display_reject = "none";
+    
     
 
+    
     if(can_print==1){
         var display_print = "";
     }
@@ -49,40 +48,20 @@ var KTDatatablesServerSide = function () {
         var display_edit = "";
     }
 
+
+
     if(can_delete==1){
         var display_delete = "";
     }
 
+    if(can_accept==1){
+        var display_accept = "";
+    }
 
-    
-    var adminColumns = [
-    { data: '#' },
-    { data: 'order' },
-    { data: 'username' },
-    { data: 'name' },
-    { data: 'email' },
-    { data: 'phone' },
-    { data: 'created_at' },
-    { data: null },
-   ];
+    if(can_reject==1){
+        var display_reject = "";
+    }
 
-
-    var userColumns = [
-    { data: '#' },
-    { data: 'order' },
-    { data: 'username' },
-    { data: 'group_name' },
-    { data: 'name' },
-    { data: 'email' },
-    { data: 'phone'},
-    //{ data: 'address'},
-    { data: 'created_at' },
-    { data: null },
-       
-    ];
-
-   // var chosenColumns = type_segment === '0' ? userColumns : adminColumns;
-    var chosenColumns = segment === 'leaders' ? userColumns : adminColumns;
 
     // Private functions
     var initDatatable = function () {
@@ -96,7 +75,7 @@ var KTDatatablesServerSide = function () {
             processing: true,
             serverSide: true,
             order: [[1, 'desc']],
-            stateSave: false,
+            stateSave: true,
             select: {
                 style: 'os',
                 selector: 'td:first-child',
@@ -105,7 +84,24 @@ var KTDatatablesServerSide = function () {
             ajax: {
                 url: main_url,
             },
-            columns: chosenColumns,
+            columns: [
+                { data: '#' },
+                { data: 'order' },
+                // { data: 'id' },
+                { data: 'leader' },
+                { data: 'first_name' },
+                { data: 'father_name' },
+                { data: 'grandfather_name' },
+                { data: 'family_name' },
+                { data: 'job' },
+                
+                { data: 'birth_date' },
+                { data: 'birth_place' },
+                { data: 'phone' },
+               
+                { data: 'created_at' },
+                { data: null },
+            ],
             buttons: [
                 {
                     extend: 'excel',
@@ -125,16 +121,22 @@ var KTDatatablesServerSide = function () {
                     }
                 }
             ],
-
             columnDefs: [
                 {
                     targets: 0,
                     orderable: false,
                     render: function (data) {
+                        if (can_delete === '1') {
                         return `
                             <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
+                        }else{
+                            return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="visibility: hidden;">
+                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
+                            </div>`;
+                        }
                     }
                 },
                 {
@@ -143,94 +145,9 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-
-                        var AdminContent = '';
-
-                        // Check if segment is 'lawyer'
-                        if (can_delete === '1' || position_id_check == 4) {
-                            
-                            AdminContent = `
-                                
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_print+`">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
-                                       عرض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_delete+`">
-                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
- 
-                            `;
-                        }
-
-
-                        if (segment === 'leaders' && can_delete == '1') {
-                            AdminContent = `
-                                
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_print+`">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
-                                       عرض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       تسجيل الطالب
-                                    </a>
-
-                                </div>
-                                <!--end::Menu item-->
-
-
-
-
-                                <div class="menu-item px-3" >
-                                    <a href="/admin/board_directors/`+row.id+`" class="menu-link px-3">
-                                        مجلس إدارة المجموعة  
-                                    </a>
-                                </div>
-
-
-                                <div class="menu-item px-3" >
-                                    <a href="/admin/group_leaders/`+row.id+`" class="menu-link px-3">
-                                        معلومات قائد المجموعة 
-                                    </a>
-                                </div>
-
-
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       عرض الطلاب
-                                    </a>
-
-                                </div>
-                                <!--end::Menu item-->
-
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
- 
-                            `;
-                        }
-
+                        // console.log(row.permit_status);
+                       
+                        
                         return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
@@ -245,22 +162,34 @@ var KTDatatablesServerSide = function () {
                             </a>
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
+                               
+                             
+
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_edit+`">
+                                <div class="menu-item px-3"  style="display:`+display_edit+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
 
-                                `+AdminContent+`
 
-
-                             
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:none">
+                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
                         `;
                     },
+                },
+                {
+                    targets: 2,
+                    className: 'group_name',
+                     
                 },
             ],
             // // Add data-filter attribute
@@ -286,9 +215,7 @@ var KTDatatablesServerSide = function () {
     var handleSearchDatatable = function () {
         const filterSearch = document.querySelector('[data-kt-docs-table-filter="search"]');
         filterSearch.addEventListener('keyup', function (e) {
-            if (e.key === 'Enter') {
-                dt.search(e.target.value).draw();
-            }
+            dt.search(e.target.value).draw();
         });
     }
 
@@ -328,16 +255,16 @@ var KTDatatablesServerSide = function () {
                 const parent = e.target.closest('tr');
 
                 // Get  name
-                const RowName = parent.querySelectorAll('td')[3].innerText;
+                const RowName = parent.querySelectorAll('td')[2].innerText;
 
                 // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
                 Swal.fire({
-                    text: delete_confirmation,
+                    text: "هل أنت متأكد أنك تريد حذف   " + RowName + "?",
                     icon: "warning",
                     showCancelButton: true,
                     buttonsStyling: false,
-                    confirmButtonText: yes_delete,
-                    cancelButtonText: no_delete,
+                    confirmButtonText: "نعم ، احذف!",
+                    cancelButtonText: "لا ، إلغاء",
                     customClass: {
                         confirmButton: "btn fw-bold btn-danger",
                         cancelButton: "btn fw-bold btn-active-light-primary"
@@ -355,24 +282,22 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/admins/'+rowID;
+                        var ajaxurl = '/admin/delete_group_leaders/'+rowID;
 
                         $.ajax({
                             type: type,
                             url: ajaxurl,
                             dataType: 'json',
                             success: function (data) {
-                                location.reload();
-                                return false;
                                 Swal.fire({
-                                    text: "حذف " + RowName,
+                                    text: "حذف  " + RowName,
                                     icon: "info",
                                     buttonsStyling: false,
                                     showConfirmButton: false,
                                     timer: 2000
                                 }).then(function () {
                                     Swal.fire({
-                                        text: "لقد حذفت " + RowName + "!.",
+                                        text: "لقد حذفت   " + RowName + "!.",
                                         icon: "success",
                                         buttonsStyling: false,
                                         confirmButtonText: "حسنًا ، حسنًا!",
@@ -382,12 +307,13 @@ var KTDatatablesServerSide = function () {
                                     }).then(function () {
                                         // delete row data from server and re-draw datatable
                                         dt.draw();
+                                        location.reload();
                                     });
                                 });
                             },
                             error: function (data) {
                                  Swal.fire({
-                                    text: RowName + " لم يتم حذفه.",
+                                    text: RowName + " لم يتم حذفه. ",
                                     icon: "error",
                                     buttonsStyling: false,
                                     confirmButtonText: "حسنًا ، حسنًا!",
@@ -402,7 +328,7 @@ var KTDatatablesServerSide = function () {
 
                     } else if (result.dismiss === 'cancel') {
                         // Swal.fire({
-                        //     text: RowName + "لم يتم حذفه.",
+                        //     text: RowName + " لم يتم حذفه. ",
                         //     icon: "error",
                         //     buttonsStyling: false,
                         //     confirmButtonText: "حسنًا ، حسنًا!",
@@ -491,7 +417,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_admins';
+                    var ajaxurl = '/admin/delete_group_leaders';
 
                     $.ajax({
                         type: type,
@@ -517,6 +443,7 @@ var KTDatatablesServerSide = function () {
                                 }).then(function () {
                                     // delete row data from server and re-draw datatable
                                     dt.draw();
+                                     location.reload();
                                 });
 
                                 // Remove header checked box
@@ -606,26 +533,3 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
-
-
-
-function handleClick(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('/student_registration/' + id, '_blank'); // Open in a new tab
-}
-
-
-function board_directors(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('admin/board_directors', '_blank'); // Open in a new tab
-}
-
-
-
-function ShowStudents(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('show_students/' + id, '_blank'); // Open in a new tab
-}

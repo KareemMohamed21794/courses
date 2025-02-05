@@ -492,7 +492,7 @@ class StudentRegistrationsController extends Controller
 
         //     $data = ['content' => 'This is the email content.']; // Data to pass to the view
 
-        //     $fromEmail = 'noreply@privatescouts.org'; 
+        //     $fromEmail = 'admin@privatescouts.org'; 
         //     // The "from" email address
 
         //     Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {

@@ -81,24 +81,7 @@ var KTModalAdd = function () {
                         }
                     },
 
-                    'mobile_number': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-
-
-                    // 'leader': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'هذا الحقل مطلوب'
-                    //         }
-                    //     }
-                    // },
-
+                  
                    
 
 
@@ -130,7 +113,7 @@ var KTModalAdd = function () {
 
                 // Send ajax request
                 // axios.post(submitButton.closest('form').getAttribute('action'), new FormData(form))
-                axios.post("/admin/board_directors/"+group_id, new FormData(form))
+                axios.post("/admin/group_leaders/"+group_id, new FormData(form))
                     .then(function (response) {
                         // Show success message with SweetAlert2
                         Swal.fire({
@@ -296,6 +279,57 @@ var KTModalAdd = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTModalAdd.init();
 });
+
+$( document ).ready(function() {
+   
+    $('#text_area').hide();
+    $('#selected_area').hide();
+  
+    
+});
+
+function addOtherPerson() {
+  // Clone the first input element
+  var clonedPerson = $(".other_person_other_lawer:first").clone();
+
+  clonedPerson.val('');
+
+  // Find all input elements within the clonedPerson and clear their values
+  clonedPerson.find('input').val('');
+
+  // Append the cloned input to the container
+  $(".other_person_container").append(clonedPerson);
+}
+
+function SelectCity(city) {
+     
+       if(!city || city.length === 0){
+        $('#text_area').hide();
+        $('#selected_area').hide();
+        //document.getElementById('amman_region').removeAttribute('required');
+        //document.getElementById('area').removeAttribute('required');
+        $('#amman_region').val(null);
+        $('#area').val(null);
+       }
+
+       if(city == '1'){
+        $('#selected_area').show();
+        $('#text_area').hide();
+        //document.getElementById('amman_region').setAttribute('required', true);
+        //document.getElementById('area').removeAttribute('required');
+        $('#area').val(null);
+        
+       }
+
+       if(city != '1' && city.length != 0){
+        $('#selected_area').hide();
+        $('#text_area').show();
+        //document.getElementById('area').setAttribute('required', true);
+        ///document.getElementById('amman_region').removeAttribute('required');
+        $('#amman_region').val(null);
+        
+       }
+}
 
 
 

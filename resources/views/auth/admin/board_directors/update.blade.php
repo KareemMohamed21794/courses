@@ -35,7 +35,7 @@
                       
 
 
-                        @if($objAdmin->position_id == 1 || $objAdmin->position_id == 3)
+                       {{--  @if($objgroup->position_id == 1 || $objgroup->position_id == 3)
                          <!--begin::Input group-->
                         <div class="d-flex flex-column mb-7 fv-row">
                             <!--begin::Label-->
@@ -58,12 +58,12 @@
 
                         
                             <!--begin::Input-->
-                            <input type="hidden" class="form-control form-control-solid" placeholder="{{ __('messages.scout_group') }}" name="leader_id"  id="leader_id_update"  value="{{$objAdmin->id}}" />
+                            <input type="hidden" class="form-control form-control-solid" placeholder="{{ __('messages.scout_group') }}" name="leader_id"  id="leader_id_update"  value="{{$objgroup->id}}" />
                             <!--end::Input-->
                       
                         @endif
 
-
+ --}}
                          
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
@@ -110,10 +110,10 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.Profession') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.job') }}" name="job"  id="job_update" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.Profession') }}" name="job"  id="job_update" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

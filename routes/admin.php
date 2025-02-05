@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\FinancalMovementsController;
 use App\Http\Controllers\Admin\CommanderMedalsController;
 use App\Http\Controllers\Admin\SetupController;
 use App\Http\Controllers\Admin\BoardDirectorsController;
+use App\Http\Controllers\Admin\GroupLeadersController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
@@ -229,10 +230,30 @@ Route::middleware('auth:admin')->group(function () {
 
 
 		# Start board_directors
-		Route::get('/board_directors/get', [BoardDirectorsController::class, 'get']);
-		Route::resource('/board_directors', BoardDirectorsController::class);
-		Route::DELETE('/delete_board_directors', [BoardDirectorsController::class,'deleteBoardDirectors']);
+		// Route::get('/board_directors/get', [BoardDirectorsController::class, 'get']);
+		// Route::resource('/board_directors', BoardDirectorsController::class);
+		// Route::get('/add_board_directors/{id}', [BoardDirectorsController::class, 'AllData']);
+	
+		Route::get('/board_directors/{id}', [BoardDirectorsController::class, 'index']);
+		Route::POST('/board_directors/{id}', [BoardDirectorsController::class, 'store']);
+		Route::put('/board_directors/{id}', [BoardDirectorsController::class, 'update']);
+		Route::get('/get_board_directors/{id}', [BoardDirectorsController::class, 'get']);
+		Route::get('/get_board_director/{id}', [BoardDirectorsController::class, 'edit']);
+		Route::DELETE('/delete_board_directors/{id}', [BoardDirectorsController::class, 'destroy']);
+		Route::DELETE('/delete_board_directors', [BoardDirectorsController::class, 'deleteBoardDirectors']);
 		# End board_directors
+
+
+		# Start group_leaders
+		
+		Route::get('/group_leaders/{id}', [GroupLeadersController::class, 'index']);
+		Route::POST('/group_leaders/{id}', [GroupLeadersController::class, 'store']);
+		Route::put('/group_leaders/{id}', [GroupLeadersController::class, 'update']);
+		Route::get('/get_group_leaders/{id}', [GroupLeadersController::class, 'get']);
+		Route::get('/get_group_leader/{id}', [GroupLeadersController::class, 'edit']);
+		Route::DELETE('/delete_group_leaders/{id}', [GroupLeadersController::class, 'destroy']);
+		Route::DELETE('/delete_group_leaders', [GroupLeadersController::class, 'deleteGroupLeaders']);
+		# End group_leaders
 
 
 
@@ -385,6 +406,8 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/report_financial_movements_get', [FinancalMovementsController::class, 'ReportFinancialMovementsGet']);
 
 		Route::get('/report_financial_movements_get_list', [FinancalMovementsController::class, 'ReportFinancialMovementsGetlist']);
+
+		Route::get('/financial_claims', [FinancalMovementsController::class, 'financial_claims']);
 
 		# End payments_received
 

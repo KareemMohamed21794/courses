@@ -89,22 +89,7 @@ var KTModalBranchesUpdate = function () {
                     },
 
 
-                     'mobile_number_update': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-
-                    //  'leader_id_update': {
-                    //     validators: {
-                    //         notEmpty: {
-                    //             message: 'هذا الحقل مطلوب'
-                    //         }
-                    //     }
-                    // },
+                   
 
                     
                 },
@@ -135,7 +120,7 @@ var KTModalBranchesUpdate = function () {
 
                         // Send ajax request
                         var update_id = $("#id").val();
-                        axios.post("/admin/board_directors/"+update_id, new FormData(form))
+                        axios.post("/admin/group_leaders/"+update_id, new FormData(form))
                         .then(function (response) {
                             // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
@@ -307,7 +292,7 @@ function getData(id,action) {
     });
 
     var type = "GET";
-    var ajaxurl = '/admin/get_board_director/'+id;
+    var ajaxurl = '/admin/get_group_leader/'+id;
 
     $.ajax({
         type: type,
@@ -315,15 +300,67 @@ function getData(id,action) {
         dataType: 'json',
         success: function (data) {
             jQuery('#id').val(data.id);
-            jQuery('#leader_id_update').val(data.admin.id);
+           
             jQuery('#first_name_update').val(data.first_name);
             jQuery('#father_name_update').val(data.father_name);
+            jQuery('#grandfather_name_update').val(data.grandfather_name);
             jQuery('#family_name_update').val(data.family_name);
-            jQuery('#job_update').val(data.job);
-            jQuery('#mission_update').val(data.mission);
-            jQuery('#birth_date_update').val(data.birth_date);
             jQuery('#birth_place_update').val(data.birth_place);
-            jQuery('#mobile_number_update').val(data.mobile_number);
+            jQuery('#birth_date_update').val(data.birth_date);
+            jQuery('#job_update').val(data.job);
+            jQuery('#scout_update').val(data.scout);
+            jQuery('#specialization_scout_update').val(data.specialization_scout);
+            jQuery('#year_scout_update').val(data.year_scout);
+            jQuery('#place_scout_update').val(data.place_scout);
+            jQuery('#vacation_scout_update').val(data.vacation_scout);
+            jQuery('#note_scout_update').val(data.note_scout);
+            jQuery('#academic_update').val(data.academic);
+            jQuery('#specialization_academic_update').val(data.specialization_academic);
+            jQuery('#year_academic_update').val(data.year_academic);
+            jQuery('#college_update').val(data.college);
+            jQuery('#work_place_update').val(data.work_place);
+            jQuery('#phone_update').val(data.phone);
+            jQuery('#Job_title_update').val(data.Job_title);
+            
+            jQuery('#city_update').val(data.city);
+            jQuery('#city_update').select2();
+
+            if(!data.city || data.city.length === 0){
+                $('#text_area_update').hide();
+                $('#selected_area_update').hide();
+                $('#amman_region_update').val(null);
+                $('#area_update').val(null);
+               }
+
+               if(data.city == '1'){
+                $('#selected_area_update').show();
+                $('#text_area_update').hide();
+                jQuery('#amman_region_update').val(data.area);
+                jQuery('#amman_region_update').select2();
+                $('#area_update').val(null);
+                
+               }
+
+               if(data.city != '1' && data.city.length != 0){
+                $('#selected_area_update').hide();
+                $('#text_area_update').show();
+                jQuery('#area_update').val(data.area);
+                $('#amman_region_update').val(null);
+                
+            }
+
+
+            jQuery('#street_update').val(data.street);
+            jQuery('#building_number_update').val(data.building_number);
+            jQuery('#nearest_teacher_update').val(data.nearest_teacher);
+            jQuery('#home_phone_update').val(data.home_phone);
+            jQuery('#marital_status_update').val(data.marital_status);
+            jQuery('#phone_comunication_update').val(data.phone_comunication);
+            jQuery('#email_update').val(data.email);
+            jQuery('#fax_update').val(data.fax);
+            jQuery('#mailbox_update').val(data.mailbox);
+            jQuery('#city_comunication_update').val(data.city_comunication);
+            jQuery('#zip_code_update').val(data.zip_code);
 
 
         },
@@ -350,6 +387,33 @@ function getData(id,action) {
         $('input, select').prop('disabled', false);
         $('#kt_modal_update_submit').show();
     }
+}
+
+
+function SelectCityUpdate(city) {
+     
+       if(!city || city.length === 0){
+        $('#text_area_update').hide();
+        $('#selected_area_update').hide();
+        $('#amman_region_update').val(null);
+        $('#area_update').val(null);
+       }
+
+       if(city == '1'){
+        $('#selected_area_update').show();
+        $('#text_area_update').hide();
+        
+        $('#area_update').val(null);
+        
+       }
+
+       if(city != '1' && city.length != 0){
+        $('#selected_area_update').hide();
+        $('#text_area_update').show();
+        
+        $('#amman_region_update').val(null);
+        
+       }
 }
 
 

@@ -151,9 +151,10 @@
                             <th>{{ __('messages.scout_group') }}</th>
                             <th>{{ __('messages.first_name') }}</th>
                             <th>{{ __('messages.father_name') }}</th>
+                             <th>{{ __('messages.grandfather_name') }}</th>
                             <th>{{ __('messages.family_name') }}</th>
                             <th>{{ __('messages.Profession') }}</th>
-                            <th>{{ __('messages.mission') }}</th>
+                           
                             <th>{{ __('messages.birth_date') }}</th>
                             <th>{{ __('messages.birth_place') }}</th>
                             <th>{{ __('messages.phone') }}</th>
@@ -171,10 +172,10 @@
             </div>
             <!--end::Card-->
             <!--begin::Modals-->
-            @include('auth.admin.board_directors.add')
-            @include('auth.admin.board_directors.update')
+            @include('auth.admin.group_leaders.add')
+            @include('auth.admin.group_leaders.update')
             <!--begin::Modal - Adjust Balance-->
-            @include('auth.admin.board_directors.export')
+            @include('auth.admin.group_leaders.export')
             <!--end::Modal - New Card-->
             <!--end::Modals-->
         </div>
@@ -190,10 +191,10 @@
     <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/list/export.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/list/list.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/add.js') }}"></script>
-    <script src="{{ asset('demo1/dist/assets/js/custom/apps/board_directors/update.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/group_leaders/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/group_leaders/list/list.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/group_leaders/add.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/group_leaders/update.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->

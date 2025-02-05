@@ -332,6 +332,13 @@
                         
                     </table>
                     <!--end::Datatable-->
+
+                    @if($objAdmin->position_id == 2)
+                     <a href="{{url('admin/financial_claims')}}" class="btn btn-primary" target="_blank">
+                        {{ __('messages.Financial_claims') }}
+                    </a>
+
+                    @endif
                 </div>
                 <!--end::Card body-->
             </div>
@@ -348,7 +355,6 @@
     <!--end::Post-->
    
 @endsection
-
 
 
 @if($objAdmin->is_super == 0)

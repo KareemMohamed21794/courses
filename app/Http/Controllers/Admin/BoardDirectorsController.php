@@ -24,8 +24,9 @@ class BoardDirectorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
+
         $title = __('messages.board_director');
         $add_title = __('messages.board_director');
 
@@ -42,10 +43,10 @@ class BoardDirectorsController extends Controller
 
         # check if a super_admin
         $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
+        $objgroup = Admin::find($id);
         $added = "";
 
-        if($objAdmin->position_id == 1  || $objAdmin->position_id == 3){
+        if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;
             $can_update = 1;
             $can_delete = 1;
@@ -55,7 +56,7 @@ class BoardDirectorsController extends Controller
         }
 
 
-        if($objAdmin->position_id == 4){
+        if($objgroup->position_id == 4){
             $can_add = 0;
             $can_update = 0;
             $can_delete = 0;
@@ -65,7 +66,7 @@ class BoardDirectorsController extends Controller
         }
 
 
-        if($objAdmin->position_id ==2){
+        if($objgroup->position_id ==2){
             $can_add = 1;
             $can_update = 1;
             $can_delete = 1;
@@ -73,13 +74,13 @@ class BoardDirectorsController extends Controller
             $can_accept = 0;
             $can_reject = 0;
 
-            $added = BoardDirector::where('admin_id',$objAdmin->id)->first();
+            $added = BoardDirector::where('admin_id',$objgroup->id)->first();
         }
 
 
 
-        if($objAdmin->is_super == 0){
-        BoardDirector::where('admin_id', $objAdmin->id)
+        if($objgroup->is_super == 0){
+        BoardDirector::where('admin_id', $objgroup->id)
         ->withTrashed() // Include both active and soft-deleted records
         ->update(['read' => 1]);
         
@@ -90,7 +91,7 @@ class BoardDirectorsController extends Controller
         }
          
 
-        return view('auth.admin.board_directors.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject,'added'=>$added]);
+        return view('auth.admin.board_directors.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders, 'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print, 'can_accept'=>$can_accept, 'can_reject'=>$can_reject,'added'=>$added,'objgroup'=>$objgroup]);
     }
 
     /**
@@ -109,16 +110,14 @@ class BoardDirectorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $userId = Auth::id();
-        $objAdmin = Admin::find($userId);
-         
-        
+       
+   
         //$this->authorize(self::MODEL.'-store');
-         // print_r('here'); die;
+       
         $validator = Validator::make($request->all(),[
-            'leader_id' => ['required'],
+            // 'leader_id' => ['required'],
             'first_name' => ['required', 'string', 'max:255'],
             'father_name' => ['required', 'string', 'max:255'],
             'family_name' => ['required', 'string', 'max:255'],
@@ -135,7 +134,7 @@ class BoardDirectorsController extends Controller
 
 
         // Check if the admin already exists
-        $exsist_admin =  BoardDirector::where('admin_id', $request->leader_id)->first();
+        $exsist_admin =  BoardDirector::where('admin_id', $id)->first();
 
         if ($exsist_admin) {
             return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
@@ -151,7 +150,7 @@ class BoardDirectorsController extends Controller
             'birth_place' =>  $request->birth_place,
             'birth_date' =>  $request->birth_date,
             'mobile_number' =>  $request->mobile_number,
-            'admin_id' =>  $request->leader_id ? $request->leader_id : $userId,
+            'admin_id' =>  $id,
             
         ]);
 
@@ -217,16 +216,11 @@ class BoardDirectorsController extends Controller
         }
 
 
-        // Check if the admin already exists
-        $exsist_admin =  BoardDirector::where('admin_id', $request->leader_id)->where('id','!=',$id)->first();
-        if ($exsist_admin) {
-            return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
-        }
+      
 
        
         $userId = Auth::id();
         $objBoardDirector = BoardDirector::find($id);
-        $objBoardDirector->admin_id = $request->leader_id ? $request->leader_id : $userId;
         $objBoardDirector->first_name =  $request->first_name;
         $objBoardDirector->father_name =  $request->father_name;
         $objBoardDirector->family_name =  $request->family_name;
@@ -570,7 +564,7 @@ class BoardDirectorsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'noreply@privatescouts.org'; 
+            $fromEmail = 'admin@privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -601,7 +595,7 @@ class BoardDirectorsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'noreply@privatescouts.org'; 
+            $fromEmail = 'admin@privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_reject', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -1527,8 +1521,4 @@ class BoardDirectorsController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
-
-
-
-    
 }

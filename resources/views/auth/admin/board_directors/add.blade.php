@@ -32,7 +32,7 @@
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_add_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_header" data-kt-scroll-wrappers="#kt_modal_add_scroll" data-kt-scroll-offset="300px">
 
                      
-                    @if($objAdmin->position_id == 1 || $objAdmin->position_id == 3)
+                   {{--  @if($objgroup->position_id == 1 || $objgroup->position_id == 3)
 
 
                         <!--begin::Input group-->
@@ -57,13 +57,13 @@
                     <!--begin::Input group-->
                        
                             <!--begin::Input-->
-                            <input type="hidden" class="form-control form-control-solid" placeholder="{{ __('messages.scout_group') }}" name="leader_id"  id="leader"  value="{{$objAdmin->id}}" />
+                            <input type="hidden" class="form-control form-control-solid" placeholder="{{ __('messages.scout_group') }}" name="leader_id"  id="leader"  value="{{$objgroup->id}}" />
                             <!--end::Input-->
                         
 
                     @endif
                         
-
+ --}}
                        
 
                         <!--begin::Input group-->
@@ -111,10 +111,10 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.Profession') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.job') }}" name="job"  id="job" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.Profession') }}" name="job"  id="job" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
