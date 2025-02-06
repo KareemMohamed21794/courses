@@ -50,6 +50,10 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('show_students/{id}', [StudentRegistrationsController::class, 'index']);
 
+		Route::get('show_all_students/{id}', [StudentRegistrationsController::class, 'ShowStudents']);
+
+		Route::get('show_all_students/student_registration/get/{id}', [StudentRegistrationsController::class, 'get']);
+
 		Route::get('/accept_student_registration/{id}', [StudentRegistrationsController::class, 'accept_student_registration']);
 
 		Route::DELETE('show_students/delete_student_registration', [StudentRegistrationsController::class,'deleteStudentRegistrations']);

@@ -675,7 +675,8 @@ return [
     'fax'=>'رقم الفاكس',
     'mailbox'=>'صندوق البريد',
     'zip_code'=>'الرمز البريدي',
-    'Financial_claims'=>'مطالبة مالية'
+    'Financial_claims'=>'مطالبة مالية',
+    'permit_count'=>'عدد التصاريح',
 
  ];
 

@@ -37,6 +37,31 @@ class StudentRegistrationsController extends Controller
             );
     }
 
+
+     public function ShowStudents(Request $request , $id)
+    {
+
+        $segment = $request->segment(2);
+        $userId = Auth::id();
+
+        $objAdmin = Admin::find($userId);
+       
+        $admindetails = Admin::find($id);
+       
+        $title = __('messages.show_students');
+        $add_title = __('messages.show_students');
+
+        if($id != $userId){
+            return view('auth.404',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails , 'id'=>$id,'objAdmin'=>$objAdmin]
+            );
+        }else{
+            return view('auth.student_registration.index',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails , 'id'=>$id,'objAdmin'=>$objAdmin]
+            );
+        }
+       
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *

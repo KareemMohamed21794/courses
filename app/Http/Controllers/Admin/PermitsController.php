@@ -793,7 +793,7 @@ class PermitsController extends Controller
             'leader'   => true,
             'activity_name'=> true,
             'nature_activity'=>true,
-            'permit_number'=>true,
+            'count'=>true,
             'price'=>true,
             'created_at'   => true,
         ];
@@ -810,24 +810,52 @@ class PermitsController extends Controller
         $active = $request->active;
         if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
 
-           $alldata = DB::table('permits')
-            ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+           // $alldata = DB::table('permits')
+           //  ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+           //  ->join('admins', 'admins.id', '=', 'permits.admin_id')
+           //  ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+           //  ->groupBy('permits.admin_id','admins.group_name')
+           //  ->get();
+
+            $alldata = DB::table('permits')
+            ->select(
+                'permits.admin_id',
+                'admins.group_name',
+                DB::raw('SUM(type_activity.price) as price'),
+                DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
+            )
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
-            ->groupBy('permits.admin_id','admins.group_name')
+            ->groupBy('permits.admin_id', 'admins.group_name')
             ->get();
+
         
         }else{
 
-            $alldata = DB::table('permits')
-            ->where('admin_id',$userId)
-            ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+            // $alldata = DB::table('permits')
+            // ->where('admin_id',$userId)
+            // ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+            // ->join('admins', 'admins.id', '=', 'permits.admin_id')
+            // ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+            // ->groupBy('permits.admin_id','admins.group_name')
+            // ->get();
+
+             $alldata = DB::table('permits')
+             ->where('admin_id',$userId)
+            ->select(
+                'permits.admin_id',
+                'admins.group_name',
+                DB::raw('SUM(type_activity.price) as price'),
+                DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
+            )
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
-            ->groupBy('permits.admin_id','admins.group_name')
+            ->groupBy('permits.admin_id', 'admins.group_name')
             ->get();
            
         }
+
+
 
         $alldataResult=array();
 
@@ -838,7 +866,7 @@ class PermitsController extends Controller
                 "order" => $key+1,
                
                 "leader" => @$objdata->group_name,
-               
+                "count"=> @$objdata->permit_count,
                 "price"=> @$objdata->price,
               
             );

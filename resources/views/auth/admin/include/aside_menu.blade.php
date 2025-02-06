@@ -387,7 +387,7 @@ fill: #009EF7;
                     @if($objAdmin->position_id == 2)
 
                         <div class="menu-item">
-                            <a class="menu-link {{ Request::segment(2)=='show_students' ? 'active' : '' }}" href="{{ url('admin/show_students') }}/{{$objAdmin->id}}">
+                            <a class="menu-link {{ Request::segment(2)=='show_students' ? 'active' : '' }}" href="{{ url('admin/show_all_students') }}/{{$objAdmin->id}}">
                                   <span class="menu-icon">
                                         <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                         <span class="svg-icon svg-icon-2">

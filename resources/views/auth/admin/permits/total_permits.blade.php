@@ -129,7 +129,7 @@
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
                            
-                            
+                            <th>{{ __('messages.permit_count') }}</th>
                           
                             <th>{{ __('messages.price') }}</th>
                             {{-- <th>{{ __('messages.created_at') }}</th> --}}
