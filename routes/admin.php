@@ -21,11 +21,13 @@ use App\Http\Controllers\Admin\PaymentMethodsController;
 use App\Http\Controllers\Admin\FinancalMovementsController;
 use App\Http\Controllers\Admin\CommanderMedalsController;
 use App\Http\Controllers\Admin\SetupController;
+use App\Http\Controllers\Admin\BoardDirectorsController;
+use App\Http\Controllers\Admin\GroupLeadersController;
 Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashboard'])->middleware(['auth:admin'])->name('admin_dashboard');
 
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
 
-
+Route::get('/student_registration/{id}', [StudentRegistrationsController::class, 'create']);
 Route::middleware('auth:admin')->group(function () {
 	Route::prefix('/admin')->group(function () {
 
@@ -42,14 +44,15 @@ Route::middleware('auth:admin')->group(function () {
 		# Start Student registration
         Route::get('show_students/student_registration/get/{id}', [StudentRegistrationsController::class, 'get']);
 
-        Route::get('student_registration/{id}', [StudentRegistrationsController::class, 'create']);
-
-
-
+        
         Route::post('student_registration', [StudentRegistrationsController::class, 'store']);
 
 
 		Route::get('show_students/{id}', [StudentRegistrationsController::class, 'index']);
+
+		Route::get('show_all_students/{id}', [StudentRegistrationsController::class, 'ShowStudents']);
+
+		Route::get('show_all_students/student_registration/get/{id}', [StudentRegistrationsController::class, 'get']);
 
 		Route::get('/accept_student_registration/{id}', [StudentRegistrationsController::class, 'accept_student_registration']);
 
@@ -59,6 +62,17 @@ Route::middleware('auth:admin')->group(function () {
 
         Route::get('annual_registration_archive', [StudentRegistrationsController::class, 'AnuulRegistrationArchive']);
 		Route::post('annual_registration_archive', [StudentRegistrationsController::class, 'AddAnuulRegistrationArchive']);
+
+
+
+		Route::get('/report_student_registration', [StudentRegistrationsController::class, 'ReportStudentRegistration']);
+
+		Route::get('/report_student_registration_get', [StudentRegistrationsController::class, 'ReportStudentRegistrationGet']);
+
+		Route::get('/report_student_registration_get_list', [StudentRegistrationsController::class, 'ReportQualificationLeadersGetlist']);
+
+
+
 
         # End Student registration
 
@@ -203,7 +217,47 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/total_permits', [PermitsController::class, 'total_permits']);
 
 		Route::get('/total_permits/get', [PermitsController::class, 'get_totall_permits']);
+
+		Route::get('/report_archive_permits', [PermitsController::class, 'ReportArchivepermits']);
+
+		Route::get('/report_archive_permits_get', [PermitsController::class, 'ReportArchivepermitsGet']);
+
+		Route::get('/report_archive_permits_get_list', [PermitsController::class, 'report_archive_permits_get_list']);
+
+
+		Route::get('/report_permits', [PermitsController::class, 'ReportPermits']);
+
+		Route::get('/report_permits_get', [PermitsController::class, 'ReportPermitsGet']);
+
+		Route::get('/report_permits_get_list', [PermitsController::class, 'ReportPermitsGetlist']);
 		# End permits
+
+
+		# Start board_directors
+		// Route::get('/board_directors/get', [BoardDirectorsController::class, 'get']);
+		// Route::resource('/board_directors', BoardDirectorsController::class);
+		// Route::get('/add_board_directors/{id}', [BoardDirectorsController::class, 'AllData']);
+	
+		Route::get('/board_directors/{id}', [BoardDirectorsController::class, 'index']);
+		Route::POST('/board_directors/{id}', [BoardDirectorsController::class, 'store']);
+		Route::put('/board_directors/{id}', [BoardDirectorsController::class, 'update']);
+		Route::get('/get_board_directors/{id}', [BoardDirectorsController::class, 'get']);
+		Route::get('/get_board_director/{id}', [BoardDirectorsController::class, 'edit']);
+		Route::DELETE('/delete_board_directors/{id}', [BoardDirectorsController::class, 'destroy']);
+		Route::DELETE('/delete_board_directors', [BoardDirectorsController::class, 'deleteBoardDirectors']);
+		# End board_directors
+
+
+		# Start group_leaders
+		
+		Route::get('/group_leaders/{id}', [GroupLeadersController::class, 'index']);
+		Route::POST('/group_leaders/{id}', [GroupLeadersController::class, 'store']);
+		Route::put('/group_leaders/{id}', [GroupLeadersController::class, 'update']);
+		Route::get('/get_group_leaders/{id}', [GroupLeadersController::class, 'get']);
+		Route::get('/get_group_leader/{id}', [GroupLeadersController::class, 'edit']);
+		Route::DELETE('/delete_group_leaders/{id}', [GroupLeadersController::class, 'destroy']);
+		Route::DELETE('/delete_group_leaders', [GroupLeadersController::class, 'deleteGroupLeaders']);
+		# End group_leaders
 
 
 
@@ -295,6 +349,19 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('export_commander_medals', [CommanderMedalsController::class, 'ExportCommanderMedal']);
 
+		Route::get('/report_commander_medals', [CommanderMedalsController::class, 'ReportCommanderMedals']);
+
+		Route::get('/report_commander_medals_get', [CommanderMedalsController::class, 'ReportCommanderMedalsGet']);
+
+		Route::get('/report_commander_medals_get_list', [CommanderMedalsController::class, 'report_commander_medals_get_list']);
+
+
+		Route::get('/report_archive_commander_medals', [CommanderMedalsController::class, 'ReportArchiveCommanderMedals']);
+
+		Route::get('/report_archive_commander_medals_get', [CommanderMedalsController::class, 'ReportArchiveCommanderMedalsGet']);
+
+		Route::get('/report_archive_commander_medals_get_list', [CommanderMedalsController::class, 'report_archive_commander_medals_get_list']);
+
 	
 		# End commander_medals
 
@@ -338,6 +405,14 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('/financial_movements', [FinancalMovementsController::class, 'financial_movements']);
 
+		Route::get('/report_financial_movements', [FinancalMovementsController::class, 'ReportFinancialMovements']);
+
+		Route::get('/report_financial_movements_get', [FinancalMovementsController::class, 'ReportFinancialMovementsGet']);
+
+		Route::get('/report_financial_movements_get_list', [FinancalMovementsController::class, 'ReportFinancialMovementsGetlist']);
+
+		Route::get('/financial_claims', [FinancalMovementsController::class, 'financial_claims']);
+
 		# End payments_received
 
 
@@ -351,7 +426,13 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_advertisements', [AdvertisementsController::class,'deleteadvertisements']);
 		Route::get('export_advertisements', [AdvertisementsController::class, 'ExportAdvertisements']);
         
+        Route::get('/report_archive_advertisements', [AdvertisementsController::class, 'ReportArchiveAdvertisements']);
 
+		Route::get('/report_archive_advertisements_get', [AdvertisementsController::class, 'ReportArchiveAdvertisementsGet']);
+
+		Route::get('/report_archive_advertisements_get_list', [AdvertisementsController::class, 'report_archive_advertisements_get_list']);
+
+		Route::get('export_archive_advertisements', [AdvertisementsController::class, 'ExportArchiveAdvertisements']);
 		# End advertisements
 
 
@@ -364,6 +445,12 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/requests/{status}/{id}/reject_accept', [InformationsController::class, 'reject_accept']);
 
 		Route::post('/rejected_request/', [InformationsController::class, 'RejectedRequest']);
+
+		Route::get('/report_archive_requests', [InformationsController::class, 'ReportArchiveRequests']);
+
+		Route::get('/report_archive_requests_get', [InformationsController::class, 'ReportArchiveRequestsGet']);
+
+		Route::get('/report_archive_requests_get_list', [InformationsController::class, 'report_archive_Requests_get_list']);
 		# End requests
 
 

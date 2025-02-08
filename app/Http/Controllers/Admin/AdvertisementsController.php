@@ -389,30 +389,32 @@ class AdvertisementsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = AdvertisementParent::get();
+           $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
         
             if($active=='All'){
-                $alldata = AdvertisementParent::withTrashed()->get();
+                $alldata = AdvertisementParent::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = AdvertisementParent::get();
+                $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='DeActive'){
-                $alldata = AdvertisementParent::onlyTrashed()->get();
+                $alldata = AdvertisementParent::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
         }else{
 
-            $alldata = Advertisement::where('admin_id',$userId)->get();
+            $alldata = Advertisement::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             if($active=='All'){
-                $alldata = Advertisement::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = Advertisement::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = Advertisement::where('admin_id',$userId)->get();
+                $alldata = Advertisement::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Advertisement::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = Advertisement::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
 
 
@@ -708,6 +710,285 @@ class AdvertisementsController extends Controller
             } else {
                 fputcsv($file, array($row['file'], $row['file_name'], $row['description']));
             }
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
+public function ReportArchiveAdvertisements()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.archive_advertisements') ;
+        
+        return view('auth.admin.advertisements.report_archive_advertisements', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ReportArchiveAdvertisementsGet()
+    {
+        $year = @$_GET['year'];
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+       
+        $title = __('messages.archive_advertisements') . ' - ' . 'سنة ' .$year;
+
+        return view('auth.admin.advertisements.report_archive_advertisements_get', ['title' => $title,'year' => $year]);
+    }
+
+
+
+    public function report_archive_advertisements_get_list(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+
+        $columnsDefault = [
+            '#'   => true,
+            'order'   => true,
+            'id'   => true,
+            'admin_id'   => true,
+            'categories'=>true,
+            'file_name'=>true,
+            'file'=> true,
+            
+            'description'=>true,
+            'created_at'   => true,
+        ];
+
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+        
+        // Set the first day of the provided year at midnight (00:00:00)
+        $first_day_year = date('Y-m-d 00:00:00', strtotime("first day of january $request->year"));
+
+        // Set the last day of the provided year at 23:59:59
+        $last_day_year = $request->year . '-12-31 23:59:59';
+
+        $title = __('messages.archive_advertisements');
+
+        // Fetch all advertisements where the created_at date is between the first and last day of the provided year
+        $alldata = Advertisement::whereBetween('created_at', [$first_day_year, $last_day_year])->get();
+
+       
+
+        $alldataResult = array();
+
+        foreach ($alldata as $key=> $objdata) {
+
+
+            $categories = "";
+
+
+            if($objdata->categories=='talab_mukhatabat'){
+                $categories = "طلب مخاطبات لجهات محلية";
+            }elseif ($objdata->categories=='⁠anshitat_mahaliya') {
+                $categories = "أنشطة محلية";
+            }elseif ($objdata->categories=='anshita_earabiat_waealamia') {
+                $categories = " ⁠أنشطة عربية وعالمية";
+            }elseif ($objdata->categories=='aldirasat_altaahilia') {
+                $categories = "الدراسات التأهيلية";
+            }elseif ($objdata->categories=='aistifsarat_malia') {
+                $categories = "استفسارات مالية";
+            }elseif ($objdata->categories=='aijtimaeat') {
+                $categories = "اجتماعات ";
+            }elseif ($objdata->categories=='⁠aistifsarat_eama') {
+                $categories = "استفسارات عامة";
+            }
+
+        
+            // $groups = "";
+        
+            // if($objdata->group_type=='all'){
+            //     $groups = "الكل";
+            // }elseif ($objdata->group_type=='kashfih') {
+            //     $groups = "كشفية";
+            // }
+            // elseif ($objdata->group_type=='irshad') {
+            //     $groups = "ارشادية";
+            // }
+            // elseif ($objdata->group_type=='group_name') {
+                 
+            //     foreach ($objdata->Advertisements as $key2=> $Advertisement) {
+            //         if(count($objdata->Advertisements)==($key2+1)){
+            //             $groups.=@$Advertisement->Admin->group_name;
+            //         }else{
+            //             $groups.=@$Advertisement->Admin->group_name." - ";
+                        
+            //         }
+                    
+            //     }
+                
+            // }
+                
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "admin_id" => @$objdata->Admin->group_name,
+                "categories"=> @$categories,
+                "file_name"=> $objdata->file_name,
+                "file"=> '<a target="_blank" href="' . asset('public/images/advertisements/' . $objdata->file) . '">تحميل الملف<a>',
+                
+                "description"=> $objdata->description,
+                "created_at" => Date('Y-m-d H:i:s',strtotime($objdata->created_at)),
+            );
+            
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
+
+    public function export_archive_advertisements(Request $request)
+{
+
+
+    $fileName = 'export_secondary_registrations.csv';
+    
+    $userId = \Auth::id();
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 1){
+
+       $Files = File::where('type','secondary_registration')->get();
+    
+    }else{
+
+        $Files = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
+
+    }
+    
+     
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),'نموذج التسجيل','السنة');
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($Files, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($Files as $File) {
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $File->Admin->name;
+            
+            $row['secondary_registration']  =asset('public/images/files/' . $File->secondary_registration);
+
+            $row['year']  = $File->year;
+         
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['secondary_registration'],$row['year']));
         }
 
         fclose($file);

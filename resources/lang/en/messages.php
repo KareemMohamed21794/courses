@@ -383,6 +383,7 @@ return [
     'Client_Payment'=>'Client Payment',
     'finished' => 'finished',
     'show_students'=>'Show Students' ,
-    
+    'register_url'=>'register url',
+    'board_director'=>'Board Director',
  ];
 

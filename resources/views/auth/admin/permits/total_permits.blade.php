@@ -128,12 +128,11 @@
                             </th>
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            {{-- <th>{{ __('messages.activity_name') }}</th> --}}
-                            <th>{{ __('messages.nature_activity') }}</th>
-                            
-                            <th>{{ __('messages.permit_number') }}</th>
+                           
+                            <th>{{ __('messages.permit_count') }}</th>
+                          
                             <th>{{ __('messages.price') }}</th>
-                            <th>{{ __('messages.created_at') }}</th>
+                            {{-- <th>{{ __('messages.created_at') }}</th> --}}
                             <th style="visibility: hidden;" class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>
                         </thead>
@@ -143,9 +142,7 @@
                             <tr style="font-size: 20px">
                                 <td colspan="3">{{ __('messages.total_value') }}</td>
                                 
-                                {{-- <td></td> --}}
-                                <td></td>
-                                <td></td>
+                                
                                 <td >{{$sum}}</td>
                             </tr>
                         </tfoot>

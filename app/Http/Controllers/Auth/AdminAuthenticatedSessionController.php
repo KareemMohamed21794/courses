@@ -47,8 +47,15 @@ class AdminAuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-
-        return redirect()->intended('/admin');
+        
+        $userId = Auth::guard('admin')->user();
+       
+        if ($userId->position_id == 2) {
+            return redirect('/admin/leaders');
+        } else {
+            return redirect('/admin');
+        }
+        
     }
 
     /**

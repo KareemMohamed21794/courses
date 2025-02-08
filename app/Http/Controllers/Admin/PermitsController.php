@@ -14,6 +14,7 @@ use Validator;
 use Auth;
 use Lang;
 use TCPDF;
+use DB;
 use Illuminate\Support\Facades\Mail;
 
 class PermitsController extends Controller
@@ -338,30 +339,35 @@ class PermitsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
+
+
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = Permit::with('TypeActivity')->get();
+           $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
         
             if($active=='All'){
-                $alldata = Permit::withTrashed()->with('TypeActivity')->get();
+                $alldata = Permit::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
                 $alldata = Permit::get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->with('TypeActivity')->get();
+                $alldata = Permit::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
         }else{
 
-            $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
+            $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             if($active=='All'){
-                $alldata = Permit::withTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
+                $alldata = Permit::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
-                $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
+                $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
+                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
 
 
@@ -787,7 +793,7 @@ class PermitsController extends Controller
             'leader'   => true,
             'activity_name'=> true,
             'nature_activity'=>true,
-            'permit_number'=>true,
+            'count'=>true,
             'price'=>true,
             'created_at'   => true,
         ];
@@ -804,48 +810,65 @@ class PermitsController extends Controller
         $active = $request->active;
         if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
 
-           $alldata = Permit::with('TypeActivity')->get();
+           // $alldata = DB::table('permits')
+           //  ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+           //  ->join('admins', 'admins.id', '=', 'permits.admin_id')
+           //  ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+           //  ->groupBy('permits.admin_id','admins.group_name')
+           //  ->get();
+
+            $alldata = DB::table('permits')
+            ->select(
+                'permits.admin_id',
+                'admins.group_name',
+                DB::raw('SUM(type_activity.price) as price'),
+                DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
+            )
+            ->join('admins', 'admins.id', '=', 'permits.admin_id')
+            ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+            ->groupBy('permits.admin_id', 'admins.group_name')
+            ->get();
+
         
-            if($active=='All'){
-                $alldata = Permit::withTrashed()->with('TypeActivity')->get();
-            }
-            elseif($active=='Active'){
-                $alldata = Permit::get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->with('TypeActivity')->get();
-            }
         }else{
 
-            $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
-            if($active=='All'){
-                $alldata = Permit::withTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
-            }
-            elseif($active=='Active'){
-                $alldata = Permit::where('admin_id',$userId)->with('TypeActivity')->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->with('TypeActivity')->get();
-            }
+            // $alldata = DB::table('permits')
+            // ->where('admin_id',$userId)
+            // ->select('permits.admin_id','admins.group_name', DB::raw('SUM(type_activity.price) as price'))
+            // ->join('admins', 'admins.id', '=', 'permits.admin_id')
+            // ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+            // ->groupBy('permits.admin_id','admins.group_name')
+            // ->get();
 
-
-
+             $alldata = DB::table('permits')
+             ->where('admin_id',$userId)
+            ->select(
+                'permits.admin_id',
+                'admins.group_name',
+                DB::raw('SUM(type_activity.price) as price'),
+                DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
+            )
+            ->join('admins', 'admins.id', '=', 'permits.admin_id')
+            ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
+            ->groupBy('permits.admin_id', 'admins.group_name')
+            ->get();
+           
         }
+
+
 
         $alldataResult=array();
 
         foreach($alldata as $key=> $objdata){
 
             $alldataResult[] = array(
-                "#" => $objdata->id,
+                
                 "order" => $key+1,
-                "id" => $objdata->id,
-                "leader" => @$objdata->Admin->group_name,
-                "activity_name"=> $objdata->activity_name,
-                "nature_activity"=> @$objdata->TypeActivity->name_ar,
-                "permit_number"=>$objdata->permit_number,
-                "price"=> @$objdata->TypeActivity->price,
-                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+               
+                "leader" => @$objdata->group_name,
+                "count"=> @$objdata->permit_count,
+                "price"=> @$objdata->price,
+              
             );
         }
 
@@ -993,6 +1016,674 @@ class PermitsController extends Controller
 
         return $data;
     }
+
+
+
+     public function ReportArchivepermits()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.archive_permits') ;
+        
+        return view('auth.admin.permits.report_archive_permits', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ReportArchivepermitsGet()
+    {
+        $year = @$_GET['year'];
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+       
+        $title = __('messages.archive_permits') . ' - ' . 'سنة ' .$year;
+
+        return view('auth.admin.permits.report_archive_permits_get', ['title' => $title,'year' => $year]);
+    }
+
+
+
+    public function report_archive_permits_get_list(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+
+        $columnsDefault = [
+            '#'   => true,
+            'order'   => true,
+            'id'   => true,
+            'leader'   => true,
+            'activity_name'=> true,
+            'nature_activity'=>true,
+            // 'activity_description'=>true,
+            'place_activity' =>true,
+            'activity_history' =>true,
+            'number_days'=>true,
+            'alwahda'=>true,
+            // 'alwahda_description'=>true,
+            'activity_leader'=>true,
+            'number_leader'=>true,
+            'permit_status'=>true,
+            'permit_number'=>true,
+            
+            'created_at'   => true,
+        ];
+
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+        
+        // Set the first day of the provided year at midnight (00:00:00)
+        $first_day_year = date('Y-m-d 00:00:00', strtotime("first day of january $request->year"));
+
+        // Set the last day of the provided year at 23:59:59
+        $last_day_year = $request->year . '-12-31 23:59:59';
+
+        $title = __('messages.archive_advertisements');
+
+        // Fetch all advertisements where the created_at date is between the first and last day of the provided year
+        $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+
+       
+
+        $alldataResult=array();
+
+        foreach($alldata as $key=> $objdata){
+
+
+            $nature_activity = '';
+            if($objdata->nature_activity == "camp"){
+                $nature_activity = 'مخيم';
+            }elseif ($objdata->nature_activity == "trip") {
+                $nature_activity = 'رحلة';
+            }elseif ($objdata->nature_activity == "marching") {
+                $nature_activity = 'مسير';
+            }elseif ($objdata->nature_activity == "overnight") {
+                $nature_activity = 'مبيت';
+            }elseif ($objdata->nature_activity == "evening") {
+                $nature_activity = 'امسيه';
+            }elseif ($objdata->nature_activity == "other") {
+                $nature_activity = 'اخرى';
+            }
+
+
+
+            $alwahda = '';
+            if (is_array($objdata->alwahda)) {
+                // If alwahda is an array, map each value to its corresponding Arabic value
+                $alwahda = array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $objdata->alwahda);
+                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
+            } else {
+                // If alwahda is a single comma-separated string, split it and map each value
+                $alwahdaValues = explode(',', $objdata->alwahda);
+                $alwahda = implode(', ', array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $alwahdaValues));
+            }
+
+
+            if($objdata->status=='pending'){
+                $status = "معلقه";
+            }elseif ($objdata->status=='approved') {
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+
+                if($objAdmin->is_super == 0){
+ 
+                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+                }
+
+            }
+            elseif ($objdata->status=='rejected') {
+                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
+            }
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "leader" => @$objdata->Admin->group_name,
+                "activity_name"=> $objdata->activity_name,
+                "nature_activity"=> @$objdata->TypeActivity->name_ar,
+                // "activity_description"=> $objdata->activity_description,
+                "place_activity" =>$objdata->place_activity,
+                "activity_history" =>$objdata->activity_history,
+                "number_days" =>$objdata->number_days,
+                "alwahda" => $alwahda,
+                // "alwahda_description"=>$objdata->alwahda_description,
+                "activity_leader"=>$objdata->activity_leader,
+                "number_leader"=>$objdata->number_leader,
+                "permit_status"=>$status,
+                "permit_number"=>$objdata->permit_number,
+                
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+        }
+
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
+
+
+
+    public function ReportPermits()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_permits');
+        $leaders = Admin::where('is_super','!=',1)->get();
+        return view('auth.admin.permits.report_permits', [
+            'title' => $title,
+            'leaders' => $leaders,
+        ]);
+    }
+
+
+
+    public function ReportPermitsGet()
+    {
+        
+
+        
+        $leader_id = @$_GET['leader_id'];
+      
+        $objAdmin_data = Admin::find($leader_id);
+        $obj_admin_name = $objAdmin_data ? $objAdmin_data->group_name : 'الكل';
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_permits'). ' - ' .$obj_admin_name;
+
+        return view('auth.admin.permits.report_permits_get', ['title' => $title,'leader_id' => $leader_id]);
+    }
+
+
+
+    public function ReportPermitsGetlist(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            '#'   => true,
+            'order'   => true,
+            'id'   => true,
+            'leader'   => true,
+            'activity_name'=> true,
+            'nature_activity'=>true,
+            // 'activity_description'=>true,
+            'place_activity' =>true,
+            'activity_history' =>true,
+            'number_days'=>true,
+            'alwahda'=>true,
+            // 'alwahda_description'=>true,
+            'activity_leader'=>true,
+            'number_leader'=>true,
+            'permit_status'=>true,
+            'permit_number'=>true,
+            
+            'created_at'   => true,
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+        $alldata = Permit::with('TypeActivity')->get();
+       
+        $title = __('messages.report_permits');
+        
+        if($request->leader_id){
+            $alldata = $alldata->where('admin_id',$request->leader_id);
+        } 
+
+
+
+        $alldataResult=array();
+
+        foreach($alldata as $key=> $objdata){
+
+
+            $nature_activity = '';
+            if($objdata->nature_activity == "camp"){
+                $nature_activity = 'مخيم';
+            }elseif ($objdata->nature_activity == "trip") {
+                $nature_activity = 'رحلة';
+            }elseif ($objdata->nature_activity == "marching") {
+                $nature_activity = 'مسير';
+            }elseif ($objdata->nature_activity == "overnight") {
+                $nature_activity = 'مبيت';
+            }elseif ($objdata->nature_activity == "evening") {
+                $nature_activity = 'امسيه';
+            }elseif ($objdata->nature_activity == "other") {
+                $nature_activity = 'اخرى';
+            }
+
+
+
+            $alwahda = '';
+            if (is_array($objdata->alwahda)) {
+                // If alwahda is an array, map each value to its corresponding Arabic value
+                $alwahda = array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $objdata->alwahda);
+                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
+            } else {
+                // If alwahda is a single comma-separated string, split it and map each value
+                $alwahdaValues = explode(',', $objdata->alwahda);
+                $alwahda = implode(', ', array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $alwahdaValues));
+            }
+
+
+            if($objdata->status=='pending'){
+                $status = "معلقه";
+            }elseif ($objdata->status=='approved') {
+                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+
+                if($objAdmin->is_super == 0){
+ 
+                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+                }
+
+            }
+            elseif ($objdata->status=='rejected') {
+                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
+            }
+
+            $alldataResult[] = array(
+                "#" => $objdata->id,
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "leader" => @$objdata->Admin->group_name,
+                "activity_name"=> $objdata->activity_name,
+                "nature_activity"=> @$objdata->TypeActivity->name_ar,
+                // "activity_description"=> $objdata->activity_description,
+                "place_activity" =>$objdata->place_activity,
+                "activity_history" =>$objdata->activity_history,
+                "number_days" =>$objdata->number_days,
+                "alwahda" => $alwahda,
+                // "alwahda_description"=>$objdata->alwahda_description,
+                "activity_leader"=>$objdata->activity_leader,
+                "number_leader"=>$objdata->number_leader,
+                "permit_status"=>$status,
+                "permit_number"=>$objdata->permit_number,
+                
+                "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
+            );
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
+
+
+    public function ExportPermits(Request $request)
+    {
+      
+
+        $fileName = 'permits.csv';
+        $permits = Permit::with('TypeActivity')->get();
+        
+            
+            if($request->leader_id){
+
+                $permits = $permits->where('admin_id',$request->leader_id);
+            } 
+
+
+        
+
+        // Set the response headers with the correct character encoding
+        $headers = array(
+            "Content-type"        => "text/csv; charset=utf-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        // If you need to display Arabic column header, make sure to encode it as well
+        $columns = array(__('messages.scout_group'),__('messages.activity_name'),__('messages.nature_activity'),__('messages.place_activity'),__('messages.activity_history'),__('messages.number_days'),__('messages.alwahda'),__('messages.activity_leader'),__('messages.number_leader'),__('messages.permit_status'),__('messages.permit_number'),__('messages.created_at'));
+
+        // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+        $callback = function() use ($permits, $columns) {
+            $file = fopen('php://output', 'w');
+
+            // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+            fputs($file, "\xEF\xBB\xBF");
+
+            // Write the column headers
+            fputcsv($file, $columns);
+
+            // Write the data rows
+            foreach ($permits as $objdata) {
+
+
+                $alwahda = '';
+            if (is_array($objdata->alwahda)) {
+                // If alwahda is an array, map each value to its corresponding Arabic value
+                $alwahda = array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $objdata->alwahda);
+                $alwahda = implode(', ', $alwahda); // Convert the array back to a comma-separated string
+            } else {
+                // If alwahda is a single comma-separated string, split it and map each value
+                $alwahdaValues = explode(',', $objdata->alwahda);
+                $alwahda = implode(', ', array_map(function ($value) {
+                    switch ($value) {
+                        case 'ashbal':
+                            return 'اشبال / زهرات';
+                        case 'kashaf':
+                            return 'كشاف / مرشدات';
+                        case 'mutaqadimu':
+                            return 'متقدم / متقدمات';
+                        case 'jawaluh':
+                            return 'جواله / دليلات';
+                        case 'almajmueuh':
+                            return 'المجموعه';
+                        case 'awlia_alamwr':
+                            return 'اولياء الامور';
+                        case 'other':
+                            return 'اخرى';
+                        default:
+                            return $value; // Handle any unexpected values
+                    }
+                }, $alwahdaValues));
+            }
+
+
+            if($objdata->status=='pending'){
+                $status = "معلقه";
+            }elseif ($objdata->status=='approved') {
+                $status = "مقبول";
+            }
+            elseif ($objdata->status=='rejected') {
+                $status = "مرفوض ";
+            }
+               
+                // Make sure to retrieve the Arabic name correctly from your database column
+                $row['scout_group']  = @$objdata->Admin->group_name;
+                $row['activity_name']  = $objdata->activity_name;
+                $row['nature_activity']  = $objdata->TypeActivity->name_ar;
+                $row['place_activity']  = $objdata->place_activity;
+                $row['activity_history']  = $objdata->activity_history;
+                $row['number_days']  = $objdata->number_days;
+                $row['alwahda']  = $alwahda;
+                $row['activity_leader']  = $objdata->activity_leader;
+                $row['number_leader']  = $objdata->number_leader;
+                $row['permit_status']  = $status;
+                $row['permit_number']  = $objdata->permit_number;
+                $row['created_at']  = Date('Y-m-d',strtotime($objdata->created_at));
+                // Write the row data to the CSV file
+                fputcsv($file, array($row['scout_group'],$row['activity_name'],$row['nature_activity'],$row['place_activity'],$row['activity_history'],$row['number_days'],$row['alwahda'],$row['activity_leader'],$row['number_leader'],$row['permit_status'],$row['permit_number'],$row['created_at']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+
 
     
 }

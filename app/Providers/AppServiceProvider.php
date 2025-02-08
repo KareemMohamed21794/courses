@@ -15,6 +15,7 @@ use App\Models\Setup;
 use App\Models\CommanderMedal;
 use App\Models\AchievementStudyRequirement;
 use App\Models\OrganizingStudy;
+use App\Models\BoardDirector;
 use Auth;
 use App\Models\Admin;
 class AppServiceProvider extends ServiceProvider
@@ -93,6 +94,8 @@ class AppServiceProvider extends ServiceProvider
 
             $information_counter = Information::where('admin_id',@$objAdmin->id)->where('read',0)->count();
 
+            $BoardDirector_counter = BoardDirector::where('admin_id',@$objAdmin->id)->where('read',0)->count();
+
             }else{
             
              $permit_counter = Permit::where('read',0)->count();
@@ -113,6 +116,7 @@ class AppServiceProvider extends ServiceProvider
 
 
              $information_counter = Information::where('read',0)->count();
+             $BoardDirector_counter = BoardDirector::where('read',0)->count();
             }
              
 
@@ -132,6 +136,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('organizing_study_counter', $organizing_study_counter);
             $view->with('total_leader_counter', $total_leader_counter);
             $view->with('information_counter', $information_counter);
+            $view->with('BoardDirector_counter', $BoardDirector_counter);
             $view->with('objSetup', $objSetup);
         });
     }

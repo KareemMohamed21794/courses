@@ -37,6 +37,31 @@ class StudentRegistrationsController extends Controller
             );
     }
 
+
+     public function ShowStudents(Request $request , $id)
+    {
+
+        $segment = $request->segment(2);
+        $userId = Auth::id();
+
+        $objAdmin = Admin::find($userId);
+       
+        $admindetails = Admin::find($id);
+       
+        $title = __('messages.show_students');
+        $add_title = __('messages.show_students');
+
+        if($id != $userId){
+            return view('auth.404',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails , 'id'=>$id,'objAdmin'=>$objAdmin]
+            );
+        }else{
+            return view('auth.student_registration.index',['title' => $title, 'add_title' => $add_title , 'admindetails'=>$admindetails , 'id'=>$id,'objAdmin'=>$objAdmin]
+            );
+        }
+       
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -69,14 +94,14 @@ class StudentRegistrationsController extends Controller
         $validator = Validator::make($request->all(),[
             'first_name' => ['required', 'string', 'max:255'],
             'father_name' => ['required', 'string', 'max:255'],
-            'birth_date' => ['required', 'string', 'max:255'],
-            'mobile_number' => ['required', 'string', 'max:255'],
+            'grandfather_name' => ['required', 'string', 'max:255'],
+            'family_name' => ['required', 'string', 'max:255'],
+            'birth_place' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required'],
+            'nationality' => ['required'],
             'national_id' => ['required', 'string', 'max:255'],
-            'street' => ['required', 'string', 'max:255'],
-            'nearest_teacher' => ['required', 'string', 'max:255'],
-            'building_number' => ['required', 'string', 'max:255'],
-            'guardian_name' => ['required', 'string', 'max:255'],
-            'relative_relation' => ['required', 'string', 'max:255'],
+            'mobile_number' => ['required', 'string', 'max:255'],
+            
         ]);
 
         if ($validator->fails()) {
@@ -597,6 +622,239 @@ class StudentRegistrationsController extends Controller
 
    
     }
+
+
+
+    public function ReportStudentRegistration()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_secondary_registrations');
+        $leaders = Admin::where('is_super','!=',1)->get();
+        return view('auth.student_registration.report_student_registration', [
+            'title' => $title,
+            'leaders' => $leaders,
+        ]);
+    }
+
+
+
+    public function ReportStudentRegistrationGet()
+    {
+        
+
+        
+        $leader_id = @$_GET['leader_id'];
+      
+        $objAdmin_data = Admin::find($leader_id);
+        $obj_admin_name = $objAdmin_data ? $objAdmin_data->group_name : 'الكل';
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_secondary_registrations'). ' - ' .$obj_admin_name;
+
+        return view('auth.student_registration.report_student_registration_get', ['title' => $title,'leader_id' => $leader_id]);
+    }
+
+
+
+    public function ReportQualificationLeadersGetlist(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+           
+            'order'   => true,
+            'id'   => true,
+            'group_name'   => true,
+            'first_name'   => true,
+            'father_name'=>true,
+            'grandfather_name'=> true,
+            'family_name'=> true,
+            'birth_date'=> true,
+            'birth_place'=> true,
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+        $alldata = StudentRegistration::all();
+       
+        $title = __('messages.report_secondary_registrations');
+        
+        if($request->leader_id){
+            $alldata = $alldata->where('admin_id',$request->leader_id);
+        } 
+
+
+
+        $alldataResult = array();
+
+        foreach ($alldata as $key=> $objdata) {
+           
+            $alldataResult[] = array(
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "group_name" => @$objdata->Admin->group_name,
+                "first_name" => $objdata->first_name,
+                "father_name"=> $objdata->father_name,
+                "grandfather_name"=> $objdata->grandfather_name,
+                "family_name"=> $objdata->family_name,
+                "birth_date"=> $objdata->birth_date,
+                "birth_place"=> $objdata->birth_place,
+              
+            );
+            
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
+
+    public function ExportStudentRegistrations(Request $request)
+{
+  
+
+    $fileName = 'student_registrations.csv';
+    $student_registrations = StudentRegistration::all();
+    
+        
+        if($request->leader_id){
+
+            $student_registrations = $student_registrations->where('admin_id',$request->leader_id);
+        } 
+
+
+    
+
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+    
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'));
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($student_registrations, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+
+        // Write the data rows
+        foreach ($student_registrations as $student_registration) {
+           
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['group_name']  = @$student_registration->Admin->group_name;
+            $row['first_name']  = $student_registration->first_name;
+            $row['father_name']  = $student_registration->father_name;
+            $row['grandfather_name']  = $student_registration->grandfather_name;
+            $row['family_name']  = $student_registration->family_name;
+            $row['birth_date']  = $student_registration->birth_date;
+            $row['birth_place']  = $student_registration->birth_place;
+         
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['birth_date'],$row['birth_place']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
 
 
 }

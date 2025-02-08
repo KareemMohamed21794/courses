@@ -261,30 +261,31 @@ class CommanderMedalsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+        $year = date("Y");
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = CommanderMedal::get();
+           $alldata = CommanderMedal::where('year',$year)->get();
         
             if($active=='All'){
-                $alldata = CommanderMedal::withTrashed()->get();
+                $alldata = CommanderMedal::withTrashed()->where('year',$year)->get();
             }
             elseif($active=='Active'){
-                $alldata = CommanderMedal::get();
+                $alldata = CommanderMedal::where('year',$year)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = CommanderMedal::onlyTrashed()->get();
+                $alldata = CommanderMedal::onlyTrashed()->where('year',$year)->get();
             }
         }else{
 
-            $alldata = CommanderMedal::where('admin_id',$userId)->get();
+            $alldata = CommanderMedal::where('admin_id',$userId)->where('year',$year)->get();
             if($active=='All'){
-                $alldata = CommanderMedal::withTrashed()->where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::withTrashed()->where('admin_id',$userId)->where('year',$year)->get();
             }
             elseif($active=='Active'){
-                $alldata = CommanderMedal::where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::where('admin_id',$userId)->where('year',$year)->get();
             }
             elseif($active=='DeActive'){
-                $alldata = CommanderMedal::onlyTrashed()->where('admin_id',$userId)->get();
+                $alldata = CommanderMedal::onlyTrashed()->where('admin_id',$userId)->where('year',$year)->get();
             }
 
 
@@ -557,6 +558,343 @@ class CommanderMedalsController extends Controller
         $this->logAction(auth()->id(), 'user', 'reject_commander_medal', 'rejected', 'commander_medals', $objCommanderMedal->id);
         return response()->json(['objCommanderMedal'=>$objCommanderMedal]);
     }
+
+
+
+    public function ReportCommanderMedals()
+    {
+       $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.report_commander_medals_monzer');
+        
+        return view('auth.admin.commander_medals.report_commander_medals', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ReportCommanderMedalsGet()
+    {
+        
+
+        
+        $year = @$_GET['year'];
+        $type = @$_GET['type'];
+
+      
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+       
+        $title = __('messages.report_commander_medals_monzer') . ' - ' . 'سنة ' .$year;
+           
+
+
+        return view('auth.admin.commander_medals.report_commander_medals_get', ['title' => $title,'year' => $year,'type' => $type]);
+    }
+
+
+
+    public function report_commander_medals_get_list(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            'order'   => true,
+            'id'   => true,
+            'name'   => true,
+            'phone'   => true,
+            'address'   => true,
+            'email'   => true,
+        
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+        $alldata = Admin::where('is_super','!=',1);
+        $alldata = $alldata->get();
+        
+        $title = __('messages.report_commander_medals_monzer');
+           
+        $ArrAdminFilesID = CommanderMedal::where('year',$request->year)->pluck('admin_id')->toArray();
+
+        $alldata = $alldata->whereNotIn('id',$ArrAdminFilesID);
+
+
+
+
+        $alldataResult = array();
+
+        foreach ($alldata as $key=> $objdata) {
+
+
+            $alldataResult[] = array(
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "name" => @$objdata->group_name,
+                "phone" => @$objdata->phone,
+                "address" => @$objdata->address,
+                "email" => @$objdata->email,
+               
+            );
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
+
+
+
+    public function ReportArchiveCommanderMedals()
+    {
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        $title = __('messages.archive_commander_medals_monzer');
+        
+        return view('auth.admin.commander_medals.report_archive_commander_medals', [
+            'title' => $title,
+        ]);
+    }
+
+
+
+    public function ReportArchiveCommanderMedalsGet()
+    {
+        
+
+        
+        $year = @$_GET['year'];
+        $type = @$_GET['type'];
+
+      
+        # check if a super_admin
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
+
+       
+        $title = __('messages.archive_commander_medals_monzer') . ' - ' . 'سنة ' .$year;
+      
+
+
+        return view('auth.admin.commander_medals.report_archive_commander_medals_get', ['title' => $title,'year' => $year,'type' => $type]);
+    }
+
+
+
+    public function report_archive_commander_medals_get_list(Request $request)
+    {
+       
+
+        ini_set('memory_limit', '-1');
+        $columnsDefault = [
+            'order'   => true,
+            'id'   => true,
+            'leader'   => true,
+            'file'   => true,
+            'year'   => true,
+        
+        ];
+
+        if (isset($request->columnsDef) && is_array($request->columnsDef)) {
+            $columnsDefault = [];
+            foreach ($request->columnsDef as $field) {
+                $columnsDefault[$field] = true;
+            }
+        }
+
+
+
+        
+        $title = 'أرشيف التسجيل السنوي';
+           
+        $alldata = CommanderMedal::where('year',$request->year)->orderBy('id')->get();
+
+        $alldataResult = array();
+
+        foreach ($alldata as $key=> $objdata) {
+           
+            $file =
+        
+
+
+            $alldataResult[] = array(
+                "order" => $key+1,
+                "id" => $objdata->id,
+                "leader" => @$objdata->Admin->group_name,
+                "file" => '<a target="_blank" href="' . asset('public/images/commander_medals/' . $objdata->document) . '">تحميل الملف<a>',
+                "year" => $objdata->year,
+               
+            );
+        }
+
+
+        // dd($alldataResult);
+        $alldata = $alldataResult;
+       
+        $data = [];
+        // internal use; filter selected columns only from raw data
+        foreach ($alldata as $d) {
+            $data[] = $this->filterArray($d, $columnsDefault);
+        }
+
+
+        // count data
+        $totalRecords = $totalDisplay = count($data);
+
+        // filter by general search keyword
+        if (isset($request->search)) {
+            $data = $this->filterKeyword($data, $request->search);
+            $totalDisplay = count($data);
+        }
+
+        if (isset($request->columns) && is_array($request->columns)) {
+            foreach ($request->columns as $column) {
+                if (isset($column['search'])) {
+                    $data = $this->filterKeyword($data, $column['search'], $column['data']);
+                    $totalDisplay = count($data);
+                }
+            }
+        }
+
+        // sort
+        if (isset($request->order[0]['column']) && $request->order[0]['dir']) {
+            $column = $request->order[0]['column'];
+            $dir = $request->order[0]['dir'];
+            usort($data, function ($a, $b) use ($column, $dir) {
+                $a = array_slice($a, $column, 1);
+                $b = array_slice($b, $column, 1);
+                $a = array_pop($a);
+                $b = array_pop($b);
+
+                if ($dir === 'asc') {
+                    return $a > $b ? true : false;
+                }
+
+                return $a < $b ? true : false;
+            });
+        }
+
+        // pagination length
+        if (isset($request->length)) {
+            $data = array_splice($data, $_REQUEST['start'], $request->length);
+        }
+
+        // return array values only without the keys
+        if (isset($request->array_values) && $request->array_values) {
+            $tmp = $data;
+            $data = [];
+            foreach ($tmp as $d) {
+
+                $data[] = array_values($d);
+            }
+        }
+
+        $secho = 0;
+        if (isset($request->sEcho)) {
+            $secho = intval($request->sEcho);
+        }
+
+        $result = [
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalDisplay,
+            'data' => $data,
+        ];
+
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
+
+        return json_encode($result, JSON_PRETTY_PRINT);
+    }
+
 
 
 

@@ -142,7 +142,7 @@
                             @if($objAdmin->is_super == 1)
                             <th>{{ __('messages.scout_group') }}</th>
                             @endif
-                            <th>اسم الملف</th>
+                            <th>الموضوع</th>
                             <th>الملف</th>
                            {{--  @if($objAdmin->is_super == 0) --}}
                             <th>{{ __('messages.status') }}</th>
@@ -195,7 +195,7 @@
     <!--end::Page Custom Javascript-->
 @endsection
 
- @if($objAdmin->position_id == 4)
+ @if($can_delete == 0)
 <style type="text/css">
     .permission{
         display: none;

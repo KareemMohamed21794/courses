@@ -103,7 +103,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.date') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.date') }}" name="date"  id="date"  />
+                            <input type="date" class="form-control form-control-solid" placeholder="{{ __('messages.date') }}" name="date"  id="date"  value="{{date('Y-m-d')}}" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->

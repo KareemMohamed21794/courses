@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\AdministrativeFinancialReportsController;
 use App\Http\Controllers\Admin\BoardDirectorMeetingsController;
 use App\Http\Controllers\Admin\SecondaryRegistrationsController;
 use App\Http\Controllers\Admin\HomeController;
-
+use App\Http\Controllers\Admin\StudentRegistrationsController;
+use App\Http\Controllers\Admin\PermitsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,9 +42,9 @@ Route::get('export_cases', [PDFController::class, 'ExportCases']);
 Route::get('send_email', [HomeController::class, 'send_email']);
 Route::get('export_qualification_leaders', [QualificationleadersController::class, 'ExportQualificationLeaders']);
 
+Route::get('export_student_registrations', [StudentRegistrationsController::class, 'ExportStudentRegistrations']);
 
-
-
+Route::get('export_permits', [PermitsController::class, 'ExportPermits']);
 
 
 require __DIR__.'/auth.php';
