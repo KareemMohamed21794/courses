@@ -72,6 +72,7 @@ class StudentRegistrationsController extends Controller
         
         //$this->authorize(self::MODEL.'-store');
         $userId = Auth::id();
+        // print_r($userId);die;
         $objAdmin = Admin::find($userId);
         $segment = $request->segment(2);
         $admindetails = Admin::find($id);

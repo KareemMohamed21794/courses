@@ -235,8 +235,8 @@
 
                     <a href="#" class="btn btn-sm btn-success" onclick="getData({{ $objAdmin->id }},1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id="5">
                                         تعديل
-                                    </a>
-
+                    </a>
+                    <hr>
                     <!--begin::Content-->
                     <div class="flex-grow-1">
 
@@ -245,7 +245,7 @@
                             <div class="table-responsive border-bottom mb-9 seperate">
                                 <table class="table mb-3">
                                     <thead>
-
+                                       
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.register_url') }}</th>
                                             <th class="pb-2">
