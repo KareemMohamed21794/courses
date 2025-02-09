@@ -69,13 +69,14 @@ class StudentRegistrationsController extends Controller
      */
     public function create(Request $request , $id)
     {
-        
+        $id = $this->decodeSecureId($id);
+         
         //$this->authorize(self::MODEL.'-store');
         $userId = Auth::id();
         // print_r($userId);die;
         $objAdmin = Admin::find($userId);
         $segment = $request->segment(2);
-        $admindetails = Admin::find($id);
+        $admindetails = Admin::findOrFail($id);
 
         $title = __('messages.student_registration');
         $add_title = __('messages.student_registration');
@@ -797,63 +798,103 @@ class StudentRegistrationsController extends Controller
 
 
     public function ExportStudentRegistrations(Request $request)
-{
-  
+    {
+      
 
-    $fileName = 'student_registrations.csv';
-    $student_registrations = StudentRegistration::all();
-    
+        $fileName = 'student_registrations.csv';
+        $student_registrations = StudentRegistration::all();
         
-        if($request->leader_id){
+            
+            if($request->leader_id){
 
-            $student_registrations = $student_registrations->where('admin_id',$request->leader_id);
-        } 
+                $student_registrations = $student_registrations->where('admin_id',$request->leader_id);
+            } 
 
 
-    
+        
 
-    // Set the response headers with the correct character encoding
-    $headers = array(
-        "Content-type"        => "text/csv; charset=utf-8",
-        "Content-Disposition" => "attachment; filename=$fileName",
-        "Pragma"              => "no-cache",
-        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-        "Expires"             => "0"
-    );
-    
-    // If you need to display Arabic column header, make sure to encode it as well
-    $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'));
+        // Set the response headers with the correct character encoding
+        $headers = array(
+            "Content-type"        => "text/csv; charset=utf-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        // If you need to display Arabic column header, make sure to encode it as well
+        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'));
 
-    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
-    $callback = function() use ($student_registrations, $columns) {
-        $file = fopen('php://output', 'w');
+        // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+        $callback = function() use ($student_registrations, $columns) {
+            $file = fopen('php://output', 'w');
 
-        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
-        fputs($file, "\xEF\xBB\xBF");
+            // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+            fputs($file, "\xEF\xBB\xBF");
 
-        // Write the column headers
-        fputcsv($file, $columns);
+            // Write the column headers
+            fputcsv($file, $columns);
 
-        // Write the data rows
-        foreach ($student_registrations as $student_registration) {
-           
-            // Make sure to retrieve the Arabic name correctly from your database column
-            $row['group_name']  = @$student_registration->Admin->group_name;
-            $row['first_name']  = $student_registration->first_name;
-            $row['father_name']  = $student_registration->father_name;
-            $row['grandfather_name']  = $student_registration->grandfather_name;
-            $row['family_name']  = $student_registration->family_name;
-            $row['birth_date']  = $student_registration->birth_date;
-            $row['birth_place']  = $student_registration->birth_place;
-         
-            // Write the row data to the CSV file
-            fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['birth_date'],$row['birth_place']));
-        }
+            // Write the data rows
+            foreach ($student_registrations as $student_registration) {
+               
+                // Make sure to retrieve the Arabic name correctly from your database column
+                $row['group_name']  = @$student_registration->Admin->group_name;
+                $row['first_name']  = $student_registration->first_name;
+                $row['father_name']  = $student_registration->father_name;
+                $row['grandfather_name']  = $student_registration->grandfather_name;
+                $row['family_name']  = $student_registration->family_name;
+                $row['birth_date']  = $student_registration->birth_date;
+                $row['birth_place']  = $student_registration->birth_place;
+             
+                // Write the row data to the CSV file
+                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['birth_date'],$row['birth_place']));
+            }
 
-        fclose($file);
-    };
+            fclose($file);
+        };
 
-    return response()->stream($callback, 200, $headers);
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function decodeSecureId($encoded, $secretKey = 'mySuperSecretKey') {
+    // Revert to standard base64 characters if you made it URL-safe
+    $base64 = str_replace(['-', '_'], ['+', '/'], $encoded);
+
+    // Because we removed '=' in the encode function, we might need to pad it back
+    // Base64 strings often need padding to a multiple of 4. Let's do a quick fix:
+    $padLength = 4 - (strlen($base64) % 4);
+    if ($padLength < 4) {
+        $base64 .= str_repeat('=', $padLength);
+    }
+
+    // Base64-decode
+    $decoded = base64_decode($base64, true);
+    if ($decoded === false) {
+        // Decoding failure
+        return false;
+    }
+
+    // Split into "id" and "signature"
+    $parts = explode(':', $decoded);
+    if (count($parts) !== 2) {
+        // Not in "id:signature" format
+        return false;
+    }
+
+    list($idStr, $signature) = $parts;
+
+    // Recompute the HMAC signature
+    $expectedSignature = hash_hmac('sha256', $idStr, $secretKey);
+
+    // Compare signatures to detect tampering
+    if (!hash_equals($expectedSignature, $signature)) {
+        // Signatures do not match => tampered
+        return false;
+    }
+
+    // At this point, ID is verified. Convert to integer and return
+    return (int) $idStr;
 }
 
 

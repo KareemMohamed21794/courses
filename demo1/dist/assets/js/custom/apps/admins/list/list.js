@@ -193,6 +193,23 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
 
+
+
+                                <div class="menu-item px-3" >
+                                    <a href="/admin/board_directors/`+row.id+`" class="menu-link px-3">
+                                        مجلس إدارة المجموعة  
+                                    </a>
+                                </div>
+
+
+                                <div class="menu-item px-3" >
+                                    <a href="/admin/group_leaders/`+row.id+`" class="menu-link px-3">
+                                        معلومات قائد المجموعة 
+                                    </a>
+                                </div>
+
+
+
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
                                     <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
@@ -595,8 +612,16 @@ KTUtil.onDOMContentLoaded(function () {
 function handleClick(event, id) {
     event.preventDefault(); // Prevent default navigation
     getData(id, 2); // Execute the function
-    window.open('student_registration/' + id, '_blank'); // Open in a new tab
+    window.open('/student_registration/' + id, '_blank'); // Open in a new tab
 }
+
+
+function board_directors(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    getData(id, 2); // Execute the function
+    window.open('admin/board_directors', '_blank'); // Open in a new tab
+}
+
 
 
 function ShowStudents(event, id) {

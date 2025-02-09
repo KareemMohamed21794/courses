@@ -33,6 +33,8 @@ class AdminsController extends Controller
 
         $segment = $request->segment(2);
 
+        $encode_id = "";
+
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
 
@@ -55,6 +57,11 @@ class AdminsController extends Controller
             $department_id = 2;
             $position_id = 2;
             $is_super = 0;
+
+            $encode_id = $objAdmin->id;
+            $encodeId = $this->encodeSecureId($encode_id);
+
+             
         }
 
         elseif($segment=='secretariats'){
@@ -130,7 +137,7 @@ class AdminsController extends Controller
 
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'encodeId'=>$encodeId]);
     }
 
     /**
@@ -795,5 +802,23 @@ class AdminsController extends Controller
         return response()->json(['objAdmin'=>$objAdmin]);
 
 
+    }
+
+    public function encodeSecureId($id, $secretKey = 'mySuperSecretKey') {
+        // Convert ID to string
+        $idStr = (string) $id;
+
+        // Calculate an HMAC signature
+        $signature = hash_hmac('sha256', $idStr, $secretKey);
+
+        // Combine "id:signature" into one string
+        $combined = $idStr . ':' . $signature;
+
+        // Base64-encode to get the final string
+        // (Optionally, make it URL-safe by replacing +, /, and =)
+        $encoded = base64_encode($combined);
+        $urlSafe = str_replace(['+', '/', '='], ['-', '_', ''], $encoded);
+
+        return $urlSafe;
     }
 }

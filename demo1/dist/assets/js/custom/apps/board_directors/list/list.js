@@ -6,11 +6,61 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
-
-    let main_url = "/admin/total_permits/get";
+    var group_id = $("#group_id").val();
+    // var is_super = $("#is_super").val();
+    // let main_url = "/admin/board_directors/get";
+    let main_url = "/admin/get_board_directors/"+group_id;
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
+
+    
+    var can_add = $("#can_add").val();
+    var can_update = $("#can_update").val();
+    var can_delete = $("#can_delete").val();
+    var can_print = $("#can_print").val();
+    var can_accept = $("#can_accept").val();
+    var can_reject = $("#can_reject").val();
+
+    var display_print = "none";
+    var display_file = "none";
+    var display_case = "none";
+    var display_procedure = "none";
+    var display_edit = "none";
+    var display_delete = "none";
+    var display_accept = "none";
+    var display_reject = "none";
+    
+    
+
+    
+    if(can_print==1){
+        var display_print = "";
+    }
+
+    if(can_add==1){
+        var display_file = "";
+        var display_case = "";
+        var display_procedure = "";
+    }
+
+    if(can_update==1){
+        var display_edit = "";
+    }
+
+
+
+    if(can_delete==1){
+        var display_delete = "";
+    }
+
+    if(can_accept==1){
+        var display_accept = "";
+    }
+
+    if(can_reject==1){
+        var display_reject = "";
+    }
 
 
     // Private functions
@@ -39,9 +89,16 @@ var KTDatatablesServerSide = function () {
                 { data: 'order' },
                 // { data: 'id' },
                 { data: 'leader' },
-                { data: 'count' },
-                { data: 'price' },
-                // { data: 'created_at' },
+                { data: 'first_name' },
+                { data: 'father_name' },
+                { data: 'family_name' },
+                { data: 'job' },
+                { data: 'mission' },
+                { data: 'birth_date' },
+                { data: 'birth_place' },
+                { data: 'mobile_number' },
+               
+                { data: 'created_at' },
                 { data: null },
             ],
             buttons: [
@@ -68,10 +125,17 @@ var KTDatatablesServerSide = function () {
                     targets: 0,
                     orderable: false,
                     render: function (data) {
+                        if (can_delete === '1') {
                         return `
-                            <div style="visibility: hidden;" class="form-check form-check-sm form-check-custom form-check-solid">
+                            <div class="form-check form-check-sm form-check-custom form-check-solid">
                                 <input class="form-check-input checkselected" type="checkbox" value="${data}" />
                             </div>`;
+                        }else{
+                            return `
+                            <div class="form-check form-check-sm form-check-custom form-check-solid" style="visibility: hidden;">
+                                <input class="form-check-input checkselected" type="checkbox" value="${data}" />
+                            </div>`;
+                        }
                     }
                 },
                 {
@@ -82,8 +146,9 @@ var KTDatatablesServerSide = function () {
                     render: function (data, type, row) {
                         // console.log(row.permit_status);
                        
+                        
                         return `
-                            <a style="visibility: hidden;" href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
                                 `+action_lang+`
                                 <span class="svg-icon svg-icon-5 m-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -97,10 +162,24 @@ var KTDatatablesServerSide = function () {
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                
-                              
+                             
 
-                              
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3"  style="display:`+display_edit+`">
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                        `+edit_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:none">
+                                    <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
+                                        `+delete_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
                             </div>
                             <!--end::Menu-->
                         `;
@@ -202,7 +281,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/permits/'+rowID;
+                        var ajaxurl = '/admin/deletboard_directors/'+rowID;
 
                         $.ajax({
                             type: type,
@@ -227,6 +306,7 @@ var KTDatatablesServerSide = function () {
                                     }).then(function () {
                                         // delete row data from server and re-draw datatable
                                         dt.draw();
+                                        location.reload();
                                     });
                                 });
                             },
@@ -336,7 +416,7 @@ var KTDatatablesServerSide = function () {
                     };
 
                     var type = "DELETE";
-                    var ajaxurl = '/admin/delete_permits';
+                    var ajaxurl = '/admin/delete_board_directors';
 
                     $.ajax({
                         type: type,
@@ -362,6 +442,7 @@ var KTDatatablesServerSide = function () {
                                 }).then(function () {
                                     // delete row data from server and re-draw datatable
                                     dt.draw();
+                                     location.reload();
                                 });
 
                                 // Remove header checked box

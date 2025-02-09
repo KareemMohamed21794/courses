@@ -13,15 +13,15 @@ var KTDatatablesServerSide = function () {
     var delete_lang = $("#delete_lang").val();
 
     
-    var adminColumns = [
+     var adminColumns = [
         { data: '#' },
         { data: 'order' },
         // { data: 'id' },
         { data: 'user_id' },
         { data: 'action' },
         { data: 'action_type' },
-        { data: 'table_name' },
-        { data: 'table_id' },
+        // { data: 'table_name' },
+        // { data: 'table_id' },
         { data: 'created_at' },
          { data: null },
        ];
@@ -33,12 +33,11 @@ var KTDatatablesServerSide = function () {
         { data: 'user_id' },
         { data: 'action' },
         { data: 'action_type' },
-        { data: 'table_name' },
-        { data: 'table_id' },
+        // { data: 'table_name' },
+        // { data: 'table_id' },
         { data: 'created_at' },
          { data: null },
         ];
-
     var chosenColumns = is_super === '0' ? userColumns : adminColumns;
 
 

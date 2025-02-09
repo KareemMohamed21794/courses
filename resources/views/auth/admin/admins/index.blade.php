@@ -249,7 +249,7 @@
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.register_url') }}</th>
                                             <th class="pb-2">
-                                              <a href="{{ url('/student_registration') }}/{{$objAdmin->id}}" target="_blank">{{ url('/student_registration') }}/{{$objAdmin->id}}</a>
+                                              <a href="{{ url('/student_registration') }}/{{$encodeId}}" target="_blank">اضغط هنا</a>
                                             </th>
 
 

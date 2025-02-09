@@ -184,7 +184,7 @@ var KTDatatablesServerSide = function () {
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
                                        تسجيل الطالب
                                     </a>
