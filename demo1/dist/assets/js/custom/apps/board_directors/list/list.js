@@ -174,7 +174,7 @@ var KTDatatablesServerSide = function () {
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:none">
+                                <div class="menu-item px-3" >
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>
@@ -281,7 +281,7 @@ var KTDatatablesServerSide = function () {
                         });
 
                         var type = "DELETE";
-                        var ajaxurl = '/admin/deletboard_directors/'+rowID;
+                        var ajaxurl = '/admin/delete_board_directors/'+rowID;
 
                         $.ajax({
                             type: type,

@@ -550,7 +550,7 @@ class BoardDirectorsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'noreply@privatescouts.org'; 
+            $fromEmail = 'admin@tawasol.privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_accept', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
@@ -581,7 +581,7 @@ class BoardDirectorsController extends Controller
 
             $data = ['number_order' => $objPermit->number_order,'group_name' => $objPermit->admin->group_name]; // Data to pass to the view
 
-            $fromEmail = 'noreply@privatescouts.org'; 
+            $fromEmail = 'admin@tawasol.privatescouts.org'; 
             // The "from" email address
 
             Mail::send('emails.permits_reject', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
