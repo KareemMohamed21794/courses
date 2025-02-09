@@ -324,6 +324,7 @@ class PermitsController extends Controller
             'activity_leader'=>true,
             'number_leader'=>true,
             'permit_status'=>true,
+            'reject_notes'=> true,
             'permit_number'=>true,
             
             'created_at'   => true,
@@ -477,6 +478,7 @@ class PermitsController extends Controller
                 "activity_leader"=>$objdata->activity_leader,
                 "number_leader"=>$objdata->number_leader,
                 "permit_status"=>$status,
+                'reject_notes'=> $objdata->reject_notes,
                 "permit_number"=>$objdata->permit_number,
                 
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
@@ -633,7 +635,8 @@ class PermitsController extends Controller
          
     
         $objPermit = Permit::find($id);
-        $objPermit->status = "approved";       
+        $objPermit->status = "approved";
+        $objPermit->reject_notes = ""; 
         $objPermit->save();
 
         $this->logAction(auth()->id(), 'user', 'accept_permit', 'accepted', 'permits', $objPermit->id);
@@ -712,12 +715,14 @@ class PermitsController extends Controller
 
     }
 
-    public function reject_permit(Request $request, $id)
+    public function reject_permit(Request $request)
     {
          
-
-        $objPermit = Permit::find($id);
-        $objPermit->status = "rejected";       
+        $permit_id = $request->permit_id;
+        $reject_notes = $request->reject_notes;
+        $objPermit = Permit::find($permit_id);
+        $objPermit->status = "rejected";    
+        $objPermit->reject_notes = $reject_notes;   
         $objPermit->save();
         $this->logAction(auth()->id(), 'user', 'reject_permit', 'rejected', 'permits', $objPermit->id);
 
@@ -752,6 +757,7 @@ class PermitsController extends Controller
     {
         $title = 'تصريح نشاط' ;
         $objPermit = Permit::find($id);
+        $objPermit->TypeActivity;
         return view('auth.admin.permits.download_approve_form',['title' => $title,'objPermit'=>$objPermit]);
     }
 

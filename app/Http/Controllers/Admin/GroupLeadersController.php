@@ -28,8 +28,7 @@ class GroupLeadersController extends Controller
     public function index($id)
     {
 
-        $title = __('messages.group_leader');
-        $add_title = __('messages.group_leader');
+        
 
         $ids = GroupLeader::select('admin_id')->groupBy('admin_id')->pluck('admin_id')->toArray();
 
@@ -46,6 +45,8 @@ class GroupLeadersController extends Controller
         $userId = Auth::id();
         $objgroup = Admin::find($id);
         $added = "";
+        $title = __('messages.group_leader') . $objgroup->group_name;
+        $add_title = __('messages.group_leader') . $objgroup->group_name;
 
         if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;
@@ -75,10 +76,10 @@ class GroupLeadersController extends Controller
             $can_accept = 0;
             $can_reject = 0;
 
-            $added = GroupLeader::where('admin_id',$objgroup->id)->first();
+            
         }
 
-
+        $added = GroupLeader::where('admin_id',$objgroup->id)->first();
 
         if($objgroup->is_super == 0){
         GroupLeader::where('admin_id', $objgroup->id)
@@ -341,7 +342,7 @@ class GroupLeadersController extends Controller
     }
 
 
-    public function get(Request $request)
+    public function get(Request $request , $id)
     { 
 
         //$this->authorize(self::MODEL.'-viewAny');
@@ -377,35 +378,21 @@ class GroupLeadersController extends Controller
         $last_day_year = date('Y') . '-12-31';
 
 
-        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
-
-           $alldata = GroupLeader::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
         
+
+            $alldata = GroupLeader::where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             if($active=='All'){
-                $alldata = GroupLeader::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                $alldata = GroupLeader::withTrashed()->where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = GroupLeader::get();
+                $alldata = GroupLeader::where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='DeActive'){
-                $alldata = GroupLeader::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-        }else{
-
-            $alldata = GroupLeader::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            if($active=='All'){
-                $alldata = GroupLeader::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='Active'){
-                $alldata = GroupLeader::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = GroupLeader::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                $alldata = GroupLeader::onlyTrashed()->where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
 
 
 
-        }
 
         $alldataResult=array();
 

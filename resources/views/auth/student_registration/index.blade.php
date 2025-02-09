@@ -77,7 +77,14 @@
                                 </div>
                                 <!--end::Content-->
                             </div>
-                          
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-primary" data-kt-menu-dismiss="true" onclick="copyToClipboard()">
+                                    {{ __('messages.register_url') }}
+                                </button>
+                            </div>
+                            <!--end::Actions-->
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             
                             <!--end::Menu 1-->
                             <!--end::Filter-->
@@ -173,5 +180,61 @@
 
  
     <!--end::Page Custom Javascript-->
+
+    <!--begin::Actions-->
+<div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-primary" data-kt-menu-dismiss="true" onclick="copyToClipboard()">
+        {{ __('messages.register_url') }}
+    </button>
+</div>
+
+<script>
+    function copyToClipboard() {
+        // Construct the URL
+        var url = "{{ url('/student_registration') }}/{{$objAdmin->id}}";
+
+        // Create a temporary input element
+        var tempInput = document.createElement("input");
+        tempInput.value = url;
+        document.body.appendChild(tempInput);
+
+        // Select and copy the text
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+
+        // Remove the temporary input
+        document.body.removeChild(tempInput);
+
+        Swal.fire({
+                text: "تم نسخ الرابط",
+                icon: "success",
+                showCancelButton: false,
+                buttonsStyling: false,
+                confirmButtonText: "تم نسخ الرابط",
+               
+                customClass: {
+                    confirmButton: "btn btn-primary",
+                    
+                }
+            }).then(function (result) {
+                if (result.value) {
+                    form.reset(); // Reset form 
+                    modal.hide(); // Hide modal             
+                } else if (result.dismiss === 'cancel') {
+                    Swal.fire({
+                        text: "لم يتم إلغاء النموذج الخاص بك !.",
+                        icon: "error",
+                        buttonsStyling: false,
+                        confirmButtonText: "حسنًا ، حسنًا!",
+                        
+                    });
+                }
+            });
+
+        // Optionally, provide user feedback
+        // alert("تم نسخ الرابط");
+    }
+</script>
 @endsection
 

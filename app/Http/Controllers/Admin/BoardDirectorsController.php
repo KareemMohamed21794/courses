@@ -27,8 +27,6 @@ class BoardDirectorsController extends Controller
     public function index($id)
     {
 
-        $title = __('messages.board_director');
-        $add_title = __('messages.board_director');
 
         $ids = BoardDirector::select('admin_id')->groupBy('admin_id')->pluck('admin_id')->toArray();
 
@@ -45,6 +43,10 @@ class BoardDirectorsController extends Controller
         $userId = Auth::id();
         $objgroup = Admin::find($id);
         $added = "";
+
+
+        $title = __('messages.board_director') . $objgroup->group_name;
+        $add_title = __('messages.board_director') . $objgroup->group_name;
 
         if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;
@@ -74,9 +76,9 @@ class BoardDirectorsController extends Controller
             $can_accept = 0;
             $can_reject = 0;
 
-            $added = BoardDirector::where('admin_id',$objgroup->id)->first();
+           
         }
-
+        $added = BoardDirector::where('admin_id',$objgroup->id)->first();
 
 
         if($objgroup->is_super == 0){
@@ -263,9 +265,9 @@ class BoardDirectorsController extends Controller
     }
 
 
-    public function get(Request $request)
+    public function get(Request $request , $id)
     { 
-
+       
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
         $columnsDefault = [
@@ -299,35 +301,19 @@ class BoardDirectorsController extends Controller
         $last_day_year = date('Y') . '-12-31';
 
 
-        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
+      
 
-           $alldata = BoardDirector::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+           $alldata = BoardDirector::where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            if($active=='All'){
+                $alldata = BoardDirector::withTrashed()->where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            }
+            elseif($active=='Active'){
+                $alldata = BoardDirector::where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            }
+            elseif($active=='DeActive'){
+                $alldata = BoardDirector::onlyTrashed()->where('admin_id',$id)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            }
         
-            if($active=='All'){
-                $alldata = BoardDirector::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='Active'){
-                $alldata = BoardDirector::get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = BoardDirector::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-        }else{
-
-            $alldata = BoardDirector::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            if($active=='All'){
-                $alldata = BoardDirector::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='Active'){
-                $alldata = BoardDirector::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = BoardDirector::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-
-
-
-        }
 
         $alldataResult=array();
 

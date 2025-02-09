@@ -160,6 +160,7 @@
                             <th>{{ __('messages.activity_leader') }}</th>
                             <th>{{ __('messages.number_leader') }}</th>
                             <th>{{ __('messages.permit_status') }}</th>
+                            <th>{{ __('messages.reject_notes') }}</th>
                             <th>{{ __('messages.permit_number') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
@@ -176,6 +177,7 @@
             <!--begin::Modals-->
             @include('auth.admin.permits.add')
             @include('auth.admin.permits.update')
+            @include('auth.admin.permits.reject_permit')
             <!--begin::Modal - Adjust Balance-->
             @include('auth.admin.permits.export')
             <!--end::Modal - New Card-->
@@ -197,6 +199,7 @@
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/list/list.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/update.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/apps/permits/reject_permit.js') }}"></script>
 
  
     <!--end::Page Custom Javascript-->

@@ -196,17 +196,18 @@ var KTDatatablesServerSide = function () {
 
 
                                 <div class="menu-item px-3" >
-                                    <a href="/admin/board_directors/`+row.id+`" class="menu-link px-3">
+                                    <a href="/admin/board_directors/`+row.id+`" class="menu-link px-3" target="_blank">
                                         مجلس إدارة المجموعة  
                                     </a>
                                 </div>
 
-
-                                <div class="menu-item px-3" >
-                                    <a href="/admin/group_leaders/`+row.id+`" class="menu-link px-3">
-                                        معلومات قائد المجموعة 
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="/admin/group_leaders/`+row.id+`" class="menu-link px-3" target="_blank">
+                                        معلومات قائد المجموعة
                                     </a>
                                 </div>
+                                <!--end::Menu item-->
 
 
 
