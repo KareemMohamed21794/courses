@@ -50,11 +50,22 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             $notifications = [];
 
+            $encode_id = "";
+            $encodeId = "";
+         
+
             # check if a super_admin
             $userId = Auth::id();
             $objAdmin = Admin::find($userId);
+            
+            //leaders
+            if(@$objAdmin->position_id==2){
+            $encode_id = $objAdmin->id;
+            $encodeId = $this->encodeSecureId($encode_id);
+            
+           }
 
-           
+          
             $Advertisements = Advertisement::where('read',0)
             ->where('admin_id',@$objAdmin->id)
             ->get();
@@ -138,6 +149,25 @@ class AppServiceProvider extends ServiceProvider
             $view->with('information_counter', $information_counter);
             $view->with('BoardDirector_counter', $BoardDirector_counter);
             $view->with('objSetup', $objSetup);
+            $view->with('encodeId', $encodeId);
         });
+    }
+
+    public function encodeSecureId($id, $secretKey = 'mySuperSecretKey') {
+        // Convert ID to string
+        $idStr = (string) $id;
+
+        // Calculate an HMAC signature
+        $signature = hash_hmac('sha256', $idStr, $secretKey);
+
+        // Combine "id:signature" into one string
+        $combined = $idStr . ':' . $signature;
+
+        // Base64-encode to get the final string
+        // (Optionally, make it URL-safe by replacing +, /, and =)
+        $encoded = base64_encode($combined);
+        $urlSafe = str_replace(['+', '/', '='], ['-', '_', ''], $encoded);
+
+        return $urlSafe;
     }
 }

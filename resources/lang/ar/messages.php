@@ -652,6 +652,8 @@ return [
     'archive_permits'=>'أرشيف   التصاريح',
     'report_permits'=>'تقرير   التصاريح',
     'board_director'=>'مجلس إدارة   ',
+    'Add_leader'=>'إضافة القائد',
+    'Add_administrator'=>'إضافة إداري',
     'Profession'=>"المهنة",
     'group_leader'=>'معلومات قائد   ',
     'scout_qualification'=>'المؤهل الكشفي',

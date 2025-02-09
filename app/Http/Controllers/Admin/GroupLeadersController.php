@@ -46,7 +46,7 @@ class GroupLeadersController extends Controller
         $objgroup = Admin::find($id);
         $added = "";
         $title = __('messages.group_leader') . $objgroup->group_name;
-        $add_title = __('messages.group_leader') . $objgroup->group_name;
+        $add_title = __('messages.Add_leader');
 
         if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;

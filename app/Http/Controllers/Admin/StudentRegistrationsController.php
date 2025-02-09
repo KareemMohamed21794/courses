@@ -23,12 +23,14 @@ class StudentRegistrationsController extends Controller
      */
     public function index(Request $request , $id)
     {
+        $id = $this->decodeSecureId($id);
 
+       
         $segment = $request->segment(2);
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
        
-        $admindetails = Admin::find($id);
+        $admindetails = Admin::findOrFail($id);
        
         $title = __('messages.show_students');
         $add_title = __('messages.show_students');
@@ -46,7 +48,7 @@ class StudentRegistrationsController extends Controller
 
         $objAdmin = Admin::find($userId);
        
-        $admindetails = Admin::find($id);
+        $admindetails = Admin::findOrFail($id);
        
         $title = __('messages.show_students');
         $add_title = __('messages.show_students');
@@ -250,6 +252,7 @@ class StudentRegistrationsController extends Controller
      */
     public function destroy($id)
     {
+
         //$this->authorize(self::MODEL.'-delete');
         $StudentRegistration = StudentRegistration::where('id',$id)->delete();
         $this->logAction(auth()->id(), 'user', 'delete_student', 'delete', ' student_registrations', $id);
@@ -533,9 +536,12 @@ class StudentRegistrationsController extends Controller
 
         // print_r($objUser); die;
 
+        $encode_id = "";
+        $encode_id = $objStudentRegistration->admin_id;
+        $encodeId = $this->encodeSecureId($encode_id);
+        
 
-
-        return redirect('/admin/show_students/'.$objStudentRegistration->admin_id);
+        return redirect('/admin/show_students/'.$encodeId);
 
     }
 
@@ -858,44 +864,62 @@ class StudentRegistrationsController extends Controller
     }
 
     public function decodeSecureId($encoded, $secretKey = 'mySuperSecretKey') {
-    // Revert to standard base64 characters if you made it URL-safe
-    $base64 = str_replace(['-', '_'], ['+', '/'], $encoded);
+        // Revert to standard base64 characters if you made it URL-safe
+        $base64 = str_replace(['-', '_'], ['+', '/'], $encoded);
 
-    // Because we removed '=' in the encode function, we might need to pad it back
-    // Base64 strings often need padding to a multiple of 4. Let's do a quick fix:
-    $padLength = 4 - (strlen($base64) % 4);
-    if ($padLength < 4) {
-        $base64 .= str_repeat('=', $padLength);
+        // Because we removed '=' in the encode function, we might need to pad it back
+        // Base64 strings often need padding to a multiple of 4. Let's do a quick fix:
+        $padLength = 4 - (strlen($base64) % 4);
+        if ($padLength < 4) {
+            $base64 .= str_repeat('=', $padLength);
+        }
+
+        // Base64-decode
+        $decoded = base64_decode($base64, true);
+        if ($decoded === false) {
+            // Decoding failure
+            return false;
+        }
+
+        // Split into "id" and "signature"
+        $parts = explode(':', $decoded);
+        if (count($parts) !== 2) {
+            // Not in "id:signature" format
+            return false;
+        }
+
+        list($idStr, $signature) = $parts;
+
+        // Recompute the HMAC signature
+        $expectedSignature = hash_hmac('sha256', $idStr, $secretKey);
+
+        // Compare signatures to detect tampering
+        if (!hash_equals($expectedSignature, $signature)) {
+            // Signatures do not match => tampered
+            return false;
+        }
+
+        // At this point, ID is verified. Convert to integer and return
+        return (int) $idStr;
     }
 
-    // Base64-decode
-    $decoded = base64_decode($base64, true);
-    if ($decoded === false) {
-        // Decoding failure
-        return false;
-    }
+    public function encodeSecureId($id, $secretKey = 'mySuperSecretKey') {
+            // Convert ID to string
+            $idStr = (string) $id;
 
-    // Split into "id" and "signature"
-    $parts = explode(':', $decoded);
-    if (count($parts) !== 2) {
-        // Not in "id:signature" format
-        return false;
-    }
+            // Calculate an HMAC signature
+            $signature = hash_hmac('sha256', $idStr, $secretKey);
 
-    list($idStr, $signature) = $parts;
+            // Combine "id:signature" into one string
+            $combined = $idStr . ':' . $signature;
 
-    // Recompute the HMAC signature
-    $expectedSignature = hash_hmac('sha256', $idStr, $secretKey);
+            // Base64-encode to get the final string
+            // (Optionally, make it URL-safe by replacing +, /, and =)
+            $encoded = base64_encode($combined);
+            $urlSafe = str_replace(['+', '/', '='], ['-', '_', ''], $encoded);
 
-    // Compare signatures to detect tampering
-    if (!hash_equals($expectedSignature, $signature)) {
-        // Signatures do not match => tampered
-        return false;
-    }
-
-    // At this point, ID is verified. Convert to integer and return
-    return (int) $idStr;
-}
+            return $urlSafe;
+        }
 
 
 

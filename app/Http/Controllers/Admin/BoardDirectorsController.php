@@ -46,7 +46,7 @@ class BoardDirectorsController extends Controller
 
 
         $title = __('messages.board_director') . $objgroup->group_name;
-        $add_title = __('messages.board_director') . $objgroup->group_name;
+        $add_title = __('messages.Add_administrator');
 
         if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;

@@ -161,7 +161,7 @@
                 </table>
             </div>
             <div class="approvementIntro">
-                <p><strong>السيد/ة قائد/ة<span class="scoutName">  {{ $objPermit->Admin->group_name }} </span> المحترم</strong></p>
+                <p><strong>السيد/ة قائد/ة<span class="scoutName">  {{ @$objPermit->Admin->group_name }} </span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
                  إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span class="date">{{date('d-m-Y',strtotime(@$objPermit->activity_history))}}</span>، والمتضمن طلب إقامة نشاط، أعلمكم بأنّه لا مانع لدى مجلس القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي: 
@@ -171,7 +171,7 @@
                 <table>
                     <tr>
                         <th>نوع النشاط</th>
-                        <td>{{$objPermit->TypeActivity->name_ar}}</td>
+                        <td>{{@$objPermit->TypeActivity->name_ar}}</td>
                        {{--  @if(@$objPermit->nature_activity == "camp")
                             <td>مخيم</td>
                         @elseif (@$objPermit->nature_activity == "trip") 

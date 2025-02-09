@@ -19,7 +19,7 @@ use PDF;
 use TCPDF;
 use Carbon\Carbon;
 use DB;
-
+use Illuminate\Support\Facades\Mail;
 class SecondaryRegistrationsController extends Controller
 {
     private const MODEL ='File';
