@@ -171,7 +171,8 @@
                 <table>
                     <tr>
                         <th>نوع النشاط</th>
-                        @if(@$objPermit->nature_activity == "camp")
+                        <td>{{$objPermit->TypeActivity->name_ar}}</td>
+                       {{--  @if(@$objPermit->nature_activity == "camp")
                             <td>مخيم</td>
                         @elseif (@$objPermit->nature_activity == "trip") 
                            <td>رحلة</td>
@@ -183,7 +184,7 @@
                             <td>امسيه</td>
                         @elseif (@$objPermit->nature_activity == "other") 
                            <td>اخرى</td>
-                        @endif
+                        @endif --}}
                     </tr>
                     <tr>
                         <th>مكان النشاط</th>

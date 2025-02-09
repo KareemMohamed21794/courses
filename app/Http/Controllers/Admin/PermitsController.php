@@ -636,7 +636,7 @@ class PermitsController extends Controller
     
         $objPermit = Permit::find($id);
         $objPermit->status = "approved";
-        $objPermit->reject_notes = "";       
+        $objPermit->reject_notes = ""; 
         $objPermit->save();
 
         $this->logAction(auth()->id(), 'user', 'accept_permit', 'accepted', 'permits', $objPermit->id);
@@ -757,6 +757,7 @@ class PermitsController extends Controller
     {
         $title = 'تصريح نشاط' ;
         $objPermit = Permit::find($id);
+        $objPermit->TypeActivity;
         return view('auth.admin.permits.download_approve_form',['title' => $title,'objPermit'=>$objPermit]);
     }
 
