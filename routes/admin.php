@@ -209,8 +209,8 @@ Route::middleware('auth:admin')->group(function () {
 		Route::DELETE('/delete_permits', [PermitsController::class,'deletepermits']);
 
 		Route::get('/accept_permit/{id}', [PermitsController::class, 'accept_permit']);
-		
-		Route::get('/reject_permit/{id}', [PermitsController::class, 'reject_permit']);
+
+		Route::post('/reject_permit/', [PermitsController::class, 'reject_permit']);
 		
 		Route::get('/download_approve_form', [PermitsController::class, 'DownloadApproveForm']);
 

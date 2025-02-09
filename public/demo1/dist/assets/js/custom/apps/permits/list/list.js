@@ -98,6 +98,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'activity_leader' },
                 { data: 'number_leader' },
                 { data: 'permit_status' },
+                { data: 'reject_notes' },
                 { data: 'permit_number' },
                 { data: 'created_at' },
                 { data: null },
@@ -176,10 +177,12 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
 
+                              
+
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_reject+`">
-                                    <a href="/admin/reject_permit/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
-                                        مرفوض
+                                <div class="menu-item px-3">
+                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject_request"  onclick="reject(`+row.id+`)">
+                                        رفض
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
