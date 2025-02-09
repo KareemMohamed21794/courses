@@ -209,8 +209,8 @@ var KTDatatablesServerSide = function () {
                                 </div>
                                 <!--end::Menu item-->
 
-
-
+                              
+                                <!--begin::Menu item-->
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3" style="display:none">
                                     <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
