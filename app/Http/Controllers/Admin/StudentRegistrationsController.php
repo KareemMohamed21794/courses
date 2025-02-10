@@ -121,6 +121,7 @@ class StudentRegistrationsController extends Controller
              return redirect()->back()->with('message', 'هذا الطالب  موجود من قبل');
         }
 
+         
 
        
         $StudentRegistration = StudentRegistration::create([
@@ -163,7 +164,7 @@ class StudentRegistrationsController extends Controller
         'year' => date('Y'),
         ]);
 
-        $this->logAction(auth()->id(), 'user', 'add_student', 'create', ' student_registrations', $StudentRegistration->id);
+        //$this->logAction("", 'user', 'add_student', 'create', ' student_registrations', $StudentRegistration->id);
 
         // return redirect('student_registration');
 

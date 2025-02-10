@@ -180,18 +180,18 @@
 
  
     <!--end::Page Custom Javascript-->
-
-    <!--begin::Actions-->
-<div class="d-flex justify-content-end">
-    <button type="button" class="btn btn-primary" data-kt-menu-dismiss="true" onclick="copyToClipboard()">
-        {{ __('messages.register_url') }}
-    </button>
-</div>
+ 
 
 <script>
     function copyToClipboard() {
         // Construct the URL
-        var url = "{{ url('/student_registration') }}/{{$objAdmin->id}}";
+
+        var originalUrl = window.location.href;
+
+        // Extract the unique identifier from the URL (last part)
+        var uniqueIdentifier = originalUrl.split('/').pop();
+
+        var url = "{{ url('/student_registration') }}/"+uniqueIdentifier;
 
         // Create a temporary input element
         var tempInput = document.createElement("input");

@@ -108,14 +108,50 @@
 
 
 <body>
-    <form class="scout-form" action="{{ url('admin/student_registration') }}" method="POST" enctype="multipart/form-data">
+    <form class="scout-form" action="{{ url('student_registration') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @if(session()->has('message'))
-            <div class="alert alert-success" style="text-align: center;font-weight:bold;font-size:18px;font-family: 'Cairo'">
-                {{ session()->get('message') }}
+            <div class="custom-alert">
+                <span class="icon">✔</span> <!-- Success icon -->
+                <span class="message">{{ session()->get('message') }}</span>
             </div>
         @endif
+
+        <style>
+            .custom-alert {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, #28a745, #218838); /* Elegant gradient */
+                color: white;
+                font-weight: bold;
+                font-size: 18px;
+                font-family: 'Cairo', sans-serif;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                position: relative;
+                animation: fadeIn 0.5s ease-in-out;
+            }
+
+            .custom-alert .icon {
+                margin-right: 10px;
+                font-size: 22px;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        </style>
 
 
          <div class="form-group">

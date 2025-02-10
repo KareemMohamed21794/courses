@@ -28,6 +28,7 @@ Route::get('/{url}', HomeController::class)->where(['url' => 'admin|admin/dashbo
 Route::get('/client', HomeController::class)->middleware(['auth:client'])->name('admin_dashboard');
 
 Route::get('/student_registration/{id}', [StudentRegistrationsController::class, 'create']);
+Route::post('/student_registration', [StudentRegistrationsController::class, 'store']);
 Route::middleware('auth:admin')->group(function () {
 	Route::prefix('/admin')->group(function () {
 
