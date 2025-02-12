@@ -861,6 +861,8 @@ class PermitsController extends Controller
            
         }
 
+       
+
 
 
         $alldataResult=array();
@@ -1450,10 +1452,10 @@ class PermitsController extends Controller
             }elseif ($objdata->status=='approved') {
                 $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
 
-                if($objAdmin->is_super == 0){
+                // if($objAdmin->is_super == 0){
  
-                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
-                }
+                //     $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
+                // }
 
             }
             elseif ($objdata->status=='rejected') {

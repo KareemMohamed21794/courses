@@ -33,7 +33,7 @@ class AdminsController extends Controller
 
         $segment = $request->segment(2);
 
-        $encode_id = "";
+        $encodeId = "";
 
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
@@ -58,8 +58,8 @@ class AdminsController extends Controller
             $position_id = 2;
             $is_super = 0;
 
-            $encode_id = $objAdmin->id;
-            $encodeId = $this->encodeSecureId($encode_id);
+            $encodeId = $objAdmin->id;
+            $encodeId = $this->encodeSecureId($encodeId);
 
              
         }
@@ -131,6 +131,11 @@ class AdminsController extends Controller
             $can_add = 1;
             $can_update = 1;
             $can_delete = 1;
+            $can_print = 1;
+        }
+
+        if($objAdmin->position_id == 3 ){
+           
             $can_print = 1;
         }
 
