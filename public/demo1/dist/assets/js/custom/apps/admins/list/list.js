@@ -188,7 +188,7 @@ var KTDatatablesServerSide = function () {
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3" style="display:none">
                                     <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       تسجيل الطالب
+                                       تسجيل  المنتسبين
                                     </a>
 
                                 </div>
@@ -216,7 +216,7 @@ var KTDatatablesServerSide = function () {
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3" >
                                     <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       عرض الطلاب
+                                       عرض  المنتسبين
                                     </a>
 
                                 </div>
@@ -242,9 +242,9 @@ var KTDatatablesServerSide = function () {
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:none">
+                                <div class="menu-item px-3" >
                                     <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       تسجيل الطالب
+                                       تسجيل  المنتسبين
                                     </a>
 
                                 </div>
@@ -272,7 +272,7 @@ var KTDatatablesServerSide = function () {
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3" >
                                     <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       عرض الطلاب
+                                       عرض المنتسبين
                                     </a>
 
                                 </div>
@@ -667,27 +667,12 @@ KTUtil.onDOMContentLoaded(function () {
 });
 
 
-
-function handleClick(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('/student_registration/' + id, '_blank'); // Open in a new tab
-}
-
-
 function board_directors(event, id) {
     event.preventDefault(); // Prevent default navigation
     getData(id, 2); // Execute the function
     window.open('admin/board_directors', '_blank'); // Open in a new tab
 }
 
-
-
-// function ShowStudents(event, id) {
-//     event.preventDefault(); // Prevent default navigation
-//     getData(id, 2); // Execute the function
-//     window.open('show_students/' + id, '_blank'); // Open in a new tab
-// }
 
 function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
     // Convert ID to string (ensure it's a string)
@@ -725,6 +710,19 @@ function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
         
         return urlSafe;
     });
+}
+
+
+function handleClick(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        getData(id, 2);
+        // Open the URL with the encoded ID in a new tab
+        window.open('/student_registration/' + encodedId, '_blank'); // Open in a new tab
+    });
+
+    
 }
 
 function ShowStudents(event, id) {

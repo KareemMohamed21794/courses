@@ -29,6 +29,10 @@ Route::get('/client', HomeController::class)->middleware(['auth:client'])->name(
 
 Route::get('/student_registration/{id}', [StudentRegistrationsController::class, 'create']);
 Route::post('/student_registration', [StudentRegistrationsController::class, 'store']);
+Route::get('/show_student_registration/{id}', [StudentRegistrationsController::class, 'show']);
+Route::get('/edit_student_registration/{id}', [StudentRegistrationsController::class, 'edit']);
+Route::put('/update_student_registration/{id}', [StudentRegistrationsController::class, 'update']);
+
 Route::middleware('auth:admin')->group(function () {
 	Route::prefix('/admin')->group(function () {
 

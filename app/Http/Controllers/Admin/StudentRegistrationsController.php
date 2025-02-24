@@ -75,7 +75,7 @@ class StudentRegistrationsController extends Controller
          
         //$this->authorize(self::MODEL.'-store');
         $userId = Auth::id();
-        // print_r($userId);die;
+        
         $objAdmin = Admin::find($userId);
         $segment = $request->segment(2);
         $admindetails = Admin::findOrFail($id);
@@ -105,6 +105,7 @@ class StudentRegistrationsController extends Controller
             'nationality' => ['required'],
             'national_id' => ['required', 'string', 'max:255'],
             'mobile_number' => ['required', 'string', 'max:255'],
+            'division' => ['required'],
             
         ]);
 
@@ -130,7 +131,7 @@ class StudentRegistrationsController extends Controller
         'father_name' =>  $request->father_name,
         'grandfather_name' =>  $request->grandfather_name,
         'family_name' =>  $request->family_name,
-        'full_name' =>  $request->first_name.' '.$request->father_name.' '.$request->grandfather_name.' '.$request->family_name,
+        'full_name' =>  $full_name,
         'birth_date' =>  $request->birth_date,
         'birth_place' =>  $request->birth_place,
         'mobile_number' =>  $request->mobile_number,
@@ -144,7 +145,7 @@ class StudentRegistrationsController extends Controller
         'health_condition' =>  $request->health_condition,
         'health_condition_type' =>  $request->health_condition_type ,
         'city' =>  $request->city,
-        'area' =>  $request->area ? $request->area : $request->amman_region,
+        'area' =>  $request->area ?? $request->amman_region,
         'street' =>  $request->street,
         'nearest_teacher' =>  $request->nearest_teacher,
         'building_number' =>  $request->building_number,
@@ -178,9 +179,21 @@ class StudentRegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request ,$id)
     {
-        $this->authorize(self::MODEL.'-viewAny');
+        // $this->authorize(self::MODEL.'-viewAny');
+
+        $id = $this->decodeSecureId($id);
+        $userId = Auth::id();
+       
+        $objAdmin = Admin::find($userId);
+        $segment = $request->segment(2);
+        $StudentRegistration = StudentRegistration::findOrFail($id);
+        $StudentRegistration->Admin;
+        $title = __('messages.show_student');
+        $add_title = __('messages.show_student');
+     
+        return view('auth.student_registration.show',['title' => $title, 'add_title' => $add_title, 'StudentRegistration'=>$StudentRegistration , 'id'=>$id]);
     }
 
     /**
@@ -189,17 +202,19 @@ class StudentRegistrationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request ,$id)
     {
        
         //$this->authorize(self::MODEL.'-update');
-        $StudentRegistration  = StudentRegistration::find($id);
-        
+        $id = $this->decodeSecureId($id);
         $userId = Auth::id();
+       
         $objAdmin = Admin::find($userId);
-      
-        $title = __('messages.student_registration');
-        $add_title = __('messages.student_registration');
+        $segment = $request->segment(2);
+        $StudentRegistration  = StudentRegistration::findOrFail($id);
+        $StudentRegistration->Admin;
+        $title = __('messages.edit_student_registration');
+        $add_title = __('messages.edit_student_registration');
         
         return view('auth.student_registration.update',['title' => $title, 'add_title' => $add_title, 'StudentRegistration' => $StudentRegistration, 'id' => $id]);
 
@@ -215,15 +230,22 @@ class StudentRegistrationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+       
         //$this->authorize(self::MODEL.'-update');
        
-            $validator = Validator::make($request->all(),[
-               
-                'description_ar' => ['required', 'string', 'max:255'],
-                'description_en' => ['required', 'string', 'max:255'],
-                
-            ]);
+        $validator = Validator::make($request->all(),[
+            'first_name' => ['required', 'string', 'max:255'],
+            'father_name' => ['required', 'string', 'max:255'],
+            'grandfather_name' => ['required', 'string', 'max:255'],
+            'family_name' => ['required', 'string', 'max:255'],
+            'birth_place' => ['required', 'string', 'max:255'],
+            'birth_date' => ['required'],
+            'nationality' => ['required'],
+            'national_id' => ['required', 'string', 'max:255'],
+            'mobile_number' => ['required', 'string', 'max:255'],
+            'division' => ['required'],
+            
+        ]);
    
 
         if ($validator->fails()) {
@@ -231,16 +253,54 @@ class StudentRegistrationsController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
+        $full_name = $request->first_name.' '.$request->father_name.' '.$request->grandfather_name.' '.$request->family_name;
+
+        $exsist_student = StudentRegistration::where('full_name',$full_name)->where('year',date('Y'))->where('id','!=',$id)->first();
+
+        if($exsist_student){
+             return redirect()->back()->with('message', 'هذا الطالب  موجود من قبل');
+        }
+
        
         $objStudentRegistration = StudentRegistration::find($id);
-        $objStudentRegistration->description_ar = $request->description_ar;
-        $objStudentRegistration->description_en = $request->description_en;
-        $objStudentRegistration->active = $request->active ? $request->active : 0;
+        $objStudentRegistration->first_name = $request->first_name;
+        $objStudentRegistration->father_name = $request->father_name;
+        $objStudentRegistration->grandfather_name = $request->grandfather_name;
+        $objStudentRegistration->family_name = $request->family_name;
+        $objStudentRegistration->full_name = $full_name;
+        $objStudentRegistration->birth_date = $request->birth_date;
+        $objStudentRegistration->birth_place = $request->birth_place;
+        $objStudentRegistration->mobile_number = $request->mobile_number;
+        $objStudentRegistration->home_number = $request->home_number;
+        $objStudentRegistration->national_id = $request->national_id;
+        $objStudentRegistration->nationality = $request->nationality;
+        $objStudentRegistration->parents_status = $request->parents_status;
+        $objStudentRegistration->education_level = $request->education_level;
+        $objStudentRegistration->blood_type = $request->blood_type;
+        $objStudentRegistration->hobbies = $request->hobbies;
+        $objStudentRegistration->health_condition = $request->health_condition;
+        $objStudentRegistration->health_condition_type = $request->health_condition_type;
+        $objStudentRegistration->city = $request->city;
+        $objStudentRegistration->area = $request->area ?? $request->amman_region;
+        $objStudentRegistration->street = $request->street;
+        $objStudentRegistration->nearest_teacher = $request->nearest_teacher;
+        $objStudentRegistration->building_number = $request->building_number;
+        $objStudentRegistration->guardian_name = $request->guardian_name;
+        $objStudentRegistration->division = $request->division;
+        $objStudentRegistration->guardian_phone = $request->guardian_phone;
+        $objStudentRegistration->guardian_phone_2 = $request->guardian_phone_2;
+        $objStudentRegistration->guardian_job = $request->guardian_job;
+        $objStudentRegistration->relative_relation = $request->relative_relation;
+        $objStudentRegistration->guardian_place_work = $request->guardian_place_work;
+        $objStudentRegistration->guardian_email = $request->guardian_email;
+        $objStudentRegistration->identifier_name = $request->identifier_name;
+        $objStudentRegistration->identifier_phone = $request->identifier_phone;
+        $objStudentRegistration->notes = $request->notes;
+        $objStudentRegistration->text_note = $request->text_note;
+        $objStudentRegistration->year = date('Y');
         $objStudentRegistration->save();
-        
-       
 
-        return redirect('student_registration');
+        return redirect()->back()->with('message', 'تم  التعديل بنجاح');
    
         //return response()->json(['objStudentRegistration'=>$objStudentRegistration]);
     }

@@ -108,18 +108,8 @@
 
 
 <body>
-  
-        <form class="scout-form" action="{{url('update_student_registration/')}}/{{$StudentRegistration->id}}" method="post" enctype="multipart/form-data">
-            @csrf 
-            @method('PUT') 
-
-        @if(session()->has('message'))
-            <div class="custom-alert">
-                <span class="icon">✔</span> <!-- Success icon -->
-                <span class="message">{{ session()->get('message') }}</span>
-            </div>
-        @endif
-
+       <form class="scout-form" action="{{url()->previous()}}" method="get" enctype="multipart/form-data">
+           
         <style>
             .custom-alert {
                 display: flex;
@@ -167,40 +157,40 @@
 
         <div class="two-column">
             <div class="form-group">
-                <label for="first_name">الاسم الأول <span class="required-mark">*</span></label>
-                <input type="text" id="first_name" name="first_name" required value="{{@$StudentRegistration->first_name}}">
+                <label for="first_name">الاسم الأول  </label>
+                <input type="text" id="first_name" name="first_name" readonly value="{{@$StudentRegistration->first_name}}">
             </div>
             <div class="form-group">
-                <label for="father_name">اسم الأب <span class="required-mark">*</span></label>
-                <input type="text" id="father_name" name="father_name" required value="{{@$StudentRegistration->father_name}}">
+                <label for="father_name">اسم الأب </label>
+                <input type="text" id="father_name" name="father_name" readonly value="{{@$StudentRegistration->father_name}}">
             </div>
 </div>
                     <div class="two-column">
             <div class="form-group">
-                <label for="grandfather_name">اسم الجد <span class="required-mark">*</span></label>
-                <input type="text" id="grandfather_name" name="grandfather_name" required value="{{@$StudentRegistration->grandfather_name}}">
+                <label for="grandfather_name">اسم الجد </label>
+                <input type="text" id="grandfather_name" name="grandfather_name" readonly value="{{@$StudentRegistration->grandfather_name}}">
             </div>
             <div class="form-group">
-                <label for="family_name">اسم العائلة <span class="required-mark">*</span></label>
-                <input type="text" id="family_name" name="family_name" required value="{{@$StudentRegistration->family_name}}">
+                <label for="family_name">اسم العائلة </label>
+                <input type="text" id="family_name" name="family_name" readonly value="{{@$StudentRegistration->family_name}}">
             </div>
         </div>
 </div>
         <div class="two-column">
                         <div class="form-group">
-                <label for="birth_place">مكان الولادة <span class="required-mark">*</span></label>
-                <input type="text" id="birth_place" name="birth_place" value="{{@$StudentRegistration->birth_place}}">
+                <label for="birth_place">مكان الولادة </label>
+                <input type="text" id="birth_place" name="birth_place" value="{{@$StudentRegistration->birth_place}}" readonly>
             </div>
             <div class="form-group">
-                <label for="birth_date">تاريخ الولادة <span class="required-mark">*</span></label>
-                <input type="date" id="birth_date" name="birth_date" value="{{date('Y-m-d',strtotime(@$StudentRegistration->birth_date))}}">
+                <label for="birth_date">تاريخ الولادة </label>
+                <input type="date" id="birth_date" name="birth_date" value="{{date('Y-m-d',strtotime(@$StudentRegistration->birth_date))}}" readonly>
             </div>
         </div>
 
                 <div class="two-column">
 <div class="form-group">
-    <label for="nationality">الجنسيه <span class="required-mark">*</span></label>
-    <select onchange="ChooseNationality(this.value)" id="nationality" name="nationality" required>
+    <label for="nationality">الجنسيه </label>
+    <select id="nationality" name="nationality" disabled>
         <option value="">اختر..</option>
         <option value="jordanian" {{@$StudentRegistration->nationality == 'jordanian' ? 'selected' : ''}}>أردني</option>
         <option value="emirati" {{@$StudentRegistration->nationality == 'emirati' ? 'selected' : ''}}>إماراتي</option>
@@ -260,19 +250,19 @@
     </select>
 </div>
             <div class="form-group">
-                <label for="national_id" id="national_label">الرقم الوطني <span class="required-mark">*</span></label>
-                <input type="text" id="national_id" name="national_id" required value="{{@$StudentRegistration->national_id}}">
+                <label for="national_id">الرقم الوطني </label>
+                <input type="text" id="national_id" name="national_id" readonly value="{{@$StudentRegistration->national_id}}">
             </div>
         </div>
 
         <div class="two-column">
             <div class="form-group">
-                <label for="mobile_number">رقم الهاتف  <span class="required-mark">*</span></label>
-                <input type="text" id="mobile_number" name="mobile_number" value="{{@$StudentRegistration->mobile_number}}">
+                <label for="mobile_number">رقم الهاتف  </label>
+                <input type="text" id="mobile_number" name="mobile_number" value="{{@$StudentRegistration->mobile_number}}" readonly>
             </div>
             <div class="form-group">
                 <label for="home_number">رقم المنزل</label>
-                <input type="text" id="home_number" name="home_number" value="{{@$StudentRegistration->home_number}}">
+                <input type="text" id="home_number" name="home_number" value="{{@$StudentRegistration->home_number}}" readonly>
             </div>
         </div>
 
@@ -281,7 +271,7 @@
         <div class="two-column">
             <div class="form-group">
 <label for="education_level">المؤهل العلمي  </label>
-<select id="education_level" name="education_level" >
+<select id="education_level" name="education_level" disabled>
     <option value="">اختر..</option>
     <option value="primary_school" {{@$StudentRegistration->education_level == 'primary_school' ? 'selected' : ''}}>ابتدائي</option>
     <option value="middle_school" {{@$StudentRegistration->education_level == 'middle_school' ? 'selected' : ''}}>إعدادي</option>
@@ -294,7 +284,7 @@
 </div>
 <div class="form-group">
     <label for="parents_status">الحالة بين الأبوين</label>
-    <select id="parents_status" name="parents_status" >
+    <select id="parents_status" name="parents_status" disabled>
         <option value="">اختر..</option>
         <option value="married" {{@$StudentRegistration->parents_status == 'married' ? 'selected' : ''}}>متزوج</option>
         <option value="divorced" {{@$StudentRegistration->parents_status == 'divorced' ? 'selected' : ''}}>مطلق</option>
@@ -306,7 +296,7 @@
 
 <div class="form-group">
     <label for="blood_type">نوع الدم</label>
-    <select id="blood_type" name="blood_type" >
+    <select id="blood_type" name="blood_type" disabled>
         <option value="">اختر..</option>
         <option value="A+" {{@$StudentRegistration->blood_type == 'A+' ? 'selected' : ''}}>A+</option>
         <option value="A-" {{@$StudentRegistration->blood_type == 'A-' ? 'selected' : ''}}>A-</option>
@@ -321,11 +311,11 @@
 
 <div class="form-group">
     <label for="hobbies">الهوايات</label>
-    <textarea id="hobbies" name="hobbies" ></textarea>
+    <textarea id="hobbies" name="hobbies" readonly></textarea>
 </div>
 <div class="form-group">
     <label>هل لديك أي أمراض مزمنة أو ظروف صحية بحاجة إلى رعاية؟</label>
-    <div onchange="HealthCondition()">
+    <div >
         <input type="radio" id="health_yes" name="health_condition" value="yes" {{@$StudentRegistration->health_condition == 'yes' ? 'checked' : ''}}>
         <label for="health_yes">نعم</label>
         <input type="radio" id="health_no" name="health_condition" value="no" {{@$StudentRegistration->health_condition == 'no' ? 'checked' : ''}}>
@@ -336,13 +326,13 @@
 
 <div class="form-group" id="health_condition_type_div">
     <label for="health_condition_type">هل يمكنك كتابة ما هي الأمراض مزمنة أو الظروف الصحية التي بحاجة إلى رعاية؟</label>
-    <textarea id="health_condition_type" name="health_condition_type">{{@$StudentRegistration->health_condition_type}}</textarea>
+    <textarea id="health_condition_type" name="health_condition_type" readonly>{{@$StudentRegistration->health_condition_type}}</textarea>
 </div>
 
         <div class="two-column">
 <div class="form-group">
     <label for="city">المدينه</label>
-    <select id="city" name="city" onchange="SelectCity(this.value)" >
+    <select id="city" name="city" disabled >
         <option value="">اختر..</option>
         <option value="1" {{@$StudentRegistration->city == '1' ? 'selected' : ''}}>عمان</option>
         <option value="2" {{@$StudentRegistration->city == '2' ? 'selected' : ''}}>إربد</option>
@@ -361,71 +351,71 @@
 
 <div class="form-group" id="selected_area">
     <label for="amman_region">المنطقه</label>
-    <select id="amman_region" name="amman_region" class="form-control">
+    <select id="amman_region" name="amman_region" class="form-control" disabled>
         <option value="">اختر..</option>
-         <option value="أبو نصير" {{@$StudentRegistration->area == 'أبو نصير' ? 'selected' : ''}}>أبو نصير</option>
+         <option value="أبو نصير" {{@$StudentRegistration->amman_region == 'أبو نصير' ? 'selected' : ''}}>أبو نصير</option>
 
-            <option value="شفا بدران" {{@$StudentRegistration->area == 'شفا بدران' ? 'selected' : ''}}>
+            <option value="شفا بدران" {{@$StudentRegistration->amman_region == 'شفا بدران' ? 'selected' : ''}}>
             شفا بدران</option>
 
-           <option value="الجبيهة" {{@$StudentRegistration->area == 'الجبيهة' ? 'selected' : ''}}>
+           <option value="الجبيهة" {{@$StudentRegistration->amman_region == 'الجبيهة' ? 'selected' : ''}}>
             الجبيهة</option>
 
-            <option value="طارق" {{@$StudentRegistration->area == 'طارق' ? 'selected' : ''}}>
+            <option value="طارق" {{@$StudentRegistration->amman_region == 'طارق' ? 'selected' : ''}}>
             طارق</option>
 
-            <option value=" ماركا" {{@$StudentRegistration->area == 'ماركا' ? 'selected' : ''}}>
+            <option value=" ماركا" {{@$StudentRegistration->amman_region == 'ماركا' ? 'selected' : ''}}>
             ماركا</option>
 
-            <option value="بسمان" {{@$StudentRegistration->area == 'بسمان' ? 'selected' : ''}}>
+            <option value="بسمان" {{@$StudentRegistration->amman_region == 'بسمان' ? 'selected' : ''}}>
             بسمان</option>
 
-            <option value="العبدلي" {{@$StudentRegistration->area == 'العبدلي' ? 'selected' : ''}}>
+            <option value="العبدلي" {{@$StudentRegistration->amman_region == 'العبدلي' ? 'selected' : ''}}>
             العبدلي</option>
 
-            <option value="تلاع العلي وأم السماق وخلدا" {{@$StudentRegistration->area == 'تلاع العلي وأم السماق وخلدا' ? 'selected' : ''}}>
+            <option value="تلاع العلي وأم السماق وخلدا" {{@$StudentRegistration->amman_region == 'تلاع العلي وأم السماق وخلدا' ? 'selected' : ''}}>
             تلاع العلي وأم السماق وخلدا</option>
 
-            <option value="صويلح" {{@$StudentRegistration->area == 'صويلح' ? 'selected' : ''}}>
+            <option value="صويلح" {{@$StudentRegistration->amman_region == 'صويلح' ? 'selected' : ''}}>
             صويلح</option>
 
-            <option value="المدينة" {{@$StudentRegistration->area == 'المدينة' ? 'selected' : ''}}>
+            <option value="المدينة" {{@$StudentRegistration->amman_region == 'المدينة' ? 'selected' : ''}}>
             المدينة</option>
 
-            <option value="النصر" {{@$StudentRegistration->area == 'النصر' ? 'selected' : ''}}>
+            <option value="النصر" {{@$StudentRegistration->amman_region == 'النصر' ? 'selected' : ''}}>
             النصر</option>
 
-            <option value="اليرموك" {{@$StudentRegistration->area == 'اليرموك' ? 'selected' : ''}}>
+            <option value="اليرموك" {{@$StudentRegistration->amman_region == 'اليرموك' ? 'selected' : ''}}>
             اليرموك</option>
 
-            <option value="زهران" {{@$StudentRegistration->area == 'زهران' ? 'selected' : ''}}>
+            <option value="زهران" {{@$StudentRegistration->amman_region == 'زهران' ? 'selected' : ''}}>
             زهران</option>
 
-            <option value="وادي السير" {{@$StudentRegistration->area == 'وادي السير' ? 'selected' : ''}}>
+            <option value="وادي السير" {{@$StudentRegistration->amman_region == 'وادي السير' ? 'selected' : ''}}>
             وادي السير</option>
 
-            <option value="بدر الجديدة" {{@$StudentRegistration->area == 'بدر الجديدة' ? 'selected' : ''}}>
+            <option value="بدر الجديدة" {{@$StudentRegistration->amman_region == 'بدر الجديدة' ? 'selected' : ''}}>
             بدر الجديدة</option>
 
-            <option value="مرج الحمام" {{@$StudentRegistration->area == 'مرج الحمام' ? 'selected' : ''}}>
+            <option value="مرج الحمام" {{@$StudentRegistration->amman_region == 'مرج الحمام' ? 'selected' : ''}}>
             مرج الحمام</option>
 
-            <option value="بدر" {{@$StudentRegistration->area == 'بدر' ? 'selected' : ''}}>
+            <option value="بدر" {{@$StudentRegistration->amman_region == 'بدر' ? 'selected' : ''}}>
             بدر</option>
 
-            <option value="راس العين" {{@$StudentRegistration->area == 'راس العين' ? 'selected' : ''}}>
+            <option value="راس العين" {{@$StudentRegistration->amman_region == 'راس العين' ? 'selected' : ''}}>
             راس العين</option>
 
-            <option value="القويسمة وأبو علندا والجويدة و الرقيم" {{@$StudentRegistration->area == 'القويسمة وأبو علندا والجويدة و الرقيم' ? 'selected' : ''}}>
+            <option value="القويسمة وأبو علندا والجويدة و الرقيم" {{@$StudentRegistration->amman_region == 'القويسمة وأبو علندا والجويدة و الرقيم' ? 'selected' : ''}}>
             القويسمة وأبو علندا والجويدة و الرقيم </option>
 
-            <option value="أم قصير " {{@$StudentRegistration->area == 'أم قصير ' ? 'selected' : ''}}>
+            <option value="أم قصير " {{@$StudentRegistration->amman_region == 'أم قصير ' ? 'selected' : ''}}>
             أم قصير والمقابلين والبنيات</option>
 
-            <option value="خريبة السوق" {{@$StudentRegistration->area == 'خريبة السوق' ? 'selected' : ''}}>
+            <option value="خريبة السوق" {{@$StudentRegistration->amman_region == 'خريبة السوق' ? 'selected' : ''}}>
             خريبة السوق وجاوا واليادودة</option>
 
-            <option value="احد" {{@$StudentRegistration->area == 'احد' ? 'selected' : ''}}>
+            <option value="احد" {{@$StudentRegistration->amman_region == 'احد' ? 'selected' : ''}}>
             احد </option>
 
     </select>
@@ -433,29 +423,29 @@
 
 <div class="form-group" id="text_area">
     <label for="area">المنطقه</label>
-    <input type="text" id="area" name="area" value="{{@$StudentRegistration->area}}"></input>
+    <input type="text" id="area" name="area" value="{{@$StudentRegistration->area}}" readonly></input>
 </div>
 </div>
 
 <div class="form-group">
     <label for="street">اسم الشارع</label>
-    <input type="text" id="street" name="street" value="{{@$StudentRegistration->street}}">
+    <input type="text" id="street" name="street" value="{{@$StudentRegistration->street}}" readonly>
 </div>
         <div class="two-column">
 
 <div class="form-group">
     <label for="nearest_teacher">اقرب معلم</label>
-    <input type="text" id="nearest_teacher" name="nearest_teacher" value="{{@$StudentRegistration->nearest_teacher}}">
+    <input type="text" id="nearest_teacher" name="nearest_teacher" value="{{@$StudentRegistration->nearest_teacher}}" readonly>
 </div>
 
 <div class="form-group">
     <label for="building_number">رقم البناء</label>
-    <input type="text" id="building_number" name="building_number" value="{{@$StudentRegistration->building_number}}">
+    <input type="text" id="building_number" name="building_number" value="{{@$StudentRegistration->building_number}}" readonly>
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقه <span class="required-mark">*</span></label>
-    <select id="division" name="division" required>
+    <label for="division">الفرقه </label>
+    <select id="division" name="division" disabled>
         <option value="">اختر..</option>
         <option value="1" {{@$StudentRegistration->division == '1' ? 'selected' : ''}}>الاشبال/الزهرات</option>
         <option value="2" {{@$StudentRegistration->division == '2' ? 'selected' : ''}}>الكشاف/المرشدات</option>
@@ -466,63 +456,63 @@
 </div>
 <div class="form-group">
     <label for="guardian_name">اسم ولي الامر</label>
-    <input type="text" id="guardian_name" name="guardian_name" value="{{@$StudentRegistration->guardian_name}}">
+    <input type="text" id="guardian_name" name="guardian_name" value="{{@$StudentRegistration->guardian_name}}" readonly>
 </div>
 
         <div class="two-column">
 <div class="form-group">
     <label for="guardian_phone">رقم  ولي  الامر 1</label>
-    <input type="text" id="guardian_phone" name="guardian_phone" value="{{@$StudentRegistration->guardian_phone}}">
+    <input type="text" id="guardian_phone" name="guardian_phone" value="{{@$StudentRegistration->guardian_phone}}" readonly>
 </div>
 
 <div class="form-group">
     <label for="guardian_phone_2">رقم  ولي  الامر  2</label>
-    <input type="text" id="guardian_phone_2" name="guardian_phone_2" value="{{@$StudentRegistration->guardian_phone_2}}">
+    <input type="text" id="guardian_phone_2" name="guardian_phone_2" value="{{@$StudentRegistration->guardian_phone_2}}" readonly>
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
     <label for="guardian_job">مهنه ولي الامر</label>
-    <input type="text" id="guardian_job" name="guardian_job" value="{{@$StudentRegistration->guardian_job}}">
+    <input type="text" id="guardian_job" name="guardian_job" value="{{@$StudentRegistration->guardian_job}}" readonly>
 </div>
 
 <div class="form-group">
     <label for="relative_relation">صله القرابه</label>
-    <input type="text" id="relative_relation" name="relative_relation" value="{{@$StudentRegistration->relative_relation}}">
+    <input type="text" id="relative_relation" name="relative_relation" value="{{@$StudentRegistration->relative_relation}}" readonly>
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
     <label for="guardian_place_work">مكان عمل ولي الامر</label>
-    <input type="text" id="guardian_place_work" name="guardian_place_work" value="{{@$StudentRegistration->guardian_place_work}}">
+    <input type="text" id="guardian_place_work" name="guardian_place_work" value="{{@$StudentRegistration->guardian_place_work}}" readonly>
 </div>
 
 <div class="form-group">
     <label for="guardian_email">البريد الإلكتروني لولي الامر</label>
-    <input type="email" id="guardian_email" name="guardian_email" value="{{@$StudentRegistration->guardian_email}}">
+    <input type="email" id="guardian_email" name="guardian_email" value="{{@$StudentRegistration->guardian_email}}" readonly>
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
     <label for="identifier_name">اسم المعرف</label>
-    <input type="text" id="identifier_name" name="identifier_name" value="{{@$StudentRegistration->identifier_name}}">
+    <input type="text" id="identifier_name" name="identifier_name" value="{{@$StudentRegistration->identifier_name}}" readonly>
 </div>
 
 <div class="form-group">
     <label for="identifier_phone">رقم المعرف</label>
-    <input type="text" id="identifier_phone" name="identifier_phone" value="{{@$StudentRegistration->identifier_phone}}">
+    <input type="text" id="identifier_phone" name="identifier_phone" value="{{@$StudentRegistration->identifier_phone}}" readonly>
 </div>
 </div>
 
 <div class="form-group">
     <label>هل لديك ملاحظات؟</label>
-    <div onchange="notes()">
+    <div>
         <input type="radio" id="notes_yes" name="notes" value="yes" {{@$StudentRegistration->notes == 'yes' ? 'checked' : ''}} >
         <label for="notes_yes">نعم</label>
-        <input type="radio" id="notes_no" name="notes" value="no" {{@$StudentRegistration->notes == 'no' ? 'checked' : ''}}>
+        <input type="radio" id="notes_no" name="notes" value="no" {{@$StudentRegistration->notes == 'no' ? 'checked' : ''}} >
         <label for="notes_no">لا</label>
     </div>
 </div>
@@ -530,12 +520,14 @@
 
 <div class="form-group" id="text_note_div">
     <label for="text_note">الملاحظات</label>
-    <textarea id="text_note" name="text_note">{{@$StudentRegistration->text_note}}</textarea>
+    <textarea id="text_note" name="text_note" readonly>{{@$StudentRegistration->text_note}}</textarea>
 </div>
 
-        <input type="hidden" name="StudentRegistration_id" value="{{$id}}">
-        <button type="submit" id="submit-btn">تعديل</button>
-    </form>
+  
+<!-- <a href="{{url('previuos')}}"><button type="submit" id="submit-btn">العوده</button></a> -->
+<button type="submit" id="submit-btn" >العوده</button>
+
+</form>
 </body>
 </html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -546,15 +538,6 @@
         var  value = $('input[name="health_condition"]:checked').val();
         var  value = $('input[name="notes"]:checked').val();
         var  city = $('#city').val();
-
-        var label = document.getElementById("national_label");
-        var nationality = $('#nationality').val();
-        // Check if nationality is 'jordanian', empty, or not a valid number
-        if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
-        label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
-        } else {
-            label.innerHTML = 'الرقم الجواز <span class="required-mark">*</span>';
-        }
 
         if(value == 'yes'){
             $('#health_condition_type_div').show();
@@ -607,7 +590,6 @@
         $('#health_condition_type_div').show();
     }else{
         $('#health_condition_type_div').hide();
-        $('#health_condition_type').val(null);
     }
     
     }
@@ -650,19 +632,7 @@
         $('#text_note_div').show();
     }else{
         $('#text_note_div').hide();
-        $('#text_note').val(null);
     }
     
-    }
-
-    function ChooseNationality(nationality) {
-        var label = document.getElementById("national_label");
-    
-        // Check if nationality is 'jordanian', empty, or not a valid number
-        if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
-        label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
-        } else {
-            label.innerHTML = 'الرقم الجواز <span class="required-mark">*</span>';
-        }
     }
 </script>

@@ -180,7 +180,7 @@ var KTDatatablesServerSide = function () {
                               
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_file+`">
                                     <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject_request"  onclick="reject(`+row.id+`)">
                                         رفض
                                     </a>
@@ -199,7 +199,7 @@ var KTDatatablesServerSide = function () {
 
 
                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
+                                <div class="menu-item px-3" style="display:`+display_file+`">
                                     <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
                                        عرض
                                     </a>

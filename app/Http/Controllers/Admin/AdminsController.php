@@ -8,6 +8,7 @@ use App\Models\Position;
 use App\Models\Problem;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\StudentRegistration;
 //use Response;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -135,14 +136,20 @@ class AdminsController extends Controller
         }
 
         if($objAdmin->position_id == 3 ){
-           
             $can_print = 1;
         }
 
+        
+        $leaders_number = StudentRegistration::where('division',5)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
+        $ashbal = StudentRegistration::where('division',1)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
+        $kashafa = StudentRegistration::where('division',2)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
+        $motakadem = StudentRegistration::where('division',3)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
+        $gawala = StudentRegistration::where('division',4)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
+        $persons_number = $leaders_number + $ashbal + $kashafa + $motakadem + $gawala;
 
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'encodeId'=>$encodeId]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'encodeId'=>$encodeId,'leaders_number'=>$leaders_number,'ashbal'=>$ashbal,'kashafa'=>$kashafa,'motakadem'=>$motakadem,'gawala'=>$gawala,'persons_number'=>$persons_number]);
     }
 
     /**

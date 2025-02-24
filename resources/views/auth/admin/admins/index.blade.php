@@ -352,7 +352,7 @@
                                             <th class="pb-2">{{ $objAdmin->building_number }}</th>
                                         </tr>
 
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                     <!--    <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.leader_name') }}</th>
                                             <th class="pb-2">{{ $objAdmin->name }}</th>
                                         </tr>
@@ -365,47 +365,49 @@
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.job') }}</th>
                                             <th class="pb-2">{{ $objAdmin->job }}</th>
-                                        </tr>
+                                        </tr> -->
 
 
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.leaders_number') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->leaders_number }}</th>
-                                        </tr>
-
-
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.persons_number') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->persons_number }}</th>
-                                        </tr>
-
+                                   <!-- start number  -->
+                                       
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.ashbal') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->ashbal }}</th>
+                                            <th class="pb-2">{{ @$ashbal }}</th>
                                         </tr>
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.kashafa') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->kashafa }}</th>
+                                            <th class="pb-2">{{ @$kashafa }}</th>
                                         </tr>
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.motakadem') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->motakadem }}</th>
+                                            <th class="pb-2">{{ @$motakadem }}</th>
                                         </tr>
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.gawala') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->gawala }}</th>
+                                            <th class="pb-2">{{ @$gawala }}</th>
                                         </tr>
+
+                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.leaders_number') }}</th>
+                                            <th class="pb-2">{{ @$leaders_number }}</th>
+                                        </tr>
+
 
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.groups') }}</th>
                                             <th class="pb-2">{{ $objAdmin->groups }}</th>
                                         </tr>
+
+
+                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
+                                            <th class="pb-2">{{ __('messages.persons_number') }}</th>
+                                            <th class="pb-2">{{ @$persons_number + $objAdmin->groups}}</th>
+                                        </tr>
+                                <!-- end number -->
 
 
 

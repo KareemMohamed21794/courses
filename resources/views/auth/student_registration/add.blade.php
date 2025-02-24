@@ -197,8 +197,8 @@
 
                 <div class="two-column">
 <div class="form-group">
-    <label for="nationality">الجنسيه <span class="required-mark">*</span></label>
-    <select id="nationality" name="nationality" required>
+    <label for="nationality"  >الجنسيه <span class="required-mark">*</span></label>
+    <select onchange="ChooseNationality(this.value)" id="nationality" name="nationality" required>
         <option value="">اختر..</option>
         <option value="jordanian">أردني</option>
         <option value="emirati">إماراتي</option>
@@ -258,7 +258,7 @@
     </select>
 </div>
             <div class="form-group">
-                <label for="national_id">الرقم الوطني <span class="required-mark">*</span></label>
+                <label for="national_id" id="national_label">الرقم الوطني <span class="required-mark">*</span></label>
                 <input type="text" id="national_id" name="national_id" required>
             </div>
         </div>
@@ -452,8 +452,8 @@
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقه </label>
-    <select id="division" name="division" >
+    <label for="division">الفرقه <span class="required-mark">*</span></label>
+    <select id="division" name="division" required>
         <option value="">اختر..</option>
         <option value="1">الاشبال/الزهرات</option>
         <option value="2">الكشاف/المرشدات</option>
@@ -600,5 +600,16 @@
         $('#text_note_div').hide();
     }
     
+    }
+
+    function ChooseNationality(nationality) {
+        var label = document.getElementById("national_label");
+    
+        // Check if nationality is 'jordanian', empty, or not a valid number
+        if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
+        label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
+        } else {
+            label.innerHTML = 'الرقم الجواز <span class="required-mark">*</span>';
+        }
     }
 </script>

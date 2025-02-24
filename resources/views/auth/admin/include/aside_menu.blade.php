@@ -269,6 +269,64 @@ fill: #009EF7;
 
                 @endif
 
+                @if($objAdmin->position_id == 2 )
+                 <div class="menu-item">
+                        <a class="menu-link {{ Request::segment(2)=='board_directors'  ? 'active' : '' }}" href="{{ url('/admin/board_directors') }}/{{$objAdmin->id}}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg height="24" width="24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                     viewBox="0 0 24 24" xml:space="preserve">
+                                    <g id="group">
+                                        <path d="M24,15.9c0-2.8-1.5-5-3.7-6.1C21.3,8.8,22,7.5,22,6c0-2.8-2.2-5-5-5c-2.1,0-3.8,1.2-4.6,3c0,0,0,0,0,0c-0.1,0-0.3,0-0.4,0
+                                        c-0.1,0-0.3,0-0.4,0c0,0,0,0,0,0C10.8,2.2,9.1,1,7,1C4.2,1,2,3.2,2,6c0,1.5,0.7,2.8,1.7,3.8C1.5,10.9,0,13.2,0,15.9V20h5v3h14v-3h5
+                                        V15.9z M17,3c1.7,0,3,1.3,3,3c0,1.6-1.3,3-3,3c0-1.9-1.1-3.5-2.7-4.4c0,0,0,0,0,0C14.8,3.6,15.8,3,17,3z M13.4,4.2
+                                        C13.4,4.2,13.4,4.2,13.4,4.2C13.4,4.2,13.4,4.2,13.4,4.2z M15,9c0,1.7-1.3,3-3,3s-3-1.3-3-3s1.3-3,3-3S15,7.3,15,9z M10.6,4.2
+                                        C10.6,4.2,10.6,4.2,10.6,4.2C10.6,4.2,10.6,4.2,10.6,4.2z M7,3c1.2,0,2.2,0.6,2.7,1.6C8.1,5.5,7,7.1,7,9C5.3,9,4,7.7,4,6S5.3,3,7,3
+                                        z M5.1,18H2v-2.1C2,13.1,4.1,11,7,11v0c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0,0,0,0c0.3,0.7,0.8,1.3,1.3,1.8
+                                        C6.7,13.8,5.4,15.7,5.1,18z M17,21H7v-2.1c0-2.8,2.2-4.9,5-4.9c2.9,0,5,2.1,5,4.9V21z M22,18h-3.1c-0.3-2.3-1.7-4.2-3.7-5.2
+                                        c0.6-0.5,1-1.1,1.3-1.8c0.1,0,0.2,0,0.4,0v0c2.9,0,5,2.1,5,4.9V18z"/>
+                                    </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            
+                            <span class="menu-title"> {{ __('messages.board_directors') }}</span>
+                          
+                        </a>
+                    </div>
+
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ Request::segment(2)=='group_leaders'  ? 'active' : '' }}" href="{{ url('/admin/group_leaders') }}/{{$objAdmin->id}}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg height="24" width="24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                                     viewBox="0 0 24 24" xml:space="preserve">
+                                    <g id="group">
+                                        <path d="M24,15.9c0-2.8-1.5-5-3.7-6.1C21.3,8.8,22,7.5,22,6c0-2.8-2.2-5-5-5c-2.1,0-3.8,1.2-4.6,3c0,0,0,0,0,0c-0.1,0-0.3,0-0.4,0
+                                        c-0.1,0-0.3,0-0.4,0c0,0,0,0,0,0C10.8,2.2,9.1,1,7,1C4.2,1,2,3.2,2,6c0,1.5,0.7,2.8,1.7,3.8C1.5,10.9,0,13.2,0,15.9V20h5v3h14v-3h5
+                                        V15.9z M17,3c1.7,0,3,1.3,3,3c0,1.6-1.3,3-3,3c0-1.9-1.1-3.5-2.7-4.4c0,0,0,0,0,0C14.8,3.6,15.8,3,17,3z M13.4,4.2
+                                        C13.4,4.2,13.4,4.2,13.4,4.2C13.4,4.2,13.4,4.2,13.4,4.2z M15,9c0,1.7-1.3,3-3,3s-3-1.3-3-3s1.3-3,3-3S15,7.3,15,9z M10.6,4.2
+                                        C10.6,4.2,10.6,4.2,10.6,4.2C10.6,4.2,10.6,4.2,10.6,4.2z M7,3c1.2,0,2.2,0.6,2.7,1.6C8.1,5.5,7,7.1,7,9C5.3,9,4,7.7,4,6S5.3,3,7,3
+                                        z M5.1,18H2v-2.1C2,13.1,4.1,11,7,11v0c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0,0,0,0c0.3,0.7,0.8,1.3,1.3,1.8
+                                        C6.7,13.8,5.4,15.7,5.1,18z M17,21H7v-2.1c0-2.8,2.2-4.9,5-4.9c2.9,0,5,2.1,5,4.9V21z M22,18h-3.1c-0.3-2.3-1.7-4.2-3.7-5.2
+                                        c0.6-0.5,1-1.1,1.3-1.8c0.1,0,0.2,0,0.4,0v0c2.9,0,5,2.1,5,4.9V18z"/>
+                                    </g>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            
+                            <span class="menu-title"> {{ __('messages.group_leaders') }}</span>
+                          
+                        </a>
+                    </div>
+
+                @endif
+
 
                 
 
@@ -858,7 +916,7 @@ fill: #009EF7;
 
               
 
-                @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
+                @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3)
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
                   Request::segment(2)=='report_secondary_registrations' ||Request::segment(2)=='report_administrative'||Request::segment(2)=='report_financial' || Request::segment(2)=='report_board_director_meetings'  || Request::segment(2)=='report_qualification_leaders' || Request::segment(2)=='report_commander_medals'|| Request::segment(2)=='report_student_registration'|| Request::segment(2)=='report_commander_medals'|| Request::segment(2)=='report_financial_movements'|| Request::segment(2)=='report_financial_movements'  ? 'show here' : '' }}">
 
@@ -977,13 +1035,13 @@ fill: #009EF7;
 
 
 
-                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
-                  Request::segment(2)=='report_archive_secondary_registrations' ||
-                  Request::segment(2)=='report_archive_administrative' || Request::segment(2)=='report_archive_financial'  || Request::segment(2)=='report_archive_board_director_meetings'  || Request::segment(2)=='annual_registration_archive' ||
-                  Request::segment(2)=='report_archive_commander_medals'||
-                  Request::segment(2)=='report_archive_advertisements'||
-                  Request::segment(2)=='report_archive_requests' ||
-                  Request::segment(2)=='report_archive_permits'  ? 'show here' : '' }}">
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
+                      Request::segment(2)=='report_archive_secondary_registrations' ||
+                      Request::segment(2)=='report_archive_administrative' || Request::segment(2)=='report_archive_financial'  || Request::segment(2)=='report_archive_board_director_meetings'  || Request::segment(2)=='annual_registration_archive' ||
+                      Request::segment(2)=='report_archive_commander_medals'||
+                      Request::segment(2)=='report_archive_advertisements'||
+                      Request::segment(2)=='report_archive_requests' ||
+                      Request::segment(2)=='report_archive_permits'  ? 'show here' : '' }}">
 
 
                         <span class="menu-link">
@@ -1098,9 +1156,69 @@ fill: #009EF7;
 
                  @endif
 
+                @if($objAdmin->position_id == 2)
+
+                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{ 
+                      Request::segment(2)=='report_archive_secondary_registrations' ||
+                      Request::segment(2)=='report_archive_administrative' || Request::segment(2)=='report_archive_financial'  || Request::segment(2)=='report_archive_board_director_meetings'  || Request::segment(2)=='annual_registration_archive' ||
+                      Request::segment(2)=='report_archive_commander_medals'||
+                      Request::segment(2)=='report_archive_advertisements'||
+                      Request::segment(2)=='report_archive_requests' ||
+                      Request::segment(2)=='report_archive_permits'  ? 'show here' : '' }}">
+
+
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotune/finance/fin002.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <svg height="24" viewBox="-2 0 428 428" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="m317 278.90625-25 25.402344c-.71875.839844-1.648438 1.476562-2.691406 1.84375l-62.886719 20.847656h38.695313c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8h-213.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h166.382813c-.679688 0-1.3125-.738281-1.875-1.300781-2.140626-2.105469-2.890626-5.253907-1.929688-8.097657l4.820312-14.601562h-167.398437c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h172.746094l11.28125-33.898438c.28125-1.105468.835937-2.121093 1.617187-2.949218l79.246094-79.507813v-89.644531h-72.089844c-4.417968 0-7.910156-3.128906-7.910156-7.550781v-73.449219h-237v428h317zm-264.890625-31.90625h113.007813c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8h-113.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8zm213.007813 136h-213.007813c-4.417969 0-8-3.582031-8-8s3.582031-8 8-8h213.007813c4.417968 0 8 3.582031 8 8s-3.582032 8-8 8zm0 0"/>
+                                    <path d="m253 11.808594v53.191406h53.554688zm0 0"/>
+                                    <path d="m234.945312 307.640625 37.027344-12.378906-24.648437-24.648438zm0 0"/>
+                                    <path d="m286.765625 287.425781 101.289063-101.511719-31.382813-31.382812-101.511719 101.289062zm0 0"/>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">{{ __('messages.archives') }}</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+                        <div class="menu-sub menu-sub-accordion">
+
+                            
+                      
+
+
+                           
+
+                            <div class="menu-item">
+                                 <a class="menu-link {{ Request::segment(2)=='annual_registration_archive' ? 'active' : '' }}" href="{{ url('/admin/annual_registration_archive') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.annual_registration_archive') }}</span>
+                                </a>
+                            </div>
+                      
+
+                          
+
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_archive_permits' ? 'active' : '' }}" href="{{ url('admin/report_archive_permits') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.archive_permits') }}</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                @endif
+
 
                {{-- START SETTINGS --}}
-                 @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3|| $objAdmin->position_id == 4)
+                 @if($objAdmin->is_super == 1 || $objAdmin->position_id == 3)
 
 
                   <div data-kt-menu-trigger="click" class="menu-item menu-accordion {{Request::segment(2)=='setup'||Request::segment(2)=='type_activities'||Request::segment(2)=='payment_methods' ||Request::segment(2)=='history_movements' ? 'show here' : ''}}">

@@ -122,6 +122,22 @@ var KTDatatablesServerSide = function () {
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" >
                                 <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="edit_student_registration/`+row.id+`" class="menu-link px-3"  onclick="EditStudent(event, `+row.id+`)"  target="_blank">
+                                        `+edit_lang+`
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="show_student_registration/`+row.id+`" class="menu-link px-3"  onclick="ShowStudent(event, `+row.id+`)"  target="_blank">
+                                    عرض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                                <!--begin::Menu item-->
                                 <div class="menu-item px-3" >
                                     <a href="/admin/accept_student_registration/`+row.id+`" class="menu-link px-3"  data-id=`+row.id+`>
                                         مقبول
@@ -484,3 +500,67 @@ var KTDatatablesServerSide = function () {
 KTUtil.onDOMContentLoaded(function () {
     KTDatatablesServerSide.init();
 });
+
+
+function EditStudent(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        getData(id, 2);
+        // Open the URL with the encoded ID in a new tab
+        window.open('/edit_student_registration/' + encodedId, '_blank'); // Open in a new tab
+    });
+
+    
+}
+
+function ShowStudent(event, id) {
+    event.preventDefault(); // Prevent default navigation
+
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        getData(id, 2);
+
+        // Open the URL with the encoded ID in a new tab
+        window.open('/show_student_registration/' + encodedId, '_blank');
+    });
+}
+
+
+function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
+    // Convert ID to string (ensure it's a string)
+    const idStr = String(id);
+
+    // Create HMAC with SHA-256
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(secretKey);
+    const idData = encoder.encode(idStr);
+    
+    return crypto.subtle.importKey(
+        'raw',
+        keyData,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+    ).then(key => {
+        return crypto.subtle.sign('HMAC', key, idData);
+    }).then(signature => {
+        // Convert signature to hex string
+        const signatureBytes = new Uint8Array(signature);
+        let signatureHex = '';
+        signatureBytes.forEach(byte => {
+            signatureHex += ('00' + byte.toString(16)).slice(-2);
+        });
+
+        // Combine "id:signature"
+        const combined = idStr + ':' + signatureHex;
+
+        // Base64 encode the combined string
+        let encoded = btoa(combined);
+
+        // URL-safe Base64 encoding
+        let urlSafe = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        
+        return urlSafe;
+    });
+}

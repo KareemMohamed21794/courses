@@ -52,10 +52,10 @@ class HomeController extends Controller
 
         $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
         $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
-        $count_leaders = Admin::where('is_super',0)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->whereNotNull('group_classification')->count();
 
        
-       if($objAdmin->position_id == 2|| $objAdmin->position_id == 4|| $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
+       if($objAdmin->position_id == 2||  $objAdmin->position_id == 5|| $objAdmin->position_id == 6){
         $count_secondary_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->where('type','approved')->where('year',date('Y'))->count();
 
         $count_administrative_reports = File::where('admin_id',$objAdmin->id)->where('type','administrative')->where('status','approved')->where('year',date('Y'))->count();
@@ -189,7 +189,7 @@ class HomeController extends Controller
 
         $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
         $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
-        $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','kashfih')->count();
         
        
        if($objAdmin->position_id == 2){
@@ -405,7 +405,7 @@ class HomeController extends Controller
 
         $count_admins = Admin::where('position_id',1)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
         $count_lawyers = Admin::where('position_id',2)->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
-        $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->whereBetween('created_at',[$first_day_year,$last_day_year])->count();
+        $count_leaders = Admin::where('is_super',0)->where('group_classification','irshad')->count();
         
        
        if($objAdmin->position_id == 2){

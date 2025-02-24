@@ -454,8 +454,8 @@ class FinancalMovementsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $Setup = Setup::first();
-        $leaders = Admin::where('is_super',0)->get();
-
+        $leaders = Admin::where('position_id',2)->get();
+        
         $admin_id = '';
 
 

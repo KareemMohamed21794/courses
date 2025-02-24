@@ -331,7 +331,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.workplace') }}</label>
                             <!--end::Label-->
@@ -343,7 +343,7 @@
 
 
                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.job') }}</label>
                             <!--end::Label-->
@@ -355,7 +355,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.leaders_number') }}</label>
                             <!--end::Label-->
@@ -366,7 +366,7 @@
                         <!--end::Input group-->
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class=" fs-6 fw-bold mb-2">{{ __('messages.persons_number') }}</label>
                             <!--end::Label-->

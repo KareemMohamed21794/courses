@@ -40,13 +40,22 @@ class GroupLeadersController extends Controller
         $can_update = 0;
         $can_delete = 0;
         $can_print = 0;
-
         # check if a super_admin
         $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         $objgroup = Admin::find($id);
-        $added = "";
         $title = __('messages.group_leader') . $objgroup->group_name;
         $add_title = __('messages.Add_leader');
+        $added = "";
+        if($objAdmin->is_super == 0 && $userId != $id){
+         
+          return view('auth.404',['title' => $title, 'add_title' => $add_title , 'objgroup'=>$objgroup , 'id'=>$id,'objAdmin'=>$objAdmin]
+            );
+        }
+
+        
+        
+        
 
         if($objgroup->position_id == 1  || $objgroup->position_id == 3){
             $can_add = 1;

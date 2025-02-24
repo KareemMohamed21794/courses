@@ -575,32 +575,37 @@ class PermitsController extends Controller
     }
 
     function filterKeyword( $data, $search, $field = '' ) {
-        $filter = '';
-        if ( isset( $search['value'] ) ) {
-            $filter = $search['value'];
-        }
-        if ( ! empty( $filter ) ) {
-            if ( ! empty( $field ) ) {
-                if ( strpos( strtolower( $field ), 'date' ) !== false ) {
-                    // filter by date range
-                    $data = filterByDateRange( $data, $filter, $field );
-                } else {
-                    // filter by column
-                    $data = array_filter( $data, function ( $a ) use ( $field, $filter ) {
-                        return (boolean) preg_match( "/$filter/i", $a[ $field ] );
-                    } );
-                }
+    $filter = '';
+    if ( isset( $search['value'] ) ) {
+        $filter = $search['value'];
+    }
+    
+    if ( ! empty( $filter ) ) {
+        // Escape special characters in the filter string for safe use in the regular expression
+        $escaped_filter = preg_quote( $filter, '/' );
 
+        if ( ! empty( $field ) ) {
+            if ( strpos( strtolower( $field ), 'date' ) !== false ) {
+                // Filter by date range
+                $data = filterByDateRange( $data, $escaped_filter, $field );
             } else {
-                // general filter
-                $data = array_filter( $data, function ( $a ) use ( $filter ) {
-                    return (boolean) preg_grep( "/$filter/i", (array) $a );
+                // Filter by column
+                $data = array_filter( $data, function ( $a ) use ( $field, $escaped_filter ) {
+                    return (boolean) preg_match( "/$escaped_filter/i", $a[ $field ] );
                 } );
             }
-        }
 
-        return $data;
+        } else {
+            // General filter
+            $data = array_filter( $data, function ( $a ) use ( $escaped_filter ) {
+                return (boolean) preg_grep( "/$escaped_filter/i", (array) $a );
+            } );
+        }
     }
+
+    return $data;
+}
+
 
     function filterByDateRange( $data, $filter, $field ) {
         // filter by range
@@ -1100,7 +1105,14 @@ class PermitsController extends Controller
         $title = __('messages.archive_advertisements');
 
         // Fetch all advertisements where the created_at date is between the first and last day of the provided year
-        $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+        $userId = \Auth::id();
+        $objAdmin = Admin::find($userId);
+        if($objAdmin->is_super){
+            $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+        }else{
+            $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->where('admin_id',$objAdmin->id)->get();
+        }
+        
 
        
 
@@ -1180,11 +1192,6 @@ class PermitsController extends Controller
                 $status = "معلقه";
             }elseif ($objdata->status=='approved') {
                 $status = "<span style='color:green;font-weight:bold'>مقبول</span>" . "<br><a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
-
-                if($objAdmin->is_super == 0){
- 
-                    $status = "<a target='_blank' href = '".url('admin/download_approvement')."/".$objdata->id." '>تحميل الموافقة</>";
-                }
 
             }
             elseif ($objdata->status=='rejected') {
