@@ -427,7 +427,10 @@ Route::middleware('auth:admin')->group(function () {
 
 		# Start advertisements
 		Route::get('/advertisements/get', [AdvertisementsController::class, 'get']);
+		Route::get('/your_advertisements/get', [AdvertisementsController::class, 'get']);
 		Route::resource('/advertisements', AdvertisementsController::class);
+		Route::resource('/your_advertisements', AdvertisementsController::class);
+
 		Route::DELETE('/delete_advertisements', [AdvertisementsController::class,'deleteadvertisements']);
 		Route::get('export_advertisements', [AdvertisementsController::class, 'ExportAdvertisements']);
         

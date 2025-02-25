@@ -30,7 +30,7 @@ class BoardDirectorMeetingsController extends Controller
         $objAdmin = Admin::find($userId);
         $exsistdata = File::where('admin_id',$userId)->where('type','board_director_meetings')->where('year',date('Y'))->first();
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
 
         if($objAdmin->is_super == 0){

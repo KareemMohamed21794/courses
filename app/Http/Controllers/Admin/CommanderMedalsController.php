@@ -29,7 +29,7 @@ class CommanderMedalsController extends Controller
         $add_title = __('messages.commander_medals');
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
         $Setup = Setup::first();
         
         if($Setup && $Setup->commander_medal_date >= date('Y-m-d')){

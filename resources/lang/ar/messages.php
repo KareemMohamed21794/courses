@@ -683,6 +683,7 @@ return [
     'zip_code'=>'الرمز البريدي',
     'Financial_claims'=>'مطالبة مالية',
     'permit_count'=>'عدد التصاريح',
+    'privite_advertisements'=>'الوارد الخاص فيك',
 
  ];
 

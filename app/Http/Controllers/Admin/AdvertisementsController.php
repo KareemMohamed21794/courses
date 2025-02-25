@@ -24,10 +24,12 @@ class AdvertisementsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
+        $segment = $request->segment(2);
+        
         if($objAdmin->is_super == 1){
             $title = __('messages.issued');
             $add_title = __('messages.issued');
@@ -37,8 +39,8 @@ class AdvertisementsController extends Controller
         }
 
 
-        $leaders = Admin::where('is_super',0)->get();
-
+        $leaders = Admin::where('is_super',0)->whereNotNull('group_classification')->whereNull('deleted_at')->get();
+        $monitors = Admin::where('position_id',4)->whereNull('deleted_at')->get();
 
          ///// update read 
 
@@ -85,7 +87,7 @@ class AdvertisementsController extends Controller
 
       
 
-        return view('auth.admin.advertisements.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'objAdmin'=>$objAdmin]);
+        return view('auth.admin.advertisements.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'objAdmin'=>$objAdmin,'monitors'=>$monitors,'segment'=>$segment]);
 
         //Advertisement::where('admin_id', $objAdmin->id)->update(['read' => 1]);
     }
@@ -146,14 +148,17 @@ class AdvertisementsController extends Controller
 
         }elseif($request->group_type == 'all'){
 
-            $arrGroups =  Admin::whereNull('deleted_at')->where('is_super',0)->pluck('id')->toArray();
+            $arrGroups =  Admin::whereNull('deleted_at')->where('is_super',0)->whereNotNull('group_classification')->pluck('id')->toArray();
             
         }elseif($request->group_type == 'group_name'){
 
             $arrGroups =  $request->admin_id ? $request->admin_id : array();
             
-        }
+        }elseif($request->group_type == 'monitors'){
 
+            $arrGroups =  $request->monitor_id ? $request->monitor_id : array();
+            
+        }
 
 
 
@@ -203,36 +208,27 @@ class AdvertisementsController extends Controller
         $this->logAction(auth()->id(), 'user', 'send_Advertisement', 'create', 'advertisements', $Advertisement->id);
         
 
-        foreach ($arrGroups as $key => $objGroup) {
-
-
-            $objAdmin = Admin::find($objGroup);
-
+        // foreach ($arrGroups as $key => $objGroup) {
+        //     $objAdmin = Admin::find($objGroup);
              
-            if(!empty($objAdmin->email)){
-                $recipient = $objAdmin->email;
+        //     if(!empty($objAdmin->email)){
+        //         $recipient = $objAdmin->email;
+        //         //$recipient = 'mahmoud.ali.29992@gmail.com';
+        //         $subject = "لديك وارد من مدير نظام تواصل";
+        //         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+        //         $fromEmail = 'admin@tawasol.privatescouts.org'; 
+        //         // The "from" email address
+        //         Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+        //             $mail->to($recipient)
+        //                 ->from($fromEmail) // Set the "from" email address
+        //                 ->subject($subject);
+        //         });
+        //     }
+        //     # send email
 
-                 
-                //$recipient = 'mahmoud.ali.29992@gmail.com';
-                $subject = "لديك وارد من مدير نظام تواصل";
+        //     // sleep(60);
 
-                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
-
-                $fromEmail = 'admin@tawasol.privatescouts.org'; 
-                // The "from" email address
-
-                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                    $mail->to($recipient)
-                        ->from($fromEmail) // Set the "from" email address
-                        ->subject($subject);
-                });
-            }
-
-            # send email
-
-            // sleep(60);
-
-        }
+        // }
         
 
         DB::commit(); // Commit the transaction
@@ -344,6 +340,8 @@ class AdvertisementsController extends Controller
     { 
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
+        $segment = $request->segment(2);
+      
         //$this->authorize(self::MODEL.'-viewAny');
         ini_set('memory_limit', '-1');
 
@@ -391,20 +389,8 @@ class AdvertisementsController extends Controller
         $active = $request->active;
         $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
         $last_day_year = date('Y') . '-12-31';
-        if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-        
-            if($active=='All'){
-                $alldata = AdvertisementParent::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='Active'){
-                $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = AdvertisementParent::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
-            }
-        }else{
+        if($segment == 'your_advertisements'){
 
             $alldata = Advertisement::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             if($active=='All'){
@@ -417,9 +403,40 @@ class AdvertisementsController extends Controller
                 $alldata = Advertisement::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
 
+        }else{
 
+            if($objAdmin->is_super == 1|| $objAdmin->position_id == 3|| $objAdmin->position_id == 4){
+
+               $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            
+                if($active=='All'){
+                    $alldata = AdvertisementParent::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+                elseif($active=='Active'){
+                    $alldata = AdvertisementParent::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+                elseif($active=='DeActive'){
+                    $alldata = AdvertisementParent::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+            }else{
+
+                $alldata = Advertisement::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                if($active=='All'){
+                    $alldata = Advertisement::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+                elseif($active=='Active'){
+                    $alldata = Advertisement::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+                elseif($active=='DeActive'){
+                    $alldata = Advertisement::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+                }
+
+
+
+            }
 
         }
+        
 
         $alldataResult=array();
  

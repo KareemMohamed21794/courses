@@ -30,7 +30,7 @@ class AchievementsStudyRequirementsController extends Controller
         $objAdmin = Admin::find($userId);
        
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
         if($objAdmin->is_super == 0){
         AchievementStudyRequirement::where('admin_id', $objAdmin->id)

@@ -30,7 +30,7 @@ class AdminsController extends Controller
        // $this->authorize(self::MODEL.'-viewAny');
         $departments = Department::all();
         $positions = Position::all();
-        $leaders = Admin::where('position_id',2)->get();
+        $leaders = Admin::where('position_id',2)->whereNull('deleted_at')->get();
 
         $segment = $request->segment(2);
 
@@ -572,13 +572,13 @@ class AdminsController extends Controller
         $active = $request->active;
 
         if($objAdmin->is_super == 1 || $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
-            $alldata = Admin::where('position_id',$position_id)->get();
+            $alldata = Admin::where('position_id',$position_id)->whereNull('deleted_at')->get();
 
             if($active=='All'){
                 $alldata = Admin::withTrashed()->where('position_id',$position_id)->get();
             }
             elseif($active=='Active'){
-                $alldata = Admin::where('position_id',$position_id)->get();
+                $alldata = Admin::where('position_id',$position_id)->whereNull('deleted_at')->get();
             }
             elseif($active=='DeActive'){
                 $alldata = Admin::onlyTrashed()->where('position_id',$position_id)->get();
@@ -587,13 +587,13 @@ class AdminsController extends Controller
         }else{
 
 
-            $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+            $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->whereNull('deleted_at')->get();
 
             if($active=='All'){
                 $alldata = Admin::withTrashed()->where('position_id',$position_id)->where('id',$objAdmin->id)->get();
             }
             elseif($active=='Active'){
-                $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->get();
+                $alldata = Admin::where('position_id',$position_id)->where('id',$objAdmin->id)->whereNull('deleted_at')->get();
             }
             elseif($active=='DeActive'){
                 $alldata = Admin::onlyTrashed()->where('position_id',$position_id)->where('id',$objAdmin->id)->get();

@@ -172,7 +172,7 @@
     </div>
     <!--end::Post-->
    <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
-
+   <input type="hidden" name="segment" id="segment" value="{{ $segment }}">
 
 @endsection
 

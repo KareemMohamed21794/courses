@@ -6,13 +6,15 @@ var KTDatatablesServerSide = function () {
     var table;
     var dt;
     var filterPayment;
+    var segment = $("#segment").val();
     var is_super = $("#is_super").val();
     var firstSegment = $("#firstSegment").val();
-    let main_url = "/admin/advertisements/get";
+    // let main_url = "/admin/advertisements/get";
+    let main_url = "/admin/"+segment+"/get";
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
-
+    
     var adminColumns = [
     { data: '#' },
     { data: 'order' },

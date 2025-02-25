@@ -34,7 +34,7 @@ class OrganizingStudiesController extends Controller
         $add_title = __('messages.organizing_study');
         
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
         if($objAdmin->is_super == 0){
         OrganizingStudy::where('admin_id', $objAdmin->id)

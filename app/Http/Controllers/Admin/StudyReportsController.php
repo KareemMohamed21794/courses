@@ -34,7 +34,7 @@ class StudyReportsController extends Controller
         $add_title = __('messages.study_report');
         
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
         $can_add = 0;
         $can_update = 0;

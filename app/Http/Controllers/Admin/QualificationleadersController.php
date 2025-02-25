@@ -28,7 +28,7 @@ class QualificationleadersController extends Controller
     {
         $title = __('messages.qualification_leaders');
         $add_title = __('messages.qualification_leader');
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         if($objAdmin->is_super == 0){

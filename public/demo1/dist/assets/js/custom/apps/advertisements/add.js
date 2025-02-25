@@ -257,6 +257,7 @@ KTUtil.onDOMContentLoaded(function () {
 
 $( document ).ready(function() {
     $("#group_div").hide();
+    $("#monitor_div").hide();
 });
 
 
@@ -264,8 +265,20 @@ function group_classification(value) {
 
    if(value == 'group_name'){
     $("#group_div").show();
+    $("#monitor_div").hide();
+    // $("#monitor_id").val(null);
+    $('#monitor_id').val([]).trigger('change');
+   }else if(value == 'monitors'){
+    $("#group_div").hide();
+    $("#monitor_div").show();
+    // $("#admin_id").val(null);
+    $('#admin_id').val([]).trigger('change');
    }else{
     $("#group_div").hide();
-   
+    $("#monitor_div").hide();
+    // $("#monitor_id").val(null);
+    // $("#admin_id").val(null);
+    $('#monitor_id').val([]).trigger('change');
+    $('#admin_id').val([]).trigger('change');
    }
 }

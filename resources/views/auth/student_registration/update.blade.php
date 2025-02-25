@@ -662,7 +662,7 @@
         if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
         label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
         } else {
-            label.innerHTML = 'الرقم الجواز <span class="required-mark">*</span>';
+            label.innerHTML = ' رقم الجواز <span class="required-mark">*</span>';
         }
     }
 </script>

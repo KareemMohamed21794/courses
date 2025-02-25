@@ -31,7 +31,7 @@ class BoardDirectorsController extends Controller
         $ids = BoardDirector::select('admin_id')->groupBy('admin_id')->pluck('admin_id')->toArray();
 
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
 
         $can_add = 0;

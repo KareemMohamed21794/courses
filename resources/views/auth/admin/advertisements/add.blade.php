@@ -44,6 +44,7 @@
                                 <option value="irshad">ارشادية</option>
                                 
                                 <option value="group_name">اسم المجموعة</option>
+                                <option value="monitors">مراقبين</option>
                             </select>
                             <!--end::Select-->
                         </div>
@@ -74,7 +75,7 @@
 
 
 
-                          <!--begin::Input group-->
+                        <!--begin::Input group-->
                         <div class="fv-row mb-7" id="group_div">
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
@@ -88,6 +89,28 @@
                                 
                                  @foreach($leaders as $leader)
                                         <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
+                                    @endforeach
+                            </select>
+                            <!--end::Input-->
+                        </div>
+                        <!--end::Input group-->
+
+
+
+                        <!--begin::Input group-->
+                        <div class="fv-row mb-7" id="monitor_div">
+                            <!--begin::Label-->
+                            <label class="fs-6 fw-bold mb-2">
+                                <span class="required">{{ __('messages.monitors') }}</span>
+                                 
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Input-->
+                            <select name="monitor_id[]" id="monitor_id" aria-label="{{ __('messages.Select') }} " data-control="select2" data-placeholder="{{ __('messages.Select') }} " data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder" multiple>
+                                <option value="0">{{ __('messages.Select') }} </option>
+                                
+                                 @foreach($monitors as $monitor)
+                                        <option value="{{$monitor->id}}">{{ $monitor->name }} / {{ $monitor->email }}</option>
                                     @endforeach
                             </select>
                             <!--end::Input-->

@@ -37,7 +37,7 @@ class SecondaryRegistrationsController extends Controller
         $exsistdata = File::where('admin_id',$userId)->where('type','secondary_registration')->where('year',date('Y'))->first();
 
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
         ///// update read 
 
@@ -264,10 +264,10 @@ class SecondaryRegistrationsController extends Controller
             'order'   => true,
             'id'   => true,
             'leader'   => true,
-            'secondary_registration'   => true,
-            'year'   => true,
-            'status'   => true,
-            'created_at'   => true,
+            'count'   => true,
+            // 'year'   => true,
+            // 'status'   => true,
+            // 'created_at'   => true,
         ];
 
         if ( isset( $request->columnsDef ) && is_array( $request->columnsDef ) ) {
@@ -280,68 +280,95 @@ class SecondaryRegistrationsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+        // if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
+
+        //    $alldata = File::where('type','secondary_registration')->get();
+        
+        //     if($active=='All'){
+        //         $alldata = File::where('type','secondary_registration')->withTrashed()->get();
+        //     }
+        //     elseif($active=='Active'){
+        //         $alldata = File::where('type','secondary_registration')->get();
+        //     }
+        //     elseif($active=='DeActive'){
+        //         $alldata = File::where('type','secondary_registration')->onlyTrashed()->get();
+        //     }
+        // }else{
+
+        //     $alldata = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
+        //     if($active=='All'){
+        //         $alldata = File::withTrashed()->where('admin_id',$userId)->where('type','secondary_registration')->get();
+        //     }
+        //     elseif($active=='Active'){
+        //         $alldata = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
+        //     }
+        //     elseif($active=='DeActive'){
+        //         $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type','secondary_registration')->get();
+        //     }
+
+
+
+        // }
+
+
+
+
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = File::where('type','secondary_registration')->get();
+           $alldata = StudentRegistration::
+           join('admins', 'student_registrations.admin_id', '=', 'admins.id')
+           ->select('student_registrations.admin_id','admins.group_name', \DB::raw('count(*) as registration_count'))
+           ->groupBy('student_registrations.admin_id','admins.group_name')
+           ->get();
+
+
         
-            if($active=='All'){
-                $alldata = File::where('type','secondary_registration')->withTrashed()->get();
-            }
-            elseif($active=='Active'){
-                $alldata = File::where('type','secondary_registration')->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = File::where('type','secondary_registration')->onlyTrashed()->get();
-            }
         }else{
 
-            $alldata = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
-            if($active=='All'){
-                $alldata = File::withTrashed()->where('admin_id',$userId)->where('type','secondary_registration')->get();
-            }
-            elseif($active=='Active'){
-                $alldata = File::where('admin_id',$userId)->where('type','secondary_registration')->get();
-            }
-            elseif($active=='DeActive'){
-                $alldata = File::onlyTrashed()->where('admin_id',$userId)->where('type','secondary_registration')->get();
-            }
-
-
+           
+            $alldata = StudentRegistration::
+            where('student_registrations.admin_id',$userId)
+           ->join('admins', 'student_registrations.admin_id', '=', 'admins.id')
+           ->select('student_registrations.admin_id','admins.group_name', \DB::raw('count(*) as registration_count'))
+           ->groupBy('student_registrations.admin_id','admins.group_name')
+           ->get();
+           
 
         }
 
-
+     
 
         $alldataResult=array();
 
         foreach($alldata as $key=> $objdata){
-            $status = "معلقه";
-            if($objdata->status=='pending'){
-                $status = "معلقه";
-            }elseif ($objdata->status=='approved') {
-                $status = "<span style='color:green;font-weight:bold'>مقبول</span>" .  "<br><a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";;
+            // $status = "معلقه";
+            // if($objdata->status=='pending'){
+            //     $status = "معلقه";
+            // }elseif ($objdata->status=='approved') {
+            //     $status = "<span style='color:green;font-weight:bold'>مقبول</span>" .  "<br><a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";;
 
-                if($objAdmin->is_super == 0){
+            //     if($objAdmin->is_super == 0){
  
-                    $status = "<a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";
-                }
+            //         $status = "<a target='_blank' href = '".url('admin/download_secondary_registration')."/".$objdata->id." '>تحميل  الشهادة</>";
+            //     }
 
-            }
-            elseif ($objdata->status=='rejected') {
-                $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
-            }
+            // }
+            // elseif ($objdata->status=='rejected') {
+            //     $status = "<span style='color:red;font-weight:bold'>مرفوض</span>";
+            // }
 
 
             $alldataResult[] = array(
-                "#" => $objdata->id,
+                "#" => $objdata->admin_id,
                 "order" => $key+1,
-                "id" => $objdata->id,
-                "leader" => @$objdata->Admin->group_name,
-                 "secondary_registration" => '
-                <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">تحميل الملف<a>',
-                "year" => $objdata->year,
-                "status"=>$status,
-                "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
+                "id" => $objdata->admin_id,
+                "leader" => @$objdata->group_name,
+                "count" => @$objdata->registration_count,
+                //  "secondary_registration" => '
+                // <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">تحميل الملف<a>',
+                // "year" => $objdata->year,
+                // "status"=>$status,
+                // "created_at" => Date('Y-m-d h:i:s',strtotime($objdata->created_at)),
             );
         }
 
@@ -1151,7 +1178,7 @@ public function accept_second_registration(Request $request, $id)
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
         $Setup = Setup::first();
 
         $admin_id = '';

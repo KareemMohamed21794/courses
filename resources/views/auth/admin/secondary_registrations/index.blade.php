@@ -87,7 +87,7 @@
                             @if($objAdmin->is_super == 1)
                             <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
-                           <a href="{{url('admin/export_secondary_registrations')}}" class="menu-link px-3">
+                           <a href="{{url('admin/export_secondary_registrations')}}" class="menu-link px-3" style="display:none;">
                             <button type="button" class="btn btn-light-primary me-3" >
                            <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
@@ -106,7 +106,7 @@
                         @endif
                         @if($can_add == 1 )
                         <!--begin::Download Form-->
-                         <a href="{{ url('public') }}/{{@$objSetup->secondary_registration_file}}" class="menu-link px-3" download="نموذج التسجيل السنوي">
+                         <a href="{{ url('public') }}/{{@$objSetup->secondary_registration_file}}" class="menu-link px-3" download="نموذج التسجيل السنوي" style="display:none;">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">
@@ -120,7 +120,7 @@
 
 
                             <!--begin::Add-->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add" style="display:none;">{{ __('messages.Add') }} {{ $add_title }}</button >
                             <!--end::Add-->
                             @endif
                           
@@ -146,7 +146,7 @@
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                              @if($objAdmin->is_super == 1)
-                            <th class="w-10px pe-2">
+                            <th class="w-10px pe-2" style="visibility: hidden;">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
                                 </div>
@@ -163,11 +163,11 @@
                             @endif
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th>الملف</th>
+                            <th>العدد</th>
 
-                             <th>السنة</th>
+                            <!--  <th>السنة</th>
                               <th>حاله التسجيل السنوي</th>
-                            <th>{{ __('messages.created_at') }}</th>
+                            <th>{{ __('messages.created_at') }}</th> -->
                             @if($objAdmin->is_super == 1)
                             <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
                             @else

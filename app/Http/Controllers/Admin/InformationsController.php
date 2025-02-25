@@ -35,7 +35,7 @@ class InformationsController extends Controller
         }
         
 
-        $leaders = Admin::where('is_super',0)->get();
+        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
 
          ///// update read 
 

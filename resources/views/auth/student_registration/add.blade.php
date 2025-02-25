@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الطالب</title>
+    <title>تسجيل  منتسب جديد</title>
     <link href="{{ asset('demo1/dist/assets/plugins/custom/styles.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -609,7 +609,7 @@
         if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
         label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
         } else {
-            label.innerHTML = 'الرقم الجواز <span class="required-mark">*</span>';
+            label.innerHTML = 'رقم الجواز <span class="required-mark">*</span>';
         }
     }
 </script>
