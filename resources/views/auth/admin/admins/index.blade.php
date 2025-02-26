@@ -405,7 +405,7 @@
 
                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
                                             <th class="pb-2">{{ __('messages.persons_number') }}</th>
-                                            <th class="pb-2">{{ @$persons_number + $objAdmin->groups}}</th>
+                                            <th class="pb-2">{{ @$persons_number }}</th>
                                         </tr>
                                 <!-- end number -->
 

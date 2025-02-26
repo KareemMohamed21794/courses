@@ -125,7 +125,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" >
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.scout_qualification') }}</label>
                             <!--end::Label-->
@@ -139,7 +139,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display:none;">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.specialization') }}</label>
                             <!--end::Label-->
@@ -188,7 +188,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.notes') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.notes') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -498,7 +498,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.fax') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.fax') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.fax') }}" name="fax"  id="fax_update" />
@@ -510,7 +510,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.mailbox') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.mailbox') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.mailbox') }}" name="mailbox"  id="mailbox_update" />
@@ -521,7 +521,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.city') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.city') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.city') }}" name="city_comunication"  id="city_comunication_update" />
@@ -533,7 +533,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.zip_code') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.zip_code') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.zip_code') }}" name="zip_code"  id="zip_code_update" />

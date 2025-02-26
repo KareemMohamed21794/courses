@@ -44,7 +44,8 @@
                                 <option value="irshad">ارشادية</option>
                                 
                                 <option value="group_name">اسم المجموعة</option>
-                                <option value="monitors">مراقبين</option>
+                                <option value="monitor_name">اسم  المراقب</option>
+                                <option value="monitors">كل المراقبين</option>
                             </select>
                             <!--end::Select-->
                         </div>

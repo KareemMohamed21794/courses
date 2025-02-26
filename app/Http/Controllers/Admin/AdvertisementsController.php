@@ -154,10 +154,13 @@ class AdvertisementsController extends Controller
 
             $arrGroups =  $request->admin_id ? $request->admin_id : array();
             
-        }elseif($request->group_type == 'monitors'){
+        }elseif($request->group_type == 'monitor_name'){
 
             $arrGroups =  $request->monitor_id ? $request->monitor_id : array();
             
+        }elseif($request->group_type == 'monitors'){
+
+            $arrGroups =  Admin::whereNull('deleted_at')->where('position_id',4)->pluck('id')->toArray();
         }
 
 
@@ -208,27 +211,27 @@ class AdvertisementsController extends Controller
         $this->logAction(auth()->id(), 'user', 'send_Advertisement', 'create', 'advertisements', $Advertisement->id);
         
 
-        // foreach ($arrGroups as $key => $objGroup) {
-        //     $objAdmin = Admin::find($objGroup);
+        foreach ($arrGroups as $key => $objGroup) {
+            $objAdmin = Admin::find($objGroup);
              
-        //     if(!empty($objAdmin->email)){
-        //         $recipient = $objAdmin->email;
-        //         //$recipient = 'mahmoud.ali.29992@gmail.com';
-        //         $subject = "لديك وارد من مدير نظام تواصل";
-        //         $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
-        //         $fromEmail = 'admin@tawasol.privatescouts.org'; 
-        //         // The "from" email address
-        //         Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-        //             $mail->to($recipient)
-        //                 ->from($fromEmail) // Set the "from" email address
-        //                 ->subject($subject);
-        //         });
-        //     }
-        //     # send email
+            if(!empty($objAdmin->email)){
+                $recipient = $objAdmin->email;
+                //$recipient = 'mahmoud.ali.29992@gmail.com';
+                $subject = "لديك وارد من مدير نظام تواصل";
+                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
+                $fromEmail = 'admin@tawasol.privatescouts.org'; 
+                // The "from" email address
+                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                    $mail->to($recipient)
+                        ->from($fromEmail) // Set the "from" email address
+                        ->subject($subject);
+                });
+            }
+            # send email
 
-        //     // sleep(60);
+            // sleep(60);
 
-        // }
+        }
         
 
         DB::commit(); // Commit the transaction
@@ -487,6 +490,22 @@ class AdvertisementsController extends Controller
                     }
                     
                 }
+                
+            }elseif ($objdata->group_type=='monitor_name') {
+                 
+                foreach ($objdata->Advertisements as $key2=> $Advertisement) {
+                    if(count($objdata->Advertisements)==($key2+1)){
+                        $groups.=@$Advertisement->Admin->name;
+                    }else{
+                        $groups.=@$Advertisement->Admin->name." - ";
+                        
+                    }
+                    
+                }
+                
+            }elseif ($objdata->group_type=='monitors') {
+                 
+                $groups = "كل  المراقبين";
                 
             }
                 

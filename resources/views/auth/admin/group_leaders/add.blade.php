@@ -40,7 +40,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.first_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.first_name') }}" name="first_name"  id="first_name" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.first_name') }}" name="first_name"  id="first_name"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -54,7 +54,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.father_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.father_name') }}" name="father_name"  id="father_name" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.father_name') }}" name="father_name"  id="father_name"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -67,7 +67,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.grandfather_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.grandfather_name') }}" name="grandfather_name"  id="grandfather_name" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.grandfather_name') }}" name="grandfather_name"  id="grandfather_name"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -81,7 +81,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.family_name') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.family_name') }}" name="family_name"  id="family_name" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.family_name') }}" name="family_name"  id="family_name"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -93,7 +93,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.birth_place') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.birth_place') }}" name="birth_place"  id="birth_place" />
+                            <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.birth_place') }}" name="birth_place"  id="birth_place"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -140,7 +140,7 @@
 
 
                         <!--begin::Input group-->
-                        <div class="fv-row mb-7">
+                        <div class="fv-row mb-7" style="display: none;">
                             <!--begin::Label-->
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.specialization') }}</label>
                             <!--end::Label-->
@@ -189,7 +189,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.notes') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.notes') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                            
@@ -202,7 +202,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.previous_scouting_experiences') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.previous_scouting_experiences') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <a href="javascript:void(0)" onclick="addOtherPerson();" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -331,7 +331,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.city') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select aria-label="{{ __('messages.Select') }} {{ __('messages.city') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.city') }}"   class="form-select form-select-solid fw-bolder" id="city" name="city" onchange="SelectCity(this.value)" >
+                            <select   aria-label="{{ __('messages.Select') }} {{ __('messages.city') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.city') }}"   class="form-select form-select-solid fw-bolder" id="city" name="city" onchange="SelectCity(this.value)" >
                                 <option value="">اختر..</option>
                                 <option value="1">عمان</option>
                                 <option value="2">إربد</option>
@@ -354,7 +354,7 @@
                         <!--begin::Input group-->
                         <div class="fv-row mb-7" id="selected_area">
                              <label class="required fs-6 fw-bold mb-2">{{ __('messages.area') }}</label>
-                             <select aria-label="{{ __('messages.Select') }} {{ __('messages.area') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.area') }}"   class="form-select form-select-solid fw-bolder" id="amman_region" name="amman_region" class="form-control">
+                             <select  aria-label="{{ __('messages.Select') }} {{ __('messages.area') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.area') }}"   class="form-select form-select-solid fw-bolder" id="amman_region" name="amman_region" class="form-control">
                                 <option value="">اختر..</option>
                                  <option value="أبو نصير">
                                     أبو نصير</option>
@@ -499,7 +499,7 @@
                             <label class="required fs-6 fw-bold mb-2">{{ __('messages.marital_status') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select aria-label="{{ __('messages.Select') }} {{ __('messages.marital_status') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.marital_status') }}"   class="form-select form-select-solid fw-bolder" id="marital_status" name="marital_status" onchange="SelectCity(this.value)" >
+                            <select  aria-label="{{ __('messages.Select') }} {{ __('messages.marital_status') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.marital_status') }}"   class="form-select form-select-solid fw-bolder" id="marital_status" name="marital_status" onchange="SelectCity(this.value)" >
                                 <option value="">اختر..</option>
                                 <option value="اعزب">اعزب</option>
                                 <option value="متزوج">متزوج</option>
@@ -539,7 +539,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.fax') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.fax') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.fax') }}" name="fax"  id="fax" />
@@ -551,7 +551,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.mailbox') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.mailbox') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.mailbox') }}" name="mailbox"  id="mailbox" />
@@ -562,7 +562,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.city') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.city') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.city') }}" name="city_comunication"  id="city_comunication" />
@@ -574,7 +574,7 @@
                          <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.zip_code') }}</label>
+                            <label class=" fs-6 fw-bold mb-2">{{ __('messages.zip_code') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
                             <input type="text" class="form-control form-control-solid" placeholder="{{ __('messages.zip_code') }}" name="zip_code"  id="zip_code" />

@@ -136,7 +136,26 @@ class GroupLeadersController extends Controller
             'job' => ['required', 'string', 'max:255'],
             'birth_place' => ['required', 'string', 'max:255'],
             'birth_date' => ['required'],
-            
+            'scout' => ['required', 'string', 'max:255'],
+            'year_scout' => ['required'],
+            'place_scout' => ['required', 'string', 'max:255'],
+            'vacation_scout' => ['required', 'string', 'max:255'],
+            'academic' => ['required', 'string', 'max:255'],
+            'specialization_academic' => ['required', 'string', 'max:255'],
+            'year_academic' => ['required'],
+            'college' => ['required', 'string', 'max:255'],
+            'work_place' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'Job_title' => ['required', 'string', 'max:255'],
+            'city' => ['required'],
+            'street' => ['required', 'string', 'max:255'],
+            'building_number' => ['required', 'string', 'max:255'],
+            'nearest_teacher' => ['required', 'string', 'max:255'],
+            'home_phone' => ['required', 'string', 'max:255'],
+            'marital_status' => ['required', 'string', 'max:255'],
+            'phone_comunication' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+           
         ]);
 
         if ($validator->fails()) {
@@ -267,6 +286,25 @@ class GroupLeadersController extends Controller
             'job' => ['required', 'string', 'max:255'],
             'birth_place' => ['required', 'string', 'max:255'],
             'birth_date' => ['required'],
+            'scout' => ['required', 'string', 'max:255'],
+            'year_scout' => ['required'],
+            'place_scout' => ['required', 'string', 'max:255'],
+            'vacation_scout' => ['required', 'string', 'max:255'],
+            'academic' => ['required', 'string', 'max:255'],
+            'specialization_academic' => ['required', 'string', 'max:255'],
+            'year_academic' => ['required'],
+            'college' => ['required', 'string', 'max:255'],
+            'work_place' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:255'],
+            'Job_title' => ['required', 'string', 'max:255'],
+            'city' => ['required'],
+            'street' => ['required', 'string', 'max:255'],
+            'building_number' => ['required', 'string', 'max:255'],
+            'nearest_teacher' => ['required', 'string', 'max:255'],
+            'home_phone' => ['required', 'string', 'max:255'],
+            'marital_status' => ['required', 'string', 'max:255'],
+            'phone_comunication' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             ]);
    
 
