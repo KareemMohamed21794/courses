@@ -7,8 +7,10 @@
     <link href="{{ asset('demo1/dist/assets/plugins/custom/styles.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+
     body {
-        font-family: 'Cairo', sans-serif;
+        font-family: "IBM Plex Sans Arabic", serif;
         direction: rtl;
         background-color: #f4f4f4;
         color: #333;
@@ -31,11 +33,19 @@
         margin-bottom: 6px;
         font-weight: 600;
         display: inline-block;
+        font-size: 16px;
     }
 
     .form-group label .required-mark {
         color: red;
-        margin-right: 4px;
+        margin-right: 0px;
+        font-size: 10px;
+        top: -2px;
+        position: relative;
+    }
+    
+    .form-group input[type="radio"] {
+        width: auto;
     }
 
     .form-group input[type="text"],
@@ -48,19 +58,20 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
-        font-family: 'Cairo', sans-serif;
+        font-family: "IBM Plex Sans Arabic", serif;
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
         height: 42px;
+        text-align: right;
     }
-
-.form-group select {
-    height: 46px;
-    background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
-    background-position: calc(10px) calc(1em + 6px), calc(15px) calc(1em + 6px);
-    background-size: 5px 5px, 5px 5px;
-    background-repeat: no-repeat;
-    appearance: none;
-}
+    
+    .form-group select {
+        height: 46px;
+        background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+        background-position: calc(10px) calc(1em + 6px), calc(15px) calc(1em + 6px);
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+        appearance: none;
+    }
 
     .form-group input[type="text"]:focus,
     .form-group input[type="date"]:focus,
@@ -92,20 +103,58 @@
         background-color: #28a745;
         color: #fff;
         border: none;
-        border-radius: 5px;
+        border-radius: 4px;
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-            font-family: 'Cairo', sans-serif;
-            height: 42px;
+        font-family: "IBM Plex Sans Arabic", serif;
     }
 
     button[type="submit"]:hover {
         background-color: #218838;
     }
+    
+    .custom-alert {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #28a745, #218838); /* Elegant gradient */
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        font-family: "IBM Plex Sans Arabic", serif;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .custom-alert .icon {
+        margin-right: 10px;
+        font-size: 22px;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            
+        }
+    }
+    
+    .healthCondition div label,
+    .notes div label {
+        margin-bottom: 0;
+        margin-right: 2px;
+    }
     </style>
 </head>
-
 
 <body>
        <form class="scout-form" action="{{url()->previous()}}" method="get" enctype="multipart/form-data">
@@ -151,7 +200,7 @@
         </div>
 
         <div class="form-group">
-            <label for="first_name">المجموعه الكشفيه</label>
+            <label for="first_name">المجموعة الكشفية</label>
             <input type="text" id="first_name" name="first_name" value="{{@$StudentRegistration->Admin->group_name}}" readonly>
         </div>
 
@@ -189,7 +238,7 @@
 
                 <div class="two-column">
 <div class="form-group">
-    <label for="nationality">الجنسيه </label>
+    <label for="nationality">الجنسية </label>
     <select id="nationality" name="nationality" disabled>
         <option value="">اختر..</option>
         <option value="jordanian" {{@$StudentRegistration->nationality == 'jordanian' ? 'selected' : ''}}>أردني</option>
@@ -331,7 +380,7 @@
 
         <div class="two-column">
 <div class="form-group">
-    <label for="city">المدينه</label>
+    <label for="city">المدينة</label>
     <select id="city" name="city" disabled >
         <option value="">اختر..</option>
         <option value="1" {{@$StudentRegistration->city == '1' ? 'selected' : ''}}>عمان</option>
@@ -350,7 +399,7 @@
 </div>
 
 <div class="form-group" id="selected_area">
-    <label for="amman_region">المنطقه</label>
+    <label for="amman_region">المنطقة</label>
     <select id="amman_region" name="amman_region" class="form-control" disabled>
         <option value="">اختر..</option>
          <option value="أبو نصير" {{@$StudentRegistration->amman_region == 'أبو نصير' ? 'selected' : ''}}>أبو نصير</option>
@@ -422,7 +471,7 @@
 </div>
 
 <div class="form-group" id="text_area">
-    <label for="area">المنطقه</label>
+    <label for="area">المنطقة</label>
     <input type="text" id="area" name="area" value="{{@$StudentRegistration->area}}" readonly></input>
 </div>
 </div>
@@ -434,7 +483,7 @@
         <div class="two-column">
 
 <div class="form-group">
-    <label for="nearest_teacher">اقرب معلم</label>
+    <label for="nearest_teacher">أقرب معلم</label>
     <input type="text" id="nearest_teacher" name="nearest_teacher" value="{{@$StudentRegistration->nearest_teacher}}" readonly>
 </div>
 
@@ -444,7 +493,7 @@
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقه </label>
+    <label for="division">الفرقة </label>
     <select id="division" name="division" disabled>
         <option value="">اختر..</option>
         <option value="1" {{@$StudentRegistration->division == '1' ? 'selected' : ''}}>الاشبال/الزهرات</option>
@@ -455,42 +504,42 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="guardian_name">اسم ولي الامر</label>
+    <label for="guardian_name">اسم ولي الأمر</label>
     <input type="text" id="guardian_name" name="guardian_name" value="{{@$StudentRegistration->guardian_name}}" readonly>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_phone">رقم  ولي  الامر 1</label>
+    <label for="guardian_phone">رقم  ولي  الأمر 1</label>
     <input type="text" id="guardian_phone" name="guardian_phone" value="{{@$StudentRegistration->guardian_phone}}" readonly>
 </div>
 
 <div class="form-group">
-    <label for="guardian_phone_2">رقم  ولي  الامر  2</label>
+    <label for="guardian_phone_2">رقم  ولي  الأمر  2</label>
     <input type="text" id="guardian_phone_2" name="guardian_phone_2" value="{{@$StudentRegistration->guardian_phone_2}}" readonly>
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_job">مهنه ولي الامر</label>
+    <label for="guardian_job">مهنة ولي الأمر</label>
     <input type="text" id="guardian_job" name="guardian_job" value="{{@$StudentRegistration->guardian_job}}" readonly>
 </div>
 
 <div class="form-group">
-    <label for="relative_relation">صله القرابه</label>
+    <label for="relative_relation">صلة القرابة</label>
     <input type="text" id="relative_relation" name="relative_relation" value="{{@$StudentRegistration->relative_relation}}" readonly>
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_place_work">مكان عمل ولي الامر</label>
+    <label for="guardian_place_work">مكان عمل ولي الأمر</label>
     <input type="text" id="guardian_place_work" name="guardian_place_work" value="{{@$StudentRegistration->guardian_place_work}}" readonly>
 </div>
 
 <div class="form-group">
-    <label for="guardian_email">البريد الإلكتروني لولي الامر</label>
+    <label for="guardian_email">البريد الإلكتروني لولي الأمر</label>
     <input type="email" id="guardian_email" name="guardian_email" value="{{@$StudentRegistration->guardian_email}}" readonly>
 </div>
 </div>

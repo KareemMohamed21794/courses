@@ -366,16 +366,16 @@ class StudentRegistrationsController extends Controller
         $active = $request->active;
        
 
-           $alldata = StudentRegistration::where('admin_id',$id)->get();
+           $alldata = StudentRegistration::where('admin_id',$id)->orderBy('type')->get();
         
             if($active=='All'){
-                $alldata = StudentRegistration::where('admin_id',$id)->withTrashed()->get();
+                $alldata = StudentRegistration::where('admin_id',$id)->withTrashed()->orderBy('type')->get();
             }
             elseif($active=='Active'){
-                $alldata = StudentRegistration::where('admin_id',$id)->get();
+                $alldata = StudentRegistration::where('admin_id',$id)->orderBy('type')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = StudentRegistration::where('admin_id',$id)->onlyTrashed()->get();
+                $alldata = StudentRegistration::where('admin_id',$id)->onlyTrashed()->orderBy('type')->get();
             }
         
 

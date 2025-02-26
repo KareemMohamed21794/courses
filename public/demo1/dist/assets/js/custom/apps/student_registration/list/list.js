@@ -123,7 +123,7 @@ var KTDatatablesServerSide = function () {
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" >
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="edit_student_registration/`+row.id+`" class="menu-link px-3"  onclick="EditStudent(event, `+row.id+`)"  target="_blank">
+                                    <a href="/edit_student_registration/`+row.id+`" class="menu-item px-3 menu-link px-3"  onclick="EditStudent(event, `+row.id+`)"  data-id=`+row.id+`>
                                         `+edit_lang+`
                                     </a>
                                 </div>
@@ -131,7 +131,7 @@ var KTDatatablesServerSide = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="show_student_registration/`+row.id+`" class="menu-link px-3"  onclick="ShowStudent(event, `+row.id+`)"  target="_blank">
+                                    <a href="/show_student_registration/`+row.id+`" class="menu-item px-3 menu-link px-3" onclick="ShowStudent(event, `+row.id+`)"  data-id=`+row.id+`>
                                     عرض
                                     </a>
                                 </div>
@@ -502,29 +502,9 @@ KTUtil.onDOMContentLoaded(function () {
 });
 
 
-function EditStudent(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    encodeSecureId(id).then(encodedId => {
-        // Execute your function after encoding the ID
-        getData(id, 2);
-        // Open the URL with the encoded ID in a new tab
-        window.open('/edit_student_registration/' + encodedId, '_blank'); // Open in a new tab
-    });
 
-    
-}
 
-function ShowStudent(event, id) {
-    event.preventDefault(); // Prevent default navigation
 
-    encodeSecureId(id).then(encodedId => {
-        // Execute your function after encoding the ID
-        getData(id, 2);
-
-        // Open the URL with the encoded ID in a new tab
-        window.open('/show_student_registration/' + encodedId, '_blank');
-    });
-}
 
 
 function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
@@ -563,4 +543,43 @@ function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
         
         return urlSafe;
     });
+}
+
+// function ShowStudent(event, id) {
+//     event.preventDefault(); // Prevent default navigation
+
+//     encodeSecureId(id).then(encodedId => {
+//         // Execute your function after encoding the ID
+//         getData(id, 2);
+
+//         // Open the URL with the encoded ID in a new tab
+//         window.open('/show_student_registration/' + encodedId, '_blank');
+//     });
+// }
+
+function ShowStudent(event, id) {
+    event.preventDefault(); // Prevent default navigation from the link
+
+    encodeSecureId(id).then(encodedId => {
+        // Open the URL with the encoded ID in a new tab
+        window.open('/show_student_registration/' + encodedId, '_blank');
+        
+        // Optionally, you can call your getData function or any other logic here:
+        
+    });
+}
+
+
+function EditStudent(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        
+        // Open the URL with the encoded ID in a new tab
+        window.open('/edit_student_registration/' + encodedId, '_blank'); // Open in a new tab
+
+        
+    });
+
+    
 }
