@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل  منتسب جديد</title>
+    <title>تسجيل الطالب</title>
     <link href="{{ asset('demo1/dist/assets/plugins/custom/styles.css') }}" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+
     body {
-        font-family: 'Cairo', sans-serif;
+        font-family: "IBM Plex Sans Arabic", serif;
         direction: rtl;
         background-color: #f4f4f4;
         color: #333;
@@ -31,11 +33,19 @@
         margin-bottom: 6px;
         font-weight: 600;
         display: inline-block;
+        font-size: 16px;
     }
 
     .form-group label .required-mark {
         color: red;
-        margin-right: 4px;
+        margin-right: 0px;
+        font-size: 10px;
+        top: -2px;
+        position: relative;
+    }
+    
+    .form-group input[type="radio"] {
+        width: auto;
     }
 
     .form-group input[type="text"],
@@ -48,19 +58,20 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
-        font-family: 'Cairo', sans-serif;
+        font-family: "IBM Plex Sans Arabic", serif;
         transition: border-color 0.3s ease, box-shadow 0.3s ease;
         height: 42px;
+        text-align: right;
     }
-
-.form-group select {
-    height: 46px;
-    background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
-    background-position: calc(10px) calc(1em + 6px), calc(15px) calc(1em + 6px);
-    background-size: 5px 5px, 5px 5px;
-    background-repeat: no-repeat;
-    appearance: none;
-}
+    
+    .form-group select {
+        height: 46px;
+        background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%);
+        background-position: calc(10px) calc(1em + 6px), calc(15px) calc(1em + 6px);
+        background-size: 5px 5px, 5px 5px;
+        background-repeat: no-repeat;
+        appearance: none;
+    }
 
     .form-group input[type="text"]:focus,
     .form-group input[type="date"]:focus,
@@ -92,16 +103,55 @@
         background-color: #28a745;
         color: #fff;
         border: none;
-        border-radius: 5px;
+        border-radius: 4px;
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-            font-family: 'Cairo', sans-serif;
-            height: 42px;
+        font-family: "IBM Plex Sans Arabic", serif;
     }
 
     button[type="submit"]:hover {
         background-color: #218838;
+    }
+    
+    .custom-alert {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #28a745, #218838); /* Elegant gradient */
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        font-family: "IBM Plex Sans Arabic", serif;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .custom-alert .icon {
+        margin-right: 10px;
+        font-size: 22px;
+    }
+    
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+            
+        }
+    }
+    
+    .healthCondition div label,
+    .notes div label {
+        margin-bottom: 0;
+        margin-right: 2px;
     }
     </style>
 </head>
@@ -117,50 +167,13 @@
                 <span class="message">{{ session()->get('message') }}</span>
             </div>
         @endif
-
-        <style>
-            .custom-alert {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: linear-gradient(135deg, #28a745, #218838); /* Elegant gradient */
-                color: white;
-                font-weight: bold;
-                font-size: 18px;
-                font-family: 'Cairo', sans-serif;
-                padding: 15px 20px;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                text-align: center;
-                position: relative;
-                animation: fadeIn 0.5s ease-in-out;
-            }
-
-            .custom-alert .icon {
-                margin-right: 10px;
-                font-size: 22px;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        </style>
-
-
          <div class="form-group">
-           <p style="text-align: center;font-weight:bold;font-size:18px;font-family: 'Cairo'">التسجيل في   {{$admindetails->group_name}}</p>
+           <p style="text-align: center; font-weight:bold; font-size:18px;">تسجيل في {{$admindetails->group_name}}</p>
         </div>
 
         <div class="form-group">
-            <label for="first_name">المجموعه الكشفيه</label>
-            <input type="text" id="first_name" name="first_name" value="{{$admindetails->group_name}}" readonly>
+            <label for="scount_name">المجموعة الكشفية</label>
+            <input type="text" id="scount_name" name="scount_name" value="{{$admindetails->group_name}}" readonly>
         </div>
 
         <div class="two-column">
@@ -197,8 +210,8 @@
 
                 <div class="two-column">
 <div class="form-group">
-    <label for="nationality"  >الجنسيه <span class="required-mark">*</span></label>
-    <select onchange="ChooseNationality(this.value)" id="nationality" name="nationality" required>
+    <label for="nationality">الجنسية <span class="required-mark">*</span></label>
+    <select id="nationality" name="nationality" required>
         <option value="">اختر..</option>
         <option value="jordanian">أردني</option>
         <option value="emirati">إماراتي</option>
@@ -258,7 +271,7 @@
     </select>
 </div>
             <div class="form-group">
-                <label for="national_id" id="national_label">الرقم الوطني <span class="required-mark">*</span></label>
+                <label for="national_id">الرقم الوطني <span class="required-mark">*</span></label>
                 <input type="text" id="national_id" name="national_id" required>
             </div>
         </div>
@@ -321,7 +334,7 @@
     <label for="hobbies">الهوايات</label>
     <textarea id="hobbies" name="hobbies" ></textarea>
 </div>
-<div class="form-group">
+<div class="form-group healthCondition">
     <label>هل لديك أي أمراض مزمنة أو ظروف صحية بحاجة إلى رعاية؟</label>
     <div onchange="HealthCondition()">
         <input type="radio" id="health_yes" name="health_condition" value="yes">
@@ -338,7 +351,7 @@
 
         <div class="two-column">
 <div class="form-group">
-    <label for="city">المدينه</label>
+    <label for="city">المدينة</label>
     <select id="city" name="city" onchange="SelectCity(this.value)" >
         <option value="">اختر..</option>
         <option value="1">عمان</option>
@@ -357,7 +370,7 @@
 </div>
 
 <div class="form-group" id="selected_area">
-    <label for="amman_region">المنطقه</label>
+    <label for="amman_region">المنطقة</label>
     <select id="amman_region" name="amman_region" class="form-control">
                                                     <option value="">اختر..</option>
                                                      <option value="أبو نصير">
@@ -430,7 +443,7 @@
 </div>
 
 <div class="form-group" id="text_area">
-    <label for="area">المنطقه</label>
+    <label for="area">المنطقة</label>
     <input type="text" id="area" name="area" ></input>
 </div>
 </div>
@@ -442,7 +455,7 @@
         <div class="two-column">
 
 <div class="form-group">
-    <label for="nearest_teacher">اقرب معلم</label>
+    <label for="nearest_teacher">أقرب معلم</label>
     <input type="text" id="nearest_teacher" name="nearest_teacher" >
 </div>
 
@@ -452,8 +465,8 @@
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقه <span class="required-mark">*</span></label>
-    <select id="division" name="division" required>
+    <label for="division">الفرقة </label>
+    <select id="division" name="division" >
         <option value="">اختر..</option>
         <option value="1">الاشبال/الزهرات</option>
         <option value="2">الكشاف/المرشدات</option>
@@ -463,42 +476,42 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="guardian_name">اسم ولي الامر</label>
+    <label for="guardian_name">اسم ولي الأمر</label>
     <input type="text" id="guardian_name" name="guardian_name" >
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_phone">رقم  ولي  الامر 1</label>
+    <label for="guardian_phone">رقم  ولي  الأمر 1</label>
     <input type="text" id="guardian_phone" name="guardian_phone" >
 </div>
 
 <div class="form-group">
-    <label for="guardian_phone_2">رقم  ولي  الامر  2</label>
+    <label for="guardian_phone_2">رقم  ولي  الأمر  2</label>
     <input type="text" id="guardian_phone_2" name="guardian_phone_2">
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_job">مهنه ولي الامر</label>
+    <label for="guardian_job">مهنة ولي الأمر</label>
     <input type="text" id="guardian_job" name="guardian_job" >
 </div>
 
 <div class="form-group">
-    <label for="relative_relation">صله القرابه</label>
+    <label for="relative_relation">صلة القرابة</label>
     <input type="text" id="relative_relation" name="relative_relation" >
 </div>
 </div>
 
         <div class="two-column">
 <div class="form-group">
-    <label for="guardian_place_work">مكان عمل ولي الامر</label>
+    <label for="guardian_place_work">مكان عمل ولي الأمر</label>
     <input type="text" id="guardian_place_work" name="guardian_place_work" >
 </div>
 
 <div class="form-group">
-    <label for="guardian_email">البريد الإلكتروني لولي الامر</label>
+    <label for="guardian_email">البريد الإلكتروني لولي الأمر</label>
     <input type="email" id="guardian_email" name="guardian_email" >
 </div>
 </div>
@@ -515,7 +528,7 @@
 </div>
 </div>
 
-<div class="form-group" onchange="notes()">
+<div class="form-group notes" onchange="notes()">
     <label>هل لديك ملاحظات؟</label>
     <div>
         <input type="radio" id="notes_yes" name="notes" value="yes" >
@@ -544,8 +557,6 @@
         $('#text_area').hide();
         $('#selected_area').hide();
         $('#text_note_div').hide();
-       
-        
     });
 
 
@@ -600,16 +611,5 @@
         $('#text_note_div').hide();
     }
     
-    }
-
-    function ChooseNationality(nationality) {
-        var label = document.getElementById("national_label");
-    
-        // Check if nationality is 'jordanian', empty, or not a valid number
-        if(nationality === 'jordanian' || !nationality || nationality.trim() === '') {
-        label.innerHTML = 'الرقم الوطني <span class="required-mark">*</span>';
-        } else {
-            label.innerHTML = 'رقم الجواز <span class="required-mark">*</span>';
-        }
     }
 </script>

@@ -121,10 +121,9 @@ var KTDatatablesServerSide = function () {
                             </a>
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true" >
-
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/admin/edit_student_registration/`+row.id+`" class="menu-link px-3"  onclick="EditStudent(event, `+row.id+`)"  data-id=`+row.id+`>
+                                    <a href="edit_student_registration/`+row.id+`" class="menu-link px-3"  onclick="EditStudent(event, `+row.id+`)"  target="_blank">
                                         `+edit_lang+`
                                     </a>
                                 </div>
@@ -132,12 +131,11 @@ var KTDatatablesServerSide = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="/admin/show_student_registration/`+row.id+`" class="menu-link px-3"  onclick="ShowStudent(event, `+row.id+`)"  data-id=`+row.id+`>
+                                    <a href="show_student_registration/`+row.id+`" class="menu-link px-3"  onclick="ShowStudent(event, `+row.id+`)"  target="_blank">
                                     عرض
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
-
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3" >
@@ -524,7 +522,7 @@ function ShowStudent(event, id) {
         getData(id, 2);
 
         // Open the URL with the encoded ID in a new tab
-        window.open('show_student_registration/' + encodedId, '_blank');
+        window.open('/show_student_registration/' + encodedId, '_blank');
     });
 }
 

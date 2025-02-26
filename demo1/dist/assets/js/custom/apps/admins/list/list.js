@@ -171,7 +171,9 @@ var KTDatatablesServerSide = function () {
                         }
 
 
-                        if (segment === 'leaders' && can_delete == '1') {
+
+                        if (position_id_check == 3) {
+                            
                             AdminContent = `
                                 
                                 <!--begin::Menu item-->
@@ -184,9 +186,9 @@ var KTDatatablesServerSide = function () {
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" >
+                                <div class="menu-item px-3" style="display:none">
                                     <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       تسجيل الطالب
+                                       تسجيل  المنتسبين
                                     </a>
 
                                 </div>
@@ -209,12 +211,68 @@ var KTDatatablesServerSide = function () {
                                 </div>
                                 <!--end::Menu item-->
 
+                              
+                                <!--begin::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
+                                    <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
+                                       عرض  المنتسبين
+                                    </a>
+
+                                </div>
+                                <!--end::Menu item-->
+
+
+                               
+ 
+                            `;
+                        }
+
+
+                        if (segment === 'leaders' && can_delete == '1') {
+                            AdminContent = `
+                                
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" style="display:`+display_print+`">
+                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`,2)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
+                                       عرض
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:none">
+                                <div class="menu-item px-3" >
+                                    <a href="student_registration" class="menu-item px-3 menu-link px-3" onclick="handleClick(event, `+row.id+`)"  data-id=`+row.id+`>
+                                       تسجيل  المنتسبين
+                                    </a>
+
+                                </div>
+                                <!--end::Menu item-->
+
+
+
+
+                                <div class="menu-item px-3" >
+                                    <a href="/admin/board_directors/`+row.id+`" class="menu-link px-3" target="_blank">
+                                        مجلس إدارة المجموعة  
+                                    </a>
+                                </div>
+
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <a href="/admin/group_leaders/`+row.id+`" class="menu-link px-3" target="_blank">
+                                        معلومات قائد المجموعة
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
+
+                              
+                                <!--begin::Menu item-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3" >
                                     <a href="show_students" class="menu-item px-3 menu-link px-3" onclick="ShowStudents(event, `+row.id+`)"  data-id=`+row.id+`>
-                                       عرض الطلاب
+                                       عرض المنتسبين
                                     </a>
 
                                 </div>
@@ -609,14 +667,6 @@ KTUtil.onDOMContentLoaded(function () {
 });
 
 
-
-function handleClick(event, id) {
-    event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('/student_registration/' + id, '_blank'); // Open in a new tab
-}
-
-
 function board_directors(event, id) {
     event.preventDefault(); // Prevent default navigation
     getData(id, 2); // Execute the function
@@ -624,9 +674,66 @@ function board_directors(event, id) {
 }
 
 
+function encodeSecureId(id, secretKey = 'mySuperSecretKey') {
+    // Convert ID to string (ensure it's a string)
+    const idStr = String(id);
+
+    // Create HMAC with SHA-256
+    const encoder = new TextEncoder();
+    const keyData = encoder.encode(secretKey);
+    const idData = encoder.encode(idStr);
+    
+    return crypto.subtle.importKey(
+        'raw',
+        keyData,
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign']
+    ).then(key => {
+        return crypto.subtle.sign('HMAC', key, idData);
+    }).then(signature => {
+        // Convert signature to hex string
+        const signatureBytes = new Uint8Array(signature);
+        let signatureHex = '';
+        signatureBytes.forEach(byte => {
+            signatureHex += ('00' + byte.toString(16)).slice(-2);
+        });
+
+        // Combine "id:signature"
+        const combined = idStr + ':' + signatureHex;
+
+        // Base64 encode the combined string
+        let encoded = btoa(combined);
+
+        // URL-safe Base64 encoding
+        let urlSafe = encoded.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        
+        return urlSafe;
+    });
+}
+
+
+function handleClick(event, id) {
+    event.preventDefault(); // Prevent default navigation
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        getData(id, 2);
+        // Open the URL with the encoded ID in a new tab
+        window.open('/student_registration/' + encodedId, '_blank'); // Open in a new tab
+    });
+
+    
+}
 
 function ShowStudents(event, id) {
     event.preventDefault(); // Prevent default navigation
-    getData(id, 2); // Execute the function
-    window.open('show_students/' + id, '_blank'); // Open in a new tab
+
+    encodeSecureId(id).then(encodedId => {
+        // Execute your function after encoding the ID
+        getData(id, 2);
+
+        // Open the URL with the encoded ID in a new tab
+        window.open('show_students/' + encodedId, '_blank');
+    });
 }
+
