@@ -1105,13 +1105,13 @@ class PermitsController extends Controller
 
         $title = __('messages.archive_advertisements');
 
-        // Fetch all advertisements where the created_at date is between the first and last day of the provided year
+        // Fetch all advertisements where the activity_history date is between the first and last day of the provided year
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
         if($objAdmin->is_super){
-            $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+            $alldata = Permit::with('TypeActivity')->whereBetween('activity_history',[$first_day_year,$last_day_year])->get();
         }else{
-            $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->where('admin_id',$objAdmin->id)->get();
+            $alldata = Permit::with('TypeActivity')->whereBetween('activity_history',[$first_day_year,$last_day_year])->where('admin_id',$objAdmin->id)->get();
         }
         
       
