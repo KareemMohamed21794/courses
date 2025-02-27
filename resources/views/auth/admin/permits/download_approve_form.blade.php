@@ -164,7 +164,7 @@
                 <p><strong>السيد/ة قائد/ة<span class="scoutName">  {{ @$objPermit->Admin->group_name }} </span> المحترم</strong></p>
                 <p><strong>تحية طيبة وبعد،،</strong></p>
                 <p>
-                 إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span class="date">{{date('d-m-Y',strtotime(@$objPermit->activity_history))}}</span>، والمتضمن طلب إقامة نشاط، أعلمكم بأنّه لا مانع لدى مجلس القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي: 
+                 إشارة لكتابكم رقم <span class="bookNum">{{@$objPermit->number_order}}</span>، تاريخ <span class="date">{{date('d-m-Y',strtotime(@$objPermit->created_at))}}</span>، والمتضمن طلب إقامة نشاط، أعلمكم بأنّه لا مانع لدى مجلس القطاع الكشفي والإرشادي الأهلي من إقامة النشاط المذكور حسب الآتي: 
              </p>
             </div>
             <div class="approvementInfo">

@@ -374,6 +374,7 @@ class PermitsController extends Controller
 
 
         }
+     
 
         $alldataResult=array();
 
@@ -1113,7 +1114,7 @@ class PermitsController extends Controller
             $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->where('admin_id',$objAdmin->id)->get();
         }
         
-
+      
        
 
         $alldataResult=array();

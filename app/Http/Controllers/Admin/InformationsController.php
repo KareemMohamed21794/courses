@@ -544,12 +544,14 @@ class InformationsController extends Controller
         
         $userId = \Auth::id();
         $objAdmin = Admin::find($userId);
-        
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
+       
         if ($objAdmin->is_super == 1) {
-            $Informations = Information::get();
+            $Informations = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
             $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح');
         } else {
-            $Informations = Information::where('admin_id', $userId)->get();
+            $Informations = Information::where('admin_id', $userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             $columns = array('الملف', 'اسم الملف', 'الشرح');
         }
 

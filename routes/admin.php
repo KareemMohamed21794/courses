@@ -279,7 +279,7 @@ Route::middleware('auth:admin')->group(function () {
 		Route::get('/report_qualification_leaders_get_list', [QualificationleadersController::class, 'ReportQualificationLeadersGetlist']);
 
 
-	
+	    Route::get('/export_qualification_leaders', [QualificationleadersController::class, 'ExportQualificationLeaders']);
 		# End qualification_leaders
 
 

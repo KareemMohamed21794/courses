@@ -681,10 +681,15 @@ class QualificationleadersController extends Controller
 
 public function ExportQualificationLeaders(Request $request)
 {
-
-
     $fileName = 'qualification_leaders.csv';
-    $qualification_leaders = QualificationLeader::all();
+    $userId = Auth::id();
+    
+    $objAdmin = Admin::find($userId);
+    if($objAdmin->is_super == 0){
+    $qualification_leaders = QualificationLeader::where('admin_id',$objAdmin->id)->orderBy('id')->get();
+    }else{
+        $qualification_leaders = QualificationLeader::all();
+    }
     
         
         if($request->leader_id){
