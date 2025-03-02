@@ -615,7 +615,7 @@ return [
     'list_supervisor'=>'هيئه الاشراف',
     'proposed_time_study'=>'الزمان المقترح للدراسه',
     'connected_from'=>'من',
-    'connected_to'=>'الي',
+    'connected_to'=>'إلى',
     'female_leaders_number'=>'عدد  القائدات',
     'type_activity'=>'نوع النشاط',
     'dead_line'=>'الموعد النهائي للتسجيل',
