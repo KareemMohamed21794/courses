@@ -268,7 +268,7 @@ function group_classification(value) {
     $("#monitor_div").hide();
     // $("#monitor_id").val(null);
     $('#monitor_id').val([]).trigger('change');
-   }else if(value == 'monitors'){
+   }else if(value == 'monitor_name'){
     $("#group_div").hide();
     $("#monitor_div").show();
     // $("#admin_id").val(null);

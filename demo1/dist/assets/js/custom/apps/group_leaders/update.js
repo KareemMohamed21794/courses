@@ -17,7 +17,7 @@ var KTModalBranchesUpdate = function () {
             {
                 fields: {
 
-                     'first_name_update': {
+                     'first_name': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -25,17 +25,7 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    'father_name_update': {
-                        validators: {
-                            notEmpty: {
-                                message: 'هذا الحقل مطلوب'
-                            }
-                        }
-                    },
-
-
-
-                    'family_name_update': {
+                    'father_name': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -44,7 +34,7 @@ var KTModalBranchesUpdate = function () {
                     },
 
 
-                    'job_update': {
+                    'grandfather_name': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -54,7 +44,7 @@ var KTModalBranchesUpdate = function () {
 
 
 
-                    'mission_update': {
+                    'family_name': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -63,7 +53,7 @@ var KTModalBranchesUpdate = function () {
                     },
 
 
-                    'birth_date_update': {
+                    'job': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -72,7 +62,8 @@ var KTModalBranchesUpdate = function () {
                     },
 
 
-                    'birth_place_update': {
+
+                    'mission': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
@@ -80,7 +71,184 @@ var KTModalBranchesUpdate = function () {
                         }
                     },
 
-                    'mobile_number_update': {
+
+                    'birth_date': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'birth_place': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'scout': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'year_scout': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'place_scout': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'vacation_scout': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'academic': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'specialization_academic': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'year_academic': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'college': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'work_place': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+                    'Job_title': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'city': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'street': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'building_number': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'nearest_teacher': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'home_phone': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'marital_status': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+                    'phone_comunication': {
+                        validators: {
+                            notEmpty: {
+                                message: 'هذا الحقل مطلوب'
+                            }
+                        }
+                    },
+
+
+
+                    'email': {
                         validators: {
                             notEmpty: {
                                 message: 'هذا الحقل مطلوب'
