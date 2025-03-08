@@ -213,25 +213,32 @@ class AdvertisementsController extends Controller
 
         foreach ($arrGroups as $key => $objGroup) {
             $objAdmin = Admin::find($objGroup);
-             
-            if(!empty($objAdmin->email)){
+            
+            if (!empty($objAdmin->email) && filter_var($objAdmin->email, FILTER_VALIDATE_EMAIL)) {
                 $recipient = $objAdmin->email;
-                //$recipient = 'mahmoud.ali.29992@gmail.com';
+                \Log::info("Sending email to: " . $recipient); // Log emails
+                
                 $subject = "لديك وارد من مدير نظام تواصل";
-                $data = ['group_name' => $objAdmin->group_name]; // Data to pass to the view
-                $fromEmail = 'admin@tawasol.privatescouts.org'; 
-                // The "from" email address
-                Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                    $mail->to($recipient)
-                        ->from($fromEmail) // Set the "from" email address
-                        ->subject($subject);
-                });
+                $data = ['group_name' => $objAdmin->group_name];
+                $fromEmail = 'admin@tawasol.privatescouts.org';
+
+                try {
+                    Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+                        $mail->to($recipient)
+                             ->from($fromEmail)
+                             ->subject($subject);
+                    });
+                    \Log::info("Email sent to: " . $recipient);
+                } catch (\Exception $e) {
+                    \Log::error("Email error: " . $e->getMessage());
+                }
+
+                sleep(2); // Delay to prevent spam detection
+            } else {
+                \Log::error("Invalid email: " . ($objAdmin->email ?? 'NULL'));
             }
-            # send email
-
-            // sleep(60);
-
         }
+
         
 
         DB::commit(); // Commit the transaction
