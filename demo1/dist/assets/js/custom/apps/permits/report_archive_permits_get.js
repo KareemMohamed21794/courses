@@ -58,6 +58,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'alwahda' },
                 // { data: 'alwahda_description' },
                 { data: 'activity_leader' },
+                { data: 'number_participants' },
                 { data: 'number_leader' },
                 { data: 'permit_status' },
                 { data: 'permit_number' },
