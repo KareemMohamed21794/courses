@@ -322,6 +322,7 @@ class PermitsController extends Controller
             'alwahda'=>true,
             // 'alwahda_description'=>true,
             'activity_leader'=>true,
+            'number_participants'=>true,
             'number_leader'=>true,
             'permit_status'=>true,
             'reject_notes'=> true,
@@ -477,6 +478,7 @@ class PermitsController extends Controller
                 "alwahda" => $alwahda,
                 // "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
+                "number_participants"=>$objdata->number_participants,
                 "number_leader"=>$objdata->number_leader,
                 "permit_status"=>$status,
                 'reject_notes'=> $objdata->reject_notes,
@@ -1081,6 +1083,7 @@ class PermitsController extends Controller
             'alwahda'=>true,
             // 'alwahda_description'=>true,
             'activity_leader'=>true,
+            'number_participants'=>true,
             'number_leader'=>true,
             'permit_status'=>true,
             'permit_number'=>true,
@@ -1213,6 +1216,7 @@ class PermitsController extends Controller
                 "alwahda" => $alwahda,
                 // "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
+                "number_participants"=>$objdata->number_participants,
                 "number_leader"=>$objdata->number_leader,
                 "permit_status"=>$status,
                 "permit_number"=>$objdata->permit_number,
@@ -1358,6 +1362,7 @@ class PermitsController extends Controller
             'alwahda'=>true,
             // 'alwahda_description'=>true,
             'activity_leader'=>true,
+            'number_participants'=>true,
             'number_leader'=>true,
             'permit_status'=>true,
             'permit_number'=>true,
@@ -1484,6 +1489,7 @@ class PermitsController extends Controller
                 "alwahda" => $alwahda,
                 // "alwahda_description"=>$objdata->alwahda_description,
                 "activity_leader"=>$objdata->activity_leader,
+                'number_participants'=>$objdata->number_participants,
                 "number_leader"=>$objdata->number_leader,
                 "permit_status"=>$status,
                 "permit_number"=>$objdata->permit_number,
@@ -1578,7 +1584,7 @@ class PermitsController extends Controller
     public function ExportPermits(Request $request)
     {
       
-
+       
         $fileName = 'permits.csv';
         $permits = Permit::with('TypeActivity')->get();
         
@@ -1599,10 +1605,10 @@ class PermitsController extends Controller
             "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
             "Expires"             => "0"
         );
-        
+      
         // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),__('messages.activity_name'),__('messages.nature_activity'),__('messages.place_activity'),__('messages.activity_history'),__('messages.number_days'),__('messages.alwahda'),__('messages.activity_leader'),__('messages.number_leader'),__('messages.permit_status'),__('messages.permit_number'),__('messages.created_at'));
-
+        $columns = array(__('messages.scout_group'),__('messages.activity_name'),__('messages.nature_activity'),__('messages.place_activity'),__('messages.activity_history'),__('messages.number_days'),__('messages.alwahda'),__('messages.activity_leader'),__('messages.number_participants'),__('messages.number_leader'),__('messages.permit_status'),__('messages.permit_number'),__('messages.created_at'));
+ 
         // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
         $callback = function() use ($permits, $columns) {
             $file = fopen('php://output', 'w');
@@ -1616,7 +1622,7 @@ class PermitsController extends Controller
             // Write the data rows
             foreach ($permits as $objdata) {
 
-
+ 
                 $alwahda = '';
             if (is_array($objdata->alwahda)) {
                 // If alwahda is an array, map each value to its corresponding Arabic value
@@ -1675,22 +1681,28 @@ class PermitsController extends Controller
             elseif ($objdata->status=='rejected') {
                 $status = "مرفوض ";
             }
-               
+           
                 // Make sure to retrieve the Arabic name correctly from your database column
                 $row['scout_group']  = @$objdata->Admin->group_name;
+
                 $row['activity_name']  = $objdata->activity_name;
-                $row['nature_activity']  = $objdata->TypeActivity->name_ar;
+
+                $row['nature_activity']  = @$objdata->TypeActivity->name_ar;
+                  
                 $row['place_activity']  = $objdata->place_activity;
                 $row['activity_history']  = $objdata->activity_history;
                 $row['number_days']  = $objdata->number_days;
                 $row['alwahda']  = $alwahda;
+
                 $row['activity_leader']  = $objdata->activity_leader;
+                $row['number_participants']  = $objdata->number_participants;
                 $row['number_leader']  = $objdata->number_leader;
                 $row['permit_status']  = $status;
                 $row['permit_number']  = $objdata->permit_number;
                 $row['created_at']  = Date('Y-m-d',strtotime($objdata->created_at));
+
                 // Write the row data to the CSV file
-                fputcsv($file, array($row['scout_group'],$row['activity_name'],$row['nature_activity'],$row['place_activity'],$row['activity_history'],$row['number_days'],$row['alwahda'],$row['activity_leader'],$row['number_leader'],$row['permit_status'],$row['permit_number'],$row['created_at']));
+                fputcsv($file, array($row['scout_group'],$row['activity_name'],$row['nature_activity'],$row['place_activity'],$row['activity_history'],$row['number_days'],$row['alwahda'],$row['activity_leader'],$row['number_participants'],$row['number_leader'],$row['permit_status'],$row['permit_number'],$row['created_at']));
             }
 
             fclose($file);

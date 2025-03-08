@@ -91,6 +91,7 @@
                             <th>{{ __('messages.alwahda') }}</th>
                             {{-- <th>{{ __('messages.alwahda_description') }}22</th> --}}
                             <th>{{ __('messages.activity_leader') }}</th>
+                            <th>{{ __('messages.number_participants') }}</th>
                             <th>{{ __('messages.number_leader') }}</th>
                             <th>{{ __('messages.permit_status') }}</th>
                             <th>{{ __('messages.permit_number') }}</th>
