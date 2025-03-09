@@ -94,6 +94,8 @@ class StudentRegistrationsController extends Controller
      */
     public function store(Request $request)
     {
+
+
         //$this->authorize(self::MODEL.'-store');
         $validator = Validator::make($request->all(),[
             'first_name' => ['required', 'string', 'max:255'],

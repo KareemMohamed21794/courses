@@ -179,32 +179,46 @@
         <div class="two-column">
             <div class="form-group">
                 <label for="first_name">الاسم الأول <span class="required-mark">*</span></label>
-                <input type="text" id="first_name" name="first_name" required>
+                <input type="text" id="first_name" name="first_name" required value="{{ old('first_name') }}">
+                
+                <!-- Display validation error for first_name -->
+                @if ($errors->has('first_name'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('first_name') }}</strong>
+                    </div>
+                @endif
             </div>
+
             <div class="form-group">
                 <label for="father_name">اسم الأب <span class="required-mark">*</span></label>
-                <input type="text" id="father_name" name="father_name" required>
+                <input type="text" id="father_name" name="father_name" required value="{{ old('father_name') }}">
+                <!-- Display validation error for father_name -->
+                @if ($errors->has('father_name'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('father_name') }}</strong>
+                    </div>
+                @endif
             </div>
-</div>
-                    <div class="two-column">
+        </div>
+        <div class="two-column">
             <div class="form-group">
                 <label for="grandfather_name">اسم الجد <span class="required-mark">*</span></label>
-                <input type="text" id="grandfather_name" name="grandfather_name" required>
+                <input type="text" id="grandfather_name" name="grandfather_name" required value="{{ old('grandfather_name') }}">
             </div>
             <div class="form-group">
                 <label for="family_name">اسم العائلة <span class="required-mark">*</span></label>
-                <input type="text" id="family_name" name="family_name" required>
+                <input type="text" id="family_name" name="family_name" required value="{{ old('family_name') }}">
             </div>
         </div>
 </div>
         <div class="two-column">
                         <div class="form-group">
                 <label for="birth_place">مكان الولادة <span class="required-mark">*</span></label>
-                <input type="text" id="birth_place" name="birth_place">
+                <input type="text" id="birth_place" name="birth_place" required value="{{ old('birth_place') }}">
             </div>
             <div class="form-group">
                 <label for="birth_date">تاريخ الولادة <span class="required-mark">*</span></label>
-                <input type="date" id="birth_date" name="birth_date">
+                <input type="date" id="birth_date" name="birth_date" required value="{{ old('birth_date') }}">
             </div>
         </div>
 
@@ -272,14 +286,14 @@
 </div>
             <div class="form-group">
                 <label for="national_id" id="national_label">الرقم الوطني <span class="required-mark">*</span></label>
-                <input type="text" id="national_id" name="national_id" required>
+                <input type="text" id="national_id" name="national_id" required value="{{ old('national_id') }}">
             </div>
         </div>
 
         <div class="two-column">
             <div class="form-group">
                 <label for="mobile_number">رقم الهاتف  <span class="required-mark">*</span></label>
-                <input type="text" id="mobile_number" name="mobile_number">
+                <input type="text" id="mobile_number" name="mobile_number" required value="{{ old('mobile_number') }}">
             </div>
             <div class="form-group">
                 <label for="home_number">رقم المنزل</label>
@@ -465,8 +479,8 @@
 </div>
 </div>
 <div class="form-group">
-    <label for="division">الفرقة </label>
-    <select id="division" name="division" >
+    <label for="division">الفرقة  <span class="required-mark">*</span></label>
+    <select id="division" name="division" required>
         <option value="">اختر..</option>
         <option value="1">الاشبال/الزهرات</option>
         <option value="2">الكشاف/المرشدات</option>
