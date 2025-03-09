@@ -204,10 +204,22 @@
             <div class="form-group">
                 <label for="grandfather_name">اسم الجد <span class="required-mark">*</span></label>
                 <input type="text" id="grandfather_name" name="grandfather_name" required value="{{ old('grandfather_name') }}">
+                <!-- Display validation error for grandfather_name -->
+                @if ($errors->has('grandfather_name'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('grandfather_name') }}</strong>
+                    </div>
+                @endif
             </div>
             <div class="form-group">
                 <label for="family_name">اسم العائلة <span class="required-mark">*</span></label>
                 <input type="text" id="family_name" name="family_name" required value="{{ old('family_name') }}">
+                <!-- Display validation error for family_name -->
+                @if ($errors->has('family_name'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('family_name') }}</strong>
+                    </div>
+                @endif
             </div>
         </div>
 </div>
@@ -215,10 +227,22 @@
                         <div class="form-group">
                 <label for="birth_place">مكان الولادة <span class="required-mark">*</span></label>
                 <input type="text" id="birth_place" name="birth_place" required value="{{ old('birth_place') }}">
+                <!-- Display validation error for birth_place -->
+                @if ($errors->has('birth_place'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('birth_place') }}</strong>
+                    </div>
+                @endif
             </div>
             <div class="form-group">
                 <label for="birth_date">تاريخ الولادة <span class="required-mark">*</span></label>
                 <input type="date" id="birth_date" name="birth_date" required value="{{ old('birth_date') }}">
+                 <!-- Display validation error for birth_date -->
+                @if ($errors->has('birth_date'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('birth_date') }}</strong>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -287,6 +311,12 @@
             <div class="form-group">
                 <label for="national_id" id="national_label">الرقم الوطني <span class="required-mark">*</span></label>
                 <input type="text" id="national_id" name="national_id" required value="{{ old('national_id') }}">
+                 <!-- Display validation error for national_id -->
+                @if ($errors->has('national_id'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('national_id') }}</strong>
+                    </div>
+                @endif
             </div>
         </div>
 
@@ -294,6 +324,12 @@
             <div class="form-group">
                 <label for="mobile_number">رقم الهاتف  <span class="required-mark">*</span></label>
                 <input type="text" id="mobile_number" name="mobile_number" required value="{{ old('mobile_number') }}">
+                 <!-- Display validation error for mobile_number -->
+                @if ($errors->has('mobile_number'))
+                    <div class="error-message">
+                        <strong>{{ $errors->first('mobile_number') }}</strong>
+                    </div>
+                @endif
             </div>
             <div class="form-group">
                 <label for="home_number">رقم المنزل</label>
