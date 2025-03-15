@@ -348,28 +348,28 @@ class PermitsController extends Controller
 
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = Permit::with('TypeActivity')->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
+           $alldata = Permit::with('TypeActivity')->whereBetween('activity_history',[$first_day_year,$last_day_year])->get();
         
             if($active=='All'){
-                $alldata = Permit::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = Permit::withTrashed()->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
                 $alldata = Permit::get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = Permit::onlyTrashed()->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
         }else{
 
-            $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+            $alldata = Permit::where('admin_id',$userId)->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             if($active=='All'){
-                $alldata = Permit::withTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = Permit::withTrashed()->where('admin_id',$userId)->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='Active'){
-                $alldata = Permit::where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = Permit::where('admin_id',$userId)->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->whereBetween('created_at',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
+                $alldata = Permit::onlyTrashed()->where('admin_id',$userId)->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
             }
 
 
@@ -777,12 +777,16 @@ class PermitsController extends Controller
         # check if a super_admin
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
+
+
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
         
         if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
-            $sum = Permit::join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
+            $sum = Permit::where('status','!=','rejected')->whereBetween('activity_history',[$first_day_year,$last_day_year])->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
             ->sum('type_activity.price');
        }else{
-            $sum = Permit::where('admin_id', $objAdmin->id)
+            $sum = Permit::where('status','!=','rejected')->whereBetween('activity_history',[$first_day_year,$last_day_year])->where('admin_id', $objAdmin->id)
             ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
             ->sum('type_activity.price');
         
@@ -822,6 +826,8 @@ class PermitsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $active = $request->active;
+        $first_day_year = date('Y-m-d', strtotime('first day of january this year'));
+        $last_day_year = date('Y') . '-12-31';
         if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
 
            // $alldata = DB::table('permits')
@@ -838,6 +844,8 @@ class PermitsController extends Controller
                 DB::raw('SUM(type_activity.price) as price'),
                 DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
             )
+            ->whereBetween('activity_history',[$first_day_year,$last_day_year])
+            ->where('permits.status','!=','rejected')
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
             ->groupBy('permits.admin_id', 'admins.group_name')
@@ -862,6 +870,8 @@ class PermitsController extends Controller
                 DB::raw('SUM(type_activity.price) as price'),
                 DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
             )
+            ->whereBetween('activity_history',[$first_day_year,$last_day_year])
+            ->where('permits.status','!=','rejected')
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
             ->groupBy('permits.admin_id', 'admins.group_name')
@@ -1378,7 +1388,14 @@ class PermitsController extends Controller
         }
 
 
-        $alldata = Permit::with('TypeActivity')->get();
+        // Set the first day of the provided year at midnight (00:00:00)
+        $first_day_year = date('Y-m-d 00:00:00', strtotime("first day of january $request->year"));
+
+        // Set the last day of the provided year at 23:59:59
+        $last_day_year = $request->year . '-12-31 23:59:59';
+
+
+        $alldata = Permit::with('TypeActivity')->whereBetween('activity_history',[$first_day_year,$last_day_year])->get();
        
         $title = __('messages.report_permits');
         
@@ -1584,9 +1601,13 @@ class PermitsController extends Controller
     public function ExportPermits(Request $request)
     {
       
-       
+       // Set the first day of the provided year at midnight (00:00:00)
+        $first_day_year = date('Y-m-d 00:00:00', strtotime("first day of january $request->year"));
+
+        // Set the last day of the provided year at 23:59:59
+        $last_day_year = $request->year . '-12-31 23:59:59';
         $fileName = 'permits.csv';
-        $permits = Permit::with('TypeActivity')->get();
+        $permits = Permit::with('TypeActivity')->whereBetween('activity_history',[$first_day_year,$last_day_year])->get();
         
             
             if($request->leader_id){
