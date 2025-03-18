@@ -307,16 +307,16 @@ class InformationsController extends Controller
         $last_day_year = date('Y') . '-12-31';
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
-           $alldata = Information::whereNull('status')->whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
+           $alldata = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
         
             if($active=='All'){
-                $alldata = Information::withTrashed()->whereNull('status')->whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
+                $alldata = Information::withTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='Active'){
-                $alldata = Information::whereNull('status')->whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
+                $alldata = Information::whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
             elseif($active=='DeActive'){
-                $alldata = Information::onlyTrashed()->whereNull('status')->whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
+                $alldata = Information::onlyTrashed()->whereBetween('created_at',[$first_day_year,$last_day_year])->get();
             }
         }else{
 

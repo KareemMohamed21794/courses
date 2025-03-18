@@ -14,7 +14,7 @@
                     <!--begin::Form-->
                        
 
-                        <form class="panel-body" action="{{url('admin/setup/')}}/{{$Setup->id}}" method="post">
+                        <form class="panel-body" action="{{url('admin/setup/')}}/{{$Setup->id}}" method="post" enctype="multipart/form-data">
                             @csrf 
                              @method('PUT') 
                             

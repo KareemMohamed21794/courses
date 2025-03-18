@@ -122,7 +122,7 @@ class SetupController extends Controller
             $file->move($destinationPath, $achievement_study_requirement_file);
         }
 
-
+        
         $Setup = Setup::create([
             'dead_line' =>  $request->dead_line,
             'commander_medal_date' =>  $request->commander_medal_date ,
@@ -175,6 +175,7 @@ class SetupController extends Controller
      */
     public function update(Request $request, $id)
     {
+
           $validator = Validator::make($request->all(),[
             'dead_line' => ['required'],
             'commander_medal_date' => ['required'],
@@ -274,7 +275,7 @@ class SetupController extends Controller
                @unlink("public/images/setup/".$oldImage);
             }
         }
-        
+       
         $objSetup->save();
 
         $this->logAction(auth()->id(), 'user', 'update_setup', 'update', 'setup', $objSetup->id);

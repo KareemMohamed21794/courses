@@ -576,8 +576,7 @@ class FinancalMovementsController extends Controller
         
 
         $allPermit = Permit::where('admin_id',$objAdmin_group->id)->where('status','!=','rejected')->whereBetween('activity_history',[$first_day_year,$last_day_year])->with('TypeActivity')->get();
-
-
+     
         return view('auth.admin.financial_movements.financial_movements',['title' => $title,'objAdmin'=>$objAdmin,'total_credit'=>$total_credit,'total_debit'=>$total_debit , 'remain'=>$remain,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group,'final_total_alrusum'=>$final_total_alrusum,'total_permits'=>$total_permits,'sum'=>$sum,'allPermit'=>$allPermit,'count_aliashbalu'=>$count_aliashbalu,'count_alkashaaf'=>$count_alkashaaf,'count_almutaqadima'=>$count_almutaqadima,'count_aljawaluh'=>$count_aljawaluh,'count_leaders'=>$count_leaders,'count_late_students'=>$count_late_students,'alrusum_wehda_aliashbalu'=>$alrusum_wehda_aliashbalu,'alrusum_wehda_alkashaaf'=>$alrusum_wehda_alkashaaf,'alrusum_wehda_almutaqadima'=>$alrusum_wehda_almutaqadima,'alrusum_wehda_aljawaluh'=>$alrusum_wehda_aljawaluh,'alrusum_wehda_leaders'=>$alrusum_wehda_leaders,'alrusum'=>$alrusum,'alrusum_late'=>$alrusum_late,'total_alrusum_late'=>$total_alrusum_late,'total_alrusum_wehda_leaders'=>$total_alrusum_wehda_leaders,'total_alrusum_wehda_aliashbalu'=>$total_alrusum_wehda_aliashbalu,'total_alrusum_wehda_alkashaaf'=>$total_alrusum_wehda_alkashaaf,'total_alrusum_wehda_almutaqadima'=>$total_alrusum_wehda_almutaqadima,'total_alrusum_wehda_aljawaluh'=>$total_alrusum_wehda_aljawaluh,'final_total_alrusum'=>$final_total_alrusum,'leaders'=>$leaders,'admin_id'=>$admin_id,'objAdmin_group'=>$objAdmin_group,'Setup'=>$Setup]);
     }
 

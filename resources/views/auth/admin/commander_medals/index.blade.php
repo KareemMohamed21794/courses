@@ -105,7 +105,7 @@
                         @endif
 
                         <!--begin::Download Form-->
-                         <a href="{{ url('public/') }}/{{@$objSetup->commander_medal_file}}" class="menu-link px-3" download="نموذج وسام القائد منذر">
+                         <a href="{{ url('/') }}/{{@$objSetup->commander_medal_file}}" class="menu-link px-3" download="نموذج وسام القائد منذر">
                             <button type="button" class="btn btn-light-primary me-3" >
                          
                             <span class="svg-icon svg-icon-2">
