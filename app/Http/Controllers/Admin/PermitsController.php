@@ -30,7 +30,7 @@ class PermitsController extends Controller
         $title = __('messages.permits');
         $add_title = __('messages.permit');
 
-        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
+        $leaders = Admin::where('is_super',0)->whereNotNull('group_classification')->whereNull('deleted_at')->get();
 
 
         $can_add = 0;

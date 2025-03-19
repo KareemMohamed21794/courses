@@ -169,6 +169,7 @@
             </div>
             <div class="approvementInfo">
                 <table>
+                    @if(@$objPermit->TypeActivity->name_ar)
                     <tr>
                         <th>نوع النشاط</th>
                         <td>{{@$objPermit->TypeActivity->name_ar}}</td>
@@ -186,6 +187,7 @@
                            <td>اخرى</td>
                         @endif --}}
                     </tr>
+                    @endif
                     <tr>
                         <th>مكان النشاط</th>
                         <td>{{@$objPermit->place_activity}}</td>

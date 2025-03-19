@@ -45,15 +45,16 @@
 
 
                      <!--begin::Input group-->
-                        <div class="d-flex flex-column mb-7 fv-row">
+                        <div class="fv-row mb-7" >
                             <!--begin::Label-->
                             <label class="fs-6 fw-bold mb-2">
                                 <span class="required">{{ __('messages.scout_group') }}</span>
+                                 
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}"   data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
-                                 <option value="">{{ __('messages.Select') }}</option >
+                            <select name="leader_id" id="leader_id" aria-label="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.scout_group') }}" data-dropdown-parent="#kt_modal_add" class="form-select form-select-solid fw-bolder">
+                                <option value="">{{ __('messages.Select') }}</option >
                                     @foreach($leaders as $leader)
                                         <option value="{{$leader->id}}">{{ $leader->group_name }}</option>
                                     @endforeach
@@ -61,6 +62,9 @@
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
+
+
+                  
                     @endif
                         
 

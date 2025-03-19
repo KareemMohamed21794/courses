@@ -33,7 +33,7 @@ class FinancalMovementsController extends Controller
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
         $arrPaymentMethod = PaymentMethod::orderBy('id')->get();
-        $leaders = Admin::where('is_super',0)->whereNull('deleted_at')->get();
+        $leaders = Admin::where('is_super',0)->whereNotNull('group_classification')->whereNull('deleted_at')->get();
 
         $can_add = 0;
         $can_update = 0;

@@ -143,9 +143,9 @@ class BoardDirectorsController extends Controller
         // Check if the admin already exists
         $exsist_admin =  BoardDirector::where('admin_id', $id)->first();
 
-        if ($exsist_admin) {
-            return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
-        }
+        // if ($exsist_admin) {
+        //     return response()->json(['error' => 'This user already exists as a Board Director.'], Response::HTTP_BAD_REQUEST);
+        // }
 
 
         $BoardDirector = BoardDirector::create([

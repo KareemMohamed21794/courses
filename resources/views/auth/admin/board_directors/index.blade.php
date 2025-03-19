@@ -104,7 +104,8 @@
                             <!--end::Svg Icon-->{{ __('messages.Export') }}</button>
                             <!--end::Export-->
                             @endif
-                            @if($can_add == 1 && empty($added))
+                            
+                            @if($can_add == 1)
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ $add_title }}</button>
                             <!--end::Add-->
