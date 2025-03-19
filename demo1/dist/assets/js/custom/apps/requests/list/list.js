@@ -641,7 +641,8 @@ function reject_accept(status,id) {
                     }
                 }).then(function () {
                     // delete row data from server and re-draw datatable
-                    dt.draw();
+                    // dt.draw();
+                    $('#kt_datatable_table').DataTable().draw();
                 });
             });
         },
