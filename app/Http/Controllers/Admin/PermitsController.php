@@ -783,10 +783,10 @@ class PermitsController extends Controller
         $last_day_year = date('Y') . '-12-31';
         
         if($objAdmin->position_id == 1 || $objAdmin->position_id == 3 || $objAdmin->position_id == 4 || $objAdmin->position_id == 6){
-            $sum = Permit::where('status','!=','rejected')->whereBetween('activity_history',[$first_day_year,$last_day_year])->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
+            $sum = Permit::where('status','!=','rejected')->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
             ->sum('type_activity.price');
        }else{
-            $sum = Permit::where('status','!=','rejected')->whereBetween('activity_history',[$first_day_year,$last_day_year])->where('admin_id', $objAdmin->id)
+            $sum = Permit::where('status','!=','rejected')->where('admin_id', $objAdmin->id)
             ->join('type_activity', 'permits.nature_activity', '=', 'type_activity.id')
             ->sum('type_activity.price');
         
@@ -844,7 +844,7 @@ class PermitsController extends Controller
                 DB::raw('SUM(type_activity.price) as price'),
                 DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
             )
-            ->whereBetween('activity_history',[$first_day_year,$last_day_year])
+            // ->whereBetween('activity_history',[$first_day_year,$last_day_year])
             ->where('permits.status','!=','rejected')
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
@@ -870,7 +870,7 @@ class PermitsController extends Controller
                 DB::raw('SUM(type_activity.price) as price'),
                 DB::raw('COUNT(permits.id) as permit_count')  // This counts the number of permits
             )
-            ->whereBetween('activity_history',[$first_day_year,$last_day_year])
+            // ->whereBetween('activity_history',[$first_day_year,$last_day_year])
             ->where('permits.status','!=','rejected')
             ->join('admins', 'admins.id', '=', 'permits.admin_id')
             ->join('type_activity', 'type_activity.id', '=', 'permits.nature_activity')
