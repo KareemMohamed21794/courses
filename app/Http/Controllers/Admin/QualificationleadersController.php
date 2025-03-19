@@ -302,7 +302,7 @@ class QualificationleadersController extends Controller
 
 
         $alldataResult=array();
-
+        
         foreach($alldata as $key=> $objdata){
 
             if($objdata->current_qualification == 'musaeid_qayid_wahdah'){

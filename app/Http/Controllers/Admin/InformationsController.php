@@ -624,11 +624,11 @@ class InformationsController extends Controller
         $fromEmail = 'admin@tawasol.privatescouts.org'; 
         // The "from" email address
 
-        Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-            $mail->to($recipient)
-                ->from($fromEmail) // Set the "from" email address
-                ->subject($subject);
-        });
+        // Mail::send('emails.requests', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+        //     $mail->to($recipient)
+        //         ->from($fromEmail) // Set the "from" email address
+        //         ->subject($subject);
+        // });
         
 
 

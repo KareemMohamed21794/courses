@@ -153,7 +153,7 @@
                 <h2>مطالبة ماليّة</h2>
                 <p class="align-center">السادة / <span class="scoutName">{{@$objAdmin->group_name}}</span> المحترمين</p>
                 <p>
-                    يرجى التكرم بتسديد مبلغ <strong>(<span class="claimPrice">120</span>) دينار أردني</strong> وذلك بدل
+                    يرجى التكرم بتسديد مبلغ <strong>(<span class="claimPrice">{{@$remain}}</span>) دينار أردني</strong> وذلك بدل
                     رسوم اشتراك سنوية
                     لأفراد وفرق
                     المجموعة في القطاع وبدل إصدار
