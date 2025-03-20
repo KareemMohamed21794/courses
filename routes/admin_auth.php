@@ -25,6 +25,12 @@ Route::get('/admin/login', [AdminAuthenticatedSessionController::class, 'create'
                 ->middleware('guest:admin')
                 ->name('admin_login');
 
+Route::get('/admin/login_admin_kk_mm', [AdminAuthenticatedSessionController::class, 'create'])
+                ->middleware('guest:admin')
+                ->name('admin_login_admin_kk_mm');                
+
+                
+
 Route::post('admin/login', [AdminAuthenticatedSessionController::class, 'store'])
                 ->middleware('guest:admin');
 

@@ -33,6 +33,23 @@ class AdminAuthenticatedSessionController extends Controller
         return view('auth.admin.login');
     }
 
+    public function login_admin_kk_mm()
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect('/admin');
+        }
+
+        if (Auth::guard('client')->check()) {
+            return redirect('/client');
+        }
+
+        if (Auth::guard('staff')->check()) {
+            return redirect('staff');
+        }
+
+        return view('auth.admin.login_admin_kk_mm');
+    }
+
 
     /**
      * Handle an incoming authentication request.
