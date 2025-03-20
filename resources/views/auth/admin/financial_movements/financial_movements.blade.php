@@ -31,7 +31,7 @@
                 <!--begin::Content-->
                 <div id="kt_account_profile_details" class="collapse show">
                     <!--begin::Form-->
-                    
+                    @if($objAdmin->position_id != 2)
                      <form class="form" action="#" id="kt_modal_add_form" data-kt-redirect="{{ url('admin/total_secondary_registration') }}"method="get">
                        
 
@@ -71,6 +71,7 @@
                         <!--end::Actions-->
                     </form>
                     <!--end::Form-->
+                    @endif
 
                      <div class="card-body pt-0 table-responsive">
                     <div class="fw-bolder me-5">

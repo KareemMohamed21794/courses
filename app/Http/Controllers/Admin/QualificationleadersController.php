@@ -64,11 +64,18 @@ class QualificationleadersController extends Controller
         }
 
 
-        if($objAdmin->position_id ==2 || $objAdmin->position_id ==5){
+        if($objAdmin->position_id ==5){
             $can_add = 1;
             $can_update = 0;
             $can_delete = 0;
             $can_print = 0;
+        }
+
+        if($objAdmin->position_id ==2){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 1;
+            $can_print = 1;
         }
 
         return view('auth.admin.qualification_leaders.index',['title' => $title, 'add_title' => $add_title,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'objAdmin'=>$objAdmin]);
