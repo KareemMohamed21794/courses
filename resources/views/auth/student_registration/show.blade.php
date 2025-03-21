@@ -343,6 +343,9 @@
 </div>
 </div>
 
+
+ <div class="two-column">
+
 <div class="form-group">
     <label for="blood_type">نوع الدم</label>
     <select id="blood_type" name="blood_type" disabled>
@@ -357,6 +360,19 @@
         <option value="O-" {{@$StudentRegistration->blood_type == 'O-' ? 'selected' : ''}}>O-</option>
     </select>
 </div>
+
+<div class="form-group">
+    <label for="sex">الجنس  </label>
+     <select id="sex" name="sex" disabled>
+        <option value="">اختر..</option>
+        <option {{@$StudentRegistration->sex == 'male' ? 'selected' : ''}} value="male">ذكر</option>
+        <option {{@$StudentRegistration->sex == 'female' ? 'selected' : ''}} value="female">انثي</option>
+        
+    </select>
+     
+</div>
+
+ </div>
 
 <div class="form-group">
     <label for="hobbies">الهوايات</label>

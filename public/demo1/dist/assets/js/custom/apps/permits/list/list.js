@@ -181,7 +181,7 @@ var KTDatatablesServerSide = function () {
                               
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:`+display_file+`">
+                                <div class="menu-item px-3" style="display:`+display_reject+`">
                                     <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject_request"  onclick="reject(`+row.id+`)">
                                         رفض
                                     </a>
@@ -208,7 +208,7 @@ var KTDatatablesServerSide = function () {
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display:none">
+                                <div class="menu-item px-3" style="display:`+display_delete+`">
                                     <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
                                         `+delete_lang+`
                                     </a>

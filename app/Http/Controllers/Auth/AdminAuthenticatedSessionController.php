@@ -59,7 +59,7 @@ class AdminAuthenticatedSessionController extends Controller
      */
     public function store(AdminLoginRequest $request)
     {  
-
+    
         
         $request->authenticate();
 

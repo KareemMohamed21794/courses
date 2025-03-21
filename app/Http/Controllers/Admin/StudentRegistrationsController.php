@@ -108,6 +108,7 @@ class StudentRegistrationsController extends Controller
             'national_id' => ['required', 'string', 'max:255'],
             'mobile_number' => ['required', 'string', 'max:255'],
             'division' => ['required'],
+            'sex' => ['required'],
             
         ]);
 
@@ -143,6 +144,7 @@ class StudentRegistrationsController extends Controller
         'parents_status' =>  $request->parents_status,
         'education_level' =>  $request->education_level,
         'blood_type' =>  $request->blood_type,
+        'sex' =>  $request->sex,
         'hobbies' =>  $request->hobbies,
         'health_condition' =>  $request->health_condition,
         'health_condition_type' =>  $request->health_condition_type ,
@@ -246,6 +248,7 @@ class StudentRegistrationsController extends Controller
             'national_id' => ['required', 'string', 'max:255'],
             'mobile_number' => ['required', 'string', 'max:255'],
             'division' => ['required'],
+            'sex' => ['required'],
             
         ]);
    
@@ -279,6 +282,7 @@ class StudentRegistrationsController extends Controller
         $objStudentRegistration->parents_status = $request->parents_status;
         $objStudentRegistration->education_level = $request->education_level;
         $objStudentRegistration->blood_type = $request->blood_type;
+        $objStudentRegistration->sex = $request->sex;
         $objStudentRegistration->hobbies = $request->hobbies;
         $objStudentRegistration->health_condition = $request->health_condition;
         $objStudentRegistration->health_condition_type = $request->health_condition_type;
@@ -348,6 +352,7 @@ class StudentRegistrationsController extends Controller
             'father_name'=>true,
             'grandfather_name'=> true,
             'family_name'=> true,
+            'sex'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
             'type'   => true,
@@ -384,6 +389,7 @@ class StudentRegistrationsController extends Controller
         $alldataResult=array();
 
         $page_status = '';
+        $sex = '';
  
         foreach($alldata as $key=> $objdata){
 
@@ -398,6 +404,13 @@ class StudentRegistrationsController extends Controller
                 $page_status =__('messages.inactive');
             }
 
+
+            if($objdata->sex == 'male'){
+                $sex = __('messages.male');
+            }elseif($objdata->sex == 'female'){
+                $sex =__('messages.female');
+            }
+
           
             $alldataResult[] = array(
                 "#" => $objdata->id,
@@ -407,6 +420,7 @@ class StudentRegistrationsController extends Controller
                 "father_name"=> $objdata->father_name,
                 "grandfather_name"=> $objdata->grandfather_name,
                 "family_name"=> $objdata->family_name,
+                "sex"=> @$sex,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
                 "type"=> $type,

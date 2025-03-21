@@ -84,7 +84,7 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            @if($can_add == 1 )
+                          
                              <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
                            <a href="{{url('admin/export_advertisements')}}" class="menu-link px-3">
@@ -103,7 +103,7 @@
                             <!--end::Export-->
                         </a>
                        
-
+                          @if($can_add == 1 )
                         
                             <!--begin::Add-->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add">{{ __('messages.Add') }} {{ $add_title }}</button>

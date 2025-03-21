@@ -365,6 +365,8 @@
 </div>
 </div>
 
+ <div class="two-column">
+
 <div class="form-group">
     <label for="blood_type">نوع الدم</label>
     <select id="blood_type" name="blood_type" >
@@ -379,6 +381,24 @@
         <option value="O-">O-</option>
     </select>
 </div>
+
+<div class="form-group">
+    <label for="sex">الجنس  <span class="required-mark">*</span></label>
+     <select id="sex" name="sex" required>
+        <option value="">اختر..</option>
+        <option value="male">ذكر</option>
+        <option value="female">انثي</option>
+        
+    </select>
+     <!-- Display validation error for sex -->
+        @if ($errors->has('sex'))
+            <div class="error-message">
+                <strong>{{ $errors->first('sex') }}</strong>
+            </div>
+        @endif
+</div>
+
+ </div>
 
 <div class="form-group">
     <label for="hobbies">الهوايات</label>

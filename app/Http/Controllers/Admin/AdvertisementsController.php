@@ -709,10 +709,10 @@ class AdvertisementsController extends Controller
     
     if ($objAdmin->is_super == 1) {
         $Advertisements = Advertisement::get();
-        $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح');
+        $columns = array(__('messages.scout_group'), 'الملف', 'اسم الملف', 'الشرح' , __('messages.categories'));
     } else {
         $Advertisements = Advertisement::where('admin_id', $userId)->get();
-        $columns = array('الملف', 'اسم الملف', 'الشرح');
+        $columns = array('الملف', 'اسم الملف', 'الشرح', __('messages.categories'));
     }
 
     // Set the response headers with the correct character encoding
@@ -736,6 +736,26 @@ class AdvertisementsController extends Controller
 
         // Write the data rows
         foreach ($Advertisements as $Advertisement) {
+
+             $categories = "";
+
+
+            if($Advertisement->categories=='talab_mukhatabat'){
+                $categories = "طلب مخاطبات لجهات محلية";
+            }elseif ($Advertisement->categories=='⁠anshitat_mahaliya') {
+                $categories = "أنشطة محلية";
+            }elseif ($Advertisement->categories=='anshita_earabiat_waealamia') {
+                $categories = " ⁠أنشطة عربية وعالمية";
+            }elseif ($Advertisement->categories=='aldirasat_altaahilia') {
+                $categories = "الدراسات التأهيلية";
+            }elseif ($Advertisement->categories=='aistifsarat_malia') {
+                $categories = "استفسارات مالية";
+            }elseif ($Advertisement->categories=='aijtimaeat') {
+                $categories = "اجتماعات ";
+            }elseif ($Advertisement->categories=='⁠aistifsarat_eama') {
+                $categories = "استفسارات عامة";
+            }
+
             $row = array();
 
             if ($objAdmin->is_super == 1) {
@@ -746,12 +766,13 @@ class AdvertisementsController extends Controller
             $row['file'] = asset('public/images/advertisements/' . $Advertisement->file);
             $row['file_name'] = $Advertisement->file_name;
             $row['description'] = $Advertisement->description;
+            $row['categories'] = @$categories;
 
             // Write the row data to the CSV file
             if ($objAdmin->is_super == 1) {
-                fputcsv($file, array($row['admin_id'], $row['file'], $row['file_name'], $row['description']));
+                fputcsv($file, array($row['admin_id'], $row['file'], $row['file_name'], $row['description'], $row['categories']));
             } else {
-                fputcsv($file, array($row['file'], $row['file_name'], $row['description']));
+                fputcsv($file, array($row['file'], $row['file_name'], $row['description'], $row['categories']));
             }
         }
 
