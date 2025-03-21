@@ -416,6 +416,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -440,6 +442,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1169,6 +1173,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1193,6 +1199,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1444,6 +1452,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1468,6 +1478,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1661,6 +1673,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:
@@ -1685,6 +1699,8 @@ class PermitsController extends Controller
                             return 'المجموعه';
                         case 'awlia_alamwr':
                             return 'اولياء الامور';
+                        case 'leaders':
+                            return 'القادة/القائدات';
                         case 'other':
                             return 'اخرى';
                         default:

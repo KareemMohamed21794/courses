@@ -167,8 +167,8 @@
                             <!--end::Label-->
                             <!--begin::Input-->
 
-
-                     <select onchange="AlwahdaUpdate(this.value)" name="alwahda[]" id="alwahda_update" data-placeholder="{{ __('messages.alwahda') }}" class="form-select form-select-solid" multiple>
+                     <select onchange="AlwahdaUpdate(this.value)" name="alwahda[]" id="alwahda_update" aria-label="{{ __('messages.Select') }} {{ __('messages.alwahda') }}" data-control="select2" data-placeholder="{{ __('messages.Select') }} {{ __('messages.alwahda') }}"   class="form-select form-select-solid fw-bolder" multiple="">
+                     
                                 <option value="">{{ __('messages.alwahda') }}</option>
                                 <option value="ashbal">اشبال /  زهرات</option>
                                 <option value="kashaf">كشاف / مرشدات</option>
@@ -176,6 +176,7 @@
                                 <option value="jawaluh">جواله / دليلات</option>
                                 <option value="almajmueuh">المجموعه</option>
                                 <option value="awlia_alamwr"> اولياء الامور</option>
+                                <option value="leaders">القادة/القائدات</option>
                                 <option value="other">اخرى</option>
                             </select>
                             <!--end::Input-->
