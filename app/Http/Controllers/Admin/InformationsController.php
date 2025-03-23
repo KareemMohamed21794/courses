@@ -701,7 +701,8 @@ public function RejectedRequest(Request $request)
 
     public function report_archive_Requests_get_list(Request $request)
     {
-       
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
 
         ini_set('memory_limit', '-1');
 
@@ -734,12 +735,27 @@ public function RejectedRequest(Request $request)
         $last_day_year = $request->year . '-12-31 23:59:59';
 
         $title = __('messages.archive_advertisements');
-
+        
         // Fetch all advertisements where the created_at date is between the first and last day of the provided year
-         $alldata = Information::whereNull('status')->whereBetween('created_at',[$first_day_year,$last_day_year])->orWhere('status','approved')->get();
+        if($objAdmin->position_id == 2){
+        $alldata = Information::where(function($query) use ($objAdmin, $first_day_year, $last_day_year) {
+        $query->where('admin_id', $objAdmin->id)
+              ->whereBetween('created_at', [$first_day_year, $last_day_year])
+              ->whereNotIn('status', ['rejected']); // Excludes 'rejected' status
+        })
+        ->get();
+
+        }else{
+            
+        $alldata = Information::where(function($query) use ($first_day_year, $last_day_year) {
+        $querywhereBetween('created_at', [$first_day_year, $last_day_year])
+              ->whereNotIn('status', ['rejected']); // Excludes 'rejected' status
+        })
+        ->get();
+        }
 
        
-
+       
         $alldataResult=array();
  
         foreach($alldata as $key=> $objdata){

@@ -1251,6 +1251,26 @@ fill: #009EF7;
                                 </a>
                             </div>
 
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_archive_advertisements' ? 'active' : '' }}" href="{{ url('admin/report_archive_advertisements') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.archive_advertisements') }}</span>
+                                </a>
+                            </div>
+
+
+                            <div class="menu-item">
+                                <a class="menu-link {{ Request::segment(2)=='report_archive_requests' ? 'active' : '' }}" href="{{ url('admin/report_archive_requests') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">{{ __('messages.archive_requests') }}</span>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                 @endif

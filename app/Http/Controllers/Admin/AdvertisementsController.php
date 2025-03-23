@@ -814,7 +814,8 @@ public function ReportArchiveAdvertisements()
     public function report_archive_advertisements_get_list(Request $request)
     {
        
-
+        $userId = Auth::id();
+        $objAdmin = Admin::find($userId);
         ini_set('memory_limit', '-1');
 
         $columnsDefault = [
@@ -848,7 +849,12 @@ public function ReportArchiveAdvertisements()
         $title = __('messages.archive_advertisements');
 
         // Fetch all advertisements where the created_at date is between the first and last day of the provided year
-        $alldata = Advertisement::whereBetween('created_at', [$first_day_year, $last_day_year])->get();
+        if($objAdmin->position_id == 2){
+            $alldata = Advertisement::whereBetween('created_at', [$first_day_year, $last_day_year])->where('admin_id',$objAdmin->id)->get();
+        }else{
+            $alldata = Advertisement::whereBetween('created_at', [$first_day_year, $last_day_year])->get();
+        }
+        
 
        
 

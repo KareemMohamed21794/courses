@@ -41,6 +41,7 @@ var KTDatatablesServerSide = function () {
                 { data: 'grandfather_name' },
                 { data: 'family_name' },
                 { data: 'sex' },
+                { data: 'division' },
                 { data: 'birth_date' },
                 { data: 'birth_place' },
                 { data: 'type'},

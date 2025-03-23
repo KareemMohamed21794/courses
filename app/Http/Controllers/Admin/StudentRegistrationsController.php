@@ -353,6 +353,7 @@ class StudentRegistrationsController extends Controller
             'grandfather_name'=> true,
             'family_name'=> true,
             'sex'=> true,
+            'division'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
             'type'   => true,
@@ -390,6 +391,7 @@ class StudentRegistrationsController extends Controller
 
         $page_status = '';
         $sex = '';
+        $division = '';
  
         foreach($alldata as $key=> $objdata){
 
@@ -411,6 +413,19 @@ class StudentRegistrationsController extends Controller
                 $sex =__('messages.female');
             }
 
+
+            if($objdata->division == '1'){
+                $division = 'الاشبال/الزهرات';
+            }elseif($objdata->division == '2'){
+                $division ='الكشاف/المرشدات';
+            }elseif($objdata->division == '3'){
+                $division ='المتقدم/المتقدمات';
+            }elseif($objdata->division == '4'){
+                $division ='الجواله/الدليلات';
+            }elseif($objdata->division == '5'){
+                $division ='القادة/القائدات';
+            }
+
           
             $alldataResult[] = array(
                 "#" => $objdata->id,
@@ -421,6 +436,7 @@ class StudentRegistrationsController extends Controller
                 "grandfather_name"=> $objdata->grandfather_name,
                 "family_name"=> $objdata->family_name,
                 "sex"=> @$sex,
+                "division"=> @$division,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
                 "type"=> $type,
@@ -757,6 +773,8 @@ class StudentRegistrationsController extends Controller
             'father_name'=>true,
             'grandfather_name'=> true,
             'family_name'=> true,
+            'sex'=> true,
+            'division'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
         ];
@@ -781,7 +799,29 @@ class StudentRegistrationsController extends Controller
 
         $alldataResult = array();
 
+        $sex = '';
+        $division = '';
+
         foreach ($alldata as $key=> $objdata) {
+
+            if($objdata->sex == 'male'){
+                $sex = __('messages.male');
+            }elseif($objdata->sex == 'female'){
+                $sex =__('messages.female');
+            }
+
+
+            if($objdata->division == '1'){
+                $division = 'الاشبال/الزهرات';
+            }elseif($objdata->division == '2'){
+                $division ='الكشاف/المرشدات';
+            }elseif($objdata->division == '3'){
+                $division ='المتقدم/المتقدمات';
+            }elseif($objdata->division == '4'){
+                $division ='الجواله/الدليلات';
+            }elseif($objdata->division == '5'){
+                $division ='القادة/القائدات';
+            }
            
             $alldataResult[] = array(
                 "order" => $key+1,
@@ -791,6 +831,8 @@ class StudentRegistrationsController extends Controller
                 "father_name"=> $objdata->father_name,
                 "grandfather_name"=> $objdata->grandfather_name,
                 "family_name"=> $objdata->family_name,
+                "sex"=> @$sex,
+                "division"=> @$division,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
               
@@ -906,7 +948,7 @@ class StudentRegistrationsController extends Controller
         );
         
         // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'));
+        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),'الجنس','الفرقة  ',__('messages.birth_date'),__('messages.birth_place'));
 
         // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
         $callback = function() use ($student_registrations, $columns) {
@@ -918,8 +960,31 @@ class StudentRegistrationsController extends Controller
             // Write the column headers
             fputcsv($file, $columns);
 
+            $sex = '';
+            $division = '';
+
             // Write the data rows
             foreach ($student_registrations as $student_registration) {
+
+                if($student_registration->sex == 'male'){
+                $sex = __('messages.male');
+                }elseif($student_registration->sex == 'female'){
+                    $sex =__('messages.female');
+                }
+
+
+                if($student_registration->division == '1'){
+                    $division = 'الاشبال/الزهرات';
+                }elseif($student_registration->division == '2'){
+                    $division ='الكشاف/المرشدات';
+                }elseif($student_registration->division == '3'){
+                    $division ='المتقدم/المتقدمات';
+                }elseif($student_registration->division == '4'){
+                    $division ='الجواله/الدليلات';
+                }elseif($student_registration->division == '5'){
+                    $division ='القادة/القائدات';
+                }
+
                
                 // Make sure to retrieve the Arabic name correctly from your database column
                 $row['group_name']  = @$student_registration->Admin->group_name;
@@ -927,11 +992,13 @@ class StudentRegistrationsController extends Controller
                 $row['father_name']  = $student_registration->father_name;
                 $row['grandfather_name']  = $student_registration->grandfather_name;
                 $row['family_name']  = $student_registration->family_name;
+                $row['sex'] = @$sex;
+                $row['division'] = @$division;
                 $row['birth_date']  = $student_registration->birth_date;
                 $row['birth_place']  = $student_registration->birth_place;
              
                 // Write the row data to the CSV file
-                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['birth_date'],$row['birth_place']));
+                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['sex'], $row['division'],$row['birth_date'],$row['birth_place']));
             }
 
             fclose($file);
