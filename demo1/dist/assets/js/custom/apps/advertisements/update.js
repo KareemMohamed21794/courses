@@ -267,7 +267,7 @@ function getData(id,action) {
             jQuery('#description_update').val(data.description);
             jQuery('#file_name_update').val(data.file_name);
             jQuery('#categories_update').val(data.categories);
-           
+           jQuery('#categories_update').val(data.categories).trigger('change'); // إضافة trigger لتحديث الـ Select2 إذا كنت تستخدمه
            // var image_path =  '../images/advertisements/'
            //  // Get the image element by its id
            //  var file = document.getElementById("file_update");

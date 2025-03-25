@@ -265,7 +265,7 @@ class AdvertisementsController extends Controller
     public function edit($id)
     {
         //$this->authorize(self::MODEL.'-update');
-        $Advertisement  = Advertisement::find($id);
+        $Advertisement  = AdvertisementParent::find($id);
         @$Advertisement->Admin;
 
         return response()->json($Advertisement);
@@ -457,17 +457,17 @@ class AdvertisementsController extends Controller
 
             if($objdata->categories=='talab_mukhatabat'){
                 $categories = "طلب مخاطبات لجهات محلية";
-            }elseif ($objdata->categories=='⁠anshitat_mahaliya') {
+            }elseif ($objdata->categories=='anshitat_mahaliya') {
                 $categories = "أنشطة محلية";
             }elseif ($objdata->categories=='anshita_earabiat_waealamia') {
-                $categories = " ⁠أنشطة عربية وعالمية";
+                $categories = " أنشطة عربية وعالمية";
             }elseif ($objdata->categories=='aldirasat_altaahilia') {
                 $categories = "الدراسات التأهيلية";
             }elseif ($objdata->categories=='aistifsarat_malia') {
                 $categories = "استفسارات مالية";
             }elseif ($objdata->categories=='aijtimaeat') {
                 $categories = "اجتماعات ";
-            }elseif ($objdata->categories=='⁠aistifsarat_eama') {
+            }elseif ($objdata->categories=='aistifsarat_eama') {
                 $categories = "استفسارات عامة";
             }
 
