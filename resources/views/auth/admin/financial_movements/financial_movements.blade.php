@@ -89,7 +89,7 @@
                             
                             <th>{{ __('messages.permit_number') }}</th>
                             <th>{{ __('messages.price') }}</th>
-                            <th>{{ __('messages.created_at') }}</th>
+                            <th>{{ __('messages.activity_history') }}</th>
                             <th style="visibility: hidden;" class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>
                         </thead>
@@ -103,7 +103,7 @@
                                 <td>{{@$objPermit->TypeActivity->name_ar}}</td>
                                 <td>{{@$objPermit->permit_number}}</td>
                                 <td>{{@$objPermit->TypeActivity->price}}</td>
-                                <td>{{Date('Y-m-d',strtotime($objPermit->created_at))}}</td>
+                                <td>{{Date('Y-m-d',strtotime($objPermit->activity_history))}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -220,7 +220,7 @@
 
                             <tr style="font-size: 20px">
                                 <td colspan="5">{{ __('messages.total_required_alrusum') }}</td>
-                                <td>{{$final_total_alrusum + ($count_late_students * $total_alrusum_late)}}</td>
+                                <td>{{$final_total_alrusum}}</td>
                                 
                             </tr>
                         </tfoot>
