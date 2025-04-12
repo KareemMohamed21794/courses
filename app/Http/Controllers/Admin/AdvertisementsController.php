@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Advertisement;
 use App\Models\AdvertisementParent;
 use App\Models\Admin;
+use App\Jobs\SendEmailJob;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -209,35 +210,55 @@ class AdvertisementsController extends Controller
 
 
         $this->logAction(auth()->id(), 'user', 'send_Advertisement', 'create', 'advertisements', $Advertisement->id);
-        
+       
+        // new code for queue
 
         foreach ($arrGroups as $key => $objGroup) {
             $objAdmin = Admin::find($objGroup);
-            
+
+            // Validate the email and dispatch the job to the queue
             if (!empty($objAdmin->email) && filter_var($objAdmin->email, FILTER_VALIDATE_EMAIL)) {
-                $recipient = $objAdmin->email;
-                \Log::info("Sending email to: " . $recipient); // Log emails
-                
-                $subject = "لديك وارد من مدير نظام تواصل";
-                $data = ['group_name' => $objAdmin->group_name];
-                $fromEmail = 'admin@tawasol.privatescouts.org';
+                \Log::info("Queuing email to: " . $objAdmin->email); // Log emails
 
-                try {
-                    Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-                        $mail->to($recipient)
-                             ->from($fromEmail)
-                             ->subject($subject);
-                    });
-                    \Log::info("Email sent to: " . $recipient);
-                } catch (\Exception $e) {
-                    \Log::error("Email error: " . $e->getMessage());
-                }
+                // Dispatch job to the queue
+                SendEmailJob::dispatch($objAdmin);
 
-                sleep(2); // Delay to prevent spam detection
+                // Optional sleep to manage rate limiting if needed, but generally, this isn't necessary with queues
+                //sleep(2);
             } else {
                 \Log::error("Invalid email: " . ($objAdmin->email ?? 'NULL'));
             }
         }
+
+        
+
+        // foreach ($arrGroups as $key => $objGroup) {
+        //     $objAdmin = Admin::find($objGroup);
+            
+        //     if (!empty($objAdmin->email) && filter_var($objAdmin->email, FILTER_VALIDATE_EMAIL)) {
+        //         $recipient = $objAdmin->email;
+        //         \Log::info("Sending email to: " . $recipient); // Log emails
+                
+        //         $subject = "لديك وارد من مدير نظام تواصل";
+        //         $data = ['group_name' => $objAdmin->group_name];
+        //         $fromEmail = 'admin@tawasol.privatescouts.org';
+
+        //         try {
+        //             Mail::send('emails.advertisements', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
+        //                 $mail->to($recipient)
+        //                      ->from($fromEmail)
+        //                      ->subject($subject);
+        //             });
+        //             \Log::info("Email sent to: " . $recipient);
+        //         } catch (\Exception $e) {
+        //             \Log::error("Email error: " . $e->getMessage());
+        //         }
+
+        //         sleep(2); // Delay to prevent spam detection
+        //     } else {
+        //         \Log::error("Invalid email: " . ($objAdmin->email ?? 'NULL'));
+        //     }
+        // }
 
         
 
