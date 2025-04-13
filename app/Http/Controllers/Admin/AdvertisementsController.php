@@ -350,7 +350,8 @@ class AdvertisementsController extends Controller
     public function destroy($id)
     {
         //$this->authorize(self::MODEL.'-delete');
-        $Advertisement = AdvertisementParent::where('id',$id)->delete();
+        $AdvertisementParent = AdvertisementParent::where('id',$id)->delete();
+        $Advertisement Advertisement::where('parent_id',$id)->delete();
         $this->logAction(auth()->id(), 'user', 'delete_Advertisement', 'delete', 'advertisements', $id);
         return response()->json(['Advertisement'=>$Advertisement]);
     }
@@ -361,7 +362,8 @@ class AdvertisementsController extends Controller
         foreach ($request->ids as $key => $id) {
             $this->logAction(auth()->id(), 'user', 'delete_Advertisement', 'delete', 'advertisements', $id);
         }
-        $Advertisement = AdvertisementParent::whereIn('id',$request->ids)->delete();
+        $AdvertisementParent = AdvertisementParent::whereIn('id',$request->ids)->delete();
+        $Advertisement Advertisement::whereIn('parent_id',$request->ids)->delete();
 
         return response()->json(['Advertisement'=>$Advertisement]);
     }
