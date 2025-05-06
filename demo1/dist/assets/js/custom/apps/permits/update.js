@@ -331,11 +331,12 @@ function getData(id,action) {
             jQuery('#activity_history_update').val(data.activity_history);
             jQuery('#number_days_update').val(data.number_days);
 
+           
             // Assuming data.alwahda is a comma-separated string like "kashaf,jawaluh"
-            var alwahdaValues = data.alwahda.split(',');
+            var alwahdaValues = data.alwahda ? data.alwahda.split(',') : [];
 
             // Assuming alwahda_update is the ID of your multiple select element
-            jQuery('#alwahda_update').val(alwahdaValues);
+            jQuery('#alwahda_update').val(alwahdaValues).trigger('change');
 
 
             // jQuery('#alwahda_update').val(data.alwahda);

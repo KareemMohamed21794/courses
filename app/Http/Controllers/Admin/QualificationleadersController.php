@@ -692,12 +692,14 @@ public function ExportQualificationLeaders(Request $request)
     $userId = Auth::id();
     
     $objAdmin = Admin::find($userId);
-    if($objAdmin->is_super == 0){
-    $qualification_leaders = QualificationLeader::where('admin_id',$objAdmin->id)->orderBy('id')->get();
-    }else{
-        $qualification_leaders = QualificationLeader::all();
-    }
+    // if($objAdmin->is_super == 0){
+    // $qualification_leaders = QualificationLeader::where('admin_id',$objAdmin->id)->orderBy('id')->get();
+    // }else{
+    //     $qualification_leaders = QualificationLeader::all();
+    // }
     
+
+     $qualification_leaders = QualificationLeader::all();
         
         if($request->leader_id){
             $qualification_leaders = $qualification_leaders->where('admin_id',$request->leader_id);

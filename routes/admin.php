@@ -61,9 +61,14 @@ Route::middleware('auth:admin')->group(function () {
 
 		Route::get('/accept_student_registration/{id}', [StudentRegistrationsController::class, 'accept_student_registration']);
 
+
+		Route::POST('show_students/approve_student_registration', [StudentRegistrationsController::class, 'approve_student_registration']);
+
 		Route::DELETE('show_students/delete_student_registration', [StudentRegistrationsController::class,'deleteStudentRegistrations']);
 
 		Route::DELETE('show_students/student_registration/{id}', [StudentRegistrationsController::class,'destroy']);
+
+		Route::get('/export_student_registration_all', [StudentRegistrationsController::class, 'ExportRegistrations']);
 
         Route::get('annual_registration_archive', [StudentRegistrationsController::class, 'AnuulRegistrationArchive']);
 		Route::post('annual_registration_archive', [StudentRegistrationsController::class, 'AddAnuulRegistrationArchive']);

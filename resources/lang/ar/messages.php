@@ -173,6 +173,7 @@ return [
     'client_secret' => 'كلمه مرور الضرايب',
     'change' => 'تغيير',
     'nothing' => 'لا يوجد',
+    'send'=>'ارسال',
 
     ## Reports ##
     'reports' => 'التقارير',
@@ -684,6 +685,7 @@ return [
     'Financial_claims'=>'مطالبة مالية',
     'permit_count'=>'عدد التصاريح',
     'privite_advertisements'=>'الوارد الخاص فيك',
+    'Approve_Selected'=>'الموافقة  على  المحدد',
 
  ];
 

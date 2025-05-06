@@ -163,8 +163,8 @@
                             @endif
                             <th>#</th>
                             <th>{{ __('messages.scout_group') }}</th>
-                            <th>العدد</th>
-
+                            <th>عدد المسجلين  المنتسبين</th>
+                            <th>عدد  المقبولين</th>
                             <!--  <th>السنة</th>
                               <th>حاله التسجيل السنوي</th>
                             <th>{{ __('messages.created_at') }}</th> -->

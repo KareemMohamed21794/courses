@@ -135,7 +135,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'Home' => 'Home',
-
+    'send'=>'Send',
     //=========clients==========//
     'clients' => 'Clients',
     'code' => 'Code',
@@ -385,5 +385,6 @@ return [
     'show_students'=>'Show Students' ,
     'register_url'=>'register url',
     'board_director'=>'Board Director',
+    'Approve_Selected'=>'Approve Selected',
  ];
 

@@ -178,7 +178,7 @@
                     <!--end::Button-->
                     <!--begin::Button-->
                     <button type="submit" id="kt_modal_add_submit" class="btn btn-primary">
-                        <span class="indicator-label">{{ __('messages.Submit') }}</span>
+                        <span class="indicator-label">{{ __('messages.send') }}</span>
                         <span class="indicator-progress">{{ __('messages.Please wait') }}...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>

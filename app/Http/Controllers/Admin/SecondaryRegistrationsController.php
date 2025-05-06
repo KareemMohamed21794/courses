@@ -265,6 +265,7 @@ class SecondaryRegistrationsController extends Controller
             'id'   => true,
             'leader'   => true,
             'count'   => true,
+            'approved_count'   => true,
             // 'year'   => true,
             // 'status'   => true,
             // 'created_at'   => true,
@@ -315,11 +316,23 @@ class SecondaryRegistrationsController extends Controller
 
         if($objAdmin->is_super == 1|| $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
 
+           // $alldata = StudentRegistration::
+           // join('admins', 'student_registrations.admin_id', '=', 'admins.id')
+           // ->select('student_registrations.admin_id','admins.group_name', \DB::raw('count(*) as registration_count'))
+           // ->groupBy('student_registrations.admin_id','admins.group_name')
+           // ->get();
+
+
            $alldata = StudentRegistration::
-           join('admins', 'student_registrations.admin_id', '=', 'admins.id')
-           ->select('student_registrations.admin_id','admins.group_name', \DB::raw('count(*) as registration_count'))
-           ->groupBy('student_registrations.admin_id','admins.group_name')
-           ->get();
+            join('admins', 'student_registrations.admin_id', '=', 'admins.id')
+            ->select(
+                'student_registrations.admin_id',
+                'admins.group_name',
+                \DB::raw('count(*) as registration_count'),
+                \DB::raw("SUM(CASE WHEN student_registrations.type = 'approved' THEN 1 ELSE 0 END) as approved_count")
+            )
+            ->groupBy('student_registrations.admin_id', 'admins.group_name')
+            ->get();
 
 
         
@@ -329,14 +342,19 @@ class SecondaryRegistrationsController extends Controller
             $alldata = StudentRegistration::
             where('student_registrations.admin_id',$userId)
            ->join('admins', 'student_registrations.admin_id', '=', 'admins.id')
-           ->select('student_registrations.admin_id','admins.group_name', \DB::raw('count(*) as registration_count'))
-           ->groupBy('student_registrations.admin_id','admins.group_name')
-           ->get();
+           ->select(
+                'student_registrations.admin_id',
+                'admins.group_name',
+                \DB::raw('count(*) as registration_count'),
+                \DB::raw("SUM(CASE WHEN student_registrations.type = 'approved' THEN 1 ELSE 0 END) as approved_count")
+            )
+            ->groupBy('student_registrations.admin_id', 'admins.group_name')
+            ->get();
            
 
         }
 
-     
+        
 
         $alldataResult=array();
 
@@ -364,6 +382,7 @@ class SecondaryRegistrationsController extends Controller
                 "id" => $objdata->admin_id,
                 "leader" => @$objdata->group_name,
                 "count" => @$objdata->registration_count,
+                "approved_count"=> @$objdata->approved_count,
                 //  "secondary_registration" => '
                 // <a target="_blank" href="' . asset('public/images/files/' . $objdata->secondary_registration) . '">تحميل الملف<a>',
                 // "year" => $objdata->year,

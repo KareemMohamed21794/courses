@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use Lang;
+use PDF;
+use TCPDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 class StudentRegistrationsController extends Controller
 {
@@ -607,28 +610,6 @@ class StudentRegistrationsController extends Controller
 
         $this->logAction(auth()->id(), 'user', 'accept_student', 'accepted', ' student_registrations', $objStudentRegistration->id);
 
-        // $objUser = $objStudentRegistration->Admin;
-
-        // if(!empty($objUser->email)){
-        //     $recipient = $objUser->email;
-        //     $subject = 'موافقه نموذج التسجيل';
-
-        //     $data = ['content' => 'This is the email content.']; // Data to pass to the view
-
-        //     $fromEmail = 'admin@tawasol.privatescouts.org'; 
-        //     // The "from" email address
-
-        //     Mail::send('emails.secondary_registrations', $data, function ($mail) use ($recipient, $subject, $fromEmail) {
-        //         $mail->to($recipient)
-        //             ->from($fromEmail) // Set the "from" email address
-        //             ->subject($subject);
-        //     });
-        // }
-        
-
-
-        // print_r($objUser); die;
-
         $encode_id = "";
         $encode_id = $objStudentRegistration->admin_id;
         $encodeId = $this->encodeSecureId($encode_id);
@@ -636,6 +617,29 @@ class StudentRegistrationsController extends Controller
 
         return redirect('/admin/show_students/'.$encodeId);
 
+    }
+
+
+    public function approve_student_registration(Request $request)
+    {
+        
+        $studentRegistrations = StudentRegistration::whereIn('id', $request->ids)->get();
+
+        foreach ($studentRegistrations as $registration) {
+            $registration->type = "approved";
+            $registration->save();
+
+            $this->logAction(
+                auth()->id(),
+                'user',
+                'accept_student',
+                'accepted',
+                'student_registrations',
+                $registration->id
+            );
+        }
+
+        return response()->json(['status' => 'success', 'message' => 'تمت الموافقة على المحدد.']);
     }
 
 
@@ -1064,6 +1068,111 @@ class StudentRegistrationsController extends Controller
 
             return $urlSafe;
         }
+
+
+
+
+ public function ExportRegistrations(Request $request)
+    {
+        $userId = Auth::id();
+        
+        $objAdmin = Admin::find($userId);
+      
+        $fileName = 'student_registrations.csv';
+       
+        // if($objAdmin->is_super == 0){
+        //     $student_registrations = StudentRegistration::where('admin_id',$objAdmin->id)->orderBy('id')->get();
+        // }else{
+        //     $student_registrations = StudentRegistration::orderBy('id')->get();
+        // }
+
+        $student_registrations = StudentRegistration::orderBy('id')->get();
+
+
+        $student_registrations = $student_registrations->where('admin_id',$request->leader_id);
+        
+        
+            
+         
+
+
+        
+
+        // Set the response headers with the correct character encoding
+        $headers = array(
+            "Content-type"        => "text/csv; charset=utf-8",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+        
+        // If you need to display Arabic column header, make sure to encode it as well
+        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),'الجنس','الفرقة  ',__('messages.birth_date'),__('messages.birth_place'),'الحاله');
+
+        // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+        $callback = function() use ($student_registrations, $columns) {
+            $file = fopen('php://output', 'w');
+
+            // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+            fputs($file, "\xEF\xBB\xBF");
+
+            // Write the column headers
+            fputcsv($file, $columns);
+
+            $sex = '';
+            $division = '';
+
+            // Write the data rows
+            foreach ($student_registrations as $student_registration) {
+
+
+                $type = "معلقه";
+                if($student_registration->type=='approved'){
+                    $type = "مقبول";
+                }
+
+                if($student_registration->sex == 'male'){
+                $sex = __('messages.male');
+                }elseif($student_registration->sex == 'female'){
+                    $sex =__('messages.female');
+                }
+
+
+                if($student_registration->division == '1'){
+                    $division = 'الاشبال/الزهرات';
+                }elseif($student_registration->division == '2'){
+                    $division ='الكشاف/المرشدات';
+                }elseif($student_registration->division == '3'){
+                    $division ='المتقدم/المتقدمات';
+                }elseif($student_registration->division == '4'){
+                    $division ='الجواله/الدليلات';
+                }elseif($student_registration->division == '5'){
+                    $division ='القادة/القائدات';
+                }
+
+               
+                // Make sure to retrieve the Arabic name correctly from your database column
+                $row['group_name']  = @$student_registration->Admin->group_name;
+                $row['first_name']  = $student_registration->first_name;
+                $row['father_name']  = $student_registration->father_name;
+                $row['grandfather_name']  = $student_registration->grandfather_name;
+                $row['family_name']  = $student_registration->family_name;
+                $row['sex'] = @$sex;
+                $row['division'] = @$division;
+                $row['birth_date']  = $student_registration->birth_date;
+                $row['birth_place']  = $student_registration->birth_place;
+                $row['type']  = $type;
+             
+                // Write the row data to the CSV file
+                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['sex'], $row['division'],$row['birth_date'],$row['birth_place'],$row['type']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 
 
 

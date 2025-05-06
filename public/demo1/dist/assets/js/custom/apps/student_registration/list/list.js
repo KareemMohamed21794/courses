@@ -449,6 +449,83 @@ var KTDatatablesServerSide = function () {
                 }
             });
         });
+
+
+        const approveSelected = document.querySelector('[data-kt-docs-table-select="approve_selected"]');
+
+        approveSelected.addEventListener('click', function () {
+            Swal.fire({
+                text: "هل أنت متأكد أنك تريد الموافقة على المحدد؟",
+                icon: "question",
+                showCancelButton: true,
+                buttonsStyling: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "نعم، موافقة!",
+                cancelButtonText: "لا، إلغاء",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-success",
+                    cancelButton: "btn fw-bold btn-active-light-primary"
+                },
+            }).then(function (result) {
+                if (result.value) {
+                    var ids = [];
+                    var oTable = $('#kt_datatable_table').dataTable();
+                    var rowcollection = oTable.$(".checkselected:checked", {"page": "all"});
+                    rowcollection.each(function(index, elem) {
+                        ids.push($(elem).val());
+                    });
+
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    var formData = {
+                        ids: ids,
+                    };
+
+                    var type = "POST";
+                    var ajaxurl = 'approve_student_registration'; // غيّر الرابط حسب ما يناسبك
+
+                    $.ajax({
+                        type: type,
+                        url: ajaxurl,
+                        data: formData,
+                        dataType: 'json',
+                        success: function (data) {
+                            Swal.fire({
+                                text: "تمت الموافقة على المحدد بنجاح",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "حسنًا",
+                                customClass: {
+                                    confirmButton: "btn fw-bold btn-primary",
+                                }
+                            }).then(function () {
+                                dt.draw(); // إعادة تحميل الداتا تيبل
+                            });
+
+                            // إزالة تحديد الكل
+                            const headerCheckbox = container.querySelectorAll('[type="checkbox"]')[0];
+                            headerCheckbox.checked = false;
+                        },
+                        error: function (data) {
+                            Swal.fire({
+                                text: "حدث خطأ أثناء تنفيذ العملية.",
+                                icon: "error",
+                                buttonsStyling: false,
+                                confirmButtonText: "حسنًا",
+                                customClass: {
+                                    confirmButton: "btn fw-bold btn-primary",
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
     }
 
     // Toggle toolbars
