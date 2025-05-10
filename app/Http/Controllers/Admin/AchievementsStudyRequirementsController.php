@@ -46,12 +46,14 @@ class AchievementsStudyRequirementsController extends Controller
         $can_update = 0;
         $can_delete = 0;
         $can_print = 0;
+        $can_accept_reject = 0;
 
         if($objAdmin->position_id == 1 ){
             $can_add = 1;
             $can_update = 1;
             $can_delete = 1;
             $can_print = 1;
+            $can_accept_reject = 1;
         }
 
 
@@ -60,17 +62,31 @@ class AchievementsStudyRequirementsController extends Controller
             $can_update = 0;
             $can_delete = 0;
             $can_print = 1;
+            $can_accept_reject = 0;
         }
 
 
-        if($objAdmin->position_id ==2 || $objAdmin->position_id ==5){
+        if($objAdmin->position_id ==2 ){
             $can_add = 1;
             $can_update = 1;
             $can_delete = 0;
             $can_print = 1;
+            $can_accept_reject = 0;
         }
 
-        return view('auth.admin.achievements_study_requirements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
+
+        if($objAdmin->position_id ==5){
+            $can_add = 1;
+            $can_update = 1;
+            $can_delete = 0;
+            $can_print = 1;
+            $can_accept_reject = 1;
+        }
+
+
+
+
+        return view('auth.admin.achievements_study_requirements.index',['title' => $title, 'add_title' => $add_title,'objAdmin'=>$objAdmin,'leaders'=>$leaders,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'can_accept_reject'=>$can_accept_reject]);
     }
 
     /**
@@ -460,7 +476,7 @@ class AchievementsStudyRequirementsController extends Controller
     
     $userId = \Auth::id();
     $objAdmin = Admin::find($userId);
-    if($objAdmin->is_super == 1){
+    if($objAdmin->is_super == 1 || $objAdmin->position_id == 5){
 
        $Files = AchievementStudyRequirement::get();
     

@@ -44,6 +44,7 @@ var KTDatatablesServerSide = function () {
     var can_update = $("#can_update").val();
     var can_delete = $("#can_delete").val();
     var can_print = $("#can_print").val();
+    var can_accept_reject = $("#can_accept_reject").val();
     
     
     var display_print = "none";
@@ -52,6 +53,7 @@ var KTDatatablesServerSide = function () {
     var display_procedure = "none";
     var display_edit = "none";
     var display_delete = "none";
+    var display_accept_reject = "none";
     
 
     if(can_print==1){
@@ -70,6 +72,10 @@ var KTDatatablesServerSide = function () {
 
     if(can_delete==1){
         var display_delete = "";
+    }
+
+     if(can_accept_reject==1){
+        var display_accept_reject = "";
     }
 
 
@@ -165,91 +171,69 @@ var KTDatatablesServerSide = function () {
                     orderable: false,
                     className: 'text-end',
                     render: function (data, type, row) {
-                        var AdminContent = '';
-                         // Check if segment is 'Admin'
-                        if (can_delete === '1') {
-                            AdminContent = `
+                    var AdminContent = '';
 
-                               <!--begin::Menu item-->
-                                <div class="menu-item px-3" style="display: none;">
-                                    <a href="#" class="menu-link px-3" onclick="getData(`+row.id+`)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id=`+row.id+`>
-                                        `+edit_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                    // عرض زر التعديل إذا كان لديه صلاحية التعديل
+                    // if (can_update === '1') {
+                    //     AdminContent += `
+                    //         <div class="menu-item px-3">
+                    //             <a href="#" class="menu-link px-3" onclick="getData(${row.id})" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id="${row.id}">
+                    //                 ${edit_lang}
+                    //             </a>
+                    //         </div>
+                    //     `;
+                    // }
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" onclick="reject_accept('approved', `+row.id+`)">
-                                        موافقه
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
+                    // عرض زر الموافقة إذا كان لديه صلاحية القبول/الرفض
+                    if (can_accept_reject === '1') {
+                        AdminContent += `
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" onclick="reject_accept('approved', ${row.id})">
+                                    موافقه
+                                </a>
+                            </div>
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject" onclick="reject(${row.id})">
+                                    رفض
+                                </a>
+                            </div>
+                        `;
+                    }
 
+                    // عرض زر الحذف إذا كان لديه صلاحية الحذف
+                    if (can_delete === '1') {
+                        AdminContent += `
+                            <div class="menu-item px-3">
+                                <a href="#" class="menu-link px-3" data-id="${row.id}" data-kt-docs-table-filter="delete_row">
+                                    ${delete_lang}
+                                </a>
+                            </div>
+                        `;
+                    }
 
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3" data-bs-toggle="modal" data-bs-target="#kt_modal_reject"  onclick="reject(`+row.id+`)">
-                                        رفض
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                      <a href="#" class="menu-link px-3" data-id=`+row.id+` data-kt-docs-table-filter="delete_row">
-                                        `+delete_lang+`
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
- 
-                            `;
-                        }
-                        
-                        if (can_delete === '1'){
-                              return `
+                    // إذا كان لديه أي صلاحية من الصلاحيات السابقة، نعرض الزر بالكامل
+                    if (AdminContent !== '') {
+                        return `
                             <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end">
-                                `+action_lang+`
+                                ${action_lang}
                                 <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
-                                        </g>
-                                    </svg>
+                                    <!-- SVG content -->
                                 </span>
                             </a>
-                            <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
-                               
-
-
-                               `+AdminContent+`
+                                ${AdminContent}
                             </div>
-                            <!--end::Menu-->
                         `;
-
-                        }else{
-                            return `
-                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end" data-kt-menu-flip="top-end" style="visibility: hidden;">
-                                `+action_lang+`
-                                <span class="svg-icon svg-icon-5 m-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <polygon points="0 0 24 0 24 24 0 24"></polygon>
-                                            <path d="M6.70710678,15.7071068 C6.31658249,16.0976311 5.68341751,16.0976311 5.29289322,15.7071068 C4.90236893,15.3165825 4.90236893,14.6834175 5.29289322,14.2928932 L11.2928932,8.29289322 C11.6714722,7.91431428 12.2810586,7.90106866 12.6757246,8.26284586 L18.6757246,13.7628459 C19.0828436,14.1360383 19.1103465,14.7686056 18.7371541,15.1757246 C18.3639617,15.5828436 17.7313944,15.6103465 17.3242754,15.2371541 L12.0300757,10.3841378 L6.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" transform="translate(12.000003, 11.999999) rotate(-180.000000) translate(-12.000003, -11.999999)"></path>
-                                        </g>
-                                    </svg>
-                                </span>
+                    } else {
+                        // لا يملك أي صلاحية لعرض العناصر
+                        return `
+                            <a href="#" class="btn btn-light btn-active-light-primary btn-sm" style="visibility: hidden;">
+                                ${action_lang}
                             </a>
-                            <!--begin::Menu-->
-                            
-                            </div>
-                            <!--end::Menu-->
                         `;
-                        }
-                      
-                    },
+                    }
+                }
+
                 },
                 {
                     targets: 2,

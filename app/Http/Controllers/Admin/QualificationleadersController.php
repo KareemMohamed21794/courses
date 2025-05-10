@@ -540,6 +540,7 @@ class QualificationleadersController extends Controller
 
         ini_set('memory_limit', '-1');
         $columnsDefault = [
+            '#'   => true,
             'order'   => true,
             'id'   => true,
             'group_name'   => true,
@@ -594,6 +595,7 @@ class QualificationleadersController extends Controller
 
 
             $alldataResult[] = array(
+                "#" => $objdata->id,
                 "order" => $key+1,
                 "id" => $objdata->id,
                 "group_name" => @$objdata->Admin->group_name,
@@ -699,16 +701,19 @@ public function ExportQualificationLeaders(Request $request)
     // }
     
 
-     $qualification_leaders = QualificationLeader::all();
+     $qualification_leaders = QualificationLeader::whereNotNull('id');
         
         if($request->leader_id){
             $qualification_leaders = $qualification_leaders->where('admin_id',$request->leader_id);
         } 
 
 
-        if($request->current_qualification){
+        if($request->current_qualification != 'all'){
             $qualification_leaders = $qualification_leaders->where('current_qualification',$request->current_qualification);
         } 
+     
+     $qualification_leaders = $qualification_leaders->orderBy('id')->get();
+
 
     // Set the response headers with the correct character encoding
     $headers = array(
@@ -731,9 +736,10 @@ public function ExportQualificationLeaders(Request $request)
 
         // Write the column headers
         fputcsv($file, $columns);
-
+       
         // Write the data rows
         foreach ($qualification_leaders as $qualification_leader) {
+
             // Make sure to retrieve the Arabic name correctly from your database column
             $row['leader_name']  = $qualification_leader->leader_name;
             

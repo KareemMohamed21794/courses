@@ -45,6 +45,7 @@ var KTDatatablesServerSide = function () {
             },
             columns: [
         
+                { data: '#' },
                 { data: 'order' },
                 { data: 'group_name' },
                 { data: 'leader_name' },

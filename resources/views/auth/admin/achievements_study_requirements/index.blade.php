@@ -5,6 +5,7 @@
     <input type="hidden" name="can_update" id="can_update" value="{{ $can_update }}">
     <input type="hidden" name="can_delete" id="can_delete" value="{{ $can_delete }}">
     <input type="hidden" name="can_print" id="can_print" value="{{ $can_print }}">
+    <input type="hidden" name="can_accept_reject" id="can_accept_reject" value="{{ $can_accept_reject }}">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -84,7 +85,7 @@
                           
                             <!--end::Menu 1-->
                             <!--end::Filter-->
-                            @if($objAdmin->is_super == 1)
+                            @if($objAdmin->is_super == 1 || $objAdmin->position_id == 5)
                                 <!--begin::Export-->
                         <!--     <div id="export_buttons" style="margin-left: 10px;"></div> -->
                            <a href="{{url('admin/export_achievements_study_requirements')}}" class="menu-link px-3">
@@ -141,7 +142,7 @@
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
                         <thead>
                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            @if($objAdmin->is_super == 1)
+                            @if($objAdmin->is_super == 1 )
                             <th class="w-10px pe-2">
                                 <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
                                     <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
@@ -161,7 +162,7 @@
                              <th>{{ __('messages.status') }}</th>
                             <th>{{ __('messages.reject_notes') }}</th>
                             <th>{{ __('messages.created_at') }}</th>
-                             @if($objAdmin->is_super == 1)
+                             @if($objAdmin->is_super == 1 || $objAdmin->position_id == 5)
                             <th class="text-end min-w-100px actions">{{ __('messages.Actions') }}</th>
                             @else
                             <th class="text-end min-w-100px actions" style="visibility: hidden;">{{ __('messages.Actions') }}</th>
