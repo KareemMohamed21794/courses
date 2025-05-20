@@ -64,6 +64,7 @@ return [
     'no' => 'No',
     'deduct_days' => 'Deduct Days',
     'late_deductions' => 'Late Deductions',
+    'late_cost' => 'late cost',
     'from' => 'From',
     'to' => 'To',
     'shifts' => 'Shifts',

@@ -126,6 +126,7 @@ class SetupController extends Controller
         $Setup = Setup::create([
             'dead_line' =>  $request->dead_line,
             'commander_medal_date' =>  $request->commander_medal_date ,
+            'late_cost' =>  $request->late_cost ,
             'secondary_registration_file' =>  $destinationPath.'/'.$secondary_registration_file ,
             'administrative_file' =>  $destinationPath.'/'.$administrative_file ,
             'financial_file' =>  $destinationPath.'/'.$financial_file,
@@ -198,6 +199,7 @@ class SetupController extends Controller
        
         $objSetup->dead_line =  $request->dead_line;
         $objSetup->commander_medal_date =  $request->commander_medal_date;
+        $objSetup->late_cost =  $request->late_cost;
 
         if(!empty($request->file('secondary_registration_file'))){
             $oldImage = $objSetup->secondary_registration_file;

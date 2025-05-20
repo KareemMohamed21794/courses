@@ -57,76 +57,119 @@
                         <!--end::Input group-->
 
 
-                          <!--begin::Input group-->
+                         <!--begin::Input group-->
                         <div class="fv-row mb-7">
                             <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج التسجيل السنوي</label>
+                            <label class="required fs-6 fw-bold mb-2">{{ __('messages.late_cost') }}</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج التسجيل السنوي" name="secondary_registration_file"  id="secondary_registration_file"  />
+                            <input type="number" step="any" class="form-control form-control-solid" placeholder="{{ __('messages.late_cost') }}" name="late_cost"  id="late_cost_update" value="{{$Setup->late_cost}}"/>
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
 
 
-
-                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج الاداري السنوي</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج الاداري السنوي" name="administrative_file"  id="administrative_file"  />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
-
-
-                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج المالي السنوي</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج المالي السنوي" name="financial_file"  id="financial_file"  />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                        <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج التسجيل السنوي</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج التسجيل السنوي" name="secondary_registration_file"  id="secondary_registration_file"  />
+                                    <!--end::Input-->
+                                    @if($Setup->secondary_registration_file)
+                                           <img src="{{ asset($Setup->secondary_registration_file) }}" value="{{$Setup->secondary_registration_file}}" id="secondary_registration_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="secondary_registration_file" width="100" height="100">
+                                      @endif
+                                    
+                                </div>
+                                <!--end::Input group-->
 
 
-                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج  اجتماعات الهيئه العامه</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج  اجتماعات الهيئه العامه" name="board_director_meeting_file"  id="board_director_meeting_file"  />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+
+                                  <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج الاداري السنوي</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج الاداري السنوي" name="administrative_file"  id="administrative_file"  />
+                                    <!--end::Input-->
+                                     @if($Setup->administrative_file)
+                                           <img src="{{ asset($Setup->administrative_file) }}" value="{{$Setup->administrative_file}}" id="administrative_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="administrative_file" width="100" height="100">
+                                      @endif
+                                </div>
+                                <!--end::Input group-->
 
 
-                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج وسام القائد منذر</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج وسام القائد منذر" name="commander_medal_file"  id="commander_medal_file"  />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+                                  <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج المالي السنوي</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج المالي السنوي" name="financial_file"  id="financial_file"  />
+                                    <!--end::Input-->
+                                     @if($Setup->financial_file)
+                                           <img src="{{ asset($Setup->financial_file) }}" value="{{$Setup->financial_file}}" id="financial_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="financial_file" width="100" height="100">
+                                      @endif
+                                </div>
+                                <!--end::Input group-->
 
-                          <!--begin::Input group-->
-                        <div class="fv-row mb-7">
-                            <!--begin::Label-->
-                            <label class="required fs-6 fw-bold mb-2">نموذج انجازات متطلبات دراسه</label>
-                            <!--end::Label-->
-                            <!--begin::Input-->
-                            <input type="file" class="form-control form-control-solid" placeholder="نموذج انجازات متطلبات دراسه" name="achievement_study_requirement_file"  id="achievement_study_requirement_file"  />
-                            <!--end::Input-->
-                        </div>
-                        <!--end::Input group-->
+
+                                  <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج  اجتماعات الهيئه العامه</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج  اجتماعات الهيئه العامه" name="board_director_meeting_file"  id="board_director_meeting_file"  />
+                                    <!--end::Input-->
+                                    @if($Setup->board_director_meeting_file)
+                                           <img src="{{ asset($Setup->board_director_meeting_file) }}" value="{{$Setup->board_director_meeting_file}}" id="board_director_meeting_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="board_director_meeting_file" width="100" height="100">
+                                      @endif
+                                </div>
+                                <!--end::Input group-->
+
+
+                                  <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج وسام القائد منذر</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج وسام القائد منذر" name="commander_medal_file"  id="commander_medal_file"  />
+                                    <!--end::Input-->
+                                    @if($Setup->commander_medal_file)
+                                           <img src="{{ asset($Setup->commander_medal_file) }}" value="{{$Setup->commander_medal_file}}" id="commander_medal_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="commander_medal_file" width="100" height="100">
+                                      @endif
+                                </div>
+                                <!--end::Input group-->
+
+                                  <!--begin::Input group-->
+                                <div class="fv-row mb-7">
+                                    <!--begin::Label-->
+                                    <label class="required fs-6 fw-bold mb-2">نموذج انجازات متطلبات دراسه</label>
+                                    <!--end::Label-->
+                                    <!--begin::Input-->
+                                    <input type="file" class="form-control form-control-solid" placeholder="نموذج انجازات متطلبات دراسه" name="achievement_study_requirement_file"  id="achievement_study_requirement_file"  />
+                                    <!--end::Input-->
+                                    @if($Setup->achievement_study_requirement_file)
+                                           <img src="{{ asset($Setup->achievement_study_requirement_file) }}" value="{{$Setup->achievement_study_requirement_file}}" id="achievement_study_requirement_file" width="100" height="100">
+                                         @else
+                                            <img src="{{asset('pic_load/default.png')}}" id="achievement_study_requirement_file" width="100" height="100">
+                                      @endif
+                                </div>
+                                <!--end::Input group-->
 
                     </div>
                     <!--end::Scroll-->

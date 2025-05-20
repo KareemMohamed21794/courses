@@ -741,15 +741,21 @@ public function RejectedRequest(Request $request)
         $alldata = Information::where(function($query) use ($objAdmin, $first_day_year, $last_day_year) {
         $query->where('admin_id', $objAdmin->id)
               ->whereBetween('created_at', [$first_day_year, $last_day_year])
-              ->whereNotIn('status', ['rejected']); // Excludes 'rejected' status
+               ->where(function($q) {
+                  $q->where('status', '!=', 'rejected')
+                    ->orWhereNull('status');
+              });
         })
         ->get();
 
         }else{
             
         $alldata = Information::where(function($query) use ($first_day_year, $last_day_year) {
-        $querywhereBetween('created_at', [$first_day_year, $last_day_year])
-              ->whereNotIn('status', ['rejected']); // Excludes 'rejected' status
+        $query->whereBetween('created_at', [$first_day_year, $last_day_year])
+              ->where(function($q) {
+                  $q->where('status', '!=', 'rejected')
+                    ->orWhereNull('status');
+              });
         })
         ->get();
         }

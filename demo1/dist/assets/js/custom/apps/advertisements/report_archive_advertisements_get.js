@@ -55,7 +55,7 @@ var KTDatatablesServerSide = function () {
 
         dt = $("#kt_datatable_table").DataTable({
 
-            displayLength: 200,
+            displayLength: 2000,
             lengthMenu: [[10, 25, 50, 100, 500, 1000, 5000, -1], [10, 25, 50, 100, 500, 1000, 5000, "All"]],
             dom: 'Brltip',
             searchDelay: 500,

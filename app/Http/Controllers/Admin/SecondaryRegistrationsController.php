@@ -1279,7 +1279,8 @@ public function accept_second_registration(Request $request, $id)
 
         $alrusum  = 0.50;
         $alrusum_late  = ($alrusum * 50) / 100;
-        $total_alrusum_late = $alrusum + $alrusum_late;
+        // $total_alrusum_late = $alrusum + $alrusum_late;
+        $total_alrusum_late = $Setup->late_cost;
 
 
         $total_alrusum_wehda_leaders = ($count_leaders * $alrusum) + $alrusum_wehda_leaders;

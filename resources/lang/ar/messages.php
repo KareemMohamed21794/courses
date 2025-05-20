@@ -248,6 +248,7 @@ return [
     'no' => 'لا',
     'deduct_days' => 'ايام الخصم',
     'late_deductions' => 'خصومات التاخير',
+    'late_cost' => 'غرامات التاخير',
     'from' => 'من',
     'to' => 'إلى',
     'shifts' => 'الورديات',
