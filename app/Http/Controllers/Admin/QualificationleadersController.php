@@ -708,13 +708,14 @@ public function ExportQualificationLeaders(Request $request)
         } 
 
 
-        if($request->current_qualification != 'all'){
+        if($request->current_qualification && $request->current_qualification != 'all'){
             $qualification_leaders = $qualification_leaders->where('current_qualification',$request->current_qualification);
         } 
+        
      
      $qualification_leaders = $qualification_leaders->orderBy('id')->get();
 
-
+    
     // Set the response headers with the correct character encoding
     $headers = array(
         "Content-type"        => "text/csv; charset=utf-8",
