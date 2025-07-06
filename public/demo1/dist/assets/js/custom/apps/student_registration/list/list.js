@@ -40,14 +40,39 @@ var KTDatatablesServerSide = function () {
                 { data: 'father_name' },
                 { data: 'grandfather_name' },
                 { data: 'family_name' },
-                { data: 'sex' },
-                { data: 'division' },
                 { data: 'birth_date' },
                 { data: 'birth_place' },
-                { data: 'type'},
+                { data: 'mobile_number' },
+                { data: 'home_number' },
+                { data: 'nationality' },  // New field
+                { data: 'national_id' },  // New field
+                { data: 'parents_status' },  // New field
+                { data: 'education_level' },  // New field
+                { data: 'blood_type' },  // New field
+                { data: 'sex' },
+                { data: 'hobbies' },  // New field
+                { data: 'health_condition_type' },  // New field
+                { data: 'city' },  // New field
+                { data: 'area' },  // New field
+                { data: 'street' },  // New field
+                { data: 'nearest_teacher' },  // New field
+                { data: 'building_number' },  // New field
+                { data: 'division' },
+                { data: 'guardian_name' },  // New field
+                { data: 'guardian_phone' },  // New field
+                { data: 'guardian_phone_2' },  // New field
+                { data: 'guardian_job' },  // New field
+                { data: 'relative_relation' },  // New field
+                { data: 'guardian_place_work' },  // New field
+                { data: 'guardian_email' },  // New field
+                { data: 'identifier_name' },  // New field
+                { data: 'identifier_phone' },  // New field
+                { data: 'text_note' },  // New field
+                { data: 'type' },
                 { data: 'created_at' },
-                { data: null },
+                { data: null }
             ],
+
             buttons: [
                 // 'copy',
                 // {

@@ -688,19 +688,105 @@ class QualificationleadersController extends Controller
 
 
 
+
+public function ExportAllQualificationLeaders(Request $request)
+{
+    $fileName = 'qualification_leaders.csv';
+    $userId = Auth::id();
+    
+    $objAdmin = Admin::find($userId);
+    
+    if($objAdmin->is_super == 0){
+    $qualification_leaders = QualificationLeader::where('admin_id',$objAdmin->id)->orderBy('id')->get();
+    }else{
+        $qualification_leaders = QualificationLeader::all();
+    }
+
+    
+    // Set the response headers with the correct character encoding
+    $headers = array(
+        "Content-type"        => "text/csv; charset=utf-8",
+        "Content-Disposition" => "attachment; filename=$fileName",
+        "Pragma"              => "no-cache",
+        "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+        "Expires"             => "0"
+    );
+
+    // If you need to display Arabic column header, make sure to encode it as well
+    $columns = array(__('messages.leader_name'),__('messages.current_qualification'),__('messages.study_history_mqw'),__('messages.place_study_mqw'),__('messages.organizer_mqw'),__('messages.rent_date_mqw'),__('messages.rent_number_mqw'),__('messages.study_history_qw'),__('messages.place_study_qw'),__('messages.organizer_qw'),__('messages.rent_date_qw'),__('messages.rent_number_qw'),__('messages.study_history_mqt'),__('messages.place_study_mqt'),__('messages.organizer_mqt'),__('messages.rent_date_mqt'),__('messages.rent_number_mqt'),__('messages.study_history_qt'),__('messages.place_study_qt'),__('messages.organizer_qt'),__('messages.rent_date_qt'),__('messages.rent_number_qt'));
+
+    // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
+    $callback = function() use ($qualification_leaders, $columns) {
+        $file = fopen('php://output', 'w');
+
+        // Write the UTF-8 BOM (Byte Order Mark) to the file to ensure Excel displays Arabic text correctly
+        fputs($file, "\xEF\xBB\xBF");
+
+        // Write the column headers
+        fputcsv($file, $columns);
+       
+        // Write the data rows
+        foreach ($qualification_leaders as $qualification_leader) {
+
+            // Make sure to retrieve the Arabic name correctly from your database column
+            $row['leader_name']  = $qualification_leader->leader_name;
+            
+            if($qualification_leader->current_qualification == 'musaeid_qayid_wahdah'){
+                $row['current_qualification']  = 'مساعد قائد وحده   ';
+            }else if($qualification_leader->current_qualification == 'qayid_wahda'){
+                $row['current_qualification']  = 'قائد وحدة شارة خشبية   ';
+            }else if($qualification_leader->current_qualification == 'musaeid_qayid_tadrib'){
+                $row['current_qualification']  = 'مساعد قائد تدريب';
+            }else if($qualification_leader->current_qualification == 'qayid_tadrib'){
+                $row['current_qualification']  = 'قائد تدريب';
+            }else{
+                $row['current_qualification']  = 'غير مؤهل';
+            }
+
+            $row['study_history_mqw']  = $qualification_leader->study_history_mqw;
+            $row['place_study_mqw']  = $qualification_leader->place_study_mqw;
+            $row['organizer_mqw']  = $qualification_leader->organizer_mqw;
+            $row['rent_date_mqw']  = $qualification_leader->rent_date_mqw;
+            $row['rent_number_mqw']  = $qualification_leader->rent_number_mqw;
+
+            $row['study_history_qw']  = $qualification_leader->study_history_qw;
+            $row['place_study_qw']  = $qualification_leader->place_study_qw;
+            $row['organizer_qw']  = $qualification_leader->organizer_qw;
+            $row['rent_date_qw']  = $qualification_leader->rent_date_qw;
+            $row['rent_number_qw']  = $qualification_leader->rent_number_qw;
+
+            $row['study_history_mqt']  = $qualification_leader->study_history_mqt;
+            $row['place_study_mqt']  = $qualification_leader->place_study_mqt;
+            $row['organizer_mqt']  = $qualification_leader->organizer_mqt;
+            $row['rent_date_mqt']  = $qualification_leader->rent_date_mqt;
+            $row['rent_number_mqt']  = $qualification_leader->rent_number_mqt;
+
+            $row['study_history_qt']  = $qualification_leader->study_history_qt;
+            $row['place_study_qt']  = $qualification_leader->place_study_qt;
+            $row['organizer_qt']  = $qualification_leader->organizer_qt;
+            $row['rent_date_qt']  = $qualification_leader->rent_date_qt;
+            $row['rent_number_qt']  = $qualification_leader->rent_number_qt;
+         
+
+            // Write the row data to the CSV file
+            fputcsv($file, array($row['leader_name'],$row['current_qualification'],$row['study_history_mqw'],$row['place_study_mqw'],$row['organizer_mqw'],$row['rent_date_mqw'],$row['rent_number_mqw'],$row['study_history_qw'],$row['place_study_qw'],$row['organizer_qw'],$row['rent_date_qw'],$row['rent_number_qw'],$row['study_history_mqt'],$row['place_study_mqt'],$row['organizer_mqt'],$row['rent_date_mqt'],$row['rent_number_mqt'],$row['study_history_qt'],$row['place_study_qt'],$row['organizer_qt'],$row['rent_date_qt'],$row['rent_number_qt']));
+        }
+
+        fclose($file);
+    };
+
+    return response()->stream($callback, 200, $headers);
+}
+
+
 public function ExportQualificationLeaders(Request $request)
 {
     $fileName = 'qualification_leaders.csv';
     $userId = Auth::id();
     
     $objAdmin = Admin::find($userId);
-    // if($objAdmin->is_super == 0){
-    // $qualification_leaders = QualificationLeader::where('admin_id',$objAdmin->id)->orderBy('id')->get();
-    // }else{
-    //     $qualification_leaders = QualificationLeader::all();
-    // }
-    
 
+   
      $qualification_leaders = QualificationLeader::whereNotNull('id');
         
         if($request->leader_id){

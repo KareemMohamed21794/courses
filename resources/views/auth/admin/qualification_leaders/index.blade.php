@@ -85,7 +85,7 @@
                             <!--end::Menu 1-->
                             <!--end::Filter-->
                             <!--begin::Export-->
-                               <a href="{{url('admin/export_qualification_leaders')}}" class="menu-link px-3">
+                               <a href="{{url('admin/export_all_qualification_leaders')}}" class="menu-link px-3">
                             <button type="button" class="btn btn-light-primary me-3" >
                            <!--  <button style="display: none;" type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_export_modal"> -->
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->

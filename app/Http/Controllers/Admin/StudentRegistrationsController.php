@@ -355,10 +355,35 @@ class StudentRegistrationsController extends Controller
             'father_name'=>true,
             'grandfather_name'=> true,
             'family_name'=> true,
-            'sex'=> true,
-            'division'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
+            'mobile_number'=> true,
+            'home_number'=> true,
+            'nationality'=> true,
+            'national_id'=> true,
+            'parents_status'=> true,
+            'education_level'=> true,
+            'blood_type'=> true,
+            'sex'=> true,
+            'hobbies'=> true,
+            // 'health_condition'=> true,
+            'health_condition_type'=> true,
+            'city'=> true,
+            'area'=> true,
+            'street'=> true,
+            'nearest_teacher'=> true,
+            'building_number'=> true,
+            'division'=> true,
+            'guardian_name'=> true,
+            'guardian_phone'=> true,
+            'guardian_phone_2'=> true,
+            'guardian_job'=> true,
+            'relative_relation'=> true,
+            'guardian_place_work'=> true,
+            'guardian_email'=> true,
+            'identifier_name'=> true,
+            'identifier_phone'=> true,
+            'text_note'=> true,
             'type'   => true,
             'created_at'   => true,
         ];
@@ -395,8 +420,165 @@ class StudentRegistrationsController extends Controller
         $page_status = '';
         $sex = '';
         $division = '';
+        $nationalityNames = [
+            'jordanian' => 'أردني',
+            'emirati' => 'إماراتي',
+            'bahraini' => 'بحريني',
+            'tunisian' => 'تونسي',
+            'algerian' => 'جزائري',
+            'comorian' => 'جزر القمر',
+            'djiboutian' => 'جيبوتي',
+            'saudi' => 'سعودي',
+            'sudanian' => 'سوداني',
+            'syrian' => 'سوري',
+            'somali' => 'صومالي',
+            'iraqi' => 'عراقي',
+            'omanian' => 'عماني',
+            'palestinian' => 'فلسطيني',
+            'qatari' => 'قطري',
+            'kuwaitian' => 'كويتي',
+            'lebanese' => 'لبناني',
+            'libyan' => 'ليبي',
+            'egyptian' => 'مصري',
+            'moroccan' => 'مغربي',
+            'mauritanian' => 'موريتاني',
+            'yemeni' => 'يمني',
+            'american' => 'أمريكي',
+            'british' => 'بريطاني',
+            'french' => 'فرنسي',
+            'german' => 'ألماني',
+            'canadian' => 'كندي',
+            'australian' => 'أسترالي',
+            'chinese' => 'صيني',
+            'indian' => 'هندي',
+            'japanese' => 'ياباني',
+            'south_african' => 'جنوب أفريقي',
+            'brazilian' => 'برازيلي',
+            'russian' => 'روسي',
+            'italian' => 'إيطالي',
+            'spanish' => 'إسباني',
+            'portuguese' => 'برتغالي',
+            'swedish' => 'سويدي',
+            'norwegian' => 'نرويجي',
+            'dutch' => 'هولندي',
+            'greek' => 'يوناني',
+            'turkish' => 'تركي',
+            'pakistani' => 'باكستاني',
+            'afghan' => 'أفغاني',
+            'iranian' => 'إيراني',
+            'malaysian' => 'ماليزي',
+            'singaporean' => 'سنغافوري',
+            'vietnamese' => 'فيتنامي',
+            'thai' => 'تايلاندي',
+            'indonesian' => 'إندونيسي',
+            'mexican' => 'مكسيكي',
+            'colombian' => 'كولومبي',
+            'chilean' => 'تشيلي',
+            'argentinian' => 'أرجنتيني',
+            'peruvian' => 'بيروفي',
+        ];
+
+        $parentsStatusNames = [
+            'married' => 'متزوج',
+            'divorced' => 'مطلق',
+            'separated' => 'منفصل',
+            'widowed' => 'أرمل/أرملة',
+        ];
+
+        $educationLevelNames = [
+            'primary_school' => 'ابتدائي',
+            'middle_school' => 'إعدادي',
+            'high_school' => 'ثانوية عامة',
+            'diploma' => 'دبلوم',
+            'bachelor' => 'بكالوريوس',
+            'master' => 'ماجستير',
+            'phd' => 'دكتوراه',
+        ];
+
+
+        $bloodTypeNames = [
+            'A+' => 'A+',
+            'A-' => 'A-',
+            'B+' => 'B+',
+            'B-' => 'B-',
+            'AB+' => 'AB+',
+            'AB-' => 'AB-',
+            'O+' => 'O+',
+            'O-' => 'O-',
+        ];
+
+
+        $healthConditionNames = [
+            'yes' => 'نعم',
+            'no'  => 'لا',
+        ];
+
+
+        $cityNames = [
+            '1' => 'عمان',
+            '2' => 'إربد',
+            '3' => 'الزرقاء',
+            '4' => 'العقبة',
+            '5' => 'مأدبا',
+            '6' => 'الكرك',
+            '7' => 'جرش',
+            '8' => 'عجلون',
+            '9' => 'المفرق',
+            '10' => 'الطفيلة',
+            '11' => 'معان',
+            '12' => 'البلقاء',
+        ];
+
+        $AreaNames = [
+            'أبو نصير',
+            'شفا بدران',
+            'الجبيهة',
+            'طارق',
+            'ماركا',
+            'بسمان',
+            'العبدلي',
+            'تلاع العلي وأم السماق وخلدا',
+            'صويلح',
+            'المدينة',
+            'النصر',
+            'اليرموك',
+            'زهران',
+            'وادي السير',
+            'بدر الجديدة',
+            'مرج الحمام',
+            'بدر',
+            'راس العين',
+            'القويسمة وأبو علندا والجويدة و الرقيم',
+            'أم قصير والمقابلين والبنيات',
+            'خريبة السوق وجاوا واليادودة',
+            'احد'
+        ];
+
+
+
+
  
         foreach($alldata as $key=> $objdata){
+            // Map nationality to the Arabic name (previous code)
+            $nationality = isset($nationalityNames[$objdata->nationality]) ? $nationalityNames[$objdata->nationality] : '';
+
+            // Map parents_status to the Arabic name
+            $parentsStatus = isset($parentsStatusNames[$objdata->parents_status]) ? $parentsStatusNames[$objdata->parents_status] : '';
+            
+            // Map education_level to the Arabic name
+            $educationLevel = isset($educationLevelNames[$objdata->education_level]) ? $educationLevelNames[$objdata->education_level] : '';
+            
+            // Map blood_type to the Arabic name
+            $bloodType = isset($bloodTypeNames[$objdata->blood_type]) ? $bloodTypeNames[$objdata->blood_type] : '';
+
+            // Map health_condition to the Arabic name
+            $healthCondition = isset($healthConditionNames[$objdata->health_condition]) ? $healthConditionNames[$objdata->health_condition] : '';
+
+            // Map city to the Arabic name
+            $city = isset($cityNames[$objdata->city]) ? $cityNames[$objdata->city] : '';
+
+            // Map area to the Arabic name
+            $area = isset($AreaNames[$objdata->area]) ? $AreaNames[$objdata->area] : '';
 
             $type = "معلقه";
             if($objdata->type=='approved'){
@@ -438,10 +620,34 @@ class StudentRegistrationsController extends Controller
                 "father_name"=> $objdata->father_name,
                 "grandfather_name"=> $objdata->grandfather_name,
                 "family_name"=> $objdata->family_name,
-                "sex"=> @$sex,
-                "division"=> @$division,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
+                "mobile_number"=> $objdata->mobile_number,
+                "home_number"=> $objdata->home_number,
+                "nationality" => $nationality,  // Here is the nationality in Arabic
+                "national_id" => $objdata->national_id,
+                "parents_status" => $parentsStatus,  // Parents status in Arabic
+                "education_level" => $educationLevel,  // Education level in Arabic
+                "blood_type" => $bloodType,  // Blood type in Arabic
+                "sex"=> @$sex,
+                "hobbies"=> $objdata->hobbies,
+                "health_condition_type"=> $objdata->health_condition_type,
+                "city"=> $city,
+                "area"=> $area,
+                "street"=> $objdata->street,
+                "nearest_teacher"=> $objdata->nearest_teacher,
+                "building_number"=> $objdata->building_number,
+                "division"=> @$division,
+                "guardian_name"=> $objdata->guardian_name,
+                "guardian_phone"=> $objdata->guardian_phone,
+                "guardian_phone_2"=> $objdata->guardian_phone_2,
+                "guardian_job"=> $objdata->guardian_job,
+                "relative_relation"=> $objdata->relative_relation,
+                "guardian_place_work"=> $objdata->guardian_place_work,
+                "guardian_email"=> $objdata->guardian_email,
+                "identifier_name"=> $objdata->identifier_name,
+                "identifier_phone"=> $objdata->identifier_phone,
+                "text_note"=> $objdata->text_note,
                 "type"=> $type,
                 "created_at" => Date('Y-m-d',strtotime($objdata->created_at)),
             );
@@ -773,15 +979,44 @@ class StudentRegistrationsController extends Controller
             'order'   => true,
             'id'   => true,
             'group_name'   => true,
-            'first_name'   => true,
+             'first_name'   => true,
             'father_name'=>true,
             'grandfather_name'=> true,
             'family_name'=> true,
-            'sex'=> true,
-            'division'=> true,
             'birth_date'=> true,
             'birth_place'=> true,
+            'mobile_number'=> true,
+            'home_number'=> true,
+            'nationality'=> true,
+            'national_id'=> true,
+            'parents_status'=> true,
+            'education_level'=> true,
+            'blood_type'=> true,
+            'sex'=> true,
+            'hobbies'=> true,
+            // 'health_condition'=> true,
+            'health_condition_type'=> true,
+            'city'=> true,
+            'area'=> true,
+            'street'=> true,
+            'nearest_teacher'=> true,
+            'building_number'=> true,
+            'division'=> true,
+            'guardian_name'=> true,
+            'guardian_phone'=> true,
+            'guardian_phone_2'=> true,
+            'guardian_job'=> true,
+            'relative_relation'=> true,
+            'guardian_place_work'=> true,
+            'guardian_email'=> true,
+            'identifier_name'=> true,
+            'identifier_phone'=> true,
+            'text_note'=> true,
+            'type'   => true,
         ];
+
+
+        
 
         if (isset($request->columnsDef) && is_array($request->columnsDef)) {
             $columnsDefault = [];
@@ -806,7 +1041,169 @@ class StudentRegistrationsController extends Controller
         $sex = '';
         $division = '';
 
+
+        $nationalityNames = [
+            'jordanian' => 'أردني',
+            'emirati' => 'إماراتي',
+            'bahraini' => 'بحريني',
+            'tunisian' => 'تونسي',
+            'algerian' => 'جزائري',
+            'comorian' => 'جزر القمر',
+            'djiboutian' => 'جيبوتي',
+            'saudi' => 'سعودي',
+            'sudanian' => 'سوداني',
+            'syrian' => 'سوري',
+            'somali' => 'صومالي',
+            'iraqi' => 'عراقي',
+            'omanian' => 'عماني',
+            'palestinian' => 'فلسطيني',
+            'qatari' => 'قطري',
+            'kuwaitian' => 'كويتي',
+            'lebanese' => 'لبناني',
+            'libyan' => 'ليبي',
+            'egyptian' => 'مصري',
+            'moroccan' => 'مغربي',
+            'mauritanian' => 'موريتاني',
+            'yemeni' => 'يمني',
+            'american' => 'أمريكي',
+            'british' => 'بريطاني',
+            'french' => 'فرنسي',
+            'german' => 'ألماني',
+            'canadian' => 'كندي',
+            'australian' => 'أسترالي',
+            'chinese' => 'صيني',
+            'indian' => 'هندي',
+            'japanese' => 'ياباني',
+            'south_african' => 'جنوب أفريقي',
+            'brazilian' => 'برازيلي',
+            'russian' => 'روسي',
+            'italian' => 'إيطالي',
+            'spanish' => 'إسباني',
+            'portuguese' => 'برتغالي',
+            'swedish' => 'سويدي',
+            'norwegian' => 'نرويجي',
+            'dutch' => 'هولندي',
+            'greek' => 'يوناني',
+            'turkish' => 'تركي',
+            'pakistani' => 'باكستاني',
+            'afghan' => 'أفغاني',
+            'iranian' => 'إيراني',
+            'malaysian' => 'ماليزي',
+            'singaporean' => 'سنغافوري',
+            'vietnamese' => 'فيتنامي',
+            'thai' => 'تايلاندي',
+            'indonesian' => 'إندونيسي',
+            'mexican' => 'مكسيكي',
+            'colombian' => 'كولومبي',
+            'chilean' => 'تشيلي',
+            'argentinian' => 'أرجنتيني',
+            'peruvian' => 'بيروفي',
+        ];
+
+        $parentsStatusNames = [
+            'married' => 'متزوج',
+            'divorced' => 'مطلق',
+            'separated' => 'منفصل',
+            'widowed' => 'أرمل/أرملة',
+        ];
+
+        $educationLevelNames = [
+            'primary_school' => 'ابتدائي',
+            'middle_school' => 'إعدادي',
+            'high_school' => 'ثانوية عامة',
+            'diploma' => 'دبلوم',
+            'bachelor' => 'بكالوريوس',
+            'master' => 'ماجستير',
+            'phd' => 'دكتوراه',
+        ];
+
+
+        $bloodTypeNames = [
+            'A+' => 'A+',
+            'A-' => 'A-',
+            'B+' => 'B+',
+            'B-' => 'B-',
+            'AB+' => 'AB+',
+            'AB-' => 'AB-',
+            'O+' => 'O+',
+            'O-' => 'O-',
+        ];
+
+
+        $healthConditionNames = [
+            'yes' => 'نعم',
+            'no'  => 'لا',
+        ];
+
+
+        $cityNames = [
+            '1' => 'عمان',
+            '2' => 'إربد',
+            '3' => 'الزرقاء',
+            '4' => 'العقبة',
+            '5' => 'مأدبا',
+            '6' => 'الكرك',
+            '7' => 'جرش',
+            '8' => 'عجلون',
+            '9' => 'المفرق',
+            '10' => 'الطفيلة',
+            '11' => 'معان',
+            '12' => 'البلقاء',
+        ];
+
+        $AreaNames = [
+            'أبو نصير',
+            'شفا بدران',
+            'الجبيهة',
+            'طارق',
+            'ماركا',
+            'بسمان',
+            'العبدلي',
+            'تلاع العلي وأم السماق وخلدا',
+            'صويلح',
+            'المدينة',
+            'النصر',
+            'اليرموك',
+            'زهران',
+            'وادي السير',
+            'بدر الجديدة',
+            'مرج الحمام',
+            'بدر',
+            'راس العين',
+            'القويسمة وأبو علندا والجويدة و الرقيم',
+            'أم قصير والمقابلين والبنيات',
+            'خريبة السوق وجاوا واليادودة',
+            'احد'
+        ];
+
         foreach ($alldata as $key=> $objdata) {
+
+
+            // Map nationality to the Arabic name (previous code)
+            $nationality = isset($nationalityNames[$objdata->nationality]) ? $nationalityNames[$objdata->nationality] : '';
+
+            // Map parents_status to the Arabic name
+            $parentsStatus = isset($parentsStatusNames[$objdata->parents_status]) ? $parentsStatusNames[$objdata->parents_status] : '';
+            
+            // Map education_level to the Arabic name
+            $educationLevel = isset($educationLevelNames[$objdata->education_level]) ? $educationLevelNames[$objdata->education_level] : '';
+            
+            // Map blood_type to the Arabic name
+            $bloodType = isset($bloodTypeNames[$objdata->blood_type]) ? $bloodTypeNames[$objdata->blood_type] : '';
+
+            // Map health_condition to the Arabic name
+            $healthCondition = isset($healthConditionNames[$objdata->health_condition]) ? $healthConditionNames[$objdata->health_condition] : '';
+
+            // Map city to the Arabic name
+            $city = isset($cityNames[$objdata->city]) ? $cityNames[$objdata->city] : '';
+
+            // Map area to the Arabic name
+            $area = isset($AreaNames[$objdata->area]) ? $AreaNames[$objdata->area] : '';
+
+            $type = "معلقه";
+            if($objdata->type=='approved'){
+                $type = "مقبول";
+            }
 
             if($objdata->sex == 'male'){
                 $sex = __('messages.male');
@@ -835,10 +1232,35 @@ class StudentRegistrationsController extends Controller
                 "father_name"=> $objdata->father_name,
                 "grandfather_name"=> $objdata->grandfather_name,
                 "family_name"=> $objdata->family_name,
-                "sex"=> @$sex,
-                "division"=> @$division,
                 "birth_date"=> $objdata->birth_date,
                 "birth_place"=> $objdata->birth_place,
+                "mobile_number"=> $objdata->mobile_number,
+                "home_number"=> $objdata->home_number,
+                "nationality" => $nationality,  // Here is the nationality in Arabic
+                "national_id" => $objdata->national_id,
+                "parents_status" => $parentsStatus,  // Parents status in Arabic
+                "education_level" => $educationLevel,  // Education level in Arabic
+                "blood_type" => $bloodType,  // Blood type in Arabic
+                "sex"=> @$sex,
+                "hobbies"=> $objdata->hobbies,
+                "health_condition_type"=> $objdata->health_condition_type,
+                "city"=> $city,
+                "area"=> $area,
+                "street"=> $objdata->street,
+                "nearest_teacher"=> $objdata->nearest_teacher,
+                "building_number"=> $objdata->building_number,
+                "division"=> @$division,
+                "guardian_name"=> $objdata->guardian_name,
+                "guardian_phone"=> $objdata->guardian_phone,
+                "guardian_phone_2"=> $objdata->guardian_phone_2,
+                "guardian_job"=> $objdata->guardian_job,
+                "relative_relation"=> $objdata->relative_relation,
+                "guardian_place_work"=> $objdata->guardian_place_work,
+                "guardian_email"=> $objdata->guardian_email,
+                "identifier_name"=> $objdata->identifier_name,
+                "identifier_phone"=> $objdata->identifier_phone,
+                "text_note"=> $objdata->text_note,
+                "type"=> $type,
               
             );
             
@@ -928,7 +1350,7 @@ class StudentRegistrationsController extends Controller
 
     public function ExportStudentRegistrations(Request $request)
     {
-      
+     
 
         $fileName = 'student_registrations.csv';
         $student_registrations = StudentRegistration::all();
@@ -952,8 +1374,11 @@ class StudentRegistrationsController extends Controller
         );
         
         // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),'الجنس','الفرقة  ',__('messages.birth_date'),__('messages.birth_place'));
-
+        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'),
+        'رقم الهاتف','رقم المنزل','الجنسية','الرقم الوطني','الحالة بين الأبوين','المؤهل العلمي','نوع الدم','الجنس','الهوايات','ما هي الأمراض مزمنة أو الظروف الصحية','المدينة','المنطقة','اسم الشارع','أقرب معلم',
+        'رقم البناء','الفرقة','اسم ولي الأمر','رقم ولي الأمر 1','رقم ولي الأمر 2','مهنة ولي الأمر','صلة القرابة','مكان عمل ولي الأمر','البريد الإلكتروني لولي الأمر','اسم المعرف','رقم المعرف','الملاحظات','الحاله'
+       );
+ 
         // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
         $callback = function() use ($student_registrations, $columns) {
             $file = fopen('php://output', 'w');
@@ -967,8 +1392,169 @@ class StudentRegistrationsController extends Controller
             $sex = '';
             $division = '';
 
+            $nationalityNames = [
+                'jordanian' => 'أردني',
+                'emirati' => 'إماراتي',
+                'bahraini' => 'بحريني',
+                'tunisian' => 'تونسي',
+                'algerian' => 'جزائري',
+                'comorian' => 'جزر القمر',
+                'djiboutian' => 'جيبوتي',
+                'saudi' => 'سعودي',
+                'sudanian' => 'سوداني',
+                'syrian' => 'سوري',
+                'somali' => 'صومالي',
+                'iraqi' => 'عراقي',
+                'omanian' => 'عماني',
+                'palestinian' => 'فلسطيني',
+                'qatari' => 'قطري',
+                'kuwaitian' => 'كويتي',
+                'lebanese' => 'لبناني',
+                'libyan' => 'ليبي',
+                'egyptian' => 'مصري',
+                'moroccan' => 'مغربي',
+                'mauritanian' => 'موريتاني',
+                'yemeni' => 'يمني',
+                'american' => 'أمريكي',
+                'british' => 'بريطاني',
+                'french' => 'فرنسي',
+                'german' => 'ألماني',
+                'canadian' => 'كندي',
+                'australian' => 'أسترالي',
+                'chinese' => 'صيني',
+                'indian' => 'هندي',
+                'japanese' => 'ياباني',
+                'south_african' => 'جنوب أفريقي',
+                'brazilian' => 'برازيلي',
+                'russian' => 'روسي',
+                'italian' => 'إيطالي',
+                'spanish' => 'إسباني',
+                'portuguese' => 'برتغالي',
+                'swedish' => 'سويدي',
+                'norwegian' => 'نرويجي',
+                'dutch' => 'هولندي',
+                'greek' => 'يوناني',
+                'turkish' => 'تركي',
+                'pakistani' => 'باكستاني',
+                'afghan' => 'أفغاني',
+                'iranian' => 'إيراني',
+                'malaysian' => 'ماليزي',
+                'singaporean' => 'سنغافوري',
+                'vietnamese' => 'فيتنامي',
+                'thai' => 'تايلاندي',
+                'indonesian' => 'إندونيسي',
+                'mexican' => 'مكسيكي',
+                'colombian' => 'كولومبي',
+                'chilean' => 'تشيلي',
+                'argentinian' => 'أرجنتيني',
+                'peruvian' => 'بيروفي',
+            ];
+
+            $parentsStatusNames = [
+                'married' => 'متزوج',
+                'divorced' => 'مطلق',
+                'separated' => 'منفصل',
+                'widowed' => 'أرمل/أرملة',
+            ];
+
+            $educationLevelNames = [
+                'primary_school' => 'ابتدائي',
+                'middle_school' => 'إعدادي',
+                'high_school' => 'ثانوية عامة',
+                'diploma' => 'دبلوم',
+                'bachelor' => 'بكالوريوس',
+                'master' => 'ماجستير',
+                'phd' => 'دكتوراه',
+            ];
+
+
+            $bloodTypeNames = [
+                'A+' => 'A+',
+                'A-' => 'A-',
+                'B+' => 'B+',
+                'B-' => 'B-',
+                'AB+' => 'AB+',
+                'AB-' => 'AB-',
+                'O+' => 'O+',
+                'O-' => 'O-',
+            ];
+
+
+            $healthConditionNames = [
+                'yes' => 'نعم',
+                'no'  => 'لا',
+            ];
+
+
+            $cityNames = [
+                '1' => 'عمان',
+                '2' => 'إربد',
+                '3' => 'الزرقاء',
+                '4' => 'العقبة',
+                '5' => 'مأدبا',
+                '6' => 'الكرك',
+                '7' => 'جرش',
+                '8' => 'عجلون',
+                '9' => 'المفرق',
+                '10' => 'الطفيلة',
+                '11' => 'معان',
+                '12' => 'البلقاء',
+            ];
+
+            $AreaNames = [
+                'أبو نصير',
+                'شفا بدران',
+                'الجبيهة',
+                'طارق',
+                'ماركا',
+                'بسمان',
+                'العبدلي',
+                'تلاع العلي وأم السماق وخلدا',
+                'صويلح',
+                'المدينة',
+                'النصر',
+                'اليرموك',
+                'زهران',
+                'وادي السير',
+                'بدر الجديدة',
+                'مرج الحمام',
+                'بدر',
+                'راس العين',
+                'القويسمة وأبو علندا والجويدة و الرقيم',
+                'أم قصير والمقابلين والبنيات',
+                'خريبة السوق وجاوا واليادودة',
+                'احد'
+            ];
+
             // Write the data rows
             foreach ($student_registrations as $student_registration) {
+
+                // Map nationality to the Arabic name (previous code)
+                $nationality = isset($nationalityNames[$student_registration->nationality]) ? $nationalityNames[$student_registration->nationality] : '';
+
+                // Map parents_status to the Arabic name
+                $parentsStatus = isset($parentsStatusNames[$student_registration->parents_status]) ? $parentsStatusNames[$student_registration->parents_status] : '';
+                
+                // Map education_level to the Arabic name
+                $educationLevel = isset($educationLevelNames[$student_registration->education_level]) ? $educationLevelNames[$student_registration->education_level] : '';
+                
+                // Map blood_type to the Arabic name
+                $bloodType = isset($bloodTypeNames[$student_registration->blood_type]) ? $bloodTypeNames[$student_registration->blood_type] : '';
+
+                // Map health_condition to the Arabic name
+                $healthCondition = isset($healthConditionNames[$student_registration->health_condition]) ? $healthConditionNames[$student_registration->health_condition] : '';
+
+                // Map city to the Arabic name
+                $city = isset($cityNames[$student_registration->city]) ? $cityNames[$student_registration->city] : '';
+
+                // Map area to the Arabic name
+                $area = isset($AreaNames[$student_registration->area]) ? $AreaNames[$student_registration->area] : '';
+
+                $type = "معلقه";
+                if($student_registration->type=='approved'){
+                    $type = "مقبول";
+                }
+
 
                 if($student_registration->sex == 'male'){
                 $sex = __('messages.male');
@@ -996,13 +1582,73 @@ class StudentRegistrationsController extends Controller
                 $row['father_name']  = $student_registration->father_name;
                 $row['grandfather_name']  = $student_registration->grandfather_name;
                 $row['family_name']  = $student_registration->family_name;
-                $row['sex'] = @$sex;
-                $row['division'] = @$division;
                 $row['birth_date']  = $student_registration->birth_date;
                 $row['birth_place']  = $student_registration->birth_place;
-             
+                $row['mobile_number']  = $student_registration->mobile_number;
+                $row['home_number']  = $student_registration->home_number;
+                $row['nationality']  = $nationality;  // Here is the nationality in Arabic
+                $row['national_id']  = $student_registration->national_id;
+                $row['parents_status']  = $parentsStatus;  // Parents status in Arabic
+                $row['education_level']  = $educationLevel;  // Education level in Arabic
+                $row['blood_type']  = $bloodType;  // Blood type in Arabic
+                $row['sex'] = @$sex;
+                $row['hobbies']  = $student_registration->hobbies;
+                $row['health_condition_type']  = $student_registration->health_condition_type;
+                $row['city']  = $city;
+                $row['area']  = $area;
+                $row['street']  = $student_registration->street;
+                $row['nearest_teacher']  = $student_registration->nearest_teacher;
+                $row['building_number']  = $student_registration->building_number;
+                $row['division'] = @$division;
+                $row['guardian_name']  = $student_registration->guardian_name;
+                $row['guardian_phone']  = $student_registration->guardian_phone;
+                $row['guardian_phone_2']  = $student_registration->guardian_phone_2;
+                $row['guardian_job']  = $student_registration->guardian_job;
+                $row['relative_relation']  = $student_registration->relative_relation;
+                $row['guardian_place_work']  = $student_registration->guardian_place_work;
+                $row['guardian_email']  = $student_registration->guardian_email;
+                $row['identifier_name']  = $student_registration->identifier_name;
+                $row['identifier_phone']  = $student_registration->identifier_phone;
+                $row['text_note']  = $student_registration->text_note;
+                $row['type']  = $type;
+           
                 // Write the row data to the CSV file
-                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['sex'], $row['division'],$row['birth_date'],$row['birth_place']));
+                fputcsv($file, array(
+                    $row['group_name'],
+                    $row['first_name'],
+                    $row['father_name'],
+                    $row['grandfather_name'],
+                    $row['family_name'],
+                    $row['birth_date'],
+                    $row['birth_place'],
+                    $row['mobile_number'],  // إضافة رقم الهاتف المحمول
+                    $row['home_number'],    // إضافة رقم الهاتف المنزلي
+                    $row['nationality'],    // إضافة الجنسية
+                    $row['national_id'],    // إضافة الرقم الوطني
+                    $row['parents_status'], // إضافة الحالة بين الأبوين
+                    $row['education_level'],// إضافة المؤهل العلمي
+                    $row['blood_type'],     // إضافة نوع الدم
+                    $row['sex'],            // إضافة الجنس
+                    $row['hobbies'],        // إضافة الهوايات
+                    $row['health_condition_type'], // إضافة الأمراض المزمنة أو الظروف الصحية
+                    $row['city'],           // إضافة المدينة
+                    $row['area'],           // إضافة المنطقة
+                    $row['street'],         // إضافة الشارع
+                    $row['nearest_teacher'],// إضافة أقرب معلم
+                    $row['building_number'],// إضافة رقم البناء
+                    $row['division'],       // إضافة الفرقة
+                    $row['guardian_name'],  // إضافة اسم ولي الأمر
+                    $row['guardian_phone'], // إضافة رقم ولي الأمر 1
+                    $row['guardian_phone_2'], // إضافة رقم ولي الأمر 2
+                    $row['guardian_job'],   // إضافة مهنة ولي الأمر
+                    $row['relative_relation'], // إضافة صلة القرابة
+                    $row['guardian_place_work'], // إضافة مكان عمل ولي الأمر
+                    $row['guardian_email'], // إضافة البريد الإلكتروني لولي الأمر
+                    $row['identifier_name'],// إضافة اسم المعرف
+                    $row['identifier_phone'], // إضافة رقم المعرف
+                    $row['text_note'],      // إضافة الملاحظات
+                    $row['type'],           // إضافة النوع
+                ));
             }
 
             fclose($file);
@@ -1108,7 +1754,10 @@ class StudentRegistrationsController extends Controller
         );
         
         // If you need to display Arabic column header, make sure to encode it as well
-        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),'الجنس','الفرقة  ',__('messages.birth_date'),__('messages.birth_place'),'الحاله');
+        $columns = array(__('messages.scout_group'),__('messages.first_name'),__('messages.father_name'),__('messages.grandfather_name'),__('messages.family_name'),__('messages.birth_date'),__('messages.birth_place'),
+        'رقم الهاتف','رقم المنزل','الجنسية','الرقم الوطني','الحالة بين الأبوين','المؤهل العلمي','نوع الدم','الجنس','الهوايات','ما هي الأمراض مزمنة أو الظروف الصحية','المدينة','المنطقة','اسم الشارع','أقرب معلم',
+        'رقم البناء','الفرقة','اسم ولي الأمر','رقم ولي الأمر 1','رقم ولي الأمر 2','مهنة ولي الأمر','صلة القرابة','مكان عمل ولي الأمر','البريد الإلكتروني لولي الأمر','اسم المعرف','رقم المعرف','الملاحظات','الحاله'
+       );
 
         // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
         $callback = function() use ($student_registrations, $columns) {
@@ -1122,9 +1771,163 @@ class StudentRegistrationsController extends Controller
 
             $sex = '';
             $division = '';
+            $nationalityNames = [
+                'jordanian' => 'أردني',
+                'emirati' => 'إماراتي',
+                'bahraini' => 'بحريني',
+                'tunisian' => 'تونسي',
+                'algerian' => 'جزائري',
+                'comorian' => 'جزر القمر',
+                'djiboutian' => 'جيبوتي',
+                'saudi' => 'سعودي',
+                'sudanian' => 'سوداني',
+                'syrian' => 'سوري',
+                'somali' => 'صومالي',
+                'iraqi' => 'عراقي',
+                'omanian' => 'عماني',
+                'palestinian' => 'فلسطيني',
+                'qatari' => 'قطري',
+                'kuwaitian' => 'كويتي',
+                'lebanese' => 'لبناني',
+                'libyan' => 'ليبي',
+                'egyptian' => 'مصري',
+                'moroccan' => 'مغربي',
+                'mauritanian' => 'موريتاني',
+                'yemeni' => 'يمني',
+                'american' => 'أمريكي',
+                'british' => 'بريطاني',
+                'french' => 'فرنسي',
+                'german' => 'ألماني',
+                'canadian' => 'كندي',
+                'australian' => 'أسترالي',
+                'chinese' => 'صيني',
+                'indian' => 'هندي',
+                'japanese' => 'ياباني',
+                'south_african' => 'جنوب أفريقي',
+                'brazilian' => 'برازيلي',
+                'russian' => 'روسي',
+                'italian' => 'إيطالي',
+                'spanish' => 'إسباني',
+                'portuguese' => 'برتغالي',
+                'swedish' => 'سويدي',
+                'norwegian' => 'نرويجي',
+                'dutch' => 'هولندي',
+                'greek' => 'يوناني',
+                'turkish' => 'تركي',
+                'pakistani' => 'باكستاني',
+                'afghan' => 'أفغاني',
+                'iranian' => 'إيراني',
+                'malaysian' => 'ماليزي',
+                'singaporean' => 'سنغافوري',
+                'vietnamese' => 'فيتنامي',
+                'thai' => 'تايلاندي',
+                'indonesian' => 'إندونيسي',
+                'mexican' => 'مكسيكي',
+                'colombian' => 'كولومبي',
+                'chilean' => 'تشيلي',
+                'argentinian' => 'أرجنتيني',
+                'peruvian' => 'بيروفي',
+            ];
+
+            $parentsStatusNames = [
+                'married' => 'متزوج',
+                'divorced' => 'مطلق',
+                'separated' => 'منفصل',
+                'widowed' => 'أرمل/أرملة',
+            ];
+
+            $educationLevelNames = [
+                'primary_school' => 'ابتدائي',
+                'middle_school' => 'إعدادي',
+                'high_school' => 'ثانوية عامة',
+                'diploma' => 'دبلوم',
+                'bachelor' => 'بكالوريوس',
+                'master' => 'ماجستير',
+                'phd' => 'دكتوراه',
+            ];
+
+
+            $bloodTypeNames = [
+                'A+' => 'A+',
+                'A-' => 'A-',
+                'B+' => 'B+',
+                'B-' => 'B-',
+                'AB+' => 'AB+',
+                'AB-' => 'AB-',
+                'O+' => 'O+',
+                'O-' => 'O-',
+            ];
+
+
+            $healthConditionNames = [
+                'yes' => 'نعم',
+                'no'  => 'لا',
+            ];
+
+
+            $cityNames = [
+                '1' => 'عمان',
+                '2' => 'إربد',
+                '3' => 'الزرقاء',
+                '4' => 'العقبة',
+                '5' => 'مأدبا',
+                '6' => 'الكرك',
+                '7' => 'جرش',
+                '8' => 'عجلون',
+                '9' => 'المفرق',
+                '10' => 'الطفيلة',
+                '11' => 'معان',
+                '12' => 'البلقاء',
+            ];
+
+            $AreaNames = [
+                'أبو نصير',
+                'شفا بدران',
+                'الجبيهة',
+                'طارق',
+                'ماركا',
+                'بسمان',
+                'العبدلي',
+                'تلاع العلي وأم السماق وخلدا',
+                'صويلح',
+                'المدينة',
+                'النصر',
+                'اليرموك',
+                'زهران',
+                'وادي السير',
+                'بدر الجديدة',
+                'مرج الحمام',
+                'بدر',
+                'راس العين',
+                'القويسمة وأبو علندا والجويدة و الرقيم',
+                'أم قصير والمقابلين والبنيات',
+                'خريبة السوق وجاوا واليادودة',
+                'احد'
+            ];
 
             // Write the data rows
             foreach ($student_registrations as $student_registration) {
+
+                // Map nationality to the Arabic name (previous code)
+                $nationality = isset($nationalityNames[$student_registration->nationality]) ? $nationalityNames[$student_registration->nationality] : '';
+
+                // Map parents_status to the Arabic name
+                $parentsStatus = isset($parentsStatusNames[$student_registration->parents_status]) ? $parentsStatusNames[$student_registration->parents_status] : '';
+                
+                // Map education_level to the Arabic name
+                $educationLevel = isset($educationLevelNames[$student_registration->education_level]) ? $educationLevelNames[$student_registration->education_level] : '';
+                
+                // Map blood_type to the Arabic name
+                $bloodType = isset($bloodTypeNames[$student_registration->blood_type]) ? $bloodTypeNames[$student_registration->blood_type] : '';
+
+                // Map health_condition to the Arabic name
+                $healthCondition = isset($healthConditionNames[$student_registration->health_condition]) ? $healthConditionNames[$student_registration->health_condition] : '';
+
+                // Map city to the Arabic name
+                $city = isset($cityNames[$student_registration->city]) ? $cityNames[$student_registration->city] : '';
+
+                // Map area to the Arabic name
+                $area = isset($AreaNames[$student_registration->area]) ? $AreaNames[$student_registration->area] : '';
 
 
                 $type = "معلقه";
@@ -1158,14 +1961,73 @@ class StudentRegistrationsController extends Controller
                 $row['father_name']  = $student_registration->father_name;
                 $row['grandfather_name']  = $student_registration->grandfather_name;
                 $row['family_name']  = $student_registration->family_name;
-                $row['sex'] = @$sex;
-                $row['division'] = @$division;
                 $row['birth_date']  = $student_registration->birth_date;
                 $row['birth_place']  = $student_registration->birth_place;
+                $row['mobile_number']  = $student_registration->mobile_number;
+                $row['home_number']  = $student_registration->home_number;
+                $row['nationality']  = $nationality;  // Here is the nationality in Arabic
+                $row['national_id']  = $student_registration->national_id;
+                $row['parents_status']  = $parentsStatus;  // Parents status in Arabic
+                $row['education_level']  = $educationLevel;  // Education level in Arabic
+                $row['blood_type']  = $bloodType;  // Blood type in Arabic
+                $row['sex'] = @$sex;
+                $row['hobbies']  = $student_registration->hobbies;
+                $row['health_condition_type']  = $student_registration->health_condition_type;
+                $row['city']  = $city;
+                $row['area']  = $area;
+                $row['street']  = $student_registration->street;
+                $row['nearest_teacher']  = $student_registration->nearest_teacher;
+                $row['building_number']  = $student_registration->building_number;
+                $row['division'] = @$division;
+                $row['guardian_name']  = $student_registration->guardian_name;
+                $row['guardian_phone']  = $student_registration->guardian_phone;
+                $row['guardian_phone_2']  = $student_registration->guardian_phone_2;
+                $row['guardian_job']  = $student_registration->guardian_job;
+                $row['relative_relation']  = $student_registration->relative_relation;
+                $row['guardian_place_work']  = $student_registration->guardian_place_work;
+                $row['guardian_email']  = $student_registration->guardian_email;
+                $row['identifier_name']  = $student_registration->identifier_name;
+                $row['identifier_phone']  = $student_registration->identifier_phone;
+                $row['text_note']  = $student_registration->text_note;
                 $row['type']  = $type;
              
                 // Write the row data to the CSV file
-                fputcsv($file, array($row['group_name'],$row['first_name'],$row['father_name'],$row['grandfather_name'],$row['family_name'],$row['sex'], $row['division'],$row['birth_date'],$row['birth_place'],$row['type']));
+                fputcsv($file, array(
+                    $row['group_name'],
+                    $row['first_name'],
+                    $row['father_name'],
+                    $row['grandfather_name'],
+                    $row['family_name'],
+                    $row['birth_date'],
+                    $row['birth_place'],
+                    $row['mobile_number'],  // إضافة رقم الهاتف المحمول
+                    $row['home_number'],    // إضافة رقم الهاتف المنزلي
+                    $row['nationality'],    // إضافة الجنسية
+                    $row['national_id'],    // إضافة الرقم الوطني
+                    $row['parents_status'], // إضافة الحالة بين الأبوين
+                    $row['education_level'],// إضافة المؤهل العلمي
+                    $row['blood_type'],     // إضافة نوع الدم
+                    $row['sex'],            // إضافة الجنس
+                    $row['hobbies'],        // إضافة الهوايات
+                    $row['health_condition_type'], // إضافة الأمراض المزمنة أو الظروف الصحية
+                    $row['city'],           // إضافة المدينة
+                    $row['area'],           // إضافة المنطقة
+                    $row['street'],         // إضافة الشارع
+                    $row['nearest_teacher'],// إضافة أقرب معلم
+                    $row['building_number'],// إضافة رقم البناء
+                    $row['division'],       // إضافة الفرقة
+                    $row['guardian_name'],  // إضافة اسم ولي الأمر
+                    $row['guardian_phone'], // إضافة رقم ولي الأمر 1
+                    $row['guardian_phone_2'], // إضافة رقم ولي الأمر 2
+                    $row['guardian_job'],   // إضافة مهنة ولي الأمر
+                    $row['relative_relation'], // إضافة صلة القرابة
+                    $row['guardian_place_work'], // إضافة مكان عمل ولي الأمر
+                    $row['guardian_email'], // إضافة البريد الإلكتروني لولي الأمر
+                    $row['identifier_name'],// إضافة اسم المعرف
+                    $row['identifier_phone'], // إضافة رقم المعرف
+                    $row['text_note'],      // إضافة الملاحظات
+                    $row['type'],           // إضافة النوع
+                ));
             }
 
             fclose($file);
