@@ -478,11 +478,11 @@ class AchievementsStudyRequirementsController extends Controller
     $objAdmin = Admin::find($userId);
     if($objAdmin->is_super == 1 || $objAdmin->position_id == 5){
 
-       $Files = AchievementStudyRequirement::get();
+       $Files = AchievementStudyRequirement::orderBy('id','desc')->get();
     
     }else{
 
-        $Files = AchievementStudyRequirement::where('admin_id',$userId)->get();
+        $Files = AchievementStudyRequirement::where('admin_id',$userId)->orderBy('id','desc')->get();
 
     }
     
@@ -498,7 +498,7 @@ class AchievementsStudyRequirementsController extends Controller
     );
 
     // If you need to display Arabic column header, make sure to encode it as well
-    $columns = array(__('messages.scout_group'),'الملف');
+    $columns = array(__('messages.scout_group'),'اسم القائد','البريد الالكتروني','رقم الهاتف', 'رقم التسجيل','الحالة','الملف');
 
     // Use the 'bom' parameter to ensure proper display of Arabic characters in Excel
     $callback = function() use ($Files, $columns) {
@@ -512,13 +512,30 @@ class AchievementsStudyRequirementsController extends Controller
 
         // Write the data rows
         foreach ($Files as $File) {
+
+            $status = '';
+
+            if($File->status == 'rejected'){
+              $status = 'مرفوض';  
+            }elseif($File->status == 'approved'){
+                $status = 'مقبول';
+            }else{
+                $status = 'قيد الانتظار';
+            }
+
+
             // Make sure to retrieve the Arabic name correctly from your database column
+            $row['scout_group']  = $File->Admin->group_name;
             $row['leader_name']  = $File->Admin->name;
+            $row['email']  = $File->Admin->email;
+            $row['phone']  = $File->Admin->phone;
+            $row['registration_number']  = $File->Admin->registration_number;
+            $row['status']  = $status;
             
             $row['document']  =asset('public/images/achievements_study_requirements/' . $File->document);
 
             // Write the row data to the CSV file
-            fputcsv($file, array($row['leader_name'],$row['document']));
+            fputcsv($file, array($row['scout_group'],$row['leader_name'],$row['email'],$row['phone'],$row['registration_number'],$row['status'],$row['document']));
         }
 
         fclose($file);
