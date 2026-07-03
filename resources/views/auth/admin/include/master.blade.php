@@ -61,7 +61,7 @@
         <!--end::Page Vendor Stylesheets-->
         @endif
 
-        @if (Request::segment(2)=='admins' || Request::segment(2)=='secondary_registrations' || Request::segment(2)=='administrative_financial_reports' || Request::segment(2)=='leaders'|| Request::segment(2)=='board_director_meetings'|| Request::segment(2)=='permits'|| Request::segment(2)=='qualification_leaders' )
+        @if (Request::segment(2)=='admins' || Request::segment(2)=='courses' || Request::segment(2)=='payments' || Request::segment(2)=='users' || Request::segment(2)=='secondary_registrations' || Request::segment(2)=='administrative_financial_reports' || Request::segment(2)=='leaders'|| Request::segment(2)=='board_director_meetings'|| Request::segment(2)=='permits'|| Request::segment(2)=='qualification_leaders' )
             <!--begin::Page Vendor Stylesheets(used by this page)-->
             <link href="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
             <!--end::Page Vendor Stylesheets-->

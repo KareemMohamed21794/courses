@@ -28,28 +28,6 @@ class Admin extends Authenticatable
         'position_id',
         'phone',
         'address',
-        'registration_type',
-        'alhayyuh_almuqayaduh',
-        'alhayyuh_almuqayaduh_number',
-        'group_classification',
-        'group_name',
-        'dead_line',
-        'date_establishment',
-        'registration_number',
-        'website',
-        'governorate',
-        'district',
-        'street_name',
-        'building_number',
-        'workplace',
-        'job',
-        'leaders_number',
-        'persons_number',
-        'groups',
-        'ashbal',
-        'kashafa',
-        'motakadem',
-        'gawala',
     ];
 
     /**
@@ -75,15 +53,4 @@ class Admin extends Authenticatable
     {
         return $this->belongsTo(Position::class, 'position_id', 'id');
     }
-
-
-    public function File()
-    {
-        return $this->hasMany(File::class);
-    }
-
-
-    
-
-
 }

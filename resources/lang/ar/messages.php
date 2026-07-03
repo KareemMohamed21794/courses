@@ -628,7 +628,8 @@ return [
     'receipt_number'=>'رقم الوصل ',
     'Total_activity_permit_fees'=>'مجموع رسوم تصاريح  الانشطة',
     'total_secondary_registration'=>'مجموع رسوم التسجيل السنوي',
-    'Users'=>'المستخدمين',
+    'users'=>'المستخدمين',
+    'user'=>'المستخدم',
     'total_required_alrusum'=>'مجموع الرسوم  المطلوبه',
     'Financial_Details'=>'المالية',
     'payments_received'=>'الدفعات المستلمه',
@@ -687,6 +688,8 @@ return [
     'permit_count'=>'عدد التصاريح',
     'privite_advertisements'=>'الوارد الخاص فيك',
     'Approve_Selected'=>'الموافقة  على  المحدد',
+    'Approve_Selected'=>'الموافقة  على  المحدد',
+    'reporter_man'=> ' اسم القائد مقدم التقرير ',
 
  ];
 

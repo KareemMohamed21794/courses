@@ -22,14 +22,6 @@ class AdminAuthenticatedSessionController extends Controller
             return redirect('/admin');
         }
 
-        if (Auth::guard('client')->check()) {
-            return redirect('/client');
-        }
-
-        if (Auth::guard('staff')->check()) {
-            return redirect('staff');
-        }
-
         return view('auth.admin.login');
     }
 
@@ -37,14 +29,6 @@ class AdminAuthenticatedSessionController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             return redirect('/admin');
-        }
-
-        if (Auth::guard('client')->check()) {
-            return redirect('/client');
-        }
-
-        if (Auth::guard('staff')->check()) {
-            return redirect('staff');
         }
 
         return view('auth.admin.login_admin_kk_mm');
@@ -68,7 +52,7 @@ class AdminAuthenticatedSessionController extends Controller
         $userId = Auth::guard('admin')->user();
        
         if ($userId->position_id == 2) {
-            return redirect('/admin/leaders');
+            return redirect('/admin/users');
         } else {
             return redirect('/admin');
         }

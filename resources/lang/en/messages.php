@@ -45,6 +45,8 @@ return [
     'national_id' => 'National ID',
     'finger_print_id' => 'Finger Print ID',
     'user_name' => 'User Name',
+    'users'=>'users',
+    'user'=>'user',
     'staff_activites' => 'Staff Activites',
     'staff_name' => 'Staff Name',
     'status' => 'Status',

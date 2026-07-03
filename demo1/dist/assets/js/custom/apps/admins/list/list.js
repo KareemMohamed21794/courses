@@ -12,6 +12,7 @@ var KTDatatablesServerSide = function () {
     var position_id_check = $("#position_id_check").val();
     var type_segment = $("#type_segment").val();
     let main_url = "/admin/"+segment+"/get";
+    var exportPdfUrl = $("#admins_export_pdf_url").val();
     var action_lang = $("#action_lang").val();
     var edit_lang = $("#edit_lang").val();
     var delete_lang = $("#delete_lang").val();
@@ -107,6 +108,19 @@ var KTDatatablesServerSide = function () {
             },
             columns: chosenColumns,
             buttons: [
+                {
+                    text: '<span class="svg-icon svg-icon-2 me-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19.5 8.25H18V4.5C18 3.67157 17.3284 3 16.5 3H7.5C6.67157 3 6 3.67157 6 4.5V8.25H4.5C3.67157 8.25 3 8.92157 3 9.75V19.5C3 20.3284 3.67157 21 4.5 21H19.5C20.3284 21 21 20.3284 21 19.5V9.75C21 8.92157 20.3284 8.25 19.5 8.25Z" fill="black"/></svg></span>تصدير PDF',
+                    className: 'btn btn-light-primary',
+                    action: function () {
+                        var active = $('#active').val() || 'Active';
+                        var searchInput = document.querySelector('[data-kt-docs-table-filter="search"]');
+                        var search = searchInput ? searchInput.value : '';
+                        var url = exportPdfUrl
+                            + '?active=' + encodeURIComponent(active)
+                            + '&search=' + encodeURIComponent(search);
+                        window.open(url, '_blank');
+                    }
+                },
                 {
                     extend: 'excel',
                     title: '',
@@ -344,10 +358,11 @@ var KTDatatablesServerSide = function () {
     // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
     var handleSearchDatatable = function () {
         const filterSearch = document.querySelector('[data-kt-docs-table-filter="search"]');
+        if (!filterSearch) {
+            return;
+        }
         filterSearch.addEventListener('keyup', function (e) {
-            if (e.key === 'Enter') {
-                dt.search(e.target.value).draw();
-            }
+            dt.search(e.target.value).draw();
         });
     }
 

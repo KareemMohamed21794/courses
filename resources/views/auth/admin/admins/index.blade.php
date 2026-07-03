@@ -26,7 +26,7 @@
                                 </svg>
                             </span>
                             <!--end::Svg Icon-->
-                            <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="{{__('messages.Search')}}" />
+                            <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="بحث ذكي (اسم، بريد، هاتف...)" />
                         </div>
                         <!--end::Search-->
                         @endif
@@ -149,7 +149,7 @@
                 <div class="card-body pt-0 table-responsive">
                     
                     
-                    @if($objAdmin->is_super || $objAdmin->position_id == 4)
+               
 
                     <!--begin::Datatable-->
                     <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
@@ -166,62 +166,13 @@
 
                             <th>{{ __('messages.username') }}</th>
 
-                            @if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers')
-                                <th>{{ __('messages.name') }}</th>
-                            @endif
-
-                            @if($is_super == 0 && $segment=='leaders')
-                            <th>{{ __('messages.group_name') }}</th>
-                            <th>{{ __('messages.leader_name') }}</th>
-                            @endif
+                          
+                            <th>{{ __('messages.name') }}</th>
+                          
                             <th>{{ __('messages.email') }}</th>
                             <th>{{ __('messages.phone') }}</th>
-                           <!--  @if($is_super == 0 && $segment=='leaders')
-                            <th>{{ __('messages.address') }}</th>
-                            @endif -->
-                            {{-- <th>{{ __('messages.super_admin') }}</th> --}}
-                            {{-- <th>{{ __('messages.Positions') }}</th> --}}
-                            <th>{{ __('messages.created_at') }}</th>
-                            <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody class="text-gray-600 fw-bold">
-                        </tbody>
-                    </table>
-                    <!--end::Datatable-->
-
-                    @elseif($segment=='leaders' && $objAdmin->position_id == 3)
-                    
-                    <!--begin::Datatable-->
-                    <table id="kt_datatable_table" class="table align-middle table-row-dashed fs-6 gy-5 ">
-                        <thead>
-                        <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                            <th class="w-10px pe-2">
-                                <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                    <input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_datatable_table .form-check-input" value="1"/>
-                                </div>
-                            </th>
-                            <th>#</th>
+                          
                             
-
-
-                            <th>{{ __('messages.username') }}</th>
-
-                            @if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers')
-                                <th>{{ __('messages.name') }}</th>
-                            @endif
-
-                            @if($is_super == 0 && $segment=='leaders')
-                            <th>{{ __('messages.group_name') }}</th>
-                            <th>{{ __('messages.leader_name') }}</th>
-                            @endif
-                            <th>{{ __('messages.email') }}</th>
-                            <th>{{ __('messages.phone') }}</th>
-                           <!--  @if($is_super == 0 && $segment=='leaders')
-                            <th>{{ __('messages.address') }}</th>
-                            @endif -->
-                            {{-- <th>{{ __('messages.super_admin') }}</th> --}}
-                            {{-- <th>{{ __('messages.Positions') }}</th> --}}
                             <th>{{ __('messages.created_at') }}</th>
                             <th class="text-end min-w-100px">{{ __('messages.Actions') }}</th>
                         </tr>
@@ -231,202 +182,8 @@
                     </table>
                     <!--end::Datatable-->
 
-                    @else
+                   
 
-                    <a href="#" class="btn btn-sm btn-success" onclick="getData({{ $objAdmin->id }},1)" data-bs-toggle="modal" data-bs-target="#kt_modal_update" data-id="5">
-                                        تعديل
-                    </a>
-                    <hr>
-                    <!--begin::Content-->
-                    <div class="flex-grow-1">
-
-                        <div class="custom_border">
-                            <!--begin::Table-->
-                            <div class="table-responsive border-bottom mb-9 seperate">
-                                <table class="table mb-3">
-                                    <thead>
-                                       
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.register_url') }}</th>
-                                            <th class="pb-2">
-                                              <a href="{{ url('/student_registration') }}/{{$encodeId}}" target="_blank">اضغط هنا</a>
-                                            </th>
-
-
-                                        </tr>
-
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.username') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->username }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.registration_type') }}</th>
-                                            
-                                            @if($objAdmin->registration_type == 'harah')
-                                            <th class="pb-2">حرة</th>
-                                            @else
-                                            <th class="pb-2">مقيدة</th>
-                                            @endif
-                                        </tr>
-
-                                        <!-- @if($objAdmin->alhayyuh_almuqayaduh)
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.alhayyuh_almuqayaduh') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh }}</th>
-                                        </tr>
-                                        @endif -->
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.group_classification') }}</th>
-                                            
-                                            @if($objAdmin->group_classification == 'kashfih')
-                                            <th class="pb-2">كشفية</th>
-                                            @else
-                                            <th class="pb-2">ارشادية</th>
-                                            @endif
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.group_name') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->group_name }}</th>
-                                        </tr>
-
-                                        
-                                         @if($objAdmin->registration_type == 'harah')
-                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">رقم مجلس الإدارة</th>
-                                            <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh_number }}</th>
-                                        </tr>
-                                        @else($objAdmin->registration_type == 'muqiaduh')
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">رقم الهيئة المقيدة </th>
-                                            <th class="pb-2">{{ $objAdmin->alhayyuh_almuqayaduh }}</th>
-                                        </tr>
-                                        @endif
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.date_establishment') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->date_establishment }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.registration_number') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->registration_number }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.phone') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->phone }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.email') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->email }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.website') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->website }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.governorate') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->governorate }}</th>
-                                        </tr>
-
-                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.district') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->district }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.street_name') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->street_name }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.building_number') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->building_number }}</th>
-                                        </tr>
-
-                                     <!--    <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.leader_name') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->name }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.workplace') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->workplace }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.job') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->job }}</th>
-                                        </tr> -->
-
-
-                                   <!-- start number  -->
-                                       
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.ashbal') }}</th>
-                                            <th class="pb-2">{{ @$ashbal }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.kashafa') }}</th>
-                                            <th class="pb-2">{{ @$kashafa }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.motakadem') }}</th>
-                                            <th class="pb-2">{{ @$motakadem }}</th>
-                                        </tr>
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.gawala') }}</th>
-                                            <th class="pb-2">{{ @$gawala }}</th>
-                                        </tr>
-
-                                         <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.leaders_number') }}</th>
-                                            <th class="pb-2">{{ @$leaders_number }}</th>
-                                        </tr>
-
-
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.groups') }}</th>
-                                            <th class="pb-2">{{ $objAdmin->groups }}</th>
-                                        </tr>
-
-
-                                        <tr class="border-bottom fs-6 fw-bolder text-muted">
-                                            <th class="pb-2">{{ __('messages.persons_number') }}</th>
-                                            <th class="pb-2">{{ @$persons_number }}</th>
-                                        </tr>
-                                <!-- end number -->
-
-
-
-
-
-                                          
-                                    </thead>
-                                  
-                                </table>
-                            </div>
-                            <!--end::Table--> 
-                        </div>
-
-
-                    </div>
-                    <!--end::Content-->
-
-
-                    @endif
                 </div>
                 <!--end::Card body-->
             </div>
@@ -447,6 +204,7 @@
     <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
     <input type="hidden" name="type_segment" id="type_segment" value="{{ $is_super }}">
     <input type="hidden" name="position_id_check" id="position_id_check" value="{{ $objAdmin->position_id }}">
+    <input type="hidden" id="admins_export_pdf_url" value="{{ $segment === 'users' ? route('admin.users.export.pdf') : route('admin.admins.export.pdf') }}">
 @endsection
 
 @section('scripts')

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\HandlesAdminDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Position;
-use App\Models\Problem;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\Models\StudentRegistration;
+
 //use Response;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules;
@@ -17,8 +17,12 @@ use Validator;
 use Auth;
 use Lang;
 use Illuminate\Support\Facades\DB;
+use PDF;
+
 class AdminsController extends Controller
 {
+    use HandlesAdminDataTable;
+
     private const MODEL ='Admin';
     /**
      * Display a listing of the resource.
@@ -51,61 +55,18 @@ class AdminsController extends Controller
             $is_super = 1;
             
         }
-        elseif($segment=='leaders'){
+        elseif($segment=='users'){
 
-            $title =  $objAdmin->is_super == 2 ? __('messages.group_info') : __('messages.scout_groups')  ;
-            $add_title ="مجموعة كشفية";;
+            $title =   __('messages.users') ;
+            $add_title = __('messages.user');
             $department_id = 2;
             $position_id = 2;
             $is_super = 0;
-
-            $encodeId = $objAdmin->id;
-            $encodeId = $this->encodeSecureId($encodeId);
-
-             
-        }
-
-        elseif($segment=='secretariats'){
-
-            $title =   __('messages.secretariats') ;
-            $add_title = __('messages.secretariat');
-            $department_id = 2;
-            $position_id = 3;
-            $is_super = 0;
-        }
-
-
-        elseif($segment=='monitors'){
-
-            $title =   __('messages.monitors') ;
-            $add_title = __('messages.monitor');
-            $department_id = 2;
-            $position_id = 4;
-            $is_super = 0;
         }
 
 
 
-        elseif($segment=='training_commissioners'){
-
-            $title =   __('messages.training_commissioners') ;
-            $add_title = __('messages.training_commissioner');
-            $department_id = 2;
-            $position_id = 5;
-            $is_super = 0;
-        }
-
-        elseif($segment=='treasurers'){
-
-            $title =   __('messages.treasurers') ;
-            $add_title = __('messages.treasurer'); 
-            $department_id = 2;
-            $position_id = 6;
-            $is_super = 0;
-        }
-
-
-
+     
 
 
         $Governorates = [
@@ -138,18 +99,9 @@ class AdminsController extends Controller
         if($objAdmin->position_id == 3 ){
             $can_print = 1;
         }
-
-        
-        $leaders_number = StudentRegistration::where('division',5)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
-        $ashbal = StudentRegistration::where('division',1)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
-        $kashafa = StudentRegistration::where('division',2)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
-        $motakadem = StudentRegistration::where('division',3)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
-        $gawala = StudentRegistration::where('division',4)->where('type','approved')->where('admin_id',$objAdmin->id)->count();
-        $persons_number = $leaders_number + $ashbal + $kashafa + $motakadem + $gawala;
-
         
 
-        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print,'encodeId'=>$encodeId,'leaders_number'=>$leaders_number,'ashbal'=>$ashbal,'kashafa'=>$kashafa,'motakadem'=>$motakadem,'gawala'=>$gawala,'persons_number'=>$persons_number]);
+        return view('auth.admin.admins.index',['title' => $title, 'departments' => $departments, 'positions' => $positions, 'segment' => $segment , 'add_title' => $add_title, 'department_id' => $department_id, 'position_id' => $position_id, 'is_super' => $is_super, 'leaders' => $leaders,'Governorates'=>$Governorates,'objAdmin'=>$objAdmin,'can_add'=>$can_add, 'can_update'=>$can_update, 'can_delete'=>$can_delete, 'can_print'=>$can_print]);
     }
 
     /**
@@ -198,52 +150,7 @@ class AdminsController extends Controller
             'is_super' => $request->select_is_super,
             'phone' => $request->phone,
             'address' => $request->address,
-            'registration_type' => $request->registration_type,
-            'alhayyuh_almuqayaduh' => $request->alhayyuh_almuqayaduh,
-            'alhayyuh_almuqayaduh_number' => $request->alhayyuh_almuqayaduh_number,
-            'group_classification' => $request->group_classification,
-            'group_name' => $request->group_name,
-            // 'dead_line' => $request->dead_line,
-            'date_establishment' => $request->date_establishment,
-            'registration_number' => $request->registration_number,
-            'website' => $request->website,
-            'governorate' => $request->governorate,
-            'district' => $request->district,
-            'street_name' => $request->street_name,
-            'building_number' => $request->building_number,
-            'workplace' => $request->workplace,
-            'job' => $request->job,
-            'leaders_number' => $request->leaders_number,
-            'persons_number' => $request->persons_number,
-            'groups' => $request->groups,
-            'ashbal' => $request->ashbal,
-            'kashafa' => $request->kashafa,
-            'motakadem' => $request->motakadem,
-            'gawala' => $request->gawala,
         ]);
-
-
-        if($request->position_id == 1){
-            $add_title = 'Add_Admin';
-        }
-        elseif($request->position_id == 2){
-            $add_title ="Add_scout_group";
-        }
-        elseif($request->position_id == 3){
-            $add_title = 'Add_secretariat';
-        }
-        elseif($request->position_id == 4){
-            $add_title = 'Add_monitor';
-        }
-        elseif($request->position_id == 5){
-            $add_title = 'Add_training_commissioner';
-        }
-        elseif($request->position_id == 6){
-            $add_title = 'Add_treasurer';
-        }
-
-        
-        $this->logAction(auth()->id(), 'user', $add_title , 'create', 'admins', $admin->id);
 
         return response()->json(['admin'=>$admin]);
     }
@@ -290,18 +197,7 @@ class AdminsController extends Controller
                 'name' => ['string', 'max:255'],
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
-                // 'registration_type' => 'required',
-                // 'group_classification' => 'required',
-                // 'group_name' => 'required',
-                // 'date_establishment' => 'required',
-                // 'registration_number' => 'required',
-                // 'website' => 'required',
-                // 'governorate' => 'required',
-                // 'district' => 'required',
-                // 'street_name' => 'required',
-                // 'building_number' => 'required',
-                // 'workplace' => 'required',
-                // 'job' => 'required',
+                
             ]);
         }else{
             $validator = Validator::make($request->all(),[
@@ -309,18 +205,7 @@ class AdminsController extends Controller
                 'username' => 'required|max:255|unique:admins,username,'.$Admin->id.',id',
                 'email' => 'required|email|max:255',
                 'password' => ['required', Rules\Password::defaults()],
-                // 'registration_type' => 'required',
-                // 'group_classification' => 'required',
-                // 'group_name' => 'required',
-                // 'date_establishment' => 'required',
-                // 'registration_number' => 'required',
-                // 'website' => 'required',
-                // 'governorate' => 'required',
-                // 'district' => 'required',
-                // 'street_name' => 'required',
-                // 'building_number' => 'required',
-                // 'workplace' => 'required',
-                // 'job' => 'required',
+                
             ]);
         }
 
@@ -335,29 +220,7 @@ class AdminsController extends Controller
         $objAdmin->email = $request->email;
         $objAdmin->phone = $request->phone;
         $objAdmin->address = $request->address;
-        $objAdmin->registration_type = $request->registration_type;
-        $objAdmin->alhayyuh_almuqayaduh = $request->alhayyuh_almuqayaduh;
-        $objAdmin->group_classification = $request->group_classification;
-        $objAdmin->group_name = $request->group_name;
-        // $objAdmin->dead_line = $request->dead_line;
-        $objAdmin->date_establishment = $request->date_establishment;
-        $objAdmin->registration_number = $request->registration_number;
-        $objAdmin->website = $request->website;
-        $objAdmin->governorate = $request->governorate;
-        $objAdmin->district = $request->district;
-        $objAdmin->street_name = $request->street_name;
-        $objAdmin->building_number = $request->building_number;
-        $objAdmin->workplace = $request->workplace;
-        $objAdmin->job = $request->job;
-        $objAdmin->alhayyuh_almuqayaduh = $request->alhayyuh_almuqayaduh;
-        $objAdmin->alhayyuh_almuqayaduh_number = $request->alhayyuh_almuqayaduh_number;
-        $objAdmin->leaders_number = $request->leaders_number;
-        $objAdmin->persons_number = $request->persons_number;
-        $objAdmin->groups = $request->groups;
-        $objAdmin->ashbal = $request->ashbal;
-        $objAdmin->kashafa = $request->kashafa;
-        $objAdmin->motakadem = $request->motakadem;
-        $objAdmin->gawala = $request->gawala;
+      
 
 
         if(!empty($request->password)){
@@ -367,66 +230,11 @@ class AdminsController extends Controller
         $objAdmin->save();
 
 
-        if($objAdmin->position_id == 1){
-            $update_title = 'Update_Admin';
-        }
-        elseif($objAdmin->position_id == 2){
-            $update_title ="Update_scout_group";
-        }
-        elseif($objAdmin->position_id == 3){
-            $update_title = 'Update_secretariat';
-        }
-        elseif($objAdmin->position_id == 4){
-            $update_title = 'Update_monitor';
-        }
-        elseif($objAdmin->position_id == 5){
-            $update_title = 'Update_training_commissioner';
-        }
-        elseif($objAdmin->position_id == 6){
-            $update_title = 'Update_treasurer';
-        }
-
-        
-        $this->logAction(auth()->id(), 'user', $update_title , 'update', 'admins', $objAdmin->id);
-
         return response()->json(['objAdmin'=>$objAdmin]);
 
     }
 
-    public function deletelawyer(Request $request , $id)
-    {  
-
-        //$this->authorize(self::MODEL.'-update');
-        
-        $validator = Validator::make($request->all(),[
-            'lawyer_id' => ['required', 'integer'],
-        ]);
-        
-
-
-        if ($validator->fails()) {
-            return response()->json($validator->messages(), Response::HTTP_BAD_REQUEST);
-        }
-        
-        try {
-            DB::transaction(function () use ($id, $request) {
-                $old_lawyer_id = $id;
-                $new_lawyer_id = $request->lawyer_id;
-
-                $affectedRows = Problem::where('admin_id', $old_lawyer_id)
-                    ->withTrashed() // Include both active and soft-deleted records
-                    ->update(['admin_id' => $new_lawyer_id]);
-
-                $Admin = Admin::where('id', $old_lawyer_id)->delete();
-            });
-
-            return response()->json(['message' => 'Transaction successful']);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-
-
-    }
+   
 
     /**
      * Remove the specified resource from storage.
@@ -438,56 +246,14 @@ class AdminsController extends Controller
     {
         //$this->authorize(self::MODEL.'-delete');
         $objAdmin = Admin::where('id',$id)->first();
-        if($objAdmin->position_id == 1){
-            $delete_title = 'Delete_Admin';
-        }
-        elseif($objAdmin->position_id == 2){
-            $delete_title ="Delete_scout_group";
-        }
-        elseif($objAdmin->position_id == 3){
-            $delete_title = 'Delete_secretariat';
-        }
-        elseif($objAdmin->position_id == 4){
-            $delete_title = 'Delete_monitor';
-        }
-        elseif($objAdmin->position_id == 5){
-            $delete_title = 'Delete_training_commissioner';
-        }
-        elseif($objAdmin->position_id == 6){
-            $delete_title = 'Delete_treasurer';
-        }
-
+       
         $Admin = Admin::where('id',$id)->delete();
-
-        $this->logAction(auth()->id(), 'user', $delete_title , 'delete', 'admins', $objAdmin->id);
         return response()->json(['Admin'=>$Admin]);
     }
 
     public function deleteAdmins(Request $request)
     {
-        //$this->authorize(self::MODEL.'-delete');
-        foreach ($request->ids as $key => $id) {
-            $objAdmin = Admin::where('id',$id)->first();
-            if($objAdmin->position_id == 1){
-            $delete_title = 'Delete_Admin';
-            }
-            elseif($objAdmin->position_id == 2){
-                $delete_title ="Delete_scout_group";
-            }
-            elseif($objAdmin->position_id == 3){
-                $delete_title = 'Delete_secretariat';
-            }
-            elseif($objAdmin->position_id == 4){
-                $delete_title = 'Delete_monitor';
-            }
-            elseif($objAdmin->position_id == 5){
-                $delete_title = 'Delete_training_commissioner';
-            }
-            elseif($objAdmin->position_id == 6){
-                $delete_title = 'Delete_treasurer';
-            }
-            $this->logAction(auth()->id(), 'user', $delete_title , 'delete', 'admins', $objAdmin->id);
-        }
+        
         $Admin = Admin::whereIn('id',$request->ids)->delete();
         return response()->json(['Admin'=>$Admin]);
     }
@@ -497,7 +263,7 @@ class AdminsController extends Controller
 
         ini_set('memory_limit', '-1');
         $segment = $request->segment(2);
-        if($segment=='admins' || $segment=='secretariats' || $segment=='monitors'||$segment=='training_commissioners'||$segment=='treasurers'){
+       
             $columnsDefault = [
             'order'   => true,
             '#'   => true,
@@ -512,22 +278,7 @@ class AdminsController extends Controller
             // "position_name" => true,
             'created_at'   => true,
         ];
-        }else{
-            $columnsDefault = [
-            'order'   => true,
-            '#'   => true,
-            'id'   => true,
-            'username'   => true,
-            'group_name'   => true,
-            'name'   => true,
-            'email'   => true,
-            'phone'   => true,
-            //'address'   => true,
-            // 'super_admin'   => true,
-            // "position_name" => true,
-            'created_at'   => true,
-        ];
-        }
+      
 
         //$this->authorize(self::MODEL.'-viewAny');
         
@@ -545,33 +296,21 @@ class AdminsController extends Controller
             $position_id = 1;
         }
 
-        elseif($segment=='leaders'){
+       
+
+        elseif($segment=='users'){
             $position_id = 2;
         }
 
 
-        elseif($segment=='secretariats'){
-            $position_id = 3;
-        }
-
-
-        elseif($segment=='monitors'){
-            $position_id = 4;
-        }
-
-        elseif($segment=='training_commissioners'){
-            $position_id = 5;
-        }
-        elseif($segment=='treasurers'){
-            $position_id = 6;
-        }
+        
 
         $userId = Auth::id();
         $objAdmin = Admin::find($userId);
 
         $active = $request->active;
 
-        if($objAdmin->is_super == 1 || $objAdmin->position_id == 4|| $objAdmin->position_id == 3){
+        if($objAdmin->is_super == 1){
             $alldata = Admin::where('position_id',$position_id)->whereNull('deleted_at')->get();
 
             if($active=='All'){
@@ -722,6 +461,64 @@ class AdminsController extends Controller
         header('Access-Control-Allow-Headers: Content-Type, Content-Range, Content-Disposition, Content-Description');
 
         return  json_encode( $result, JSON_PRETTY_PRINT );
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $segment = $request->segment(2);
+        $admins = $this->filteredAdminsQuery($request, $segment)->latest()->get();
+        $title = $segment === 'users' ? 'تقرير المستخدمين' : 'تقرير المدراء';
+
+        $pdf = PDF::loadView('auth.admin.admins.export-pdf', [
+            'title' => $title,
+            'admins' => $admins,
+            'segment' => $segment,
+            'filters' => [
+                'search' => $this->searchValue($request),
+                'active' => $request->input('active', 'Active'),
+            ],
+        ])->setPaper('a4', 'landscape');
+
+        return $pdf->download($segment . '-' . date('Y-m-d-His') . '.pdf');
+    }
+
+    private function filteredAdminsQuery(Request $request, string $segment)
+    {
+        $positionId = $segment === 'users' ? 2 : 1;
+        $objAdmin = Admin::find(Auth::id());
+        $active = $request->input('active', 'Active');
+
+        if ($objAdmin->is_super == 1) {
+            if ($active === 'All') {
+                $query = Admin::withTrashed()->where('position_id', $positionId);
+            } elseif ($active === 'DeActive') {
+                $query = Admin::onlyTrashed()->where('position_id', $positionId);
+            } else {
+                $query = Admin::where('position_id', $positionId)->whereNull('deleted_at');
+            }
+        } else {
+            if ($active === 'All') {
+                $query = Admin::withTrashed()->where('position_id', $positionId)->where('id', $objAdmin->id);
+            } elseif ($active === 'DeActive') {
+                $query = Admin::onlyTrashed()->where('position_id', $positionId)->where('id', $objAdmin->id);
+            } else {
+                $query = Admin::where('position_id', $positionId)->where('id', $objAdmin->id)->whereNull('deleted_at');
+            }
+        }
+
+        $search = $this->searchValue($request);
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('username', 'like', "%{$search}%")
+                    ->orWhere('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('group_name', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+
+        return $query;
     }
 
     function filterArray( $array, $allowed = [] ) {

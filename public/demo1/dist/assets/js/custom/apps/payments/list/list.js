@@ -1,0 +1,138 @@
+"use strict";
+
+var KTPaymentsList = function () {
+    var dt;
+    var getUrl = document.getElementById('payments_get_url').value;
+    var exportPdfUrl = document.getElementById('payments_export_pdf_url').value;
+
+    var buildAjaxUrl = function () {
+        var status = document.getElementById('payment_status_filter').value;
+        var courseId = document.getElementById('payment_course_filter').value;
+        return getUrl + '?status=' + encodeURIComponent(status) + '&course_id=' + encodeURIComponent(courseId);
+    };
+
+    var exportPdf = function () {
+        var status = document.getElementById('payment_status_filter').value;
+        var courseId = document.getElementById('payment_course_filter').value;
+        var search = document.querySelector('[data-kt-payments-table-filter="search"]').value;
+        var url = exportPdfUrl
+            + '?status=' + encodeURIComponent(status)
+            + '&course_id=' + encodeURIComponent(courseId)
+            + '&search=' + encodeURIComponent(search);
+        window.open(url, '_blank');
+    };
+
+    var initDatatable = function () {
+        dt = $("#kt_payments_table").DataTable({
+            displayLength: 25,
+            lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "الكل"]],
+            dom: 'Brltip',
+            searchDelay: 400,
+            processing: true,
+            serverSide: true,
+            order: [[0, 'desc']],
+            stateSave: false,
+            ajax: {
+                url: buildAjaxUrl(),
+            },
+            columns: [
+                { data: 'id' },
+                { data: 'course_title' },
+                { data: 'phone_number' },
+                { data: 'name' },
+                { data: 'payment_image', orderable: false, searchable: false },
+                { data: 'status_label', orderable: false },
+                { data: 'created_at' },
+                { data: 'actions', orderable: false, searchable: false },
+            ],
+            buttons: [
+                {
+                    text: '<span class="svg-icon svg-icon-2 me-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19.5 8.25H18V4.5C18 3.67157 17.3284 3 16.5 3H7.5C6.67157 3 6 3.67157 6 4.5V8.25H4.5C3.67157 8.25 3 8.92157 3 9.75V19.5C3 20.3284 3.67157 21 4.5 21H19.5C20.3284 21 21 20.3284 21 19.5V9.75C21 8.92157 20.3284 8.25 19.5 8.25Z" fill="black"/></svg></span>تصدير PDF',
+                    className: 'btn btn-light-primary',
+                    action: function () {
+                        exportPdf();
+                    }
+                },
+                {
+                    extend: 'excel',
+                    title: 'طلبات الشراء',
+                    text: 'Excel',
+                    charset: 'UTF-8',
+                    bom: true,
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 5, 6],
+                        orthogonal: 'export',
+                    }
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: 2,
+                    render: function (data) {
+                        return '<span dir="ltr">' + data + '</span>';
+                    }
+                },
+                {
+                    targets: 4,
+                    render: function (data) {
+                        return data;
+                    }
+                },
+                {
+                    targets: 5,
+                    render: function (data, type, row) {
+                        if (type === 'export') {
+                            return row.status;
+                        }
+                        return data;
+                    }
+                },
+                {
+                    targets: -1,
+                    className: 'text-end',
+                    render: function (data) {
+                        return data;
+                    }
+                }
+            ]
+        });
+
+        dt.buttons().container().appendTo('#export_buttons');
+    };
+
+    var handleSearch = function () {
+        var filterSearch = document.querySelector('[data-kt-payments-table-filter="search"]');
+        filterSearch.addEventListener('keyup', function (e) {
+            dt.search(e.target.value).draw();
+        });
+    };
+
+    var handleFilters = function () {
+        document.getElementById('payment_status_filter').addEventListener('change', function () {
+            dt.ajax.url(buildAjaxUrl()).load();
+        });
+
+        document.getElementById('payment_course_filter').addEventListener('change', function () {
+            dt.ajax.url(buildAjaxUrl()).load();
+        });
+
+        document.querySelector('[data-kt-payments-table-filter="reset"]').addEventListener('click', function () {
+            document.querySelector('[data-kt-payments-table-filter="search"]').value = '';
+            document.getElementById('payment_status_filter').value = 'all';
+            document.getElementById('payment_course_filter').value = 'all';
+            dt.search('').ajax.url(buildAjaxUrl()).draw();
+        });
+    };
+
+    return {
+        init: function () {
+            initDatatable();
+            handleSearch();
+            handleFilters();
+        }
+    };
+}();
+
+KTUtil.onDOMContentLoaded(function () {
+    KTPaymentsList.init();
+});
