@@ -28,7 +28,19 @@
                     </div>
                     <div class="mb-5">
                         <label class="form-label">ملف PDF (اتركه فارغاً للإبقاء على الملف الحالي)</label>
+                        @if($course->pdf_file)
+                            <div class="mb-2 text-muted small">الملف الحالي: {{ $course->pdf_file }}</div>
+                        @endif
                         <input type="file" name="pdf_file" class="form-control" accept=".pdf">
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label">ملف فيديو (اتركه فارغاً للإبقاء على الملف الحالي)</label>
+                        @if($course->video_file)
+                            <div class="mb-2 text-muted small">الملف الحالي: {{ $course->video_file }}</div>
+                        @endif
+                        <input type="file" name="video_file" class="form-control @error('video_file') is-invalid @enderror" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi">
+                        @error('video_file')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="form-text">الصيغ المدعومة: MP4, WebM, MOV, AVI (حتى 500 ميجابايت).</div>
                     </div>
                     <div class="mb-5 form-check">
                         <input type="checkbox" name="is_active" value="1" class="form-check-input" id="is_active" {{ $course->is_active ? 'checked' : '' }}>

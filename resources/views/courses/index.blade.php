@@ -6,7 +6,7 @@
 <div class="hero text-center">
     <div class="container">
         <h1 class="fw-bold mb-2">الكورسات المتاحة</h1>
-        <p class="mb-0 opacity-75">اختر الكورس المناسب وحمّل ملف PDF بعد التحقق أو الشراء</p>
+        <p class="mb-0 opacity-75">اختر الكورس المناسب وحمّل ملفات الكورس (PDF والفيديو) بعد التحقق أو الشراء</p>
     </div>
 </div>
 
@@ -32,7 +32,7 @@
                                     data-course-title="{{ $course->title }}"
                                     data-verify-url="{{ route('courses.verify', $course) }}"
                                     data-purchase-url="{{ route('courses.purchase', $course) }}">
-                                تحميل PDF
+                                تحميل الكورس
                             </button>
                         </div>
                     </div>

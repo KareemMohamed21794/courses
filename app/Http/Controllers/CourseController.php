@@ -41,7 +41,7 @@ class CourseController extends Controller
         return response()->json([
             'success' => true,
             'download_url' => route('courses.download', $course),
-            'message' => 'تم التحقق بنجاح. جاري التحميل...',
+            'message' => 'تم التحقق بنجاح. جاري تحميل ملفات الكورس...',
         ]);
     }
 }

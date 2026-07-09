@@ -24,9 +24,16 @@
                         <input type="file" name="thumbnail" class="form-control" accept="image/*">
                     </div>
                     <div class="mb-5">
-                        <label class="form-label required">ملف PDF</label>
-                        <input type="file" name="pdf_file" class="form-control @error('pdf_file') is-invalid @enderror" accept=".pdf" required>
+                        <label class="form-label">ملف PDF</label>
+                        <input type="file" name="pdf_file" class="form-control @error('pdf_file') is-invalid @enderror" accept=".pdf">
                         @error('pdf_file')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="form-text">ارفع ملف PDF أو فيديو (أحدهما على الأقل مطلوب).</div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label">ملف فيديو</label>
+                        <input type="file" name="video_file" class="form-control @error('video_file') is-invalid @enderror" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi">
+                        @error('video_file')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="form-text">الصيغ المدعومة: MP4, WebM, MOV, AVI (حتى 500 ميجابايت).</div>
                     </div>
                     <div class="mb-5 form-check">
                         <input type="checkbox" name="is_active" value="1" class="form-check-input" id="is_active" checked>

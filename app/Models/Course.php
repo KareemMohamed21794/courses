@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Course extends Model
 {
@@ -11,6 +12,7 @@ class Course extends Model
         'description',
         'thumbnail',
         'pdf_file',
+        'video_file',
         'is_active',
     ];
 
@@ -29,6 +31,6 @@ class Course extends Model
             return 'data:image/svg+xml,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"><rect fill="#e9ecef" width="400" height="200"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#adb5bd" font-family="sans-serif" font-size="20">Course</text></svg>');
         }
 
-        return asset('storage/' . $this->thumbnail);
+        return Storage::disk('public')->url($this->thumbnail);
     }
 }

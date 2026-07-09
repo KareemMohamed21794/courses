@@ -118,11 +118,27 @@ class CoursesController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'pdf_file' => 'required|file|mimes:pdf|max:20480',
+            'pdf_file' => 'nullable|file|mimes:pdf|max:20480',
+            'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
         ]);
 
-        $pdfName = time() . '_' . $request->file('pdf_file')->getClientOriginalName();
-        $request->file('pdf_file')->storeAs('courses', $pdfName, 'local');
+        if (!$request->hasFile('pdf_file') && !$request->hasFile('video_file')) {
+            return back()
+                ->withInput()
+                ->withErrors(['pdf_file' => 'يجب رفع ملف PDF أو فيديو على الأقل.']);
+        }
+
+        $pdfName = null;
+        if ($request->hasFile('pdf_file')) {
+            $pdfName = time() . '_' . $request->file('pdf_file')->getClientOriginalName();
+            $request->file('pdf_file')->storeAs('courses', $pdfName, 'local');
+        }
+
+        $videoName = null;
+        if ($request->hasFile('video_file')) {
+            $videoName = time() . '_' . $request->file('video_file')->getClientOriginalName();
+            $request->file('video_file')->storeAs('courses/videos', $videoName, 'local');
+        }
 
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail')) {
@@ -134,6 +150,7 @@ class CoursesController extends Controller
             'description' => $request->description,
             'thumbnail' => $thumbnailPath,
             'pdf_file' => $pdfName,
+            'video_file' => $videoName,
             'is_active' => $request->boolean('is_active', true),
         ]);
 
@@ -158,6 +175,7 @@ class CoursesController extends Controller
             'description' => 'nullable|string',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'pdf_file' => 'nullable|file|mimes:pdf|max:20480',
+            'video_file' => 'nullable|file|mimes:mp4,webm,mov,avi|max:512000',
         ]);
 
         $data = [
@@ -167,10 +185,21 @@ class CoursesController extends Controller
         ];
 
         if ($request->hasFile('pdf_file')) {
-            Storage::disk('local')->delete('courses/' . $course->pdf_file);
+            if ($course->pdf_file) {
+                Storage::disk('local')->delete('courses/' . $course->pdf_file);
+            }
             $pdfName = time() . '_' . $request->file('pdf_file')->getClientOriginalName();
             $request->file('pdf_file')->storeAs('courses', $pdfName, 'local');
             $data['pdf_file'] = $pdfName;
+        }
+
+        if ($request->hasFile('video_file')) {
+            if ($course->video_file) {
+                Storage::disk('local')->delete('courses/videos/' . $course->video_file);
+            }
+            $videoName = time() . '_' . $request->file('video_file')->getClientOriginalName();
+            $request->file('video_file')->storeAs('courses/videos', $videoName, 'local');
+            $data['video_file'] = $videoName;
         }
 
         if ($request->hasFile('thumbnail')) {
@@ -187,7 +216,12 @@ class CoursesController extends Controller
 
     public function destroy(Course $course)
     {
-        Storage::disk('local')->delete('courses/' . $course->pdf_file);
+        if ($course->pdf_file) {
+            Storage::disk('local')->delete('courses/' . $course->pdf_file);
+        }
+        if ($course->video_file) {
+            Storage::disk('local')->delete('courses/videos/' . $course->video_file);
+        }
         if ($course->thumbnail) {
             Storage::disk('public')->delete($course->thumbnail);
         }

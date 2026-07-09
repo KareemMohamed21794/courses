@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Payment extends Model
 {
@@ -29,7 +30,7 @@ class Payment extends Model
 
     public function getPaymentImageUrlAttribute()
     {
-        return asset('storage/' . $this->payment_image);
+        return Storage::disk('public')->url($this->payment_image);
     }
 
     public function getStatusLabelAttribute()

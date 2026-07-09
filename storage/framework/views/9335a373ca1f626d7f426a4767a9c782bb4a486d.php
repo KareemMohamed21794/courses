@@ -38,7 +38,7 @@ unset($__errorArgs, $__bag); ?>
                         <input type="file" name="thumbnail" class="form-control" accept="image/*">
                     </div>
                     <div class="mb-5">
-                        <label class="form-label required">ملف PDF</label>
+                        <label class="form-label">ملف PDF</label>
                         <input type="file" name="pdf_file" class="form-control <?php $__errorArgs = ['pdf_file'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -46,7 +46,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" accept=".pdf" required>
+unset($__errorArgs, $__bag); ?>" accept=".pdf">
                         <?php $__errorArgs = ['pdf_file'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -55,6 +55,27 @@ $message = $__bag->first($__errorArgs[0]); ?><div class="invalid-feedback"><?php
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        <div class="form-text">ارفع ملف PDF أو فيديو (أحدهما على الأقل مطلوب).</div>
+                    </div>
+                    <div class="mb-5">
+                        <label class="form-label">ملف فيديو</label>
+                        <input type="file" name="video_file" class="form-control <?php $__errorArgs = ['video_file'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo,.mp4,.webm,.mov,.avi">
+                        <?php $__errorArgs = ['video_file'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?><div class="invalid-feedback"><?php echo e($message); ?></div><?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        <div class="form-text">الصيغ المدعومة: MP4, WebM, MOV, AVI (حتى 500 ميجابايت).</div>
                     </div>
                     <div class="mb-5 form-check">
                         <input type="checkbox" name="is_active" value="1" class="form-check-input" id="is_active" checked>
