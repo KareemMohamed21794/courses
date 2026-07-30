@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-use App\Models\Payment;
+use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
@@ -25,12 +25,12 @@ class DownloadController extends Controller
                 ->with('error', 'يرجى التحقق من رقم الهاتف أولاً قبل التحميل.');
         }
 
-        if (!Payment::hasApprovedAccess($verifiedPhone, $course->id)) {
+        if (!SubscriptionService::hasCourseAccess($verifiedPhone, $course->id)) {
             session()->forget(['verified_phone', 'verified_at']);
 
             return redirect()
                 ->route('courses.index')
-                ->with('error', 'لم يتم العثور على دفع معتمد لهذا الكورس. يرجى شراء هذا الكورس أولاً.');
+                ->with('error', 'لا يوجد اشتراك نشط أو دفع معتمد لهذا الكورس.');
         }
 
         $files = $this->resolveCourseFiles($course);

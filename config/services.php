@@ -37,4 +37,28 @@ return [
         'from' => env('TWILIO_FROM'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | SMS Notifications
+    |--------------------------------------------------------------------------
+    |
+    | driver: log | twilio | http
+    | Set SMS_ENABLED=true to actually send messages.
+    |
+    */
+    'sms' => [
+        'enabled' => env('SMS_ENABLED', env('TWILIO_ENABLED', false)),
+        'driver' => env('SMS_DRIVER', 'log'),
+        'twilio' => [
+            'sid' => env('TWILIO_SID'),
+            'token' => env('TWILIO_TOKEN'),
+            'from' => env('TWILIO_FROM'),
+        ],
+        'http' => [
+            'endpoint' => env('SMS_HTTP_ENDPOINT'),
+            'api_key' => env('SMS_HTTP_API_KEY'),
+            'sender' => env('SMS_HTTP_SENDER'),
+        ],
+    ],
+
 ];

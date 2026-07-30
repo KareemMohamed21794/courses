@@ -55,10 +55,11 @@
     </div>
 </div>
 <input type="hidden" id="admin_table_get_url" value="{{ route('admin.courses.get') }}">
-<input type="hidden" id="admin_table_export_pdf_url" value="{{ route('admin.courses.export.pdf') }}">
+<input type="hidden" id="admin_table_export_url" value="{{ route('admin.courses.export') }}">
 @endsection
 
 @section('scripts')
 <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('demo1/dist/assets/js/custom/reports/export-buttons.js') }}"></script>
 <script src="{{ asset('demo1/dist/assets/js/custom/apps/courses/list/list.js') }}"></script>
 @endsection

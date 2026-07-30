@@ -63,10 +63,11 @@
     </div>
 </div>
 <input type="hidden" id="payments_get_url" value="{{ route('admin.payments.get') }}">
-<input type="hidden" id="payments_export_pdf_url" value="{{ route('admin.payments.export.pdf') }}">
+<input type="hidden" id="payments_export_url" value="{{ route('admin.payments.export') }}">
 @endsection
 
 @section('scripts')
 <script src="{{ asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js') }}"></script>
+<script src="{{ asset('demo1/dist/assets/js/custom/reports/export-buttons.js') }}"></script>
 <script src="{{ asset('demo1/dist/assets/js/custom/apps/payments/list/list.js') }}"></script>
 @endsection

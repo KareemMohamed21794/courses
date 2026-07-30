@@ -50,6 +50,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand text-primary" href="{{ route('courses.index') }}">منصة الكورسات</a>
+            <div class="d-flex gap-2">
+                <a href="{{ route('subscriptions.dashboard') }}" class="btn btn-sm btn-outline-primary">اشتراكاتي</a>
+            </div>
         </div>
     </nav>
 

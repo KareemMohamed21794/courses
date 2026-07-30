@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
 use Auth;
 use App\Models\Admin;
+use App\Services\Sms\SmsProviderFactory;
+use App\Services\Sms\SmsProviderInterface;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -27,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
 
+        $this->app->singleton(SmsProviderInterface::class, function () {
+            return SmsProviderFactory::make();
+        });
     }
 
     /**

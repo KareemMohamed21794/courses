@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\ExportsReports;
 use App\Http\Controllers\Admin\Concerns\HandlesAdminDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Position;
+use App\Support\Reports\Report;
+use App\Support\Reports\ReportColumn;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 
@@ -17,10 +20,10 @@ use Validator;
 use Auth;
 use Lang;
 use Illuminate\Support\Facades\DB;
-use PDF;
 
 class AdminsController extends Controller
 {
+    use ExportsReports;
     use HandlesAdminDataTable;
 
     private const MODEL ='Admin';
@@ -463,23 +466,58 @@ class AdminsController extends Controller
         return  json_encode( $result, JSON_PRETTY_PRINT );
     }
 
-    public function exportPdf(Request $request)
+    public function export(Request $request)
+    {
+        return $this->exportReport($this->accountsReport($request), $request);
+    }
+
+    protected function accountsReport(Request $request): Report
     {
         $segment = $request->segment(2);
-        $admins = $this->filteredAdminsQuery($request, $segment)->latest()->get();
-        $title = $segment === 'users' ? 'تقرير المستخدمين' : 'تقرير المدراء';
+        $isUsers = $segment === 'users';
+        $accounts = $this->filteredAdminsQuery($request, $segment)->latest()->get();
 
-        $pdf = PDF::loadView('auth.admin.admins.export-pdf', [
-            'title' => $title,
-            'admins' => $admins,
-            'segment' => $segment,
-            'filters' => [
-                'search' => $this->searchValue($request),
-                'active' => $request->input('active', 'Active'),
-            ],
-        ])->setPaper('a4', 'landscape');
+        $columns = [
+            ReportColumn::text('id', '#')->width(6)->align('center'),
+            ReportColumn::text('username', 'اسم المستخدم')->width(16),
+            ReportColumn::text('name', 'الاسم الكامل')->width(20),
+            ReportColumn::text('email', 'البريد الإلكتروني')->width(22)->ltr(),
+            ReportColumn::text('phone', 'رقم الهاتف')->width(13)->ltr()->align('center'),
+        ];
 
-        return $pdf->download($segment . '-' . date('Y-m-d-His') . '.pdf');
+        if ($isUsers) {
+            $columns[] = ReportColumn::text('group_name', 'المجموعة')->width(13);
+        }
+
+        $columns[] = ReportColumn::status('deleted_at', 'الحالة', [
+            'active' => ['نشط', 'success'],
+            'disabled' => ['معطّل', 'danger'],
+        ])->width(9)->using(function (Admin $account) {
+            return $account->deleted_at ? 'disabled' : 'active';
+        });
+
+        $columns[] = ReportColumn::datetime('created_at', 'تاريخ الإنشاء')->width(14);
+
+        return Report::make($isUsers ? 'تقرير المستخدمين' : 'تقرير المدراء')
+            ->subtitle($isUsers ? 'حسابات المستخدمين المسجلين في النظام' : 'حسابات المدراء وصلاحيات الدخول')
+            ->filters([
+                'كلمة البحث' => $this->searchValue($request),
+                'حالة الحساب' => $this->filterLabel($request->input('active', 'Active'), [
+                    'Active' => 'الحسابات النشطة',
+                    'DeActive' => 'الحسابات المعطّلة',
+                    'All' => 'كل الحسابات',
+                ]),
+            ])
+            ->summary([
+                'إجمالي الحسابات' => number_format($accounts->count()),
+                'حسابات نشطة' => number_format($accounts->whereNull('deleted_at')->count()),
+                'حسابات معطّلة' => number_format($accounts->whereNotNull('deleted_at')->count()),
+            ])
+            ->columns($columns)
+            ->rows($accounts)
+            ->landscape()
+            ->fileName($isUsers ? 'users' : 'admins')
+            ->sheetName($isUsers ? 'المستخدمون' : 'المدراء');
     }
 
     private function filteredAdminsQuery(Request $request, string $segment)
@@ -487,23 +525,29 @@ class AdminsController extends Controller
         $positionId = $segment === 'users' ? 2 : 1;
         $objAdmin = Admin::find(Auth::id());
         $active = $request->input('active', 'Active');
+        $softDeletes = in_array(
+            \Illuminate\Database\Eloquent\SoftDeletes::class,
+            class_uses_recursive(Admin::class),
+            true
+        );
 
-        if ($objAdmin->is_super == 1) {
+        $query = Admin::query()->where('position_id', $positionId);
+
+        if (!($objAdmin && $objAdmin->is_super == 1)) {
+            $query->where('id', optional($objAdmin)->id);
+        }
+
+        if ($softDeletes) {
             if ($active === 'All') {
-                $query = Admin::withTrashed()->where('position_id', $positionId);
+                $query->withTrashed();
             } elseif ($active === 'DeActive') {
-                $query = Admin::onlyTrashed()->where('position_id', $positionId);
+                $query->onlyTrashed();
             } else {
-                $query = Admin::where('position_id', $positionId)->whereNull('deleted_at');
+                $query->whereNull('deleted_at');
             }
-        } else {
-            if ($active === 'All') {
-                $query = Admin::withTrashed()->where('position_id', $positionId)->where('id', $objAdmin->id);
-            } elseif ($active === 'DeActive') {
-                $query = Admin::onlyTrashed()->where('position_id', $positionId)->where('id', $objAdmin->id);
-            } else {
-                $query = Admin::where('position_id', $positionId)->where('id', $objAdmin->id)->whereNull('deleted_at');
-            }
+        } elseif ($active === 'DeActive') {
+            // Soft deletes are disabled on Admin, so there are no disabled rows.
+            $query->whereRaw('1 = 0');
         }
 
         $search = $this->searchValue($request);

@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\ExportsReports;
 use App\Http\Controllers\Admin\Concerns\HandlesAdminDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Payment;
 use App\Services\NotificationService;
+use App\Support\Reports\Report;
+use App\Support\Reports\ReportColumn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PDF;
 
 class PaymentsController extends Controller
 {
+    use ExportsReports;
     use HandlesAdminDataTable;
 
     protected $notificationService;
@@ -116,27 +119,55 @@ class PaymentsController extends Controller
         ]);
     }
 
-    public function exportPdf(Request $request)
+    public function export(Request $request)
+    {
+        return $this->exportReport($this->paymentsReport($request), $request);
+    }
+
+    protected function paymentsReport(Request $request): Report
     {
         $payments = $this->filteredPaymentsQuery($request)
             ->with('course')
             ->latest()
             ->get();
 
-        $filters = [
-            'search' => $this->searchValue($request),
-            'status' => $request->input('status', 'all'),
-            'course_id' => $request->input('course_id', 'all'),
-        ];
-
-        $pdf = PDF::loadView('auth.admin.payments.export-pdf', [
-            'title' => 'تقرير طلبات الشراء',
-            'payments' => $payments,
-            'filters' => $filters,
-            'courses' => Course::pluck('title', 'id'),
-        ])->setPaper('a4', 'landscape');
-
-        return $pdf->download('payments-' . date('Y-m-d-His') . '.pdf');
+        return Report::make('تقرير طلبات الشراء')
+            ->subtitle('طلبات شراء الكورسات وحالة مراجعتها')
+            ->filters([
+                'كلمة البحث' => $this->searchValue($request),
+                'الحالة' => $this->filterLabel($request->input('status'), [
+                    'pending' => 'قيد المراجعة',
+                    'approved' => 'موافق عليه',
+                    'rejected' => 'مرفوض',
+                ]),
+                'الكورس' => $this->filterLabel(
+                    $request->input('course_id'),
+                    Course::pluck('title', 'id')->all()
+                ),
+            ])
+            ->summary([
+                'إجمالي الطلبات' => number_format($payments->count()),
+                'قيد المراجعة' => number_format($payments->where('status', 'pending')->count()),
+                'موافق عليها' => number_format($payments->where('status', 'approved')->count()),
+                'مرفوضة' => number_format($payments->where('status', 'rejected')->count()),
+            ])
+            ->columns([
+                ReportColumn::text('id', '#')->width(5)->align('center'),
+                ReportColumn::text('course.title', 'الكورس')->width(26),
+                ReportColumn::text('name', 'اسم مقدم الطلب')->width(20),
+                ReportColumn::text('phone_number', 'رقم الهاتف')->width(14)->ltr()->align('center'),
+                ReportColumn::currency('course.price', 'قيمة الكورس')->width(13)->totalled(),
+                ReportColumn::status('status', 'الحالة', [
+                    'pending' => ['قيد المراجعة', 'warning'],
+                    'approved' => ['موافق عليه', 'success'],
+                    'rejected' => ['مرفوض', 'danger'],
+                ])->width(11),
+                ReportColumn::datetime('created_at', 'تاريخ الطلب')->width(15),
+            ])
+            ->rows($payments)
+            ->landscape()
+            ->fileName('payments')
+            ->sheetName('طلبات الشراء');
     }
 
     public function approve(Payment $payment)

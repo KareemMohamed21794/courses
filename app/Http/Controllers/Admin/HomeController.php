@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Admin;
 use App\Models\Course;
 use App\Models\Payment;
+use App\Models\CourseSubscription;
 
 class HomeController extends Controller
 {
@@ -32,6 +33,8 @@ class HomeController extends Controller
         $count_courses = Course::count();
         $count_pending_payments = Payment::where('status', 'pending')->count();
         $count_approved_users = Payment::where('status', 'approved')->count();
+        $count_pending_subscriptions = CourseSubscription::where('status', 'pending')->count();
+        $count_active_subscriptions = CourseSubscription::activeAccess()->count();
 
         return view('auth.admin.dashboard', [
             'title' => $title,
@@ -40,6 +43,8 @@ class HomeController extends Controller
             'count_courses' => $count_courses,
             'count_pending_payments' => $count_pending_payments,
             'count_approved_users' => $count_approved_users,
+            'count_pending_subscriptions' => $count_pending_subscriptions,
+            'count_active_subscriptions' => $count_active_subscriptions,
             'objAdmin' => $objAdmin,
         ]);
     }

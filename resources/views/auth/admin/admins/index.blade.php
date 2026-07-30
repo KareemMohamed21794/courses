@@ -204,7 +204,7 @@
     <input type="hidden" name="is_super" id="is_super" value="{{ $objAdmin->is_super }}">
     <input type="hidden" name="type_segment" id="type_segment" value="{{ $is_super }}">
     <input type="hidden" name="position_id_check" id="position_id_check" value="{{ $objAdmin->position_id }}">
-    <input type="hidden" id="admins_export_pdf_url" value="{{ $segment === 'users' ? route('admin.users.export.pdf') : route('admin.admins.export.pdf') }}">
+    <input type="hidden" id="admins_export_url" value="{{ $segment === 'users' ? route('admin.users.export') : route('admin.admins.export') }}">
 @endsection
 
 @section('scripts')
@@ -214,6 +214,7 @@
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/list/export.js') }}"></script>
+    <script src="{{ asset('demo1/dist/assets/js/custom/reports/export-buttons.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/list/list.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/add.js') }}"></script>
     <script src="{{ asset('demo1/dist/assets/js/custom/apps/admins/update.js') }}"></script>

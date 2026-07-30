@@ -9,8 +9,11 @@
             <div class="card border-0 shadow-sm" style="border-radius: 16px;">
                 <div class="card-body p-4">
                     <a href="{{ route('courses.index') }}" class="text-decoration-none text-muted small">&larr; العودة للكورسات</a>
-                    <h2 class="fw-bold mt-2 mb-1">شراء الكورس</h2>
-                    <p class="text-primary fw-semibold">{{ $course->title }}</p>
+                    <h2 class="fw-bold mt-2 mb-1">شراء الكورس لمرة واحدة</h2>
+                    <p class="text-primary fw-semibold mb-1">{{ $course->title }}</p>
+                    @if($course->price !== null)
+                        <p class="mb-0">السعر: <strong class="fs-5">{{ number_format((float)$course->price, 2) }}</strong></p>
+                    @endif
                     <hr>
 
                     <form action="{{ route('courses.purchase.store', $course) }}" method="POST" enctype="multipart/form-data">

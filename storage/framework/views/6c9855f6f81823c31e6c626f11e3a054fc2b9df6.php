@@ -63,11 +63,12 @@
     </div>
 </div>
 <input type="hidden" id="payments_get_url" value="<?php echo e(route('admin.payments.get')); ?>">
-<input type="hidden" id="payments_export_pdf_url" value="<?php echo e(route('admin.payments.export.pdf')); ?>">
+<input type="hidden" id="payments_export_url" value="<?php echo e(route('admin.payments.export')); ?>">
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
 <script src="<?php echo e(asset('demo1/dist/assets/plugins/custom/datatables/datatables.bundle.js')); ?>"></script>
+<script src="<?php echo e(asset('demo1/dist/assets/js/custom/reports/export-buttons.js')); ?>"></script>
 <script src="<?php echo e(asset('demo1/dist/assets/js/custom/apps/payments/list/list.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
 

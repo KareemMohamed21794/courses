@@ -10,7 +10,12 @@ class Course extends Model
     protected $fillable = [
         'title',
         'description',
+        'instructor',
+        'price',
         'thumbnail',
+        'intro_video',
+        'intro_video_type',
+        'gallery_images',
         'pdf_file',
         'video_file',
         'is_active',
@@ -18,11 +23,28 @@ class Course extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'price' => 'decimal:2',
+        'gallery_images' => 'array',
     ];
 
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function subscriptionPlans()
+    {
+        return $this->hasMany(SubscriptionPlan::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(CourseSubscription::class);
+    }
+
+    public function activeSubscriptionPlans()
+    {
+        return $this->subscriptionPlans()->active()->orderBy('duration_in_months');
     }
 
     public function getThumbnailUrlAttribute()
@@ -32,5 +54,42 @@ class Course extends Model
         }
 
         return Storage::disk('public')->url($this->thumbnail);
+    }
+
+    public function getGalleryImageUrlsAttribute(): array
+    {
+        $images = $this->gallery_images ?? [];
+
+        return array_map(function ($path) {
+            return Storage::disk('public')->url($path);
+        }, $images);
+    }
+
+    public function getIntroVideoEmbedUrlAttribute(): ?string
+    {
+        if (!$this->intro_video) {
+            return null;
+        }
+
+        if ($this->intro_video_type === 'file') {
+            return Storage::disk('public')->url($this->intro_video);
+        }
+
+        $url = $this->intro_video;
+
+        if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        if (preg_match('/vimeo\.com\/(\d+)/', $url, $matches)) {
+            return 'https://player.vimeo.com/video/' . $matches[1];
+        }
+
+        return $url;
+    }
+
+    public function hasIntroVideo(): bool
+    {
+        return !empty($this->intro_video);
     }
 }

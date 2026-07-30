@@ -34,6 +34,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xl-4">
+                        <a href="{{ route('admin.subscriptions.index') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <div class="card-body">
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_pending_subscriptions ?? 0 }}</div>
+                                <div class="fw-bold text-gray-400">طلبات اشتراك قيد المراجعة</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-4">
+                        <a href="{{ route('admin.subscriptions.index') }}" class="card bg-body hoverable card-xl-stretch mb-xl-8">
+                            <div class="card-body">
+                                <div class="text-gray-900 fw-bolder fs-2 mb-2 mt-5">{{ $count_active_subscriptions ?? 0 }}</div>
+                                <div class="fw-bold text-gray-400">اشتراكات نشطة</div>
+                            </div>
+                        </a>
+                    </div>
                     @if($objAdmin->is_super == 1 || $objAdmin->position_id == 2)
                     <div class="col">
                         <!--begin::Statistics Widget 5-->
